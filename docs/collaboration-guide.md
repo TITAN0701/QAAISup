@@ -1,0 +1,100 @@
+# PM / QA / AI Collaboration Guide
+
+此文件定義 PM、QA、工程師與 AI 的分工。
+
+## Role Ownership
+
+| Role | Ownership |
+|---|---|
+| PM | 客戶需求、背景、已知範圍、待確認問題 |
+| QA | 需求可測性、測試情境、測試案例、風險、執行判斷 |
+| AI | 文件整理草稿、問題清單、測試設計草稿、自動化草稿、報告摘要 |
+| Engineer | 技術限制、API contract、selector、測試環境、code review |
+
+## PM Scope
+
+PM 只需要接觸：
+
+```txt
+pm-inbox/{feature}.md
+```
+
+PM 不需要建立：
+
+```txt
+qa-workspace/specs/{feature}/
+```
+
+PM 也不需要寫：
+
+- `scenarios.md`
+- `plan.md`
+- `tasks.md`
+- `test-cases.yaml`
+- 自動化測試碼
+
+## QA Scope
+
+QA 負責把 PM inbox 需求轉成可測試工作項目。
+
+QA 會接觸：
+
+```txt
+qa-workspace/specs/{feature}/spec.md
+qa-workspace/specs/{feature}/questions.md
+qa-workspace/specs/{feature}/scenarios.md
+artifacts/generated/qa/test-cases.yaml
+artifacts/generated/qa/test-plan.md
+artifacts/generated/qa/risk-notes.md
+```
+
+## AI Scope
+
+AI 適合做：
+
+- 根據 PM inbox 整理 `spec.md` 草稿
+- 根據 `spec.md` 產生 `questions.md`
+- 根據 PM answer 產生 `scenarios.md`
+- 產生 `test-cases.yaml` 與 `test-plan.md`
+- 產生自動化測試草稿
+- 根據 raw report 產生測試報告摘要
+
+AI 不應該做：
+
+- 自行決定未確認的商業規則
+- 自行判定 pass / fail
+- 未經 QA/Engineer review 直接合併測試碼
+- 使用正式帳密或敏感資料
+
+## Workflow
+
+```txt
+1. PM 將需求寫到 pm-inbox/{feature}.md
+2. QA 執行 scripts/new-feature-from-inbox.ps1
+3. QA 預覽 PM 需求，確認後輸入 YES
+4. 系統建立 qa-workspace/specs/{feature}/
+5. QA/AI 整理 spec.md
+6. QA/AI 產生 questions.md
+7. PM 回答 PM Answer
+8. QA/AI 產生 scenarios.md 與測試設計
+9. QA 審核測試案例
+10. QA/Engineer 決定是否進入自動化
+11. CI 執行測試
+12. AI 根據 raw report 產生報告
+```
+
+## PM Answer Rule
+
+當 PM 看到 `questions.md` 時，只需要填：
+
+```txt
+PM Answer:
+```
+
+如果答案還不知道，請填：
+
+```txt
+PM Answer: 待客戶確認。
+```
+
+如果答案會改變需求，QA 或 AI 需要同步更新 `spec.md`。

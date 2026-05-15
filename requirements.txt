@@ -1,0 +1,5 @@
+pytest>=8.0.0
+requests>=2.31.0
+allure-pytest>=2.13.0
+jsonschema>=4.0.0
+python-docx>=1.1.0

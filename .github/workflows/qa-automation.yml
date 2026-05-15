@@ -1,0 +1,74 @@
+name: QA Automation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  qa-automation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Cypress E2E
+        run: npm run test:e2e
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+
+      - name: Run pytest API
+        run: pytest
+        env:
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
+
+      - name: Generate Allure report
+        if: always()
+        run: npm run allure:generate
+
+      - name: Export PM Word report
+        if: always()
+        run: python scripts/export-pm-report-docx.py
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: artifacts/generated/allure-report
+
+      - name: Upload raw test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-test-artifacts
+          path: artifacts/raw
+
+      - name: Upload PM report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pm-release-summary
+          path: |
+            artifacts/generated/pm/release-summary.md
+            artifacts/generated/pm/release-summary.docx
