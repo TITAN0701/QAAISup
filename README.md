@@ -90,148 +90,67 @@ docs/           詳細說明文件
 10. Allure + AI 產生 QA / PM 報告
 ```
 
-## 常用指令
+## 日常操作
 
-### AI Slash Commands
+| 目的 | 指令 |
+|---|---|
+| PM 需求轉成 QA 文件 | `.\scripts\new-feature-from-inbox.ps1` |
+| 產生全部功能 QA/PM 報告 | `.\scripts\generate-qa-report.ps1` |
+| 產生單一功能報告 | `.\scripts\generate-qa-report.ps1 -Feature register` |
+| 產生測試情境矩陣 Excel | `.\scripts\generate-scenario-matrix.ps1` |
+| 只重新匯出 PM Word | `.\scripts\export-pm-report-docx.ps1` |
+| 開啟 Cypress UI | `npm run test:e2e:open` |
+| 執行 Cypress E2E | `npm run test:e2e` |
+| 執行 pytest API 測試 | `pytest` |
+| 產生 Allure 報告 | `npm run allure:generate` |
+| 開啟 Allure 報告 | `npm run allure:open` |
 
-如果使用 Claude Code 或支援 slash command 的 AI 工具，可以在聊天輸入框輸入 `/` 後使用：
+若要指定其他 PM 文件：
+
+```powershell
+.\scripts\new-feature-from-inbox.ps1 -InboxFile .\pm-inbox\{release}.md -FeatureName {release} -SplitRequirements -Yes
+```
+
+## 常看位置
 
 ```txt
-/PM-1-create-intake
-/PM-2-answer-questions
-/PM-3-review-release-summary
-/QA-1-import-pm-request
-/QA-2-generate-questions
-/QA-3-generate-scenarios
-/QA-4-generate-testcases
-/QA-5-generate-automation
-/QA-6-generate-report
+PM 需求：pm-inbox/{release}.md
+QA 文件：qa-workspace/specs/{feature}/
+QA 報告：artifacts/generated/qa/test-report.md
+PM 報告：artifacts/generated/pm/release-summary.docx
+矩陣表：artifacts/generated/qa/scenario-matrix.xlsx
+Allure：artifacts/generated/allure-report/
 ```
 
-這些指令檔放在：
+## 測試結果標記
 
-```txt
-.claude/commands/
+報告統計只會讀取 `scenarios.md` 的標準狀態欄位：
+
+```md
+- Status: Passed
+- Status: Failed
+- Status: Blocked
+- Status: Skipped
 ```
 
-### PM 需求轉入 QA/AI 工作區
+也可以使用中文：
 
-```powershell
-.\scripts\new-feature-from-inbox.ps1
+```md
+- 狀態: 通過
+- 狀態: 失敗
+- 狀態: 阻塞
+- 狀態: 略過
 ```
 
-### 安裝前端測試套件
+## 環境設定
 
-```powershell
-npm install
-```
-
-### 開啟 Cypress UI
-
-```powershell
-npm run test:e2e:open
-```
-
-### 執行 Cypress E2E
-
-```powershell
-npm run test:e2e
-```
-
-### 安裝 Python API 測試套件
-
-```powershell
-pip install -r requirements.txt
-```
-
-### 執行 pytest API 測試
-
-```powershell
-pytest
-```
-
-### 產生 Allure 報告
-
-```powershell
-npm run allure:generate
-```
-
-### 開啟 Allure 報告
-
-```powershell
-npm run allure:open
-```
-
-### 匯出 PM Word 報告
-
-```powershell
-.\scripts\export-pm-report-docx.ps1
-```
-
-用途：
-
-```txt
-將 artifacts/generated/pm/release-summary.md
-轉成 artifacts/generated/pm/release-summary.docx
-```
-
-## 報告位置
-
-```txt
-PM report:
-  artifacts/generated/pm/release-summary.md
-  artifacts/generated/pm/release-summary.docx
-
-QA report:
-  artifacts/generated/qa/test-report.md
-  artifacts/generated/qa/failure-analysis.md
-
-Allure report:
-  artifacts/generated/allure-report/
-```
-
-## 工具鏈
-
-```txt
-主要 E2E: Cypress
-輔助 API: Python + pytest
-CI: GitHub Actions
-Report: Allure
-```
-
-## 詳細文件
-
-```txt
-docs/architecture.md             架構說明
-docs/collaboration-guide.md      PM / QA / AI 分工
-docs/feature-document-format.md  功能文件格式
-docs/toolchain.md                Cypress / pytest / Allure 工具鏈
-docs/reporting-standard.md       報告格式
-docs/slash-commands.md           AI slash command 說明
-docs/references.md               參考架構與來源
-docs/environment-setup.md        被測產品環境設定
-```
-
-## 核心規則
-
-- PM inbox 只放需求，不放設定。
-- QA/AI 設定不放在 PM 資料夾。
-- AI 產物一律視為 draft。
-- 測試 pass/fail 必須來自 Cypress、pytest 或 CI。
-- Allure 是正式測試報告來源。
-- PM 對外報告使用 Word `.docx`，Markdown 保留作為版本控管來源。
-
-## 被測產品設定
-
-本專案需要設定實際產品環境才會真的執行測試。
-
-本機可先複製：
+第一次執行前先建立 `.env`：
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-主要設定：
+常用設定：
 
 ```txt
 CYPRESS_BASE_URL
@@ -240,66 +159,18 @@ TEST_USER_EMAIL
 TEST_USER_PASSWORD
 ```
 
-詳細說明：
+## 核心規則
+
+- PM inbox 只放需求，不放測試設定。
+- AI 產物一律先視為 draft，QA 要檢查後再使用。
+- 測試 pass/fail 以 Cypress、pytest 或 CI 結果為準。
+- PM 對外報告使用 Word `.docx`，Markdown 保留作為版本控管來源。
+
+## 參考文件
 
 ```txt
-docs/environment-setup.md
-```
-
-## 目前常用操作指令
-
-PM 寫完需求後，拆成多個 QA 功能資料夾並產生初版 QA 文件：
-
-```powershell
-.\scripts\new-feature-from-inbox.ps1 -InboxFile .\pm-inbox\release-2026-05-example.md -FeatureName release-2026-05-example -SplitRequirements -Yes
-```
-
-QA 測完或更新 `tasks.md`、`scenarios.md` 後，產生 QA 報告、PM 摘要與 Word。
-
-不帶 `-Feature` 時，會彙整 `qa-workspace/specs/` 底下全部功能：
-
-```powershell
-.\scripts\generate-qa-report.ps1
-```
-
-`-Feature` 要填 `qa-workspace/specs/` 底下的功能資料夾名稱：
-
-```powershell
-.\scripts\generate-qa-report.ps1 -Feature {feature}
-```
-
-範例：
-
-```powershell
-.\scripts\generate-qa-report.ps1 -Feature login
-.\scripts\generate-qa-report.ps1 -Feature forgot-password
-.\scripts\generate-qa-report.ps1 -Feature register
-```
-
-彙整所有測試情境成矩陣對照表，會同時產生 Markdown 與 Excel：
-
-```powershell
-.\scripts\generate-scenario-matrix.ps1
-```
-
-輸出：
-
-```txt
-artifacts/generated/qa/scenario-matrix.md
-artifacts/generated/qa/scenario-matrix.xlsx
-```
-
-只重新匯出 PM Word 報告：
-
-```powershell
-.\scripts\export-pm-report-docx.ps1
-```
-
-常用檢查位置：
-
-```txt
-qa-workspace/specs/{feature}/
-artifacts/generated/qa/test-report.md
-artifacts/generated/pm/release-summary.md
-artifacts/generated/pm/release-summary.docx
+docs/environment-setup.md        環境設定
+docs/collaboration-guide.md      PM / QA / AI 分工
+docs/reporting-standard.md       報告格式
+docs/slash-commands.md           AI slash command
 ```
