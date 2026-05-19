@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.local
+
+artifacts/raw/*
+!artifacts/raw/.gitkeep
+!artifacts/raw/allure-results/
+artifacts/raw/allure-results/*
+!artifacts/raw/allure-results/.gitkeep
+
+artifacts/generated/allure-report/*
+!artifacts/generated/allure-report/.gitkeep
+
+artifacts/generated/pm/*.docx
+
+__pycache__/
+.pytest_cache/

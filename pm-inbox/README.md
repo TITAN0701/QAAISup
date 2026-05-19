@@ -1,71 +1,111 @@
 # PM Inbox
 
-這個資料夾是 PM 唯一需要接觸的需求輸入區。
+`pm-inbox/` 是 PM 放需求原始資料的入口。PM 不需要依照「每個功能一份文件」來整理；可以依照實際工作方式，把一個 release、sprint、專案、客戶回饋或需求集合寫成一份文件。
 
-PM 不需要建立功能資料夾，不需要複製模板，也不需要理解 QA/AI 的工作目錄。
+QA/AI 會負責從 PM 文件中辨識每個需求項目，拆成可驗收、可測試、可自動化的規格。
 
-## PM 要做什麼
+## 文件命名方式
 
-PM 只需要新增或編輯一份需求檔：
+PM 可以依照資料來源或工作節奏命名，例如：
 
 ```txt
-pm-inbox/{feature-name}.md
+pm-inbox/release-2026-05.md
+pm-inbox/sprint-12-requirements.md
+pm-inbox/customer-feedback-2026-q2.md
+pm-inbox/authentication-requirements.md
 ```
 
-例如：
+如果某個需求很大，也可以獨立成一份文件，但這不是必要規則。
 
 ```txt
 pm-inbox/forgot-password.md
-pm-inbox/user-register.md
-pm-inbox/order-checkout.md
+pm-inbox/login-and-register.md
 ```
 
-## PM 文件格式
+## PM 文件建議格式
+
+一份 PM 文件可以包含多個需求項目。建議使用下列結構：
 
 ```md
-# 客戶需求：功能名稱
+# 文件標題
 
-## 客戶原始需求
+## 基本資訊
+- 來源:
+- 產品/模組:
+- 版本/時程:
+- PM:
+- 狀態:
 
-客戶希望...
+## 背景與目標
 
-## 背景
+說明這批需求要解決什麼問題、服務哪些使用者、預期達成什麼結果。
 
-目前...
+## 需求項目
 
-## 已知範圍
+### 需求 1: 功能名稱
 
-- 客戶有明確提到的內容
+#### 使用者故事
+身為某類使用者，我想要完成某件事，以便達成某個目的。
 
-## 不確定的地方
+#### 功能說明
+- 說明使用者可以做什麼。
+- 說明系統需要回應什麼。
+- 說明重要限制或商業規則。
 
-- PM 尚未確認的問題
+#### 驗收條件
+- 給定某個前提，當使用者執行某個操作，則系統應該產生某個結果。
+- 錯誤、空值、例外狀況也應列出。
 
-## 補充資料
+#### PM 補充
+- 尚未確認的內容可標記為「待確認」。
+- 不確定是否要做的內容可標記為「暫不納入」。
 
-- 相關 ticket:
-- 客戶會議日期:
-- 相關截圖或文件:
+### 需求 2: 功能名稱
+
+同上。
+
+## 不在本次範圍
+
+- 明確列出這份文件不包含的功能，避免 QA/AI 誤判。
+
+## 參考資料
+
+- Ticket:
+- 設計稿:
+- 會議紀錄:
+- 其他文件:
 ```
 
-## PM 不需要做什麼
+## PM 應提供的內容
 
-PM 不需要：
+PM 主要提供產品需求與驗收標準，不需要提供測試或技術細節。
 
-- 建立 `qa-workspace/specs/{feature}` 資料夾
-- 複製 `_template`
-- 撰寫 `questions.md`
-- 撰寫 `scenarios.md`
-- 撰寫 `plan.md`
-- 撰寫 `tasks.md`
-- 撰寫自動化測試碼
+建議提供：
 
-## 後續誰處理
+- 使用者要完成的任務
+- 正常流程
+- 例外流程
+- 錯誤訊息或提示文案
+- 權限、狀態、限制條件
+- 本次範圍與不在本次範圍
+- PM 認定可上線的驗收條件
 
-QA 或 AI 會讀取 `pm-inbox/{feature-name}.md`，確認後才建立：
+不需要提供：
+
+- selector
+- API contract
+- 測試案例格式
+- 自動化程式碼
+- CI 或 Allure 設定
+
+## QA/AI 後續處理
+
+QA/AI 讀取 `pm-inbox/*.md` 後，會依照文件中的需求項目拆分輸出，例如：
 
 ```txt
-qa-workspace/specs/{feature-name}/
+qa-workspace/specs/login/
+qa-workspace/specs/forgot-password/
+qa-workspace/specs/register/
 ```
 
-QA 執行腳本時會先看到 PM 寫了什麼，確認後輸入 `YES` 才會建立 QA/AI 工作資料夾。
+也就是說，PM 可以一份文件寫多個需求；QA/AI 會在後續規格層把它拆成適合測試與自動化的單位。

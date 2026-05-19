@@ -1,27 +1,21 @@
-# Login QA Tasks
-
-## PM
-
-- [ ] 確認登入成功導向規則
-- [ ] 確認 session 30 分鐘定義
-- [ ] 確認錯誤訊息是否可透露帳號狀態
+﻿# Tasks: 一般登入
 
 ## QA
 
-- [ ] 審核 `scenarios.md`
-- [ ] 補充邊界情境
-- [ ] 確認測試資料需求
-- [ ] 審核 `test-cases.yaml`
+- [ ] 檢查 spec.md，確認 PM 需求已正確拆分到此功能資料夾。
+- [ ] 檢查 questions.md，整理需要 PM 回答的問題。
+- [ ] 將 PM 回答補回 questions.md。
+- [ ] 根據 PM 回答調整 scenarios.md。
+- [ ] 根據實際測試範圍調整 plan.md。
 
-## Engineering
+## Automation
 
-- [ ] 提供登入頁穩定 selector 或 `data-testid`
-- [ ] 提供測試帳號資料建立方式
-- [ ] 確認 API error code 與 response schema
+- [ ] 確認此功能所需的穩定 selector 或 data-testid。
+- [ ] 準備必要測試資料。
+- [ ] 驗收條件確認後，建立 Cypress E2E 測試。
+- [ ] 執行 E2E 測試並產出測試結果。
 
-## AI
+## PM
 
-- [ ] 根據 `spec.md` 產生待釐清問題
-- [ ] 根據審核後規格產生測試案例
-- [ ] 根據測試案例產生自動化草稿
-- [ ] 根據 raw report 產生測試報告
+- [ ] 回答 questions.md 中的待釐清問題。
+- [ ] 確認成功訊息、錯誤訊息與頁面導向規則。

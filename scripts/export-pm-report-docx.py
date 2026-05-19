@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
 from pathlib import Path
 
 from docx import Document
@@ -49,7 +50,9 @@ def configure_document(document: Document) -> None:
 
 
 def add_heading(document: Document, text: str, level: int) -> None:
-    paragraph = document.add_heading(level=level)
+    paragraph = document.add_paragraph()
+    paragraph.paragraph_format.space_before = Pt(8 if level == 1 else 6)
+    paragraph.paragraph_format.space_after = Pt(4)
     run = paragraph.add_run(text)
     set_run_font(run, size={1: 18, 2: 14, 3: 12}.get(level, 11), bold=True)
     run.font.color.rgb = HEADING_COLOR
@@ -151,23 +154,30 @@ def add_markdown_lines(document: Document, lines: list[str]) -> None:
         index += 1
 
 
-def export_docx(source: Path, output: Path) -> None:
+def export_docx(source: Path, output: Path) -> Path:
     if not source.exists():
         raise FileNotFoundError(f"Source markdown not found: {source}")
 
     document = Document()
     configure_document(document)
 
-    lines = source.read_text(encoding="utf-8").splitlines()
+    lines = source.read_text(encoding="utf-8-sig").splitlines()
     add_markdown_lines(document, lines)
 
     output.parent.mkdir(parents=True, exist_ok=True)
     try:
         document.save(output)
     except PermissionError as exc:
-        raise PermissionError(
-            f"Cannot write {output}. Close the Word document if it is currently open, then run the export again."
-        ) from exc
+        timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        fallback = output.with_name(f"{output.stem}-{timestamp}{output.suffix}")
+        document.save(fallback)
+        print(
+            f"Cannot write {output} because it is locked. "
+            f"Exported fallback Word report: {fallback}"
+        )
+        return fallback
+
+    return output
 
 
 def main() -> None:
@@ -184,8 +194,8 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    export_docx(Path(args.source), Path(args.output))
-    print(f"Exported PM Word report: {args.output}")
+    actual_output = export_docx(Path(args.source), Path(args.output))
+    print(f"Exported PM Word report: {actual_output}")
 
 
 if __name__ == "__main__":

@@ -1,43 +1,51 @@
-# Login Scenarios
+﻿# Test Scenarios: 一般登入
 
-## Scenario: 正確帳密登入成功
+## Source
 
-```gherkin
-Given 使用者位於登入頁
-When 使用者輸入正確帳號與密碼
-And 使用者點擊登入
-Then 使用者應成功登入
-And 使用者應進入首頁
-```
+- Feature: login
+- Requirement: 一般登入
 
-## Scenario: 錯誤密碼登入失敗
+## Scenarios
 
-```gherkin
-Given 使用者位於登入頁
-When 使用者輸入正確帳號與錯誤密碼
-And 使用者點擊登入
-Then 系統應顯示「帳號或密碼錯誤」
-And 使用者應停留在登入頁
-```
+### SC-LOGIN-001
 
-## Scenario: 停用帳號不可登入
+- Source acceptance: 給定使用者位於登入頁，當使用者輸入有效帳號與正確密碼並送出，則系統應登入成功。
+- Type: e2e
+- Priority: high
+- Automation candidate: true
 
-```gherkin
-Given 使用者位於登入頁
-And 使用者帳號狀態為停用
-When 使用者輸入該帳號與正確密碼
-And 使用者點擊登入
-Then 系統應顯示「帳號已停用，請聯絡管理員」
-And 使用者應停留在登入頁
-```
+### SC-LOGIN-002
 
-## Scenario: 鎖定帳號不可登入
+- Source acceptance: 給定使用者位於登入頁，當使用者未輸入帳號就送出，則系統應提示帳號為必填。
+- Type: e2e
+- Priority: high
+- Automation candidate: true
 
-```gherkin
-Given 使用者位於登入頁
-And 使用者帳號狀態為鎖定
-When 使用者輸入該帳號與正確密碼
-And 使用者點擊登入
-Then 系統應顯示「帳號已被鎖定，請稍後再試」
-And 使用者應停留在登入頁
-```
+### SC-LOGIN-003
+
+- Source acceptance: 給定使用者位於登入頁，當使用者未輸入密碼就送出，則系統應提示密碼為必填。
+- Type: e2e
+- Priority: high
+- Automation candidate: true
+
+### SC-LOGIN-004
+
+- Source acceptance: 給定使用者位於登入頁，當使用者輸入錯誤帳號或錯誤密碼並送出，則系統應顯示登入失敗提示。
+- Type: e2e
+- Priority: high
+- Automation candidate: true
+
+### SC-LOGIN-005
+
+- Source acceptance: 給定使用者位於登入頁，當使用者點擊「忘記密碼」，則系統應導向忘記密碼流程。
+- Type: e2e
+- Priority: high
+- Automation candidate: true
+
+### SC-LOGIN-006
+
+- Source acceptance: 給定使用者位於登入頁，當使用者點擊「創建帳號」，則系統應導向註冊流程。
+- Type: e2e
+- Priority: high
+- Automation candidate: true
+

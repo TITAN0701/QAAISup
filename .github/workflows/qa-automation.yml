@@ -35,12 +35,16 @@ jobs:
       - name: Run Cypress E2E
         run: npm run test:e2e
         env:
-          BASE_URL: ${{ secrets.BASE_URL }}
+          CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
       - name: Run pytest API
         run: pytest
         env:
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
       - name: Generate Allure report
         if: always()

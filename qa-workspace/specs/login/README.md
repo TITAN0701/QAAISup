@@ -1,44 +1,36 @@
-# Feature: Login
+﻿# 一般登入
 
-## Owner
+## Purpose
 
-- PM:
-- QA:
-- Engineer:
+此資料夾是 login 功能的 QA/AI 工作區，從 PM 文件中的「一般登入」需求拆分產生。
 
-## Status
+## Source
 
-| Item | Status |
-|---|---|
-| Spec | Draft |
-| PM Review | Not Started |
-| QA Review | Not Started |
-| Test Case | Draft |
-| Automation | Not Started |
-| Report | Not Started |
+- PM inbox: pm-inbox/release-2026-05-example.md
+- Feature key: login
+- Requirement title: 一般登入
 
-## Related Files
+## User Story
 
-- `spec.md`: 登入功能需求與驗收條件
-- `questions.md`: 需要 PM 釐清的登入規則
-- `scenarios.md`: 登入功能測試情境
-- `plan.md`: 登入功能 QA 測試計畫
-- `tasks.md`: PM、QA、工程師與 AI 的分工
+身為已註冊會員，我想要輸入帳號與密碼登入系統，以便使用會員功能。
 
-## Current Decision
+## Workspace Files
 
-- 登入方式目前只包含帳號密碼登入。
-- 第三方登入、忘記密碼與 MFA 不在本次範圍。
-- 錯誤密碼、停用帳號、鎖定帳號都需要測試。
+- spec.md: PM 原始需求與待整理規格。
+- questions.md: QA/AI 需要 PM 釐清的問題。
+- scenarios.md: 初版測試情境。
+- plan.md: 初版測試計畫。
+- tasks.md: QA、PM、Automation 後續任務。
 
-## Pending Questions
+## Review Checklist
 
-- 登入成功後要導向固定首頁，還是導回登入前頁面？
-- Session 30 分鐘是閒置時間，還是登入後絕對有效時間？
-- 密碼錯誤次數是否跨裝置與跨瀏覽器累計？
+- [ ] 確認此資料夾只包含 一般登入 的需求。
+- [ ] 檢查 questions.md 是否需要 PM 回答。
+- [ ] 檢查 scenarios.md 是否完整覆蓋驗收條件。
+- [ ] 檢查 plan.md 的測試範圍與風險是否合理。
+- [ ] 補上測試資料、selector、API contract 或環境限制。
 
-## Next Step
+## Current Status
 
-- PM 先回答 `questions.md`。
-- QA 根據 PM 回答更新 `scenarios.md`。
-- AI 再根據確認後的 spec 產生正式版 `test-cases.yaml`。
+- Draft generated from PM inbox.
+- 等待 QA review 與 PM answer。

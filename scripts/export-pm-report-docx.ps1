@@ -8,6 +8,21 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+$repoRoot = Split-Path -Parent $PSScriptRoot
+Set-Location $repoRoot
+
+if (-not (Test-Path $Source)) {
+    $reportScript = Join-Path "scripts" "generate-qa-report.ps1"
+    if (Test-Path $reportScript) {
+        Write-Output "Source markdown not found. Generating PM markdown first: $Source"
+        & ".\$reportScript" -PmSummary $Source -SkipWord | Out-Null
+    }
+}
+
+if (-not (Test-Path $Source)) {
+    throw "Source markdown not found after generation attempt: $Source"
+}
+
 $localPython = Join-Path $env:LOCALAPPDATA "Programs\Python\Python313\python.exe"
 
 if (Test-Path $localPython) {

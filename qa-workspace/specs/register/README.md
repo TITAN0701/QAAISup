@@ -1,18 +1,18 @@
-﻿# 忘記密碼入口
+﻿# 創建帳號入口
 
 ## Purpose
 
-此資料夾是 forgot-password 功能的 QA/AI 工作區，從 PM 文件中的「忘記密碼入口」需求拆分產生。
+此資料夾是 register 功能的 QA/AI 工作區，從 PM 文件中的「創建帳號入口」需求拆分產生。
 
 ## Source
 
 - PM inbox: pm-inbox/release-2026-05-example.md
-- Feature key: forgot-password
-- Requirement title: 忘記密碼入口
+- Feature key: register
+- Requirement title: 創建帳號入口
 
 ## User Story
 
-身為忘記密碼的會員，我想要從登入頁進入密碼重設流程，以便重新取得帳號存取權。
+身為新使用者，我想要從登入頁進入創建帳號流程，以便註冊成為會員。
 
 ## Workspace Files
 
@@ -24,7 +24,7 @@
 
 ## Review Checklist
 
-- [ ] 確認此資料夾只包含 忘記密碼入口 的需求。
+- [ ] 確認此資料夾只包含 創建帳號入口 的需求。
 - [ ] 檢查 questions.md 是否需要 PM 回答。
 - [ ] 檢查 scenarios.md 是否完整覆蓋驗收條件。
 - [ ] 檢查 plan.md 的測試範圍與風險是否合理。

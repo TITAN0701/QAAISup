@@ -3,6 +3,7 @@ import allureWriter from "@shelex/cypress-allure-plugin/writer";
 
 export default defineConfig({
   e2e: {
+    baseUrl: process.env.CYPRESS_BASE_URL,
     specPattern: "automation/e2e/specs/**/*.cy.ts",
     supportFile: "automation/e2e/support/e2e.ts",
     fixturesFolder: "automation/e2e/fixtures",

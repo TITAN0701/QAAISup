@@ -6,7 +6,7 @@
 
 | Role | Ownership |
 |---|---|
-| PM | 客戶需求、背景、已知範圍、待確認問題 |
+| PM | 客戶原始需求、需求背景、期望結果、已知內容、待確認問題 |
 | QA | 需求可測性、測試情境、測試案例、風險、執行判斷 |
 | AI | 文件整理草稿、問題清單、測試設計草稿、自動化草稿、報告摘要 |
 | Engineer | 技術限制、API contract、selector、測試環境、code review |
@@ -17,6 +17,7 @@ PM 只需要接觸：
 
 ```txt
 pm-inbox/{feature}.md
+pm-inbox/{release-or-sprint}.md
 ```
 
 PM 不需要建立：
@@ -27,6 +28,7 @@ qa-workspace/specs/{feature}/
 
 PM 也不需要寫：
 
+- `spec.md`
 - `scenarios.md`
 - `plan.md`
 - `tasks.md`
@@ -69,18 +71,19 @@ AI 不應該做：
 ## Workflow
 
 ```txt
-1. PM 將需求寫到 pm-inbox/{feature}.md
-2. QA 執行 scripts/new-feature-from-inbox.ps1
-3. QA 預覽 PM 需求，確認後輸入 YES
-4. 系統建立 qa-workspace/specs/{feature}/
-5. QA/AI 整理 spec.md
-6. QA/AI 產生 questions.md
-7. PM 回答 PM Answer
-8. QA/AI 產生 scenarios.md 與測試設計
-9. QA 審核測試案例
-10. QA/Engineer 決定是否進入自動化
-11. CI 執行測試
-12. AI 根據 raw report 產生報告
+1. PM 將客戶需求紀錄寫到 pm-inbox/{feature}.md，或整理成一份批次需求文件
+2. QA/AI 判斷是否需要拆成多個 feature
+3. QA 執行 scripts/new-feature-from-inbox.ps1
+4. QA 預覽 PM 需求，確認後輸入 YES
+5. 系統建立 qa-workspace/specs/{feature}/
+6. QA/AI 根據 PM inbox 整理 spec.md
+7. QA/AI 產生 questions.md
+8. PM 回答 PM Answer
+9. QA/AI 產生 scenarios.md 與測試設計
+10. QA 審核測試案例
+11. QA/Engineer 決定是否進入自動化
+12. CI 執行測試
+13. AI 根據 raw report 產生報告
 ```
 
 ## PM Answer Rule

@@ -55,6 +55,8 @@ artifacts/generated/pm/release-summary.md
 - 整體狀態
 - 摘要說明
 - 測試結果統計
+- 測試範圍摘要
+- 測試執行概況
 - 發布建議
 - 受影響功能
 - 主要風險
@@ -65,6 +67,8 @@ artifacts/generated/pm/release-summary.md
 PM summary 不要包含大量 stack trace、selector、API response body 或 framework log。
 
 PM summary 欄位名稱使用中文；只有狀態值使用英文，例如 `Not Evaluated`、`Passed`、`Failed`、`Skipped`、`Blocked`。
+
+PM summary 可以包含測試範圍與執行概況，但不要放完整測試步驟。完整測試過程保留在 QA report 與 Allure report。
 
 PM Word 版本由匯出腳本產生：
 

@@ -1,0 +1,314 @@
+import argparse
+import re
+import zipfile
+from datetime import datetime, timezone
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+
+def get_field(block: str, field: str, default: str = "") -> str:
+    pattern = rf"(?m)^-\s+{re.escape(field)}\s*:\s*(.+?)\s*$"
+    match = re.search(pattern, block)
+    return match.group(1).strip() if match else default
+
+
+def get_title(path: Path, fallback: str) -> str:
+    if not path.exists():
+        return fallback
+    content = path.read_text(encoding="utf-8")
+    match = re.search(r"(?m)^#\s+(.+?)\s*$", content)
+    return match.group(1).strip() if match else fallback
+
+
+def simplify_acceptance(text: str) -> str:
+    text = text.strip()
+    text = re.sub(r"^給定.*?，當", "", text)
+    text = re.sub(r"^使用者", "使用者", text)
+    text = text.replace("，則系統應", " -> ")
+    text = text.replace("，則", " -> ")
+    return text
+
+
+def status_symbol(status: str) -> str:
+    normalized = status.strip().lower()
+    if normalized in {"passed", "pass", "通過"}:
+        return "✓"
+    if normalized in {"failed", "fail", "失敗"}:
+        return "✕"
+    if normalized in {"blocked", "阻塞"}:
+        return "!"
+    if normalized in {"skipped", "略過"}:
+        return "-"
+    return "—"
+
+
+def platform_style(status: str) -> int:
+    normalized = status.strip().lower()
+    if normalized in {"passed", "pass", "通過"}:
+        return 7
+    if normalized in {"failed", "fail", "失敗"}:
+        return 8
+    if normalized in {"blocked", "阻塞"}:
+        return 9
+    if normalized in {"skipped", "略過"}:
+        return 10
+    return 11
+
+
+def read_scenarios(specs_root: Path) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    feature_dirs = sorted(
+        p for p in specs_root.iterdir()
+        if p.is_dir() and not p.name.startswith((".", "_"))
+    )
+
+    for feature_dir in feature_dirs:
+        scenario_path = feature_dir / "scenarios.md"
+        if not scenario_path.exists():
+            continue
+
+        module_name = get_title(feature_dir / "README.md", feature_dir.name)
+        content = scenario_path.read_text(encoding="utf-8")
+        matches = list(re.finditer(r"(?m)^###\s+(SC-[A-Z0-9_-]+)\s*$", content))
+
+        for index, match in enumerate(matches):
+            next_start = matches[index + 1].start() if index + 1 < len(matches) else len(content)
+            block = content[match.start():next_start]
+            status = get_field(block, "Status", "Not Marked")
+            acceptance = get_field(block, "Source acceptance")
+            rows.append(
+                {
+                    "feature": feature_dir.name,
+                    "module": module_name,
+                    "scenario_id": match.group(1),
+                    "item": simplify_acceptance(acceptance),
+                    "acceptance": acceptance,
+                    "type": get_field(block, "Type"),
+                    "priority": get_field(block, "Priority"),
+                    "automation": get_field(block, "Automation candidate"),
+                    "status": status,
+                    "source": str(scenario_path).replace("\\", "/"),
+                }
+            )
+
+    return rows
+
+
+def col_name(index: int) -> str:
+    name = ""
+    while index:
+        index, remainder = divmod(index - 1, 26)
+        name = chr(65 + remainder) + name
+    return name
+
+
+def cell_xml(row: int, col: int, value: str, style: int = 0) -> str:
+    ref = f"{col_name(col)}{row}"
+    return (
+        f'<c r="{ref}" t="inlineStr" s="{style}">'
+        f"<is><t>{escape(str(value))}</t></is>"
+        "</c>"
+    )
+
+
+def row_xml(row: int, cells: list[tuple[int, str, int]], height: int | None = None) -> str:
+    height_attr = f' ht="{height}" customHeight="1"' if height else ""
+    return f'<row r="{row}"{height_attr}>{"".join(cell_xml(row, col, value, style) for col, value, style in cells)}</row>'
+
+
+def build_sheet(rows: list[dict[str, str]]) -> str:
+    sheet_rows: list[str] = []
+    merges: list[str] = []
+
+    sheet_rows.append(row_xml(1, [
+        (1, "功能模組", 1),
+        (2, "測試編號", 1),
+        (3, "測試項目", 1),
+        (4, "Desktop", 2),
+        (5, "狀態", 1),
+    ], height=26))
+    sheet_rows.append(row_xml(2, [
+        (4, "Win Chrome", 1),
+    ], height=30))
+    merges.extend(["A1:A2", "B1:B2", "C1:C2", "E1:E2"])
+
+    module_styles = [3, 4, 5, 6]
+    row_index = 3
+    grouped: dict[str, list[dict[str, str]]] = {}
+    for row in rows:
+        grouped.setdefault(row["module"], []).append(row)
+
+    for module_index, (module, module_rows) in enumerate(grouped.items()):
+        start_row = row_index
+        module_style = module_styles[module_index % len(module_styles)]
+        for item in module_rows:
+            symbol = status_symbol(item["status"])
+            p_style = platform_style(item["status"])
+            sheet_rows.append(row_xml(row_index, [
+                (1, module if row_index == start_row else "", module_style),
+                (2, item["scenario_id"], 13),
+                (3, item["item"], 12),
+                (4, symbol, p_style),
+                (5, item["status"], 13),
+            ], height=23))
+            row_index += 1
+
+        if row_index - start_row > 1:
+            merges.append(f"A{start_row}:A{row_index - 1}")
+
+    last_row = max(2, row_index - 1)
+    merge_xml = ""
+    if merges:
+        merge_xml = f'<mergeCells count="{len(merges)}">' + "".join(f'<mergeCell ref="{m}"/>' for m in merges) + "</mergeCells>"
+
+    return f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <sheetViews>
+    <sheetView workbookViewId="0">
+      <pane ySplit="2" topLeftCell="A3" activePane="bottomLeft" state="frozen"/>
+    </sheetView>
+  </sheetViews>
+  <cols>
+    <col min="1" max="1" width="20" customWidth="1"/>
+    <col min="2" max="2" width="24" customWidth="1"/>
+    <col min="3" max="3" width="62" customWidth="1"/>
+    <col min="4" max="4" width="14" customWidth="1"/>
+    <col min="5" max="5" width="16" customWidth="1"/>
+  </cols>
+  <sheetData>
+    {''.join(sheet_rows)}
+  </sheetData>
+  {merge_xml}
+</worksheet>'''
+
+
+def build_styles() -> str:
+    return '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <fonts count="4">
+    <font><sz val="11"/><name val="Calibri"/></font>
+    <font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font>
+    <font><b/><sz val="11"/><color rgb="FF1F4E79"/><name val="Calibri"/></font>
+    <font><b/><sz val="12"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font>
+  </fonts>
+  <fills count="12">
+    <fill><patternFill patternType="none"/></fill>
+    <fill><patternFill patternType="gray125"/></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FF1F3A63"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FF2F75B5"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FFDDEBF7"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FFE2F0D9"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FFFFF2CC"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FFFCE4D6"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FFEAF2F8"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FFC6EFCE"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FFFFC7CE"/><bgColor indexed="64"/></patternFill></fill>
+    <fill><patternFill patternType="solid"><fgColor rgb="FFE7E6E6"/><bgColor indexed="64"/></patternFill></fill>
+  </fills>
+  <borders count="2">
+    <border><left/><right/><top/><bottom/><diagonal/></border>
+    <border>
+      <left style="thin"><color rgb="FFB7B7B7"/></left>
+      <right style="thin"><color rgb="FFB7B7B7"/></right>
+      <top style="thin"><color rgb="FFB7B7B7"/></top>
+      <bottom style="thin"><color rgb="FFB7B7B7"/></bottom>
+      <diagonal/>
+    </border>
+  </borders>
+  <cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+  <cellXfs count="14">
+    <xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>
+    <xf numFmtId="0" fontId="3" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
+    <xf numFmtId="0" fontId="1" fillId="3" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="4" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="5" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="6" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="7" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="9" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="10" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="6" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="11" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
+    <xf numFmtId="0" fontId="2" fillId="8" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
+    <xf numFmtId="0" fontId="0" fillId="8" borderId="1" xfId="0" applyFill="1" applyBorder="1"><alignment vertical="center" wrapText="1"/></xf>
+    <xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
+  </cellXfs>
+  <cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
+</styleSheet>'''
+
+
+def write_xlsx(rows: list[dict[str, str]], output: Path) -> Path:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    sheet_xml = build_sheet(rows)
+    created = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+    files = {
+        "[Content_Types].xml": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  <Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>
+  <Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
+  <Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>
+  <Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
+  <Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
+</Types>''',
+        "_rels/.rels": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>
+  <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>
+  <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/>
+</Relationships>''',
+        "xl/workbook.xml": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+  <sheets><sheet name="Scenario Matrix" sheetId="1" r:id="rId1"/></sheets>
+</workbook>''',
+        "xl/_rels/workbook.xml.rels": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>
+  <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
+</Relationships>''',
+        "xl/worksheets/sheet1.xml": sheet_xml,
+        "xl/styles.xml": build_styles(),
+        "docProps/core.xml": f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <dc:title>Scenario Matrix</dc:title>
+  <dc:creator>QAAI</dc:creator>
+  <cp:lastModifiedBy>QAAI</cp:lastModifiedBy>
+  <dcterms:created xsi:type="dcterms:W3CDTF">{created}</dcterms:created>
+  <dcterms:modified xsi:type="dcterms:W3CDTF">{created}</dcterms:modified>
+</cp:coreProperties>''',
+        "docProps/app.xml": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
+  <Application>QAAI</Application>
+</Properties>''',
+    }
+
+    actual_output = output
+    try:
+        zf = zipfile.ZipFile(actual_output, "w", zipfile.ZIP_DEFLATED)
+    except PermissionError:
+        suffix = datetime.now().strftime("%Y%m%d-%H%M%S")
+        actual_output = output.with_name(f"{output.stem}-{suffix}{output.suffix}")
+        zf = zipfile.ZipFile(actual_output, "w", zipfile.ZIP_DEFLATED)
+
+    with zf:
+        for name, content in files.items():
+            zf.writestr(name, content)
+
+    return actual_output
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--specs-root", default="qa-workspace/specs")
+    parser.add_argument("--output", default="artifacts/generated/qa/scenario-matrix.xlsx")
+    args = parser.parse_args()
+
+    rows = read_scenarios(Path(args.specs_root))
+    actual_output = write_xlsx(rows, Path(args.output))
+    print(f"Generated Excel scenario matrix: {actual_output}")
+    print(f"Total scenarios: {len(rows)}")
+
+
+if __name__ == "__main__":
+    main()
