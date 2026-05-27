@@ -23,9 +23,12 @@ if (-not (Test-Path $Source)) {
     throw "Source markdown not found after generation attempt: $Source"
 }
 
-$localPython = Join-Path $env:LOCALAPPDATA "Programs\Python\Python313\python.exe"
+$localPython = $null
+if ($env:LOCALAPPDATA) {
+    $localPython = Join-Path $env:LOCALAPPDATA "Programs\Python\Python313\python.exe"
+}
 
-if (Test-Path $localPython) {
+if ($localPython -and (Test-Path $localPython)) {
     $python = $localPython
 } else {
     $pythonCommand = Get-Command python -ErrorAction SilentlyContinue
