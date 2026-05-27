@@ -195,7 +195,8 @@ function Convert-BulletsToMarkdown {
 function New-QaDraftDocs {
     param(
         [string]$TargetDir,
-        [object]$Section
+        [object]$Section,
+        [string]$SourcePath = "pm-inbox/unknown.md"
     )
 
     $story = Get-MarkdownSection -Content $Section.Body -Heading "使用者故事"
@@ -218,7 +219,7 @@ function New-QaDraftDocs {
 
 ## PM Inbox Source
 
-- Source file: pm-inbox/release-2026-05-example.md
+- Source file: $SourcePath
 - Requirement: $requirementTitle
 
 ~~~md
@@ -302,6 +303,7 @@ $noteLines
             $questionLines += "$questionIndex. $note"
             $questionLines += "   - Impact: 影響驗收條件、測試資料或自動化斷言。"
             $questionLines += "   - PM Answer:"
+            $questionLines += "   - Status: Open"
             $questionLines += ""
             $questionIndex++
         }
@@ -311,6 +313,7 @@ $noteLines
             $questionLines += "$questionIndex. 請確認「$criterion」的實際畫面文案、URL 或成功狀態。"
             $questionLines += "   - Impact: 影響 E2E 測試斷言。"
             $questionLines += "   - PM Answer:"
+            $questionLines += "   - Status: Open"
             $questionLines += ""
             $questionIndex++
         }
@@ -402,7 +405,7 @@ $acceptanceLines
 
 ## Source
 
-- PM inbox: pm-inbox/release-2026-05-example.md
+- PM inbox: $SourcePath
 - Feature key: $featureName
 - Requirement title: $requirementTitle
 
@@ -544,6 +547,12 @@ if (-not (Test-Path $InboxFile)) {
     throw "Inbox file not found: $InboxFile"
 }
 
+$resolvedInboxFile = (Resolve-Path -LiteralPath $InboxFile).Path
+$sourceInboxPath = $resolvedInboxFile
+if ($resolvedInboxFile.StartsWith($repoRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
+    $sourceInboxPath = $resolvedInboxFile.Substring($repoRoot.Length).TrimStart("\", "/") -replace "\\", "/"
+}
+
 if (-not $FeatureName) {
     $FeatureName = ConvertTo-FeatureName -FileName (Split-Path $InboxFile -Leaf)
 }
@@ -626,7 +635,7 @@ if ($SplitRequirements) {
         $sectionTargetDir = Join-Path $specsDir $section.FeatureName
 
         if (Test-Path $sectionTargetDir) {
-            $updatedFiles = New-QaDraftDocs -TargetDir $sectionTargetDir -Section $section
+            $updatedFiles = New-QaDraftDocs -TargetDir $sectionTargetDir -Section $section -SourcePath $sourceInboxPath
             if ($updatedFiles.Count -gt 0) {
                 $updatedDrafts += ("{0}: {1}" -f $sectionTargetDir, ($updatedFiles -join ", "))
             } else {
@@ -645,7 +654,7 @@ if ($SplitRequirements) {
 
 ## PM Inbox Source
 
-- Source file: $InboxFile
+- Source file: $sourceInboxPath
 - Requirement: $($section.Title)
 
 ~~~md
@@ -700,7 +709,7 @@ Not confirmed.
 "@
 
         Set-Content -LiteralPath $sectionSpecPath -Value $sectionSpecContent -Encoding UTF8
-        [void](New-QaDraftDocs -TargetDir $sectionTargetDir -Section $section)
+        [void](New-QaDraftDocs -TargetDir $sectionTargetDir -Section $section -SourcePath $sourceInboxPath)
         $createdDirs += $sectionTargetDir
     }
 
@@ -743,6 +752,8 @@ $specContent = @"
 > This file was initialized from PM inbox. QA/AI should refine it into a testable specification.
 
 ## PM Inbox Source
+
+- Source file: $sourceInboxPath
 
 ~~~md
 $inboxContent

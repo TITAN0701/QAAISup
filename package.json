@@ -2,8 +2,9 @@
   "name": "qaai-spec-driven-automation",
   "private": true,
   "scripts": {
-    "test:e2e": "cypress run",
-    "test:e2e:open": "cypress open",
+    "test:e2e": "node scripts/run-cypress.js run",
+    "test:e2e:open": "node scripts/run-cypress.js open",
+    "test:e2e:verify": "node scripts/run-cypress.js verify",
     "allure:generate": "allure generate artifacts/raw/allure-results --clean -o artifacts/generated/allure-report",
     "allure:open": "allure open artifacts/generated/allure-report"
   },

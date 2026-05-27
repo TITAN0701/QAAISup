@@ -22,7 +22,7 @@ jobs:
           cache: npm
 
       - name: Install Node dependencies
-        run: npm install
+        run: npm ci
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -31,6 +31,19 @@ jobs:
 
       - name: Install Python dependencies
         run: pip install -r requirements.txt
+
+      - name: Validate SDD workspace
+        shell: pwsh
+        run: ./scripts/validate-sdd.ps1
+
+      - name: Check QA automation environment
+        shell: pwsh
+        run: ./scripts/preflight-ci.ps1
+        env:
+          CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
       - name: Run Cypress E2E
         run: npm run test:e2e

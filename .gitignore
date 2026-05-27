@@ -12,6 +12,8 @@ artifacts/generated/allure-report/*
 !artifacts/generated/allure-report/.gitkeep
 
 artifacts/generated/pm/*.docx
+artifacts/generated/**/*.xlsx
+artifacts/generated/**/~$*
 
 __pycache__/
 .pytest_cache/

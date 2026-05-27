@@ -124,6 +124,21 @@ function Get-TaskStats {
     }
 }
 
+function Get-OpenQuestionCount {
+    param([string]$Content)
+
+    if ([string]::IsNullOrWhiteSpace($Content)) {
+        return 0
+    }
+
+    $statusCount = Count-Matches -Content $Content -Pattern '(?mi)^\s*-\s*Status\s*:\s*(Open|Pending|Blocked|Waiting|Waiting PM Answer|Need Clarification)\s*$'
+    if ((Count-Matches -Content $Content -Pattern '(?mi)^\s*-\s*Status\s*:') -gt 0) {
+        return $statusCount
+    }
+
+    return Count-Matches -Content $Content -Pattern '(?mi)^\s*-\s*PM Answer\s*:\s*$'
+}
+
 function Get-ScenarioStats {
     param([string]$Content)
 
@@ -188,7 +203,7 @@ function Get-FeatureReportData {
     $title = Get-HeadingTitle -Content $spec -Fallback $featureName
     $scenarioStats = Get-ScenarioStats -Content $scenarios
     $taskStats = Get-TaskStats -Content $tasks
-    $openQuestions = Count-Matches -Content $questions -Pattern '(?m)PM Answer:\s*$'
+    $openQuestions = Get-OpenQuestionCount -Content $questions
     $cypressSpecPath = Join-Path "automation/e2e/specs" "$featureName.cy.ts"
     $hasCypressSpec = Test-Path $cypressSpecPath
     $hasAllureResults = (Test-Path "artifacts/raw/allure-results") -and ((Get-ChildItem "artifacts/raw/allure-results" -File -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne ".gitkeep" } | Measure-Object).Count -gt 0)
