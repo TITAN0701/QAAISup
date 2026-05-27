@@ -9,6 +9,10 @@ QA 支援 PM 的 SDD 流程工具。
       ↓
 [PM 回答 questions.md]
       ↓
+[QA 產 scenarios.md]
+      ↓
+[產生測試情境 Excel]
+      ↓
 [QA/Engineer 補自動化]
       ↓
 [CI 跑 Cypress / pytest]
@@ -51,10 +55,13 @@ QA 支援 PM 的 SDD 流程工具。
 4. PM 回答問題
    questions.md -> PM Answer / Status
 
-5. 補測試
+5. QA 產測試情境
+   scenarios.md -> scenario-matrix.xlsx
+
+6. 補測試
    automation/e2e/ 或 automation/api/
 
-6. 產生報告
+7. 產生報告
    artifacts/generated/
 ```
 
@@ -65,6 +72,7 @@ QA 支援 PM 的 SDD 流程工具。
 | 建立 SDD | `.\scripts\new-feature-from-inbox.ps1 -InboxFile .\pm-inbox\xxx.md -SplitRequirements -Yes` |
 | 檢查 SDD | `.\scripts\validate-sdd.ps1` |
 | PM 問題完成後檢查 | `.\scripts\validate-sdd.ps1 -FailOnOpenQuestions` |
+| 產生測試情境 Excel | `.\scripts\generate-scenario-matrix.ps1` |
 | 檢查 Cypress | `npm run test:e2e:verify` |
 | 跑 E2E | `npm run test:e2e` |
 | 跑 API | `pytest` |
@@ -90,6 +98,8 @@ QA 支援 PM 的 SDD 流程工具。
 |---|---|
 | Cypress 測試 | `automation/e2e/specs/{feature}.cy.ts` |
 | pytest 測試 | `automation/api/tests/test_{feature}.py` |
+| 測試情境來源 | `qa-workspace/specs/{feature}/scenarios.md` |
+| 測試情境矩陣 | `artifacts/generated/qa/scenario-matrix.xlsx` |
 | QA 報告 | `artifacts/generated/qa/test-report.md` |
 | PM 摘要 | `artifacts/generated/pm/release-summary.md` |
 | PM Word | `artifacts/generated/pm/release-summary.docx` |
