@@ -59,13 +59,19 @@ jobs:
           TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
+      - name: Generate scenario matrix
+        if: always()
+        shell: pwsh
+        run: ./scripts/generate-scenario-matrix.ps1
+
       - name: Generate Allure report
         if: always()
         run: npm run allure:generate
 
-      - name: Export PM Word report
+      - name: Generate QA and PM reports
         if: always()
-        run: python scripts/export-pm-report-docx.py
+        shell: pwsh
+        run: ./scripts/generate-qa-report.ps1
 
       - name: Upload Allure report
         if: always()
@@ -89,3 +95,13 @@ jobs:
           path: |
             artifacts/generated/pm/release-summary.md
             artifacts/generated/pm/release-summary.docx
+
+      - name: Upload QA report and scenario matrix
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-report-and-scenario-matrix
+          path: |
+            artifacts/generated/qa/test-report.md
+            artifacts/generated/qa/scenario-matrix.md
+            artifacts/generated/qa/scenario-matrix.xlsx

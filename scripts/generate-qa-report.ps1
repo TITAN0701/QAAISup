@@ -303,6 +303,9 @@ $businessGoalSummary = if ($isSingleFeature) {
     "- 彙整 qa-workspace/specs/ 下所有功能的 QA 狀態與發布風險。"
 }
 
+$scenarioMatrixMd = "artifacts/generated/qa/scenario-matrix.md"
+$scenarioMatrixXlsx = "artifacts/generated/qa/scenario-matrix.xlsx"
+
 New-Item -ItemType Directory -Force -Path (Split-Path $QaReport -Parent) | Out-Null
 New-Item -ItemType Directory -Force -Path (Split-Path $PmSummary -Parent) | Out-Null
 
@@ -361,6 +364,11 @@ $featureRows
 
 - qa-workspace/specs/{feature}/plan.md
 - qa-workspace/specs/{feature}/scenarios.md
+
+## 測試情境矩陣
+
+- Markdown：$scenarioMatrixMd
+- Excel：$scenarioMatrixXlsx
 
 ## 待釐清問題
 
@@ -446,6 +454,8 @@ $featureRows
 ## 相關連結
 
 - QA 測試報告：$QaReport
+- 測試情境矩陣 Markdown：$scenarioMatrixMd
+- 測試情境矩陣 Excel：$scenarioMatrixXlsx
 - 功能規格：qa-workspace/specs/{feature}/spec.md
 - 測試計畫：qa-workspace/specs/{feature}/plan.md
 - 測試情境：qa-workspace/specs/{feature}/scenarios.md

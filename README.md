@@ -111,7 +111,7 @@ push main / Pull Request / 手動 Run workflow
       ↓
 GitHub Actions
       ↓
-檢查 SDD -> 檢查 secrets -> 跑測試 -> 產生報告
+檢查 SDD -> 檢查 secrets -> 跑測試 -> 產生情境矩陣 -> 產生報告
 ```
 
 需要的 GitHub Secrets：
