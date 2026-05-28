@@ -139,6 +139,25 @@ function Get-OpenQuestionCount {
     return Count-Matches -Content $Content -Pattern '(?mi)^\s*-\s*PM Answer\s*:\s*$'
 }
 
+function Get-TestCaseCount {
+    param([string]$Path)
+
+    if (-not (Test-Path $Path)) {
+        return 0
+    }
+
+    try {
+        $content = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ($content.test_cases) {
+            return @($content.test_cases).Count
+        }
+    } catch {
+        return 0
+    }
+
+    return 0
+}
+
 function Get-ScenarioStats {
     param([string]$Content)
 
@@ -193,6 +212,7 @@ function Get-FeatureReportData {
     $planPath = Join-Path $SpecDir "plan.md"
     $questionsPath = Join-Path $SpecDir "questions.md"
     $scenariosPath = Join-Path $SpecDir "scenarios.md"
+    $testCasesPath = Join-Path $SpecDir "test-cases.json"
     $tasksPath = Join-Path $SpecDir "tasks.md"
 
     $spec = Read-TextOrDefault -Path $specPath
@@ -202,6 +222,7 @@ function Get-FeatureReportData {
 
     $title = Get-HeadingTitle -Content $spec -Fallback $featureName
     $scenarioStats = Get-ScenarioStats -Content $scenarios
+    $testCaseCount = Get-TestCaseCount -Path $testCasesPath
     $taskStats = Get-TaskStats -Content $tasks
     $openQuestions = Get-OpenQuestionCount -Content $questions
     $cypressSpecPath = Join-Path "automation/e2e/specs" "$featureName.cy.ts"
@@ -220,8 +241,10 @@ function Get-FeatureReportData {
         PlanPath = $planPath
         QuestionsPath = $questionsPath
         ScenariosPath = $scenariosPath
+        TestCasesPath = $testCasesPath
         TasksPath = $tasksPath
         ScenarioStats = $scenarioStats
+        TestCaseCount = $testCaseCount
         TaskStats = $taskStats
         OpenQuestions = $openQuestions
         CypressSpecPath = $cypressSpecPath
@@ -262,6 +285,7 @@ $primary = $featureData[0]
 $title = if ($isSingleFeature) { $primary.Title } else { "全部測試功能" }
 $generatedAt = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $totalScenarios = ($featureData | ForEach-Object { $_.ScenarioStats.Total } | Measure-Object -Sum).Sum
+$totalTestCases = ($featureData | ForEach-Object { $_.TestCaseCount } | Measure-Object -Sum).Sum
 $passedScenarios = ($featureData | ForEach-Object { $_.ScenarioStats.Passed } | Measure-Object -Sum).Sum
 $failedScenarios = ($featureData | ForEach-Object { $_.ScenarioStats.Failed } | Measure-Object -Sum).Sum
 $blockedScenarios = ($featureData | ForEach-Object { $_.ScenarioStats.Blocked } | Measure-Object -Sum).Sum
@@ -282,7 +306,7 @@ $releaseStatus = if (($featureData | Where-Object { $_.ReleaseStatus -eq "Not Re
 }
 
 $featureRows = ($featureData | ForEach-Object {
-    "| $($_.FeatureName) | $($_.ReleaseStatus) | $($_.ScenarioStats.Total) | $($_.ScenarioStats.Passed) | $($_.ScenarioStats.Failed) | $($_.ScenarioStats.NotRun) | $($_.TaskStats.Open) | $($_.OpenQuestions) |"
+    "| $($_.FeatureName) | $($_.ReleaseStatus) | $($_.ScenarioStats.Total) | $($_.TestCaseCount) | $($_.ScenarioStats.Passed) | $($_.ScenarioStats.Failed) | $($_.ScenarioStats.NotRun) | $($_.TaskStats.Open) | $($_.OpenQuestions) |"
 }) -join "`n"
 
 $testedFunctionsSummary = if ($isSingleFeature) {
@@ -315,6 +339,7 @@ $qaReportContent = @"
 ## 摘要
 
 - 功能數量：$($featureData.Count)
+- 測試案例數量：$totalTestCases
 - 產生時間：$generatedAt
 - 發布狀態：$releaseStatus
 
@@ -347,8 +372,8 @@ $acceptanceSummary
 
 ## 功能狀態明細
 
-| 功能 | 狀態 | Scenarios | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
-|---|---|---:|---:|---:|---:|---:|---:|
+| 功能 | 狀態 | Scenarios | Test Cases | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
 $featureRows
 
 ## 檢查結果
@@ -356,6 +381,7 @@ $featureRows
 | 檢查項目 | 數量 / 狀態 |
 |---|---|
 | 功能數量 | $($featureData.Count) |
+| 測試案例數量 | $totalTestCases |
 | 未回答 PM Answer | $openQuestionsTotal |
 | Cypress spec 已建立 | $(($featureData | Where-Object { $_.HasCypressSpec }).Count) |
 | Allure raw results | $(if (($featureData | Where-Object { $_.HasAllureResults }).Count -gt 0) { "OK" } else { "Not Found" }) |
@@ -364,6 +390,7 @@ $featureRows
 
 - qa-workspace/specs/{feature}/plan.md
 - qa-workspace/specs/{feature}/scenarios.md
+- qa-workspace/specs/{feature}/test-cases.json
 
 ## 測試情境矩陣
 
@@ -398,6 +425,7 @@ $releaseStatus
 本摘要根據 QA workspace 文件產生，包含 $($featureData.Count) 個功能。
 
 - 產生時間：$generatedAt
+- 測試案例數量：$totalTestCases
 
 ## 本次測試功能
 
@@ -431,8 +459,8 @@ $businessGoalSummary
 
 ## 功能狀態明細
 
-| 功能 | 狀態 | Scenarios | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
-|---|---|---:|---:|---:|---:|---:|---:|
+| 功能 | 狀態 | Scenarios | Test Cases | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
 $featureRows
 
 ## 發布建議
@@ -459,6 +487,7 @@ $featureRows
 - 功能規格：qa-workspace/specs/{feature}/spec.md
 - 測試計畫：qa-workspace/specs/{feature}/plan.md
 - 測試情境：qa-workspace/specs/{feature}/scenarios.md
+- 測試案例：qa-workspace/specs/{feature}/test-cases.json
 "@
 
 Set-Content -LiteralPath $QaReport -Value $qaReportContent -Encoding UTF8

@@ -13,6 +13,10 @@ QA 支援 PM 的 SDD 流程工具。
       ↓
 [產生測試情境 Excel]
       ↓
+[QA 產 test-cases.json]
+      ↓
+[驗證 testcase.schema.json]
+      ↓
 [QA/Engineer 補自動化]
       ↓
 [CI 跑 Cypress / pytest]
@@ -25,7 +29,7 @@ QA 支援 PM 的 SDD 流程工具。
 | 角色 | 負責 |
 |---|---|
 | PM | 寫需求、回答問題、確認規則 |
-| QA | 拆規格、設計情境、判斷風險 |
+| QA | 拆規格、設計情境、產測試案例、判斷風險 |
 | AI | 產生草稿、整理問題、摘要報告 |
 | Engineer | selector、API、自動化與 review |
 
@@ -34,7 +38,8 @@ QA 支援 PM 的 SDD 流程工具。
 | 路徑 | 用途 |
 |---|---|
 | `pm-inbox/` | PM 原始需求 |
-| `qa-workspace/specs/{feature}/` | 規格、問題、情境、測試計畫 |
+| `qa-workspace/specs/{feature}/` | 規格、問題、情境、測試案例、測試計畫 |
+| `qa-workspace/schemas/` | 測試案例 schema |
 | `automation/e2e/` | Cypress E2E 測試 |
 | `automation/api/` | pytest API 測試 |
 | `artifacts/generated/` | QA / PM / Allure 報告 |
@@ -49,19 +54,22 @@ QA 支援 PM 的 SDD 流程工具。
 2. 建立 SDD 工作區
    qa-workspace/specs/{feature}/
 
-3. 檢查文件
+3. 檢查 SDD 文件
    validate-sdd.ps1
 
 4. PM 回答問題
    questions.md -> PM Answer / Status
 
-5. QA 產測試情境
+5. QA 產測試情境與矩陣
    scenarios.md -> scenario-matrix.xlsx
 
-6. 補測試
+6. QA 產測試案例
+   test-cases.json -> testcase.schema.json
+
+7. 補自動化
    automation/e2e/ 或 automation/api/
 
-7. 產生報告
+8. 產生報告
    artifacts/generated/
 ```
 
@@ -73,6 +81,7 @@ QA 支援 PM 的 SDD 流程工具。
 | 檢查 SDD | `.\scripts\validate-sdd.ps1` |
 | PM 問題完成後檢查 | `.\scripts\validate-sdd.ps1 -FailOnOpenQuestions` |
 | 產生測試情境 Excel | `.\scripts\generate-scenario-matrix.ps1` |
+| 驗證測試案例 | `python scripts\validate-testcases.py` |
 | 檢查 Cypress | `npm run test:e2e:verify` |
 | 跑 E2E | `npm run test:e2e` |
 | 跑 API | `pytest` |
@@ -96,10 +105,12 @@ QA 支援 PM 的 SDD 流程工具。
 
 | 類型 | 位置 |
 |---|---|
+| 測試情境 | `qa-workspace/specs/{feature}/scenarios.md` |
+| 測試情境矩陣 | `artifacts/generated/qa/scenario-matrix.xlsx` |
+| 測試案例 | `qa-workspace/specs/{feature}/test-cases.json` |
+| 測試案例 schema | `qa-workspace/schemas/testcase.schema.json` |
 | Cypress 測試 | `automation/e2e/specs/{feature}.cy.ts` |
 | pytest 測試 | `automation/api/tests/test_{feature}.py` |
-| 測試情境來源 | `qa-workspace/specs/{feature}/scenarios.md` |
-| 測試情境矩陣 | `artifacts/generated/qa/scenario-matrix.xlsx` |
 | QA 報告 | `artifacts/generated/qa/test-report.md` |
 | PM 摘要 | `artifacts/generated/pm/release-summary.md` |
 | PM Word | `artifacts/generated/pm/release-summary.docx` |
@@ -111,7 +122,7 @@ push main / Pull Request / 手動 Run workflow
       ↓
 GitHub Actions
       ↓
-檢查 SDD -> 檢查 secrets -> 跑測試 -> 產生情境矩陣 -> 產生報告
+檢查 SDD -> 驗證測試案例 -> 檢查 secrets -> 跑測試 -> 產生情境矩陣 -> 產生報告
 ```
 
 需要的 GitHub Secrets：

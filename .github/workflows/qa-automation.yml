@@ -36,6 +36,9 @@ jobs:
         shell: pwsh
         run: ./scripts/validate-sdd.ps1
 
+      - name: Validate test cases
+        run: python scripts/validate-testcases.py
+
       - name: Check QA automation environment
         shell: pwsh
         run: ./scripts/preflight-ci.ps1
