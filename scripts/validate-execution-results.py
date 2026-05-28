@@ -52,11 +52,65 @@ def normalize_execution_result_file(path: Path, data: dict) -> bool:
     return changed
 
 
+def ensure_execution_result_rows(
+    path: Path,
+    data: dict,
+    scenario_ids: list[str],
+    test_case_ids: list[str],
+) -> bool:
+    changed = False
+
+    scenario_reviews = data.setdefault("scenario_reviews", [])
+    existing_scenarios = {
+        item.get("scenario_id")
+        for item in scenario_reviews
+        if isinstance(item, dict)
+    }
+    for scenario_id in scenario_ids:
+        if scenario_id not in existing_scenarios:
+            scenario_reviews.append({
+                "scenario_id": scenario_id,
+                "status": "Not Marked",
+                "notes": "",
+            })
+            changed = True
+
+    test_results = data.setdefault("test_results", [])
+    default_platform = "Desktop / Win Chrome"
+    existing_results = {
+        (item.get("test_case_id"), item.get("platform"))
+        for item in test_results
+        if isinstance(item, dict)
+    }
+    for test_case_id in test_case_ids:
+        key = (test_case_id, default_platform)
+        if key not in existing_results:
+            row = {
+                "test_case_id": test_case_id,
+                "platform": default_platform,
+                "status": "Not Run",
+            }
+            row.update(RESULT_DEFAULTS)
+            test_results.append(row)
+            changed = True
+
+    if changed:
+        dump_json(path, data)
+    return changed
+
+
 def get_scenario_ids(path: Path) -> set[str]:
     if not path.exists():
         return set()
     content = path.read_text(encoding="utf-8-sig")
     return set(re.findall(r"(?m)^###\s+(SC-[A-Z0-9_-]+)\s*$", content))
+
+
+def get_scenario_id_list(path: Path) -> list[str]:
+    if not path.exists():
+        return []
+    content = path.read_text(encoding="utf-8-sig")
+    return re.findall(r"(?m)^###\s+(SC-[A-Z0-9_-]+)\s*$", content)
 
 
 def get_test_case_ids(path: Path) -> set[str]:
@@ -70,6 +124,19 @@ def get_test_case_ids(path: Path) -> set[str]:
         for item in data.get("test_cases", [])
         if isinstance(item, dict) and isinstance(item.get("id"), str)
     }
+
+
+def get_test_case_id_list(path: Path) -> list[str]:
+    if not path.exists():
+        return []
+    data = load_json(path)
+    if not isinstance(data, dict):
+        return []
+    return [
+        item.get("id")
+        for item in data.get("test_cases", [])
+        if isinstance(item, dict) and isinstance(item.get("id"), str)
+    ]
 
 
 def format_json_path(path_parts: list[object]) -> str:
@@ -109,14 +176,25 @@ def validate_execution_results(specs_root: Path, schema_path: Path, fix: bool = 
         if not isinstance(data, dict):
             continue
 
-        if fix and normalize_execution_result_file(results_path, data):
-            fixed_files.append(str(results_path).replace("\\", "/"))
-
         if data.get("feature") != feature_dir.name:
             errors.append(f"{feature_dir.name}: feature field must match folder name")
 
-        scenario_ids = get_scenario_ids(feature_dir / "scenarios.md")
-        test_case_ids = get_test_case_ids(feature_dir / "test-cases.json")
+        scenario_id_list = get_scenario_id_list(feature_dir / "scenarios.md")
+        test_case_id_list = get_test_case_id_list(feature_dir / "test-cases.json")
+        scenario_ids = set(scenario_id_list)
+        test_case_ids = set(test_case_id_list)
+
+        if fix:
+            fixed = False
+            fixed = ensure_execution_result_rows(
+                results_path,
+                data,
+                scenario_id_list,
+                test_case_id_list,
+            ) or fixed
+            fixed = normalize_execution_result_file(results_path, data) or fixed
+            if fixed:
+                fixed_files.append(str(results_path).replace("\\", "/"))
 
         for index, item in enumerate(data.get("scenario_reviews", [])):
             scenario_id = item.get("scenario_id") if isinstance(item, dict) else None

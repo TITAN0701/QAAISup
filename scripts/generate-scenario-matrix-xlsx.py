@@ -428,9 +428,9 @@ def build_guide_sheet() -> str:
         ("狀態", "Blocked", "因環境、帳號、API、需求不清楚等原因無法測。"),
         ("狀態", "N/A", "這個平台或情境不適用。"),
         ("填寫方式", "人工回填", "QA 直接編輯 execution-results.json 的 status、test_url、screenshot、evidence、notes。"),
-        ("自動時間", "產生 Excel", ".\\scripts\\generate-scenario-matrix.ps1 會自動補 executed_at。"),
-        ("建議指令", "只整理時間", "python scripts\\validate-execution-results.py --fix"),
-        ("建議指令", "重新產出", "python scripts\\validate-execution-results.py --fix；.\\scripts\\generate-scenario-matrix.ps1"),
+        ("自動補齊", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1 會自動補欄位、補 executed_at、驗證、產 Excel、產報告。"),
+        ("建議指令", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1"),
+        ("建議指令", "包含 Word", ".\\scripts\\refresh-qa-artifacts.ps1 -IncludeWord"),
     ]
     sheet_rows = [
         row_xml(index, [(col, value, 1 if index == 1 else 12) for col, value in enumerate(row, start=1)], height=34)

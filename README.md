@@ -82,6 +82,7 @@ QA 支援 PM 的 SDD 流程工具。
 | 目的 | 指令 |
 |---|---|
 | 建立 SDD | `.\scripts\new-feature-from-inbox.ps1 -InboxFile .\pm-inbox\xxx.md -SplitRequirements -Yes` |
+| QA 回填後一次更新 | `.\scripts\refresh-qa-artifacts.ps1` |
 | 檢查 SDD | `.\scripts\validate-sdd.ps1` |
 | PM 問題完成後檢查 | `.\scripts\validate-sdd.ps1 -FailOnOpenQuestions` |
 | 產生測試情境 / 測試案例 Excel | `.\scripts\generate-scenario-matrix.ps1` |
