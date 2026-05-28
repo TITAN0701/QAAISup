@@ -17,10 +17,12 @@
         "required": ["id", "title", "type", "priority", "steps", "expected"],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^TC-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{3}$"
           },
           "requirement_id": {
-            "type": "string"
+            "type": "string",
+            "pattern": "^SC-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{3}$"
           },
           "title": {
             "type": "string"
@@ -34,6 +36,12 @@
             "enum": ["high", "medium", "low"]
           },
           "preconditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "test_data": {
             "type": "array",
             "items": {
               "type": "string"
@@ -53,6 +61,10 @@
           },
           "automation_candidate": {
             "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Not Run", "Ready", "Pass", "Fail", "Blocked", "N/A"]
           },
           "notes": {
             "type": "string"

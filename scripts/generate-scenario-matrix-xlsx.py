@@ -9,6 +9,7 @@ from xml.sax.saxutils import escape
 
 PLATFORM_STATUS_OPTIONS = "Not Run,Ready,Pass,Fail,Blocked,N/A"
 SCENARIO_STATUS_OPTIONS = "Not Marked,Ready,Need Confirm,Approved,Blocked"
+TEST_CASE_STATUS_OPTIONS = "Not Run,Ready,Pass,Fail,Blocked,N/A"
 
 
 def get_field(block: str, field: str, default: str = "") -> str:
@@ -126,9 +127,11 @@ def read_test_cases(specs_root: Path) -> list[dict[str, str]]:
                     "type": test_case.get("type", ""),
                     "priority": test_case.get("priority", ""),
                     "preconditions": split_lines(test_case.get("preconditions")),
+                    "test_data": split_lines(test_case.get("test_data")),
                     "steps": split_lines(test_case.get("steps")),
                     "expected": split_lines(test_case.get("expected")),
                     "automation": "Yes" if test_case.get("automation_candidate") else "No",
+                    "status": test_case.get("status", "Not Run"),
                     "notes": test_case.get("notes", ""),
                     "source": str(test_case_path).replace("\\", "/"),
                 }
@@ -244,9 +247,11 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
         "類型",
         "優先級",
         "前置條件",
+        "測試資料",
         "步驟",
         "預期結果",
         "自動化建議",
+        "執行狀態",
         "備註",
     ]
     sheet_rows = [row_xml(1, [(index, header, 1) for index, header in enumerate(headers, start=1)], height=30)]
@@ -260,11 +265,21 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
             (5, item["type"], 13),
             (6, item["priority"], 13),
             (7, item["preconditions"], 12),
-            (8, item["steps"], 12),
-            (9, item["expected"], 12),
-            (10, item["automation"], 13),
-            (11, item["notes"], 12),
+            (8, item["test_data"], 12),
+            (9, item["steps"], 12),
+            (10, item["expected"], 12),
+            (11, item["automation"], 13),
+            (12, item["status"], platform_style(item["status"])),
+            (13, item["notes"], 12),
         ], height=82))
+
+    last_row = max(2, len(rows) + 1)
+    data_validations = f'''
+  <dataValidations count="1">
+    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="L2:L{last_row}">
+      <formula1>"{TEST_CASE_STATUS_OPTIONS}"</formula1>
+    </dataValidation>
+  </dataValidations>'''
 
     return f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
@@ -275,14 +290,41 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
   </sheetViews>
   <cols>
     <col min="1" max="1" width="18" customWidth="1"/>
-    <col min="2" max="2" width="22" customWidth="1"/>
-    <col min="3" max="3" width="22" customWidth="1"/>
+    <col min="2" max="3" width="30" customWidth="1"/>
     <col min="4" max="4" width="34" customWidth="1"/>
     <col min="5" max="5" width="12" customWidth="1"/>
     <col min="6" max="6" width="12" customWidth="1"/>
-    <col min="7" max="9" width="38" customWidth="1"/>
-    <col min="10" max="10" width="14" customWidth="1"/>
-    <col min="11" max="11" width="42" customWidth="1"/>
+    <col min="7" max="10" width="38" customWidth="1"/>
+    <col min="11" max="12" width="14" customWidth="1"/>
+    <col min="13" max="13" width="42" customWidth="1"/>
+  </cols>
+  <sheetData>
+    {''.join(sheet_rows)}
+  </sheetData>
+  {data_validations}
+</worksheet>'''
+
+
+def build_id_rule_sheet() -> str:
+    rows = [
+        ("項目", "規則", "範例", "用途"),
+        ("測試情境 ID", "SC-{FEATURE}-{NNN}", "SC-LOGIN-001", "代表一個需求/情境"),
+        ("測試案例 ID", "TC-{FEATURE}-{NNN}", "TC-LOGIN-001", "代表一個可執行的測試案例"),
+        ("FEATURE", "使用 specs 資料夾名稱的大寫", "forgot-password -> FORGOT-PASSWORD", "讓 ID 可回推功能模組"),
+        ("NNN", "三碼流水號，從 001 開始", "001, 002, 003", "讓排序穩定、方便追蹤"),
+    ]
+    sheet_rows = [
+        row_xml(index, [(col, value, 1 if index == 1 else 12) for col, value in enumerate(row, start=1)], height=32)
+        for index, row in enumerate(rows, start=1)
+    ]
+
+    return f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <cols>
+    <col min="1" max="1" width="20" customWidth="1"/>
+    <col min="2" max="2" width="34" customWidth="1"/>
+    <col min="3" max="3" width="28" customWidth="1"/>
+    <col min="4" max="4" width="42" customWidth="1"/>
   </cols>
   <sheetData>
     {''.join(sheet_rows)}
@@ -338,7 +380,7 @@ def build_styles() -> str:
     <xf numFmtId="0" fontId="2" fillId="11" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
     <xf numFmtId="0" fontId="2" fillId="8" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
     <xf numFmtId="0" fontId="0" fillId="8" borderId="1" xfId="0" applyFill="1" applyBorder="1"><alignment vertical="center" wrapText="1"/></xf>
-    <xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
+    <xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
   </cellXfs>
   <cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
 </styleSheet>'''
@@ -348,6 +390,7 @@ def write_xlsx(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]],
     output.parent.mkdir(parents=True, exist_ok=True)
     scenario_sheet_xml = build_scenario_sheet(rows)
     test_case_sheet_xml = build_test_case_sheet(test_case_rows)
+    id_rule_sheet_xml = build_id_rule_sheet()
     created = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
     files = {
@@ -358,6 +401,7 @@ def write_xlsx(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]],
   <Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>
   <Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
   <Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
+  <Override PartName="/xl/worksheets/sheet3.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
   <Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>
   <Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
   <Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
@@ -373,16 +417,19 @@ def write_xlsx(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]],
   <sheets>
     <sheet name="測試情境" sheetId="1" r:id="rId1"/>
     <sheet name="測試案例" sheetId="2" r:id="rId2"/>
+    <sheet name="編碼規則" sheetId="3" r:id="rId3"/>
   </sheets>
 </workbook>''',
         "xl/_rels/workbook.xml.rels": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
   <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>
   <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/>
-  <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
+  <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet3.xml"/>
+  <Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
 </Relationships>''',
         "xl/worksheets/sheet1.xml": scenario_sheet_xml,
         "xl/worksheets/sheet2.xml": test_case_sheet_xml,
+        "xl/worksheets/sheet3.xml": id_rule_sheet_xml,
         "xl/styles.xml": build_styles(),
         "docProps/core.xml": f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">

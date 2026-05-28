@@ -112,13 +112,23 @@ QA 支援 PM 的 SDD 流程工具。
 | Cypress 測試 | `automation/e2e/specs/{feature}.cy.ts` |
 | pytest 測試 | `automation/api/tests/test_{feature}.py` |
 | QA 報告 | `artifacts/generated/qa/test-report.md` |
-
-`scenario-matrix.xlsx` 內有兩個工作表：
-
-- `測試情境`：給 PM / QA 確認功能是否可測，狀態欄可用下拉選單填 `Ready`、`Pass`、`Fail`、`Blocked`、`N/A`。
-- `測試案例`：彙整所有 `test-cases.json`，包含前置條件、步驟、預期結果與自動化建議。
 | PM 摘要 | `artifacts/generated/pm/release-summary.md` |
 | PM Word | `artifacts/generated/pm/release-summary.docx` |
+
+`scenario-matrix.xlsx` 內有三個工作表：
+
+- `測試情境`：給 PM / QA 確認功能是否可測，狀態欄可用下拉選單填 `Ready`、`Pass`、`Fail`、`Blocked`、`N/A`。
+- `測試案例`：彙整所有 `test-cases.json`，包含前置條件、測試資料、步驟、預期結果、自動化建議與執行狀態。
+- `編碼規則`：說明 `SC-{FEATURE}-001` 與 `TC-{FEATURE}-001` 的命名方式。
+
+測試編號規則：
+
+```txt
+SC-{FEATURE}-001 = 測試情境
+TC-{FEATURE}-001 = 測試案例
+FEATURE          = specs 資料夾名稱轉大寫，例如 login -> LOGIN
+001              = 三碼流水號
+```
 
 ## CI
 

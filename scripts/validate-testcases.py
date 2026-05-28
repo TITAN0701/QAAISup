@@ -79,6 +79,9 @@ def validate_testcases(specs_root: Path, schema_path: Path) -> int:
                 warnings.append(f"{feature_dir.name}: no scenarios found for requirement_id cross-check")
 
             seen_ids: set[str] = set()
+            feature_code = feature_dir.name.upper()
+            expected_case_pattern = re.compile(rf"^TC-{re.escape(feature_code)}-\d{{3}}$")
+            expected_requirement_pattern = re.compile(rf"^SC-{re.escape(feature_code)}-\d{{3}}$")
             for index, test_case in enumerate(data.get("test_cases", [])):
                 if not isinstance(test_case, dict):
                     continue
@@ -88,8 +91,18 @@ def validate_testcases(specs_root: Path, schema_path: Path) -> int:
                     errors.append(f"{feature_dir.name}: duplicate test case id {case_id}")
                 elif isinstance(case_id, str):
                     seen_ids.add(case_id)
+                    if not expected_case_pattern.match(case_id):
+                        errors.append(
+                            f"{feature_dir.name}: test_cases[{index}].id must match "
+                            f"TC-{feature_code}-001 format, got {case_id!r}"
+                        )
 
                 requirement_id = test_case.get("requirement_id")
+                if isinstance(requirement_id, str) and not expected_requirement_pattern.match(requirement_id):
+                    errors.append(
+                        f"{feature_dir.name}: test_cases[{index}].requirement_id must match "
+                        f"SC-{feature_code}-001 format, got {requirement_id!r}"
+                    )
                 if requirement_id and scenario_ids and requirement_id not in scenario_ids:
                     errors.append(
                         f"{feature_dir.name}: test_cases[{index}].requirement_id {requirement_id!r} "
