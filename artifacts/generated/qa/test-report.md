@@ -4,10 +4,10 @@
 
 - 功能數量：3
 - 測試案例數量：14
-- 產生時間：2026-05-28 10:38:20
+- 產生時間：2026-05-28 11:03:45
 - 發布狀態：Not Evaluated
 
-## 測試情境結果統計
+## 測試執行結果統計
 
 | 項目 | 數量 |
 |---|---:|
@@ -61,6 +61,7 @@
 - qa-workspace/specs/{feature}/plan.md
 - qa-workspace/specs/{feature}/scenarios.md
 - qa-workspace/specs/{feature}/test-cases.json
+- qa-workspace/specs/{feature}/execution-results.json
 
 ## 測試情境矩陣
 

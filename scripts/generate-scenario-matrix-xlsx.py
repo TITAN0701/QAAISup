@@ -131,12 +131,72 @@ def read_test_cases(specs_root: Path) -> list[dict[str, str]]:
                     "steps": split_lines(test_case.get("steps")),
                     "expected": split_lines(test_case.get("expected")),
                     "automation": "Yes" if test_case.get("automation_candidate") else "No",
-                    "status": test_case.get("status", "Not Run"),
+                    "status": "Not Run",
+                    "platform": "Desktop / Win Chrome",
+                    "executed_at": "",
+                    "evidence": "",
                     "notes": test_case.get("notes", ""),
                     "source": str(test_case_path).replace("\\", "/"),
                 }
             )
     return rows
+
+
+def read_execution_results(specs_root: Path) -> tuple[dict[str, str], dict[str, dict[str, str]]]:
+    scenario_reviews: dict[str, str] = {}
+    test_results: dict[str, dict[str, str]] = {}
+    for results_path in sorted(specs_root.glob("*/execution-results.json")):
+        data = json.loads(results_path.read_text(encoding="utf-8"))
+        for item in data.get("scenario_reviews", []):
+            scenario_id = item.get("scenario_id")
+            if scenario_id:
+                scenario_reviews[scenario_id] = item.get("status", "Not Marked")
+        for item in data.get("test_results", []):
+            test_case_id = item.get("test_case_id")
+            if test_case_id:
+                test_results[test_case_id] = {
+                    "status": item.get("status", "Not Run"),
+                    "platform": item.get("platform", "Desktop / Win Chrome"),
+                    "executed_at": item.get("executed_at", ""),
+                    "evidence": item.get("evidence", ""),
+                    "notes": item.get("notes", ""),
+                }
+    return scenario_reviews, test_results
+
+
+def apply_execution_results(
+    scenario_rows: list[dict[str, str]],
+    test_case_rows: list[dict[str, str]],
+    scenario_reviews: dict[str, str],
+    test_results: dict[str, dict[str, str]],
+) -> None:
+    scenario_to_statuses: dict[str, list[str]] = {}
+    for item in test_case_rows:
+        result = test_results.get(item["id"])
+        if result:
+            item.update(result)
+        scenario_to_statuses.setdefault(item["requirement_id"], []).append(item["status"])
+
+    for item in scenario_rows:
+        item["review_status"] = scenario_reviews.get(item["scenario_id"], "Not Marked")
+        item["status"] = summarize_status(scenario_to_statuses.get(item["scenario_id"], []))
+
+
+def summarize_status(statuses: list[str]) -> str:
+    normalized = [normalize_platform_status(status) for status in statuses]
+    if not normalized:
+        return "Not Run"
+    if any(status == "Fail" for status in normalized):
+        return "Fail"
+    if any(status == "Blocked" for status in normalized):
+        return "Blocked"
+    if all(status == "Pass" for status in normalized):
+        return "Pass"
+    if any(status == "Ready" for status in normalized):
+        return "Ready"
+    if all(status == "N/A" for status in normalized):
+        return "N/A"
+    return "Not Run"
 
 
 def col_name(index: int) -> str:
@@ -193,7 +253,7 @@ def build_scenario_sheet(rows: list[dict[str, str]]) -> str:
                 (2, item["scenario_id"], 13),
                 (3, item["item"], 12),
                 (4, platform_status, platform_style(platform_status)),
-                (5, item["status"], 13),
+                (5, item.get("review_status", "Not Marked"), 13),
             ], height=23))
             row_index += 1
 
@@ -251,7 +311,10 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
         "步驟",
         "預期結果",
         "自動化建議",
+        "平台",
         "執行狀態",
+        "執行時間",
+        "佐證",
         "備註",
     ]
     sheet_rows = [row_xml(1, [(index, header, 1) for index, header in enumerate(headers, start=1)], height=30)]
@@ -269,14 +332,17 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
             (9, item["steps"], 12),
             (10, item["expected"], 12),
             (11, item["automation"], 13),
-            (12, item["status"], platform_style(item["status"])),
-            (13, item["notes"], 12),
+            (12, item["platform"], 13),
+            (13, item["status"], platform_style(item["status"])),
+            (14, item["executed_at"], 13),
+            (15, item["evidence"], 12),
+            (16, item["notes"], 12),
         ], height=82))
 
     last_row = max(2, len(rows) + 1)
     data_validations = f'''
   <dataValidations count="1">
-    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="L2:L{last_row}">
+    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="M2:M{last_row}">
       <formula1>"{TEST_CASE_STATUS_OPTIONS}"</formula1>
     </dataValidation>
   </dataValidations>'''
@@ -295,8 +361,9 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
     <col min="5" max="5" width="12" customWidth="1"/>
     <col min="6" max="6" width="12" customWidth="1"/>
     <col min="7" max="10" width="38" customWidth="1"/>
-    <col min="11" max="12" width="14" customWidth="1"/>
-    <col min="13" max="13" width="42" customWidth="1"/>
+    <col min="11" max="13" width="16" customWidth="1"/>
+    <col min="14" max="14" width="20" customWidth="1"/>
+    <col min="15" max="16" width="38" customWidth="1"/>
   </cols>
   <sheetData>
     {''.join(sheet_rows)}
@@ -310,6 +377,7 @@ def build_id_rule_sheet() -> str:
         ("項目", "規則", "範例", "用途"),
         ("測試情境 ID", "SC-{FEATURE}-{NNN}", "SC-LOGIN-001", "代表一個需求/情境"),
         ("測試案例 ID", "TC-{FEATURE}-{NNN}", "TC-LOGIN-001", "代表一個可執行的測試案例"),
+        ("執行結果", "寫在 execution-results.json", "Pass / Fail / Blocked", "避免重新產生 Excel 時覆蓋人工結果"),
         ("FEATURE", "使用 specs 資料夾名稱的大寫", "forgot-password -> FORGOT-PASSWORD", "讓 ID 可回推功能模組"),
         ("NNN", "三碼流水號，從 001 開始", "001, 002, 003", "讓排序穩定、方便追蹤"),
     ]
@@ -469,6 +537,8 @@ def main() -> None:
     specs_root = Path(args.specs_root)
     rows = read_scenarios(specs_root)
     test_case_rows = read_test_cases(specs_root)
+    scenario_reviews, test_results = read_execution_results(specs_root)
+    apply_execution_results(rows, test_case_rows, scenario_reviews, test_results)
     actual_output = write_xlsx(rows, test_case_rows, Path(args.output))
     print(f"Generated Excel scenario matrix: {actual_output}")
     print(f"Total scenarios: {len(rows)}")

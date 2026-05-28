@@ -178,6 +178,36 @@ function Get-ScenarioStats {
     }
 }
 
+function Get-ExecutionStats {
+    param([string]$Path)
+
+    if (-not (Test-Path $Path)) {
+        return $null
+    }
+
+    try {
+        $content = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+        $results = @($content.test_results)
+        $total = $results.Count
+        $passed = @($results | Where-Object { $_.status -eq "Pass" }).Count
+        $failed = @($results | Where-Object { $_.status -eq "Fail" }).Count
+        $blocked = @($results | Where-Object { $_.status -eq "Blocked" }).Count
+        $skipped = @($results | Where-Object { $_.status -eq "N/A" }).Count
+        $notRun = @($results | Where-Object { $_.status -in @("Not Run", "Ready") }).Count
+
+        return [PSCustomObject]@{
+            Total = $total
+            Passed = $passed
+            Failed = $failed
+            Blocked = $blocked
+            Skipped = $skipped
+            NotRun = $notRun
+        }
+    } catch {
+        return $null
+    }
+}
+
 function Get-ReleaseStatus {
     param(
         [object]$ScenarioStats,
@@ -213,6 +243,7 @@ function Get-FeatureReportData {
     $questionsPath = Join-Path $SpecDir "questions.md"
     $scenariosPath = Join-Path $SpecDir "scenarios.md"
     $testCasesPath = Join-Path $SpecDir "test-cases.json"
+    $executionResultsPath = Join-Path $SpecDir "execution-results.json"
     $tasksPath = Join-Path $SpecDir "tasks.md"
 
     $spec = Read-TextOrDefault -Path $specPath
@@ -221,7 +252,10 @@ function Get-FeatureReportData {
     $tasks = Read-TextOrDefault -Path $tasksPath
 
     $title = Get-HeadingTitle -Content $spec -Fallback $featureName
-    $scenarioStats = Get-ScenarioStats -Content $scenarios
+    $scenarioStats = Get-ExecutionStats -Path $executionResultsPath
+    if ($null -eq $scenarioStats) {
+        $scenarioStats = Get-ScenarioStats -Content $scenarios
+    }
     $testCaseCount = Get-TestCaseCount -Path $testCasesPath
     $taskStats = Get-TaskStats -Content $tasks
     $openQuestions = Get-OpenQuestionCount -Content $questions
@@ -242,6 +276,7 @@ function Get-FeatureReportData {
         QuestionsPath = $questionsPath
         ScenariosPath = $scenariosPath
         TestCasesPath = $testCasesPath
+        ExecutionResultsPath = $executionResultsPath
         TasksPath = $tasksPath
         ScenarioStats = $scenarioStats
         TestCaseCount = $testCaseCount
@@ -343,7 +378,7 @@ $qaReportContent = @"
 - 產生時間：$generatedAt
 - 發布狀態：$releaseStatus
 
-## 測試情境結果統計
+## 測試執行結果統計
 
 | 項目 | 數量 |
 |---|---:|
@@ -391,6 +426,7 @@ $featureRows
 - qa-workspace/specs/{feature}/plan.md
 - qa-workspace/specs/{feature}/scenarios.md
 - qa-workspace/specs/{feature}/test-cases.json
+- qa-workspace/specs/{feature}/execution-results.json
 
 ## 測試情境矩陣
 
@@ -439,7 +475,7 @@ $acceptanceSummary
 
 $businessGoalSummary
 
-## 測試結果統計
+## 測試執行結果統計
 
 | 項目 | 數量 |
 |---|---:|
@@ -488,6 +524,7 @@ $featureRows
 - 測試計畫：qa-workspace/specs/{feature}/plan.md
 - 測試情境：qa-workspace/specs/{feature}/scenarios.md
 - 測試案例：qa-workspace/specs/{feature}/test-cases.json
+- 測試執行結果：qa-workspace/specs/{feature}/execution-results.json
 "@
 
 Set-Content -LiteralPath $QaReport -Value $qaReportContent -Encoding UTF8

@@ -39,6 +39,9 @@ jobs:
       - name: Validate test cases
         run: python scripts/validate-testcases.py
 
+      - name: Validate execution results
+        run: python scripts/validate-execution-results.py
+
       - name: Check QA automation environment
         shell: pwsh
         run: ./scripts/preflight-ci.ps1

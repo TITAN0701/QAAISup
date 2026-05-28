@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QA Execution Results",
+  "type": "object",
+  "required": ["feature", "source_test_cases", "scenario_reviews", "test_results"],
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "source_test_cases": {
+      "type": "string"
+    },
+    "scenario_reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scenario_id", "status"],
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "pattern": "^SC-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{3}$"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Not Marked", "Ready", "Need Confirm", "Approved", "Blocked"]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "test_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["test_case_id", "platform", "status"],
+        "properties": {
+          "test_case_id": {
+            "type": "string",
+            "pattern": "^TC-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]{3}$"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Not Run", "Ready", "Pass", "Fail", "Blocked", "N/A"]
+          },
+          "executed_at": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

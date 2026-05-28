@@ -1,0 +1,20 @@
+{
+  "feature": "login",
+  "source_test_cases": "qa-workspace/specs/login/test-cases.json",
+  "scenario_reviews": [
+    { "scenario_id": "SC-LOGIN-001", "status": "Need Confirm", "notes": "需確認登入成功後 URL 或畫面狀態。" },
+    { "scenario_id": "SC-LOGIN-002", "status": "Need Confirm", "notes": "需確認帳號必填錯誤文案。" },
+    { "scenario_id": "SC-LOGIN-003", "status": "Need Confirm", "notes": "需確認密碼必填錯誤文案。" },
+    { "scenario_id": "SC-LOGIN-004", "status": "Need Confirm", "notes": "需確認登入失敗錯誤文案。" },
+    { "scenario_id": "SC-LOGIN-005", "status": "Need Confirm", "notes": "需確認忘記密碼導向規則。" },
+    { "scenario_id": "SC-LOGIN-006", "status": "Need Confirm", "notes": "需確認創建帳號導向規則。" }
+  ],
+  "test_results": [
+    { "test_case_id": "TC-LOGIN-001", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" },
+    { "test_case_id": "TC-LOGIN-002", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" },
+    { "test_case_id": "TC-LOGIN-003", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" },
+    { "test_case_id": "TC-LOGIN-004", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" },
+    { "test_case_id": "TC-LOGIN-005", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" },
+    { "test_case_id": "TC-LOGIN-006", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" }
+  ]
+}

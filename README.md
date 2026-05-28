@@ -60,16 +60,20 @@ QA 支援 PM 的 SDD 流程工具。
 4. PM 回答問題
    questions.md -> PM Answer / Status
 
-5. QA 產測試情境與矩陣
-   scenarios.md -> scenario-matrix.xlsx
+5. QA 產測試情境
+   scenarios.md
 
 6. QA 產測試案例
    test-cases.json -> testcase.schema.json
 
-7. 補自動化
+7. 記錄測試執行結果
+   execution-results.json -> execution-results.schema.json
+
+8. 補自動化
    automation/e2e/ 或 automation/api/
 
-8. 產生報告
+9. 產生 Excel / 報告
+   scenario-matrix.xlsx
    artifacts/generated/
 ```
 
@@ -82,6 +86,7 @@ QA 支援 PM 的 SDD 流程工具。
 | PM 問題完成後檢查 | `.\scripts\validate-sdd.ps1 -FailOnOpenQuestions` |
 | 產生測試情境 / 測試案例 Excel | `.\scripts\generate-scenario-matrix.ps1` |
 | 驗證測試案例 | `python scripts\validate-testcases.py` |
+| 驗證執行結果 | `python scripts\validate-execution-results.py` |
 | 檢查 Cypress | `npm run test:e2e:verify` |
 | 跑 E2E | `npm run test:e2e` |
 | 跑 API | `pytest` |
@@ -109,6 +114,8 @@ QA 支援 PM 的 SDD 流程工具。
 | 測試情境 / 測試案例 Excel | `artifacts/generated/qa/scenario-matrix.xlsx` |
 | 測試案例 | `qa-workspace/specs/{feature}/test-cases.json` |
 | 測試案例 schema | `qa-workspace/schemas/testcase.schema.json` |
+| 測試執行結果 | `qa-workspace/specs/{feature}/execution-results.json` |
+| 執行結果 schema | `qa-workspace/schemas/execution-results.schema.json` |
 | Cypress 測試 | `automation/e2e/specs/{feature}.cy.ts` |
 | pytest 測試 | `automation/api/tests/test_{feature}.py` |
 | QA 報告 | `artifacts/generated/qa/test-report.md` |
@@ -117,9 +124,18 @@ QA 支援 PM 的 SDD 流程工具。
 
 `scenario-matrix.xlsx` 內有三個工作表：
 
-- `測試情境`：給 PM / QA 確認功能是否可測，狀態欄可用下拉選單填 `Ready`、`Pass`、`Fail`、`Blocked`、`N/A`。
-- `測試案例`：彙整所有 `test-cases.json`，包含前置條件、測試資料、步驟、預期結果、自動化建議與執行狀態。
+- `測試情境`：彙整 `scenarios.md`，並從 `execution-results.json` 顯示可測性與平台結果。
+- `測試案例`：彙整所有 `test-cases.json`，並從 `execution-results.json` 顯示執行狀態。
 - `編碼規則`：說明 `SC-{FEATURE}-001` 與 `TC-{FEATURE}-001` 的命名方式。
+
+資料分工：
+
+```txt
+scenarios.md            = 要測什麼
+test-cases.json         = 怎麼測
+execution-results.json  = 測試結果與人工回填狀態
+scenario-matrix.xlsx    = 產出的檢視報告，不當作唯一資料來源
+```
 
 測試編號規則：
 
@@ -137,7 +153,7 @@ push main / Pull Request / 手動 Run workflow
       ↓
 GitHub Actions
       ↓
-檢查 SDD -> 驗證測試案例 -> 檢查 secrets -> 跑測試 -> 產生情境矩陣 -> 產生報告
+檢查 SDD -> 驗證測試案例 -> 驗證執行結果 -> 檢查 secrets -> 跑測試 -> 產生情境矩陣 -> 產生報告
 ```
 
 需要的 GitHub Secrets：

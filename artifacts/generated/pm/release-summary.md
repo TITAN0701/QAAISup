@@ -8,7 +8,7 @@ Not Evaluated
 
 本摘要根據 QA workspace 文件產生，包含 3 個功能。
 
-- 產生時間：2026-05-28 10:38:20
+- 產生時間：2026-05-28 11:03:45
 - 測試案例數量：14
 
 ## 本次測試功能
@@ -27,7 +27,7 @@ Not Evaluated
 
 - 彙整 qa-workspace/specs/ 下所有功能的 QA 狀態與發布風險。
 
-## 測試結果統計
+## 測試執行結果統計
 
 | 項目 | 數量 |
 |---|---:|
@@ -78,3 +78,4 @@ Not Evaluated
 - 測試計畫：qa-workspace/specs/{feature}/plan.md
 - 測試情境：qa-workspace/specs/{feature}/scenarios.md
 - 測試案例：qa-workspace/specs/{feature}/test-cases.json
+- 測試執行結果：qa-workspace/specs/{feature}/execution-results.json

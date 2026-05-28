@@ -62,10 +62,6 @@
           "automation_candidate": {
             "type": "boolean"
           },
-          "status": {
-            "type": "string",
-            "enum": ["Not Run", "Ready", "Pass", "Fail", "Blocked", "N/A"]
-          },
           "notes": {
             "type": "string"
           }
