@@ -87,6 +87,7 @@ QA 支援 PM 的 SDD 流程工具。
 | 產生測試情境 / 測試案例 Excel | `.\scripts\generate-scenario-matrix.ps1` |
 | 驗證測試案例 | `python scripts\validate-testcases.py` |
 | 驗證執行結果 | `python scripts\validate-execution-results.py` |
+| 更新執行結果 | `python scripts\update-execution-result.py --feature login --test-case-id TC-LOGIN-001 --status Pass` |
 | 檢查 Cypress | `npm run test:e2e:verify` |
 | 跑 E2E | `npm run test:e2e` |
 | 跑 API | `pytest` |
@@ -175,4 +176,5 @@ TEST_USER_PASSWORD
 | `docs/collaboration-guide.md` | 分工規則 |
 | `docs/environment-setup.md` | 環境設定 |
 | `docs/reporting-standard.md` | 報告規則 |
+| `docs/execution-results-guide.md` | 執行結果填寫說明 |
 | `docs/toolchain.md` | 工具鏈 |
