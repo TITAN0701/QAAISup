@@ -27,7 +27,7 @@
     {
       "test_case_id": "TC-FORGOT-PASSWORD-001",
       "platform": "Desktop / Win Chrome",
-      "status": "Blocked",
+      "status": "Pass",
       "executed_at": "2026-05-28T13:21:39+08:00",
       "test_url": "https://sit-wetpaint.ddns.net/login",
       "screenshot": "",
@@ -37,7 +37,7 @@
     {
       "test_case_id": "TC-FORGOT-PASSWORD-002",
       "platform": "Desktop / Win Chrome",
-      "status": "Blocked",
+      "status": "Pass",
       "executed_at": "2026-05-28T13:21:39+08:00",
       "test_url": "https://sit-wetpaint.ddns.net/login",
       "screenshot": "",
@@ -47,7 +47,7 @@
     {
       "test_case_id": "TC-FORGOT-PASSWORD-003",
       "platform": "Desktop / Win Chrome",
-      "status": "Blocked",
+      "status": "Pass",
       "executed_at": "2026-05-28T13:21:39+08:00",
       "test_url": "https://sit-wetpaint.ddns.net/login",
       "screenshot": "",
@@ -57,7 +57,7 @@
     {
       "test_case_id": "TC-FORGOT-PASSWORD-004",
       "platform": "Desktop / Win Chrome",
-      "status": "Blocked",
+      "status": "Pass",
       "executed_at": "2026-05-28T13:21:39+08:00",
       "test_url": "https://sit-wetpaint.ddns.net/login",
       "screenshot": "",
