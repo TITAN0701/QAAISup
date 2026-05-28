@@ -4,7 +4,7 @@
 
 - 功能數量：3
 - 測試案例數量：14
-- 產生時間：2026-05-28 14:15:41
+- 產生時間：2026-05-28 15:35:15
 - 發布狀態：Not Evaluated
 - QA 回填來源：qa-workspace/execution-results.csv
 
@@ -24,18 +24,17 @@
 | 項目 | 數量 |
 |---|---:|
 | Total | 14 |
-| Passed | 4 |
+| Passed | 0 |
 | Failed | 0 |
 | Blocked | 0 |
 | Skipped | 0 |
-| Not Run / Not Marked | 10 |
+| Not Run / Not Marked | 14 |
 
 ## 佐證覆蓋
 
 | 項目 | 數量 |
 |---|---:|
-| 已填測試位址 | 4 |
-| 已填截圖 | 0 |
+| 已填測試位址 | 0 |
 | 已填其他佐證 | 0 |
 
 ## 本次測試功能
@@ -46,7 +45,7 @@
 
 ## 驗收重點
 
-- forgot-password: 測試案例 4 筆，通過 4 筆，未執行 0 筆；情境待確認 4 筆。
+- forgot-password: 測試案例 4 筆，通過 0 筆，未執行 4 筆；情境待確認 4 筆。
 - login: 測試案例 6 筆，通過 0 筆，未執行 6 筆；情境待確認 6 筆。
 - register: 測試案例 4 筆，通過 0 筆，未執行 4 筆；情境待確認 4 筆。
 
@@ -62,7 +61,7 @@
 
 | 功能 | 狀態 | 情境待確認 | Test Cases | Passed | Failed | Not Run | URL | Evidence | Open PM Questions |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| forgot-password | Conditional | 4 | 4 | 4 | 0 | 0 | 4 | 0 | 4 |
+| forgot-password | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 0 | 0 | 4 |
 | login | Not Evaluated | 6 | 6 | 0 | 0 | 6 | 0 | 0 | 8 |
 | register | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 0 | 0 | 4 |
 
@@ -101,7 +100,7 @@
 
 原因：
 
-- 尚未標記測試結果的情境數量：10
+- 尚未標記測試結果的情境數量：14
 - 仍待確認的測試情境數量：14
 - 未回答 PM 問題數量：16
 - 未完成任務數量：33

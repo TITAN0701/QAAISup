@@ -8,8 +8,9 @@ Not Evaluated
 
 本摘要根據 QA workspace 文件產生，包含 3 個功能。
 
-- 產生時間：2026-05-28 13:45:03
+- 產生時間：2026-05-28 15:35:15
 - 測試案例數量：14
+- QA 回填來源：qa-workspace/execution-results.csv
 
 ## 本次測試功能
 
@@ -19,24 +20,42 @@ Not Evaluated
 
 ## 驗收重點
 
-- forgot-password: 情境 4 筆，通過 4 筆，未標記 0 筆。
-- login: 情境 6 筆，通過 0 筆，未標記 6 筆。
-- register: 情境 4 筆，通過 0 筆，未標記 4 筆。
+- forgot-password: 測試案例 4 筆，通過 0 筆，未執行 4 筆；情境待確認 4 筆。
+- login: 測試案例 6 筆，通過 0 筆，未執行 6 筆；情境待確認 6 筆。
+- register: 測試案例 4 筆，通過 0 筆，未執行 4 筆；情境待確認 4 筆。
 
 ## 功能目標
 
 - 彙整 qa-workspace/specs/ 下所有功能的 QA 狀態與發布風險。
 
-## 測試執行結果統計
+## 情境可測性統計
 
 | 項目 | 數量 |
 |---|---:|
 | Total | 14 |
-| Passed | 4 |
+| Approved | 0 |
+| Ready | 0 |
+| Need Confirm | 14 |
+| Blocked | 0 |
+| Not Marked | 0 |
+
+## 測試案例執行統計
+
+| 項目 | 數量 |
+|---|---:|
+| Total | 14 |
+| Passed | 0 |
 | Failed | 0 |
 | Blocked | 0 |
 | Skipped | 0 |
-| Not Run / Not Marked | 10 |
+| Not Run / Not Marked | 14 |
+
+## 佐證覆蓋
+
+| 項目 | 數量 |
+|---|---:|
+| 已填測試位址 | 0 |
+| 已填其他佐證 | 0 |
 
 ## QA 任務狀態
 
@@ -47,11 +66,11 @@ Not Evaluated
 
 ## 功能狀態明細
 
-| 功能 | 狀態 | Scenarios | Test Cases | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
-| forgot-password | Conditional | 4 | 4 | 4 | 0 | 0 | 11 | 4 |
-| login | Not Evaluated | 6 | 6 | 0 | 0 | 6 | 11 | 8 |
-| register | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 11 | 4 |
+| 功能 | 狀態 | 情境待確認 | Test Cases | Passed | Failed | Not Run | URL | Evidence | Open PM Questions |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| forgot-password | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 0 | 0 | 4 |
+| login | Not Evaluated | 6 | 6 | 0 | 0 | 6 | 0 | 0 | 8 |
+| register | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 0 | 0 | 4 |
 
 ## 發布建議
 
@@ -61,7 +80,8 @@ Not Evaluated
 
 - 尚未回答 PM 問題：16
 - 尚未完成 QA 任務：33
-- 尚未標記測試結果的情境：10
+- 尚未標記測試結果的情境：14
+- 仍待確認的測試情境：14
 
 ## 主要風險
 
@@ -79,3 +99,4 @@ Not Evaluated
 - 測試情境：qa-workspace/specs/{feature}/scenarios.md
 - 測試案例：qa-workspace/specs/{feature}/test-cases.json
 - 測試執行結果：qa-workspace/specs/{feature}/execution-results.json
+- QA 回填總表：qa-workspace/execution-results.csv

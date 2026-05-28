@@ -1,29 +1,29 @@
-﻿record_type,feature,item_id,title,platform,status,test_url,screenshot,evidence,notes
-scenario,forgot-password,SC-FORGOT-PASSWORD-001,給定使用者位於登入頁，當點擊「忘記密碼」，則系統應進入忘記密碼流程。,,Need Confirm,,,,需確認忘記密碼入口導向規則。
-scenario,forgot-password,SC-FORGOT-PASSWORD-002,給定使用者位於忘記密碼頁，當未輸入 Email 就送出，則系統應提示 Email 為必填。,,Need Confirm,,,,需確認 Email 必填錯誤文案。
-scenario,forgot-password,SC-FORGOT-PASSWORD-003,給定使用者位於忘記密碼頁，當輸入格式錯誤的 Email 並送出，則系統應提示 Email 格式錯誤。,,Need Confirm,,,,需確認 Email 格式錯誤文案。
-scenario,forgot-password,SC-FORGOT-PASSWORD-004,給定使用者位於忘記密碼頁，當輸入有效 Email 並送出，則系統應提示已送出密碼重設通知。,,Need Confirm,,,,需確認通知送出後的畫面文案或狀態。
-test_case,forgot-password,TC-FORGOT-PASSWORD-001,忘記密碼入口導向正確,Desktop / Win Chrome,Pass,https://sit-wetpaint.ddns.net/login,,,等待中
-test_case,forgot-password,TC-FORGOT-PASSWORD-002,忘記密碼未輸入 Email 時提示必填,Desktop / Win Chrome,Pass,https://sit-wetpaint.ddns.net/login,,,等待中
-test_case,forgot-password,TC-FORGOT-PASSWORD-003,忘記密碼輸入錯誤 Email 格式時提示錯誤,Desktop / Win Chrome,Pass,https://sit-wetpaint.ddns.net/login,,,等待中
-test_case,forgot-password,TC-FORGOT-PASSWORD-004,忘記密碼輸入有效 Email 後送出通知,Desktop / Win Chrome,Pass,https://sit-wetpaint.ddns.net/login,,,等待中
-scenario,login,SC-LOGIN-001,給定使用者位於登入頁，當使用者輸入有效帳號與正確密碼並送出，則系統應登入成功。,,Need Confirm,,,,需確認登入成功後 URL 或畫面狀態。
-scenario,login,SC-LOGIN-002,給定使用者位於登入頁，當使用者未輸入帳號就送出，則系統應提示帳號為必填。,,Need Confirm,,,,需確認帳號必填錯誤文案。
-scenario,login,SC-LOGIN-003,給定使用者位於登入頁，當使用者未輸入密碼就送出，則系統應提示密碼為必填。,,Need Confirm,,,,需確認密碼必填錯誤文案。
-scenario,login,SC-LOGIN-004,給定使用者位於登入頁，當使用者輸入錯誤帳號或錯誤密碼並送出，則系統應顯示登入失敗提示。,,Need Confirm,,,,需確認登入失敗錯誤文案。
-scenario,login,SC-LOGIN-005,給定使用者位於登入頁，當使用者點擊「忘記密碼」，則系統應導向忘記密碼流程。,,Need Confirm,,,,需確認忘記密碼導向規則。
-scenario,login,SC-LOGIN-006,給定使用者位於登入頁，當使用者點擊「創建帳號」，則系統應導向註冊流程。,,Need Confirm,,,,需確認創建帳號導向規則。
-test_case,login,TC-LOGIN-001,有效帳密登入成功,Desktop / Win Chrome,Not Run,,,,
-test_case,login,TC-LOGIN-002,未輸入帳號時提示必填,Desktop / Win Chrome,Not Run,,,,
-test_case,login,TC-LOGIN-003,未輸入密碼時提示必填,Desktop / Win Chrome,Not Run,,,,
-test_case,login,TC-LOGIN-004,錯誤帳密登入失敗,Desktop / Win Chrome,Not Run,,,,
-test_case,login,TC-LOGIN-005,忘記密碼入口導向正確,Desktop / Win Chrome,Not Run,,,,
-test_case,login,TC-LOGIN-006,創建帳號入口導向正確,Desktop / Win Chrome,Not Run,,,,
-scenario,register,SC-REGISTER-001,給定使用者位於登入頁，當點擊「創建帳號」，則系統應進入註冊流程。,,Need Confirm,,,,需確認創建帳號入口導向規則。
-scenario,register,SC-REGISTER-002,給定使用者位於註冊頁，當必填欄位未填就送出，則系統應提示必填欄位。,,Need Confirm,,,,需確認必填欄位與文案。
-scenario,register,SC-REGISTER-003,給定使用者位於註冊頁，當密碼與確認密碼不一致並送出，則系統應提示密碼不一致。,,Need Confirm,,,,需確認密碼不一致錯誤文案。
-scenario,register,SC-REGISTER-004,給定使用者位於註冊頁，當輸入有效資料並送出，則系統應建立帳號或進入後續驗證流程。,,Need Confirm,,,,需確認註冊成功後流程。
-test_case,register,TC-REGISTER-001,創建帳號入口導向正確,Desktop / Win Chrome,Not Run,,,,
-test_case,register,TC-REGISTER-002,註冊必填欄位未填時提示必填,Desktop / Win Chrome,Not Run,,,,
-test_case,register,TC-REGISTER-003,密碼與確認密碼不一致時提示錯誤,Desktop / Win Chrome,Not Run,,,,
-test_case,register,TC-REGISTER-004,輸入有效資料後建立帳號或進入驗證流程,Desktop / Win Chrome,Not Run,,,,
+record_type,feature,item_id,title,platform,status,test_url,evidence,notes
+scenario,forgot-password,SC-FORGOT-PASSWORD-001,給定使用者位於登入頁，當點擊「忘記密碼」，則系統應進入忘記密碼流程。,,Need Confirm,,,需確認忘記密碼入口導向規則。
+scenario,forgot-password,SC-FORGOT-PASSWORD-002,給定使用者位於忘記密碼頁，當未輸入 Email 就送出，則系統應提示 Email 為必填。,,Need Confirm,,,需確認 Email 必填錯誤文案。
+scenario,forgot-password,SC-FORGOT-PASSWORD-003,給定使用者位於忘記密碼頁，當輸入格式錯誤的 Email 並送出，則系統應提示 Email 格式錯誤。,,Need Confirm,,,需確認 Email 格式錯誤文案。
+scenario,forgot-password,SC-FORGOT-PASSWORD-004,給定使用者位於忘記密碼頁，當輸入有效 Email 並送出，則系統應提示已送出密碼重設通知。,,Need Confirm,,,需確認通知送出後的畫面文案或狀態。
+test_case,forgot-password,TC-FORGOT-PASSWORD-001,忘記密碼入口導向正確,,,,,
+test_case,forgot-password,TC-FORGOT-PASSWORD-002,忘記密碼未輸入 Email 時提示必填,,,,,
+test_case,forgot-password,TC-FORGOT-PASSWORD-003,忘記密碼輸入錯誤 Email 格式時提示錯誤,,,,,
+test_case,forgot-password,TC-FORGOT-PASSWORD-004,忘記密碼輸入有效 Email 後送出通知,,,,,
+scenario,login,SC-LOGIN-001,給定使用者位於登入頁，當使用者輸入有效帳號與正確密碼並送出，則系統應登入成功。,,Need Confirm,,,需確認登入成功後 URL 或畫面狀態。
+scenario,login,SC-LOGIN-002,給定使用者位於登入頁，當使用者未輸入帳號就送出，則系統應提示帳號為必填。,,Need Confirm,,,需確認帳號必填錯誤文案。
+scenario,login,SC-LOGIN-003,給定使用者位於登入頁，當使用者未輸入密碼就送出，則系統應提示密碼為必填。,,Need Confirm,,,需確認密碼必填錯誤文案。
+scenario,login,SC-LOGIN-004,給定使用者位於登入頁，當使用者輸入錯誤帳號或錯誤密碼並送出，則系統應顯示登入失敗提示。,,Need Confirm,,,需確認登入失敗錯誤文案。
+scenario,login,SC-LOGIN-005,給定使用者位於登入頁，當使用者點擊「忘記密碼」，則系統應導向忘記密碼流程。,,Need Confirm,,,需確認忘記密碼導向規則。
+scenario,login,SC-LOGIN-006,給定使用者位於登入頁，當使用者點擊「創建帳號」，則系統應導向註冊流程。,,Need Confirm,,,需確認創建帳號導向規則。
+test_case,login,TC-LOGIN-001,有效帳密登入成功,Desktop / Win Chrome,Not Run,,,
+test_case,login,TC-LOGIN-002,未輸入帳號時提示必填,Desktop / Win Chrome,Not Run,,,
+test_case,login,TC-LOGIN-003,未輸入密碼時提示必填,Desktop / Win Chrome,Not Run,,,
+test_case,login,TC-LOGIN-004,錯誤帳密登入失敗,Desktop / Win Chrome,Not Run,,,
+test_case,login,TC-LOGIN-005,忘記密碼入口導向正確,Desktop / Win Chrome,Not Run,,,
+test_case,login,TC-LOGIN-006,創建帳號入口導向正確,Desktop / Win Chrome,Not Run,,,
+scenario,register,SC-REGISTER-001,給定使用者位於登入頁，當點擊「創建帳號」，則系統應進入註冊流程。,,Need Confirm,,,需確認創建帳號入口導向規則。
+scenario,register,SC-REGISTER-002,給定使用者位於註冊頁，當必填欄位未填就送出，則系統應提示必填欄位。,,Need Confirm,,,需確認必填欄位與文案。
+scenario,register,SC-REGISTER-003,給定使用者位於註冊頁，當密碼與確認密碼不一致並送出，則系統應提示密碼不一致。,,Need Confirm,,,需確認密碼不一致錯誤文案。
+scenario,register,SC-REGISTER-004,給定使用者位於註冊頁，當輸入有效資料並送出，則系統應建立帳號或進入後續驗證流程。,,Need Confirm,,,需確認註冊成功後流程。
+test_case,register,TC-REGISTER-001,創建帳號入口導向正確,Desktop / Win Chrome,Not Run,,,
+test_case,register,TC-REGISTER-002,註冊必填欄位未填時提示必填,Desktop / Win Chrome,Not Run,,,
+test_case,register,TC-REGISTER-003,密碼與確認密碼不一致時提示錯誤,Desktop / Win Chrome,Not Run,,,
+test_case,register,TC-REGISTER-004,輸入有效資料後建立帳號或進入驗證流程,Desktop / Win Chrome,Not Run,,,

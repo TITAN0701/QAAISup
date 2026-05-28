@@ -247,7 +247,6 @@ function Get-ExecutionEvidenceStats {
 
     $default = [PSCustomObject]@{
         TestUrl = 0
-        Screenshot = 0
         Evidence = 0
     }
 
@@ -259,8 +258,7 @@ function Get-ExecutionEvidenceStats {
         $content = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
         $results = @($content.test_results)
         return [PSCustomObject]@{
-            TestUrl = @($results | Where-Object { -not [string]::IsNullOrWhiteSpace($_.test_url) }).Count
-            Screenshot = @($results | Where-Object { -not [string]::IsNullOrWhiteSpace($_.screenshot) }).Count
+            TestUrl  = @($results | Where-Object { -not [string]::IsNullOrWhiteSpace($_.test_url) }).Count
             Evidence = @($results | Where-Object { -not [string]::IsNullOrWhiteSpace($_.evidence) }).Count
         }
     } catch {
@@ -365,6 +363,14 @@ function Get-FeatureReportData {
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
+# 先將 CSV 同步回各功能的 execution-results.json
+$syncScript = Join-Path "scripts" "sync-csv-to-json.ps1"
+if (Test-Path $syncScript) {
+    Write-Output "Syncing CSV to JSON..."
+    & ".\$syncScript"
+    Write-Output ""
+}
+
 if ($SpecDir) {
     $featureData = @(Get-FeatureReportData -SpecDir $SpecDir)
 } elseif ($Feature) {
@@ -397,7 +403,6 @@ $reviewNeedConfirm = ($featureData | ForEach-Object { $_.ScenarioReviewStats.Nee
 $reviewBlocked = ($featureData | ForEach-Object { $_.ScenarioReviewStats.Blocked } | Measure-Object -Sum).Sum
 $reviewNotMarked = ($featureData | ForEach-Object { $_.ScenarioReviewStats.NotMarked } | Measure-Object -Sum).Sum
 $testUrlCount = ($featureData | ForEach-Object { $_.EvidenceStats.TestUrl } | Measure-Object -Sum).Sum
-$screenshotCount = ($featureData | ForEach-Object { $_.EvidenceStats.Screenshot } | Measure-Object -Sum).Sum
 $evidenceCount = ($featureData | ForEach-Object { $_.EvidenceStats.Evidence } | Measure-Object -Sum).Sum
 $totalTasks = ($featureData | ForEach-Object { $_.TaskStats.Total } | Measure-Object -Sum).Sum
 $doneTasks = ($featureData | ForEach-Object { $_.TaskStats.Done } | Measure-Object -Sum).Sum
@@ -414,7 +419,7 @@ $releaseStatus = if (($featureData | Where-Object { $_.ReleaseStatus -eq "Not Re
 }
 
 $featureRows = ($featureData | ForEach-Object {
-    "| $($_.FeatureName) | $($_.ReleaseStatus) | $($_.ScenarioReviewStats.NeedConfirm) | $($_.TestCaseCount) | $($_.ScenarioStats.Passed) | $($_.ScenarioStats.Failed) | $($_.ScenarioStats.NotRun) | $($_.EvidenceStats.TestUrl) | $($_.EvidenceStats.Screenshot + $_.EvidenceStats.Evidence) | $($_.OpenQuestions) |"
+    "| $($_.FeatureName) | $($_.ReleaseStatus) | $($_.ScenarioReviewStats.NeedConfirm) | $($_.TestCaseCount) | $($_.ScenarioStats.Passed) | $($_.ScenarioStats.Failed) | $($_.ScenarioStats.NotRun) | $($_.EvidenceStats.TestUrl) | $($_.EvidenceStats.Evidence) | $($_.OpenQuestions) |"
 }) -join "`n"
 
 $testedFunctionsSummary = if ($isSingleFeature) {
@@ -481,7 +486,6 @@ $qaReportContent = @"
 | 項目 | 數量 |
 |---|---:|
 | 已填測試位址 | $testUrlCount |
-| 已填截圖 | $screenshotCount |
 | 已填其他佐證 | $evidenceCount |
 
 ## 本次測試功能
@@ -601,7 +605,6 @@ $businessGoalSummary
 | 項目 | 數量 |
 |---|---:|
 | 已填測試位址 | $testUrlCount |
-| 已填截圖 | $screenshotCount |
 | 已填其他佐證 | $evidenceCount |
 
 ## QA 任務狀態
