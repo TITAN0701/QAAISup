@@ -85,6 +85,12 @@ Get-ChildItem -Path $SpecsRoot -Directory |
 
 New-Item -ItemType Directory -Force -Path (Split-Path $Output -Parent) | Out-Null
 
+$pythonCommand = Get-Command python -ErrorAction SilentlyContinue
+if ($pythonCommand) {
+    $normalizeOutput = & $pythonCommand.Source scripts/validate-execution-results.py --specs-root $SpecsRoot --fix
+    $normalizeOutput | Write-Output
+}
+
 $generatedAt = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $total = $allRows.Count
 $passed = ($allRows | Where-Object { $_.Status -match '^(Passed|通過)$' }).Count
@@ -127,7 +133,6 @@ Set-Content -LiteralPath $Output -Value $content -Encoding UTF8
 
 $excelStatus = "Skipped"
 if (-not $SkipExcel) {
-    $pythonCommand = Get-Command python -ErrorAction SilentlyContinue
     if ($pythonCommand) {
         $pythonOutput = & $pythonCommand.Source scripts/generate-scenario-matrix-xlsx.py --specs-root $SpecsRoot --output $ExcelOutput
         $pythonOutput | Write-Output

@@ -36,6 +36,8 @@ def update_result(
     test_case_id: str,
     status: str,
     platform: str,
+    test_url: str | None,
+    screenshot: str | None,
     evidence: str | None,
     notes: str | None,
     executed_at: str | None,
@@ -64,6 +66,8 @@ def update_result(
             "platform": platform,
             "status": "Not Run",
             "executed_at": "",
+            "test_url": "",
+            "screenshot": "",
             "evidence": "",
             "notes": "",
         }
@@ -79,6 +83,10 @@ def update_result(
 
     if evidence is not None:
         target["evidence"] = evidence
+    if test_url is not None:
+        target["test_url"] = test_url
+    if screenshot is not None:
+        target["screenshot"] = screenshot
     if notes is not None:
         target["notes"] = notes
 
@@ -93,6 +101,8 @@ def main() -> int:
     parser.add_argument("--test-case-id", required=True)
     parser.add_argument("--status", required=True, choices=sorted(VALID_STATUSES))
     parser.add_argument("--platform", default="Desktop / Win Chrome")
+    parser.add_argument("--test-url", help="Page URL used for this execution.")
+    parser.add_argument("--screenshot", help="Screenshot file path or URL.")
     parser.add_argument("--evidence")
     parser.add_argument("--notes")
     parser.add_argument("--executed-at", help="Override timestamp. Default: current local time for Pass/Fail/Blocked/N/A.")
@@ -105,6 +115,8 @@ def main() -> int:
             test_case_id=args.test_case_id,
             status=args.status,
             platform=args.platform,
+            test_url=args.test_url,
+            screenshot=args.screenshot,
             evidence=args.evidence,
             notes=args.notes,
             executed_at=args.executed_at,

@@ -134,6 +134,8 @@ def read_test_cases(specs_root: Path) -> list[dict[str, str]]:
                     "status": "Not Run",
                     "platform": "Desktop / Win Chrome",
                     "executed_at": "",
+                    "test_url": "",
+                    "screenshot": "",
                     "evidence": "",
                     "notes": test_case.get("notes", ""),
                     "source": str(test_case_path).replace("\\", "/"),
@@ -158,6 +160,8 @@ def read_execution_results(specs_root: Path) -> tuple[dict[str, str], dict[str, 
                     "status": item.get("status", "Not Run"),
                     "platform": item.get("platform", "Desktop / Win Chrome"),
                     "executed_at": item.get("executed_at", ""),
+                    "test_url": item.get("test_url", ""),
+                    "screenshot": item.get("screenshot", ""),
                     "evidence": item.get("evidence", ""),
                     "notes": item.get("notes", ""),
                 }
@@ -314,6 +318,8 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
         "平台",
         "執行狀態",
         "執行時間",
+        "測試位址",
+        "截圖畫面",
         "佐證",
         "備註",
     ]
@@ -335,8 +341,10 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
             (12, item["platform"], 13),
             (13, item["status"], platform_style(item["status"])),
             (14, item["executed_at"], 13),
-            (15, item["evidence"], 12),
-            (16, item["notes"], 12),
+            (15, item["test_url"], 12),
+            (16, item["screenshot"], 12),
+            (17, item["evidence"], 12),
+            (18, item["notes"], 12),
         ], height=82))
 
     last_row = max(2, len(rows) + 1)
@@ -363,7 +371,7 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
     <col min="7" max="10" width="38" customWidth="1"/>
     <col min="11" max="13" width="16" customWidth="1"/>
     <col min="14" max="14" width="20" customWidth="1"/>
-    <col min="15" max="16" width="38" customWidth="1"/>
+    <col min="15" max="18" width="38" customWidth="1"/>
   </cols>
   <sheetData>
     {''.join(sheet_rows)}
@@ -408,8 +416,10 @@ def build_guide_sheet() -> str:
         ("欄位", "test_case_id", "對應 test-cases.json 的測試案例 ID，不要手動改。"),
         ("欄位", "platform", "測試平台，例如 Desktop / Win Chrome。"),
         ("欄位", "status", "只能填 Not Run、Ready、Pass、Fail、Blocked、N/A。"),
-        ("欄位", "executed_at", "實際執行時間，建議用 update-execution-result.py 自動填。"),
-        ("欄位", "evidence", "截圖、影片、Allure、CI artifact、Issue 或 PR 連結。"),
+        ("欄位", "executed_at", "實際執行時間；status 填 Pass、Fail、Blocked、N/A 後，產生 Excel 時會自動補。"),
+        ("欄位", "test_url", "測試時使用的頁面位址，例如 https://qa.example.com/forgot-password。"),
+        ("欄位", "screenshot", "截圖檔案路徑或連結，例如 artifacts/screenshots/forgot-password-001.png。"),
+        ("欄位", "evidence", "影片、Allure、CI artifact、Issue 或 PR 連結。"),
         ("欄位", "notes", "失敗原因、阻擋原因或補充說明。"),
         ("狀態", "Not Run", "還沒測。"),
         ("狀態", "Ready", "已準備好可以測，但尚未執行。"),
@@ -417,8 +427,10 @@ def build_guide_sheet() -> str:
         ("狀態", "Fail", "已測試失敗。"),
         ("狀態", "Blocked", "因環境、帳號、API、需求不清楚等原因無法測。"),
         ("狀態", "N/A", "這個平台或情境不適用。"),
-        ("建議指令", "更新結果", "python scripts\\update-execution-result.py --feature forgot-password --test-case-id TC-FORGOT-PASSWORD-001 --status Pass"),
-        ("建議指令", "重新產出", "python scripts\\validate-execution-results.py；.\\scripts\\generate-scenario-matrix.ps1"),
+        ("填寫方式", "人工回填", "QA 直接編輯 execution-results.json 的 status、test_url、screenshot、evidence、notes。"),
+        ("自動時間", "產生 Excel", ".\\scripts\\generate-scenario-matrix.ps1 會自動補 executed_at。"),
+        ("建議指令", "只整理時間", "python scripts\\validate-execution-results.py --fix"),
+        ("建議指令", "重新產出", "python scripts\\validate-execution-results.py --fix；.\\scripts\\generate-scenario-matrix.ps1"),
     ]
     sheet_rows = [
         row_xml(index, [(col, value, 1 if index == 1 else 12) for col, value in enumerate(row, start=1)], height=34)

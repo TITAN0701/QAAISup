@@ -59,9 +59,17 @@
             "type": "string",
             "description": "Execution timestamp. Prefer scripts/update-execution-result.py to auto-fill it."
           },
+          "test_url": {
+            "type": "string",
+            "description": "Page URL used for this execution, for example https://qa.example.com/forgot-password."
+          },
+          "screenshot": {
+            "type": "string",
+            "description": "Screenshot file path or URL for this execution."
+          },
           "evidence": {
             "type": "string",
-            "description": "Screenshot, video, Allure report, CI artifact, issue, or PR link."
+            "description": "Video, Allure report, CI artifact, issue, PR link, or other evidence."
           },
           "notes": {
             "type": "string",

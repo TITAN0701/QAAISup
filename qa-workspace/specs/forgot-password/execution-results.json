@@ -8,9 +8,9 @@
     { "scenario_id": "SC-FORGOT-PASSWORD-004", "status": "Need Confirm", "notes": "需確認通知送出後的畫面文案或狀態。" }
   ],
   "test_results": [
-    { "test_case_id": "TC-FORGOT-PASSWORD-001", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" },
-    { "test_case_id": "TC-FORGOT-PASSWORD-002", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" },
-    { "test_case_id": "TC-FORGOT-PASSWORD-003", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" },
-    { "test_case_id": "TC-FORGOT-PASSWORD-004", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "evidence": "", "notes": "" }
+    { "test_case_id": "TC-FORGOT-PASSWORD-001", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "test_url": "", "screenshot": "", "evidence": "", "notes": "" },
+    { "test_case_id": "TC-FORGOT-PASSWORD-002", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "test_url": "", "screenshot": "", "evidence": "", "notes": "" },
+    { "test_case_id": "TC-FORGOT-PASSWORD-003", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "test_url": "", "screenshot": "", "evidence": "", "notes": "" },
+    { "test_case_id": "TC-FORGOT-PASSWORD-004", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "test_url": "", "screenshot": "", "evidence": "", "notes": "" }
   ]
 }
