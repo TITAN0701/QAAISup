@@ -363,13 +363,9 @@ function Get-FeatureReportData {
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
-# 先將 CSV 同步回各功能的 execution-results.json
-$syncScript = Join-Path "scripts" "sync-csv-to-json.ps1"
-if (Test-Path $syncScript) {
-    Write-Output "Syncing CSV to JSON..."
-    & ".\$syncScript"
-    Write-Output ""
-}
+Write-Output "Syncing CSV to JSON..."
+python scripts/sync-execution-results-sheet.py --import --sheet qa-workspace/execution-results.csv
+Write-Output ""
 
 if ($SpecDir) {
     $featureData = @(Get-FeatureReportData -SpecDir $SpecDir)

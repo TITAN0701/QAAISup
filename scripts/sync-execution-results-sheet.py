@@ -18,7 +18,6 @@ FIELDNAMES = [
     "platform",
     "status",
     "test_url",
-    "screenshot",
     "evidence",
     "notes",
 ]
@@ -113,7 +112,6 @@ def export_sheet(specs_root: Path, output: Path) -> None:
                 "platform": "",
                 "status": review.get("status", "Not Marked"),
                 "test_url": "",
-                "screenshot": "",
                 "evidence": "",
                 "notes": review.get("notes", ""),
             })
@@ -128,7 +126,6 @@ def export_sheet(specs_root: Path, output: Path) -> None:
                 "platform": result.get("platform", DEFAULT_PLATFORM),
                 "status": result.get("status", "Not Run"),
                 "test_url": result.get("test_url", ""),
-                "screenshot": result.get("screenshot", ""),
                 "evidence": result.get("evidence", ""),
                 "notes": result.get("notes", ""),
             })
@@ -200,7 +197,6 @@ def import_sheet(specs_root: Path, sheet: Path) -> None:
                 })
                 item["status"] = status
                 item["test_url"] = row["test_url"]
-                item["screenshot"] = row["screenshot"]
                 item["evidence"] = row["evidence"]
                 item["notes"] = row["notes"]
                 item.setdefault("executed_at", "")

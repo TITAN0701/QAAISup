@@ -95,6 +95,8 @@ function Get-ScenarioReviewStatuses {
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
+python scripts/sync-execution-results-sheet.py --import --sheet qa-workspace/execution-results.csv
+
 if (-not (Test-Path $SpecsRoot)) {
     throw "Specs root not found: $SpecsRoot"
 }
