@@ -8,7 +8,8 @@ Not Evaluated
 
 本摘要根據 QA workspace 文件產生，包含 3 個功能。
 
-- 產生時間：2026-05-19 18:12:10
+- 產生時間：2026-05-28 10:38:20
+- 測試案例數量：14
 
 ## 本次測試功能
 
@@ -46,11 +47,11 @@ Not Evaluated
 
 ## 功能狀態明細
 
-| 功能 | 狀態 | Scenarios | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
-|---|---|---:|---:|---:|---:|---:|---:|
-| forgot-password | Not Evaluated | 4 | 0 | 0 | 4 | 11 | 4 |
-| login | Not Evaluated | 6 | 0 | 0 | 6 | 11 | 8 |
-| register | Not Evaluated | 4 | 0 | 0 | 4 | 11 | 4 |
+| 功能 | 狀態 | Scenarios | Test Cases | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| forgot-password | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 11 | 4 |
+| login | Not Evaluated | 6 | 6 | 0 | 0 | 6 | 11 | 8 |
+| register | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 11 | 4 |
 
 ## 發布建議
 
@@ -71,6 +72,9 @@ Not Evaluated
 ## 相關連結
 
 - QA 測試報告：artifacts/generated/qa/test-report.md
+- 測試情境矩陣 Markdown：artifacts/generated/qa/scenario-matrix.md
+- 測試情境矩陣 Excel：artifacts/generated/qa/scenario-matrix.xlsx
 - 功能規格：qa-workspace/specs/{feature}/spec.md
 - 測試計畫：qa-workspace/specs/{feature}/plan.md
 - 測試情境：qa-workspace/specs/{feature}/scenarios.md
+- 測試案例：qa-workspace/specs/{feature}/test-cases.json

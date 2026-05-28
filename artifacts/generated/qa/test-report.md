@@ -3,7 +3,8 @@
 ## 摘要
 
 - 功能數量：3
-- 產生時間：2026-05-19 18:12:10
+- 測試案例數量：14
+- 產生時間：2026-05-28 10:38:20
 - 發布狀態：Not Evaluated
 
 ## 測試情境結果統計
@@ -39,25 +40,32 @@
 
 ## 功能狀態明細
 
-| 功能 | 狀態 | Scenarios | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
-|---|---|---:|---:|---:|---:|---:|---:|
-| forgot-password | Not Evaluated | 4 | 0 | 0 | 4 | 11 | 4 |
-| login | Not Evaluated | 6 | 0 | 0 | 6 | 11 | 8 |
-| register | Not Evaluated | 4 | 0 | 0 | 4 | 11 | 4 |
+| 功能 | 狀態 | Scenarios | Test Cases | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| forgot-password | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 11 | 4 |
+| login | Not Evaluated | 6 | 6 | 0 | 0 | 6 | 11 | 8 |
+| register | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 11 | 4 |
 
 ## 檢查結果
 
 | 檢查項目 | 數量 / 狀態 |
 |---|---|
 | 功能數量 | 3 |
+| 測試案例數量 | 14 |
 | 未回答 PM Answer | 16 |
 | Cypress spec 已建立 | 0 |
-| Allure raw results | Not Found |
+| Allure raw results | OK |
 
 ## 測試範圍來源
 
 - qa-workspace/specs/{feature}/plan.md
 - qa-workspace/specs/{feature}/scenarios.md
+- qa-workspace/specs/{feature}/test-cases.json
+
+## 測試情境矩陣
+
+- Markdown：artifacts/generated/qa/scenario-matrix.md
+- Excel：artifacts/generated/qa/scenario-matrix.xlsx
 
 ## 待釐清問題
 

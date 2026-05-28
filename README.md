@@ -80,7 +80,7 @@ QA 支援 PM 的 SDD 流程工具。
 | 建立 SDD | `.\scripts\new-feature-from-inbox.ps1 -InboxFile .\pm-inbox\xxx.md -SplitRequirements -Yes` |
 | 檢查 SDD | `.\scripts\validate-sdd.ps1` |
 | PM 問題完成後檢查 | `.\scripts\validate-sdd.ps1 -FailOnOpenQuestions` |
-| 產生測試情境 Excel | `.\scripts\generate-scenario-matrix.ps1` |
+| 產生測試情境 / 測試案例 Excel | `.\scripts\generate-scenario-matrix.ps1` |
 | 驗證測試案例 | `python scripts\validate-testcases.py` |
 | 檢查 Cypress | `npm run test:e2e:verify` |
 | 跑 E2E | `npm run test:e2e` |
@@ -106,12 +106,17 @@ QA 支援 PM 的 SDD 流程工具。
 | 類型 | 位置 |
 |---|---|
 | 測試情境 | `qa-workspace/specs/{feature}/scenarios.md` |
-| 測試情境矩陣 | `artifacts/generated/qa/scenario-matrix.xlsx` |
+| 測試情境 / 測試案例 Excel | `artifacts/generated/qa/scenario-matrix.xlsx` |
 | 測試案例 | `qa-workspace/specs/{feature}/test-cases.json` |
 | 測試案例 schema | `qa-workspace/schemas/testcase.schema.json` |
 | Cypress 測試 | `automation/e2e/specs/{feature}.cy.ts` |
 | pytest 測試 | `automation/api/tests/test_{feature}.py` |
 | QA 報告 | `artifacts/generated/qa/test-report.md` |
+
+`scenario-matrix.xlsx` 內有兩個工作表：
+
+- `測試情境`：給 PM / QA 確認功能是否可測，狀態欄可用下拉選單填 `Ready`、`Pass`、`Fail`、`Blocked`、`N/A`。
+- `測試案例`：彙整所有 `test-cases.json`，包含前置條件、步驟、預期結果與自動化建議。
 | PM 摘要 | `artifacts/generated/pm/release-summary.md` |
 | PM Word | `artifacts/generated/pm/release-summary.docx` |
 

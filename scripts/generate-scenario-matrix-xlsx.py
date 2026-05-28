@@ -1,9 +1,14 @@
 import argparse
+import json
 import re
 import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 from xml.sax.saxutils import escape
+
+
+PLATFORM_STATUS_OPTIONS = "Not Run,Ready,Pass,Fail,Blocked,N/A"
+SCENARIO_STATUS_OPTIONS = "Not Marked,Ready,Need Confirm,Approved,Blocked"
 
 
 def get_field(block: str, field: str, default: str = "") -> str:
@@ -22,37 +27,49 @@ def get_title(path: Path, fallback: str) -> str:
 
 def simplify_acceptance(text: str) -> str:
     text = text.strip()
-    text = re.sub(r"^給定.*?，當", "", text)
-    text = re.sub(r"^使用者", "使用者", text)
-    text = text.replace("，則系統應", " -> ")
-    text = text.replace("，則", " -> ")
+    replacements = [
+        ("使用者", "使用者"),
+        ("，則系統應", " -> "),
+        ("則系統應", " -> "),
+        ("。", ""),
+    ]
+    for old, new in replacements:
+        text = text.replace(old, new)
     return text
 
 
-def status_symbol(status: str) -> str:
+def normalize_platform_status(status: str) -> str:
     normalized = status.strip().lower()
     if normalized in {"passed", "pass", "通過"}:
-        return "✓"
+        return "Pass"
     if normalized in {"failed", "fail", "失敗"}:
-        return "✕"
-    if normalized in {"blocked", "阻塞"}:
-        return "!"
-    if normalized in {"skipped", "略過"}:
-        return "-"
-    return "—"
+        return "Fail"
+    if normalized in {"blocked", "阻擋"}:
+        return "Blocked"
+    if normalized in {"skipped", "skip", "n/a", "略過"}:
+        return "N/A"
+    if normalized == "ready":
+        return "Ready"
+    return "Not Run"
 
 
 def platform_style(status: str) -> int:
-    normalized = status.strip().lower()
-    if normalized in {"passed", "pass", "通過"}:
+    normalized = normalize_platform_status(status)
+    if normalized == "Pass":
         return 7
-    if normalized in {"failed", "fail", "失敗"}:
+    if normalized == "Fail":
         return 8
-    if normalized in {"blocked", "阻塞"}:
+    if normalized == "Blocked":
         return 9
-    if normalized in {"skipped", "略過"}:
+    if normalized == "N/A":
         return 10
     return 11
+
+
+def split_lines(items: list[str] | None) -> str:
+    if not items:
+        return ""
+    return "\n".join(f"{index}. {item}" for index, item in enumerate(items, start=1))
 
 
 def read_scenarios(specs_root: Path) -> list[dict[str, str]]:
@@ -94,6 +111,31 @@ def read_scenarios(specs_root: Path) -> list[dict[str, str]]:
     return rows
 
 
+def read_test_cases(specs_root: Path) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for test_case_path in sorted(specs_root.glob("*/test-cases.json")):
+        data = json.loads(test_case_path.read_text(encoding="utf-8"))
+        feature = data.get("feature") or test_case_path.parent.name
+        for test_case in data.get("test_cases", []):
+            rows.append(
+                {
+                    "feature": feature,
+                    "id": test_case.get("id", ""),
+                    "requirement_id": test_case.get("requirement_id", ""),
+                    "title": test_case.get("title", ""),
+                    "type": test_case.get("type", ""),
+                    "priority": test_case.get("priority", ""),
+                    "preconditions": split_lines(test_case.get("preconditions")),
+                    "steps": split_lines(test_case.get("steps")),
+                    "expected": split_lines(test_case.get("expected")),
+                    "automation": "Yes" if test_case.get("automation_candidate") else "No",
+                    "notes": test_case.get("notes", ""),
+                    "source": str(test_case_path).replace("\\", "/"),
+                }
+            )
+    return rows
+
+
 def col_name(index: int) -> str:
     name = ""
     while index:
@@ -116,7 +158,7 @@ def row_xml(row: int, cells: list[tuple[int, str, int]], height: int | None = No
     return f'<row r="{row}"{height_attr}>{"".join(cell_xml(row, col, value, style) for col, value, style in cells)}</row>'
 
 
-def build_sheet(rows: list[dict[str, str]]) -> str:
+def build_scenario_sheet(rows: list[dict[str, str]]) -> str:
     sheet_rows: list[str] = []
     merges: list[str] = []
 
@@ -125,7 +167,7 @@ def build_sheet(rows: list[dict[str, str]]) -> str:
         (2, "測試編號", 1),
         (3, "測試項目", 1),
         (4, "Desktop", 2),
-        (5, "狀態", 1),
+        (5, "情境狀態", 1),
     ], height=26))
     sheet_rows.append(row_xml(2, [
         (4, "Win Chrome", 1),
@@ -142,13 +184,12 @@ def build_sheet(rows: list[dict[str, str]]) -> str:
         start_row = row_index
         module_style = module_styles[module_index % len(module_styles)]
         for item in module_rows:
-            symbol = status_symbol(item["status"])
-            p_style = platform_style(item["status"])
+            platform_status = normalize_platform_status(item["status"])
             sheet_rows.append(row_xml(row_index, [
                 (1, module if row_index == start_row else "", module_style),
                 (2, item["scenario_id"], 13),
                 (3, item["item"], 12),
-                (4, symbol, p_style),
+                (4, platform_status, platform_style(platform_status)),
                 (5, item["status"], 13),
             ], height=23))
             row_index += 1
@@ -160,6 +201,17 @@ def build_sheet(rows: list[dict[str, str]]) -> str:
     merge_xml = ""
     if merges:
         merge_xml = f'<mergeCells count="{len(merges)}">' + "".join(f'<mergeCell ref="{m}"/>' for m in merges) + "</mergeCells>"
+
+    validation_last_row = max(3, last_row)
+    data_validations = f'''
+  <dataValidations count="2">
+    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="D3:D{validation_last_row}">
+      <formula1>"{PLATFORM_STATUS_OPTIONS}"</formula1>
+    </dataValidation>
+    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="E3:E{validation_last_row}">
+      <formula1>"{SCENARIO_STATUS_OPTIONS}"</formula1>
+    </dataValidation>
+  </dataValidations>'''
 
     return f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
@@ -173,12 +225,68 @@ def build_sheet(rows: list[dict[str, str]]) -> str:
     <col min="2" max="2" width="24" customWidth="1"/>
     <col min="3" max="3" width="62" customWidth="1"/>
     <col min="4" max="4" width="14" customWidth="1"/>
-    <col min="5" max="5" width="16" customWidth="1"/>
+    <col min="5" max="5" width="18" customWidth="1"/>
   </cols>
   <sheetData>
     {''.join(sheet_rows)}
   </sheetData>
   {merge_xml}
+  {data_validations}
+</worksheet>'''
+
+
+def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
+    headers = [
+        "功能模組",
+        "測試案例 ID",
+        "對應情境 ID",
+        "標題",
+        "類型",
+        "優先級",
+        "前置條件",
+        "步驟",
+        "預期結果",
+        "自動化建議",
+        "備註",
+    ]
+    sheet_rows = [row_xml(1, [(index, header, 1) for index, header in enumerate(headers, start=1)], height=30)]
+
+    for row_index, item in enumerate(rows, start=2):
+        sheet_rows.append(row_xml(row_index, [
+            (1, item["feature"], 13),
+            (2, item["id"], 13),
+            (3, item["requirement_id"], 13),
+            (4, item["title"], 12),
+            (5, item["type"], 13),
+            (6, item["priority"], 13),
+            (7, item["preconditions"], 12),
+            (8, item["steps"], 12),
+            (9, item["expected"], 12),
+            (10, item["automation"], 13),
+            (11, item["notes"], 12),
+        ], height=82))
+
+    return f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <sheetViews>
+    <sheetView workbookViewId="0">
+      <pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/>
+    </sheetView>
+  </sheetViews>
+  <cols>
+    <col min="1" max="1" width="18" customWidth="1"/>
+    <col min="2" max="2" width="22" customWidth="1"/>
+    <col min="3" max="3" width="22" customWidth="1"/>
+    <col min="4" max="4" width="34" customWidth="1"/>
+    <col min="5" max="5" width="12" customWidth="1"/>
+    <col min="6" max="6" width="12" customWidth="1"/>
+    <col min="7" max="9" width="38" customWidth="1"/>
+    <col min="10" max="10" width="14" customWidth="1"/>
+    <col min="11" max="11" width="42" customWidth="1"/>
+  </cols>
+  <sheetData>
+    {''.join(sheet_rows)}
+  </sheetData>
 </worksheet>'''
 
 
@@ -230,15 +338,16 @@ def build_styles() -> str:
     <xf numFmtId="0" fontId="2" fillId="11" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
     <xf numFmtId="0" fontId="2" fillId="8" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
     <xf numFmtId="0" fontId="0" fillId="8" borderId="1" xfId="0" applyFill="1" applyBorder="1"><alignment vertical="center" wrapText="1"/></xf>
-    <xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf>
+    <xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
   </cellXfs>
   <cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
 </styleSheet>'''
 
 
-def write_xlsx(rows: list[dict[str, str]], output: Path) -> Path:
+def write_xlsx(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]], output: Path) -> Path:
     output.parent.mkdir(parents=True, exist_ok=True)
-    sheet_xml = build_sheet(rows)
+    scenario_sheet_xml = build_scenario_sheet(rows)
+    test_case_sheet_xml = build_test_case_sheet(test_case_rows)
     created = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
     files = {
@@ -248,6 +357,7 @@ def write_xlsx(rows: list[dict[str, str]], output: Path) -> Path:
   <Default Extension="xml" ContentType="application/xml"/>
   <Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>
   <Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
+  <Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
   <Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>
   <Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
   <Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
@@ -260,14 +370,19 @@ def write_xlsx(rows: list[dict[str, str]], output: Path) -> Path:
 </Relationships>''',
         "xl/workbook.xml": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
-  <sheets><sheet name="Scenario Matrix" sheetId="1" r:id="rId1"/></sheets>
+  <sheets>
+    <sheet name="測試情境" sheetId="1" r:id="rId1"/>
+    <sheet name="測試案例" sheetId="2" r:id="rId2"/>
+  </sheets>
 </workbook>''',
         "xl/_rels/workbook.xml.rels": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
   <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>
-  <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
+  <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/>
+  <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
 </Relationships>''',
-        "xl/worksheets/sheet1.xml": sheet_xml,
+        "xl/worksheets/sheet1.xml": scenario_sheet_xml,
+        "xl/worksheets/sheet2.xml": test_case_sheet_xml,
         "xl/styles.xml": build_styles(),
         "docProps/core.xml": f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -304,10 +419,13 @@ def main() -> None:
     parser.add_argument("--output", default="artifacts/generated/qa/scenario-matrix.xlsx")
     args = parser.parse_args()
 
-    rows = read_scenarios(Path(args.specs_root))
-    actual_output = write_xlsx(rows, Path(args.output))
+    specs_root = Path(args.specs_root)
+    rows = read_scenarios(specs_root)
+    test_case_rows = read_test_cases(specs_root)
+    actual_output = write_xlsx(rows, test_case_rows, Path(args.output))
     print(f"Generated Excel scenario matrix: {actual_output}")
     print(f"Total scenarios: {len(rows)}")
+    print(f"Total test cases: {len(test_case_rows)}")
 
 
 if __name__ == "__main__":
