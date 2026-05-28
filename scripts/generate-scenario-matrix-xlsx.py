@@ -365,7 +365,7 @@ def build_id_rule_sheet() -> str:
         ("項目", "規則", "範例", "用途"),
         ("測試情境 ID", "SC-{FEATURE}-{NNN}", "SC-LOGIN-001", "代表一個需求/情境"),
         ("測試案例 ID", "TC-{FEATURE}-{NNN}", "TC-LOGIN-001", "代表一個可執行的測試案例"),
-        ("執行結果", "寫在 execution-results.json", "Pass / Fail / Blocked", "避免重新產生 Excel 時覆蓋人工結果"),
+        ("執行結果", "寫在 qa-workspace/execution-results.csv", "Pass / Fail / Blocked", "避免重新產生 Excel 時覆蓋人工結果"),
         ("FEATURE", "使用 specs 資料夾名稱的大寫", "forgot-password -> FORGOT-PASSWORD", "讓 ID 可回推功能模組"),
         ("NNN", "三碼流水號，從 001 開始", "001, 002, 003", "讓排序穩定、方便追蹤"),
     ]
@@ -415,7 +415,7 @@ def build_guide_sheet() -> str:
         ("自動補齊", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1 會匯入 CSV、同步自動化佐證、補欄位、補 executed_at、驗證、產 Excel、產報告。"),
         ("建議指令", "重建 CSV", "python scripts\\sync-execution-results-sheet.py --export --sheet qa-workspace\\execution-results.csv"),
         ("建議指令", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1"),
-        ("建議指令", "包含 Word", ".\\scripts\\refresh-qa-artifacts.ps1 -IncludeWord"),
+        ("建議指令", "包含 PM Word", ".\\scripts\\refresh-qa-artifacts.ps1 -IncludePm -IncludeWord"),
     ]
     sheet_rows = [
         row_xml(index, [(col, value, 1 if index == 1 else 12) for col, value in enumerate(row, start=1)], height=34)
@@ -462,8 +462,8 @@ def build_overview_sheet(rows: list[dict[str, str]], test_case_rows: list[dict[s
         ("案例 Fail", str(failed), "execution-results.json / test_results"),
         ("案例 Blocked", str(blocked), "execution-results.json / test_results"),
         ("案例 Not Run / Ready", str(not_run), "execution-results.json / test_results"),
-        ("流程", "scenarios.md -> test-cases.json -> execution-results.json -> scenario-matrix.xlsx", "README.md"),
-        ("提醒", "請回填 execution-results.json，不要把 Excel 當唯一資料來源。", "QA workflow"),
+        ("流程", "scenarios.md -> test-cases.json -> qa-workspace/execution-results.csv -> scenario-matrix.xlsx", "README.md"),
+        ("提醒", "請回填 qa-workspace/execution-results.csv，不要手動逐一修改 execution-results.json。", "QA workflow"),
     ]
     sheet_rows = [
         row_xml(index, [(col, value, 1 if index == 1 else 12) for col, value in enumerate(row, start=1)], height=32)

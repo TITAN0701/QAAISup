@@ -1,136 +1,76 @@
-# Reporting Standard
+# 報告產出標準
 
-本專案統一使用 Allure 作為測試報告格式。
+目前先以 QA 文件為主，PM 摘要先視為選用產物。
 
-## Raw Report Location
+## QA 報告應該包含
 
-所有測試框架應輸出 raw result 到：
+| 區塊 | 內容 |
+|---|---|
+| 摘要 | 功能數量、測試案例數量、產生時間、整體狀態、回填來源。 |
+| 情境可測性統計 | `scenario` 的 Approved / Ready / Need Confirm / Blocked / Not Marked。 |
+| 測試案例執行統計 | `test_case` 的 Pass / Fail / Blocked / N/A / Not Run。 |
+| 佐證覆蓋 | 已填測試網址、截圖、其他佐證的數量。 |
+| 功能狀態明細 | 每個 feature 的狀態、待確認情境、通過/失敗/未執行數量。 |
+| 待釐清問題 | 尚未回答的 PM 問題數量。 |
+| QA 結論 | QA 對目前測試狀態的判斷。 |
 
-```txt
-artifacts/raw/allure-results/
-```
+## QA 報告不應該放
 
-Allure HTML report 輸出到：
+| 不建議內容 | 原因 |
+|---|---|
+| 大量測試步驟全文 | 會讓報告太長，步驟應保留在 `test-cases.json` 或 Excel。 |
+| 原始 stack trace 全文 | QA report 只放摘要與連結，細節放 Allure / CI artifact。 |
+| 沒有來源的結論 | 每個風險應能追到情境、案例、問題或佐證。 |
+| PM 對外敘述 | 目前還沒開始整理 PM 文件，先不要混進 QA report。 |
 
-```txt
-artifacts/generated/allure-report/
-```
+## QA 主要產物
 
-## Cypress Output
+| 產物 | 用途 |
+|---|---|
+| `qa-workspace/execution-results.csv` | QA 唯一主要回填來源。 |
+| `artifacts/generated/qa/scenario-matrix.xlsx` | Excel 檢視情境、案例、狀態、佐證。 |
+| `artifacts/generated/qa/scenario-matrix.md` | GitHub / PR 可讀的矩陣。 |
+| `artifacts/generated/qa/test-report.md` | QA 測試報告。 |
 
-Cypress 測試應輸出：
+## 自動化佐證
 
-```txt
-artifacts/raw/allure-results/
-```
-
-建議每個測試案例包含：
-
-- feature name
-- test case id
-- priority
-- screenshot on failure
-- video or trace if available
-
-## pytest Output
-
-pytest 測試應輸出：
-
-```txt
-artifacts/raw/allure-results/
-```
-
-建議每個測試案例包含：
-
-- feature name
-- API endpoint
-- request payload summary
-- response status
-- assertion failure detail
-
-## AI Report Input
-
-AI 產生測試報告時，只能讀取：
+Cypress / pytest 的輸出應集中到：
 
 ```txt
+artifacts/raw/
 artifacts/raw/allure-results/
 artifacts/generated/allure-report/
 ```
 
-以及 CI log。
-
-AI 不可自行創造：
-
-- passed count
-- failed count
-- skipped count
-- failed reason
-
-## AI Report Output
-
-AI 可產生：
+若要讓系統自動對應截圖或影片，檔名或測試名稱需要包含測試案例 ID：
 
 ```txt
-artifacts/generated/qa/test-report.md
-artifacts/generated/qa/failure-analysis.md
-artifacts/generated/pm/release-summary.md
-artifacts/generated/pm/release-summary.docx
+TC-FORGOT-PASSWORD-001
+TC-LOGIN-001
 ```
 
-PM summary 應聚焦：
+## 建議命名
 
-- 是否有阻擋 release 的風險
-- 哪些功能受影響
-- 是否需要 PM 或客戶決策
-- 測試範圍摘要
-- 測試執行概況
-
-PM summary 欄位名稱使用中文，狀態值才使用英文。
+```txt
+SC-{FEATURE}-001 = 測試情境
+TC-{FEATURE}-001 = 測試案例
+```
 
 範例：
 
 ```txt
-整體狀態: Not Evaluated
-測試結果統計: Passed / Failed / Skipped / Blocked
-發布建議: Approved / Blocked / Not Evaluated
+SC-LOGIN-001
+TC-LOGIN-001
 ```
 
-QA report 應聚焦：
-
-- failed tests
-- error message
-- likely owner
-- retry recommendation
-- related screenshots or logs
-
-## Report Audience
-
-| Report | Audience | Purpose |
-|---|---|---|
-| `artifacts/generated/pm/release-summary.md` | PM / lead | release 風險與決策摘要 |
-| `artifacts/generated/pm/release-summary.docx` | PM / lead / customer-facing owner | Word 版本，方便傳閱與留存 |
-| `artifacts/generated/qa/test-report.md` | QA | 測試結果與失敗案例 |
-| `artifacts/generated/qa/failure-analysis.md` | QA / Engineer | 失敗分類、可能原因與建議 owner |
-| `artifacts/generated/allure-report/` | QA / Engineer | Allure HTML 詳細報告 |
-
-PM 版本報告不應包含大量 stack trace。若需要技術細節，應連結到 QA report 或 Allure report。
-
-## PM Word Report
-
-PM 報告流程：
-
-```txt
-AI 產生 release-summary.md
-        ↓
-QA/PM 確認內容
-        ↓
-匯出 release-summary.docx
-```
-
-執行：
+## 一次產出 QA 文件
 
 ```powershell
-.\scripts\export-pm-report-docx.ps1
+.\scripts\refresh-qa-artifacts.ps1
 ```
 
-Markdown 是內部版本控管來源，Word 是 PM 對外傳閱或留存版本。
+預設只產 QA 文件。需要 PM 摘要時才加：
+
+```powershell
+.\scripts\refresh-qa-artifacts.ps1 -IncludePm
+```

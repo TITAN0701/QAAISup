@@ -3,6 +3,9 @@ param(
     [string]$SpecsRoot = "qa-workspace/specs",
 
     [Parameter(Mandatory=$false)]
+    [switch]$IncludePm,
+
+    [Parameter(Mandatory=$false)]
     [switch]$IncludeWord
 )
 
@@ -40,11 +43,13 @@ Write-Output "Step 6/7 Generate scenario matrix and Excel"
 .\scripts\generate-scenario-matrix.ps1 -SpecsRoot $SpecsRoot
 
 Write-Output ""
-Write-Output "Step 7/7 Generate QA / PM reports"
-if ($IncludeWord) {
+Write-Output "Step 7/7 Generate QA report"
+if ($IncludePm -and $IncludeWord) {
     .\scripts\generate-qa-report.ps1
-} else {
+} elseif ($IncludePm) {
     .\scripts\generate-qa-report.ps1 -SkipWord
+} else {
+    .\scripts\generate-qa-report.ps1 -SkipPm -SkipWord
 }
 
 Write-Output ""

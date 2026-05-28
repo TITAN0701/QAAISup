@@ -1,97 +1,107 @@
-# 測試執行結果填寫說明
+# QA 執行結果回填說明
 
-QA 主要回填 `qa-workspace/execution-results.csv`。這是一張可用 Excel 開啟的總表，用 `record_type` 區分情境與測試案例。
+QA 現階段只維護一份總表：
 
-`execution-results.json` 由 CSV 同步產生，保留給 schema 驗證、CI 與報告流程使用。不要逐個功能手動維護 JSON。
+```txt
+qa-workspace/execution-results.csv
+```
 
-## 欄位說明
+不要逐一手改各功能資料夾底下的 `execution-results.json`。那些 JSON 是系統同步與驗證用的中介檔，會由整理流程自動更新。
 
-| 欄位 | 誰填 | 說明 |
-|---|---|---|
-| `record_type` | 系統產生 | `scenario` 代表情境可測性，`test_case` 代表測試案例執行結果。 |
-| `feature` | 系統產生 | 功能資料夾名稱。 |
-| `item_id` | 系統產生 | `SC-...` 或 `TC-...` 編號，不要手動改。 |
-| `platform` | QA | 測試平台，例如 `Desktop / Win Chrome`。 |
-| `status` | QA | 測試結果，只能填 `Not Run`、`Ready`、`Pass`、`Fail`、`Blocked`、`N/A`。 |
-| `executed_at` | 工具產生 | 實際執行或確認時間。QA 不用手動填，產生 Excel 或執行 `--fix` 時會自動補。 |
-| `test_url` | QA | 實際測試的頁面位址，例如 `https://qa.example.com/forgot-password`。 |
-| `screenshot` | QA | 截圖檔案路徑或連結，例如 `artifacts/screenshots/forgot-password-001.png`。 |
-| `evidence` | QA | 影片、Allure、CI artifact、Issue、PR 或其他佐證連結。 |
-| `notes` | QA | 補充說明，例如失敗原因、阻擋原因或測試限制。 |
+## 操作流程
 
-## 狀態用法
+```txt
+打開 qa-workspace/execution-results.csv
+        ↓
+QA 填狀態、測試網址、截圖、佐證、備註
+        ↓
+執行 .\scripts\refresh-qa-artifacts.ps1
+        ↓
+產出 QA Excel / Markdown / QA report
+```
 
-| status | 何時使用 |
+## QA 要填的欄位
+
+| 欄位 | 要填什麼 |
 |---|---|
-| `Not Run` | 還沒測。 |
-| `Ready` | 已準備好可以測，但尚未執行。 |
-| `Pass` | 已測試通過。 |
-| `Fail` | 已測試失敗。 |
+| `record_type` | 不要改。`scenario` 是測試情境，`test_case` 是測試案例。 |
+| `feature` | 不要改。功能資料夾名稱。 |
+| `item_id` | 不要改。`SC-...` 或 `TC-...` 編號。 |
+| `title` | 不要改。情境或案例標題。 |
+| `platform` | 測試平台，例如 `Desktop / Win Chrome`。 |
+| `status` | 執行狀態，請用下方固定值。 |
+| `test_url` | 實際測試網址，例如 SIT / QA 環境網址。 |
+| `screenshot` | 截圖路徑或連結。失敗、阻塞、重要流程建議填。 |
+| `evidence` | Allure、CI artifact、Issue、PR、Log 或影片連結。 |
+| `notes` | 補充說明，例如失敗原因、阻塞原因、等待誰處理。 |
+
+## status 怎麼填
+
+| status | 使用時機 |
+|---|---|
+| `Not Run` | 尚未測試。 |
+| `Ready` | 已準備好可以測，但還沒執行。 |
+| `Pass` | 測試通過。 |
+| `Fail` | 測試失敗。 |
 | `Blocked` | 因環境、帳號、API、需求不清楚等原因無法測。 |
 | `N/A` | 這個平台或情境不適用。 |
 
-## 建議更新方式
-
-QA 可以直接編輯 `qa-workspace/execution-results.csv`：
-
-```json
-{
-record_type,feature,item_id,title,platform,status,test_url,screenshot,evidence,notes
-test_case,forgot-password,TC-FORGOT-PASSWORD-001,忘記密碼入口導向正確,Desktop / Win Chrome,Pass,https://qa.example.com/forgot-password,artifacts/screenshots/forgot-password-001.png,artifacts/generated/allure-report/index.html,忘記密碼入口可正常導向。
-}
-```
-
-存檔後只要執行一次，系統會自動補欄位、補 `executed_at`、驗證、產 Excel、產報告：
-
-```powershell
-.\scripts\refresh-qa-artifacts.ps1
-```
-
-如果新增功能或測試案例後要重建 CSV：
-
-```powershell
-python scripts\sync-execution-results-sheet.py --export --sheet qa-workspace\execution-results.csv
-```
-
-若 Cypress 截圖、影片或測試名稱包含 `TC-...`，一鍵更新也會自動把佐證回填到 `screenshot` / `evidence`。
-
-範例命名：
+## 情境和案例的差別
 
 ```txt
-artifacts/raw/cypress/screenshots/.../TC-FORGOT-PASSWORD-001.png
+scenario  = 確認這個功能情境是否可測、是否還有需求問題
+test_case = 實際測試步驟的執行結果
 ```
 
-若需要連 PM Word 一起產生：
+常見狀況：
 
-```powershell
-.\scripts\refresh-qa-artifacts.ps1 -IncludeWord
+```txt
+scenario = Need Confirm
+test_case = Pass
 ```
 
-`update-execution-result.py` 仍保留給需要用指令更新單筆結果時使用，日常 QA 回填不需要用它：
+這代表測試案例可以先跑過，但需求或驗收條件還沒有完全確認，所以報告會保留風險。
 
-```powershell
-python scripts\update-execution-result.py `
-  --feature forgot-password `
-  --test-case-id TC-FORGOT-PASSWORD-001 `
-  --status Pass `
-  --test-url https://qa.example.com/forgot-password `
-  --screenshot artifacts/screenshots/forgot-password-001.png `
-  --evidence artifacts/generated/allure-report/index.html `
-  --notes "忘記密碼入口可正常導向。"
-```
-
-被環境卡住時：
-
-```powershell
-python scripts\update-execution-result.py `
-  --feature forgot-password `
-  --test-case-id TC-FORGOT-PASSWORD-004 `
-  --status Blocked `
-  --notes "目前沒有 Email 測試環境，無法確認重設密碼通知是否送出。"
-```
-
-更新後重新產出 Excel：
+## 一次整理全部 QA 產物
 
 ```powershell
 .\scripts\refresh-qa-artifacts.ps1
+```
+
+這個指令會做：
+
+```txt
+匯入 CSV
+  ↓
+驗證 SDD
+  ↓
+驗證 test-cases.json
+  ↓
+同步自動化截圖 / 佐證
+  ↓
+自動補 executed_at
+  ↓
+產出 scenario-matrix.md / scenario-matrix.xlsx
+  ↓
+產出 QA report
+```
+
+## 產出要看哪裡
+
+| 產物 | 用途 |
+|---|---|
+| `artifacts/generated/qa/scenario-matrix.xlsx` | 給 QA 用 Excel 看情境、案例、狀態、佐證。 |
+| `artifacts/generated/qa/scenario-matrix.md` | 給 GitHub / PR 看文字版矩陣。 |
+| `artifacts/generated/qa/test-report.md` | QA 測試報告。 |
+
+PM 摘要目前不是主要流程。需要時才執行：
+
+```powershell
+.\scripts\refresh-qa-artifacts.ps1 -IncludePm
+```
+
+需要 PM Word 時：
+
+```powershell
+.\scripts\refresh-qa-artifacts.ps1 -IncludePm -IncludeWord
 ```

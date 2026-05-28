@@ -9,11 +9,13 @@
     [string]$QaReport = "artifacts/generated/qa/test-report.md",
 
     [Parameter(Mandatory=$false)]
-    [string]$PmSummary = "artifacts/generated/pm/release-summary.md"
-,
+    [string]$PmSummary = "artifacts/generated/pm/release-summary.md",
 
     [Parameter(Mandatory=$false)]
     [string]$PmWord = "artifacts/generated/pm/release-summary.docx",
+
+    [Parameter(Mandatory=$false)]
+    [switch]$SkipPm,
 
     [Parameter(Mandatory=$false)]
     [switch]$SkipWord
@@ -208,6 +210,64 @@ function Get-ExecutionStats {
     }
 }
 
+function Get-ScenarioReviewStats {
+    param([string]$Path)
+
+    $default = [PSCustomObject]@{
+        Total = 0
+        Approved = 0
+        Ready = 0
+        NeedConfirm = 0
+        Blocked = 0
+        NotMarked = 0
+    }
+
+    if (-not (Test-Path $Path)) {
+        return $default
+    }
+
+    try {
+        $content = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+        $reviews = @($content.scenario_reviews)
+        return [PSCustomObject]@{
+            Total = $reviews.Count
+            Approved = @($reviews | Where-Object { $_.status -eq "Approved" }).Count
+            Ready = @($reviews | Where-Object { $_.status -eq "Ready" }).Count
+            NeedConfirm = @($reviews | Where-Object { $_.status -eq "Need Confirm" }).Count
+            Blocked = @($reviews | Where-Object { $_.status -eq "Blocked" }).Count
+            NotMarked = @($reviews | Where-Object { $_.status -eq "Not Marked" }).Count
+        }
+    } catch {
+        return $default
+    }
+}
+
+function Get-ExecutionEvidenceStats {
+    param([string]$Path)
+
+    $default = [PSCustomObject]@{
+        TestUrl = 0
+        Screenshot = 0
+        Evidence = 0
+    }
+
+    if (-not (Test-Path $Path)) {
+        return $default
+    }
+
+    try {
+        $content = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+        $results = @($content.test_results)
+        return [PSCustomObject]@{
+            TestUrl = @($results | Where-Object { -not [string]::IsNullOrWhiteSpace($_.test_url) }).Count
+            Screenshot = @($results | Where-Object { -not [string]::IsNullOrWhiteSpace($_.screenshot) }).Count
+            Evidence = @($results | Where-Object { -not [string]::IsNullOrWhiteSpace($_.evidence) }).Count
+        }
+    } catch {
+        return $default
+    }
+}
+
 function Get-ReleaseStatus {
     param(
         [object]$ScenarioStats,
@@ -256,6 +316,8 @@ function Get-FeatureReportData {
     if ($null -eq $scenarioStats) {
         $scenarioStats = Get-ScenarioStats -Content $scenarios
     }
+    $scenarioReviewStats = Get-ScenarioReviewStats -Path $executionResultsPath
+    $evidenceStats = Get-ExecutionEvidenceStats -Path $executionResultsPath
     $testCaseCount = Get-TestCaseCount -Path $testCasesPath
     $taskStats = Get-TaskStats -Content $tasks
     $openQuestions = Get-OpenQuestionCount -Content $questions
@@ -279,6 +341,8 @@ function Get-FeatureReportData {
         ExecutionResultsPath = $executionResultsPath
         TasksPath = $tasksPath
         ScenarioStats = $scenarioStats
+        ScenarioReviewStats = $scenarioReviewStats
+        EvidenceStats = $evidenceStats
         TestCaseCount = $testCaseCount
         TaskStats = $taskStats
         OpenQuestions = $openQuestions
@@ -326,6 +390,15 @@ $failedScenarios = ($featureData | ForEach-Object { $_.ScenarioStats.Failed } | 
 $blockedScenarios = ($featureData | ForEach-Object { $_.ScenarioStats.Blocked } | Measure-Object -Sum).Sum
 $skippedScenarios = ($featureData | ForEach-Object { $_.ScenarioStats.Skipped } | Measure-Object -Sum).Sum
 $notRunScenarios = ($featureData | ForEach-Object { $_.ScenarioStats.NotRun } | Measure-Object -Sum).Sum
+$reviewTotal = ($featureData | ForEach-Object { $_.ScenarioReviewStats.Total } | Measure-Object -Sum).Sum
+$reviewApproved = ($featureData | ForEach-Object { $_.ScenarioReviewStats.Approved } | Measure-Object -Sum).Sum
+$reviewReady = ($featureData | ForEach-Object { $_.ScenarioReviewStats.Ready } | Measure-Object -Sum).Sum
+$reviewNeedConfirm = ($featureData | ForEach-Object { $_.ScenarioReviewStats.NeedConfirm } | Measure-Object -Sum).Sum
+$reviewBlocked = ($featureData | ForEach-Object { $_.ScenarioReviewStats.Blocked } | Measure-Object -Sum).Sum
+$reviewNotMarked = ($featureData | ForEach-Object { $_.ScenarioReviewStats.NotMarked } | Measure-Object -Sum).Sum
+$testUrlCount = ($featureData | ForEach-Object { $_.EvidenceStats.TestUrl } | Measure-Object -Sum).Sum
+$screenshotCount = ($featureData | ForEach-Object { $_.EvidenceStats.Screenshot } | Measure-Object -Sum).Sum
+$evidenceCount = ($featureData | ForEach-Object { $_.EvidenceStats.Evidence } | Measure-Object -Sum).Sum
 $totalTasks = ($featureData | ForEach-Object { $_.TaskStats.Total } | Measure-Object -Sum).Sum
 $doneTasks = ($featureData | ForEach-Object { $_.TaskStats.Done } | Measure-Object -Sum).Sum
 $openTasks = ($featureData | ForEach-Object { $_.TaskStats.Open } | Measure-Object -Sum).Sum
@@ -341,7 +414,7 @@ $releaseStatus = if (($featureData | Where-Object { $_.ReleaseStatus -eq "Not Re
 }
 
 $featureRows = ($featureData | ForEach-Object {
-    "| $($_.FeatureName) | $($_.ReleaseStatus) | $($_.ScenarioStats.Total) | $($_.TestCaseCount) | $($_.ScenarioStats.Passed) | $($_.ScenarioStats.Failed) | $($_.ScenarioStats.NotRun) | $($_.TaskStats.Open) | $($_.OpenQuestions) |"
+    "| $($_.FeatureName) | $($_.ReleaseStatus) | $($_.ScenarioReviewStats.NeedConfirm) | $($_.TestCaseCount) | $($_.ScenarioStats.Passed) | $($_.ScenarioStats.Failed) | $($_.ScenarioStats.NotRun) | $($_.EvidenceStats.TestUrl) | $($_.EvidenceStats.Screenshot + $_.EvidenceStats.Evidence) | $($_.OpenQuestions) |"
 }) -join "`n"
 
 $testedFunctionsSummary = if ($isSingleFeature) {
@@ -353,7 +426,7 @@ $testedFunctionsSummary = if ($isSingleFeature) {
 $acceptanceSummary = if ($isSingleFeature) {
     $primary.AcceptanceSummary
 } else {
-    ($featureData | ForEach-Object { "- $($_.FeatureName): 情境 $($_.ScenarioStats.Total) 筆，通過 $($_.ScenarioStats.Passed) 筆，未標記 $($_.ScenarioStats.NotRun) 筆。" }) -join "`n"
+    ($featureData | ForEach-Object { "- $($_.FeatureName): 測試案例 $($_.ScenarioStats.Total) 筆，通過 $($_.ScenarioStats.Passed) 筆，未執行 $($_.ScenarioStats.NotRun) 筆；情境待確認 $($_.ScenarioReviewStats.NeedConfirm) 筆。" }) -join "`n"
 }
 
 $businessGoalSummary = if ($isSingleFeature) {
@@ -366,7 +439,9 @@ $scenarioMatrixMd = "artifacts/generated/qa/scenario-matrix.md"
 $scenarioMatrixXlsx = "artifacts/generated/qa/scenario-matrix.xlsx"
 
 New-Item -ItemType Directory -Force -Path (Split-Path $QaReport -Parent) | Out-Null
-New-Item -ItemType Directory -Force -Path (Split-Path $PmSummary -Parent) | Out-Null
+if (-not $SkipPm) {
+    New-Item -ItemType Directory -Force -Path (Split-Path $PmSummary -Parent) | Out-Null
+}
 
 $qaReportContent = @"
 # QA 測試報告：$title
@@ -377,8 +452,20 @@ $qaReportContent = @"
 - 測試案例數量：$totalTestCases
 - 產生時間：$generatedAt
 - 發布狀態：$releaseStatus
+- QA 回填來源：qa-workspace/execution-results.csv
 
-## 測試執行結果統計
+## 情境可測性統計
+
+| 項目 | 數量 |
+|---|---:|
+| Total | $reviewTotal |
+| Approved | $reviewApproved |
+| Ready | $reviewReady |
+| Need Confirm | $reviewNeedConfirm |
+| Blocked | $reviewBlocked |
+| Not Marked | $reviewNotMarked |
+
+## 測試案例執行統計
 
 | 項目 | 數量 |
 |---|---:|
@@ -388,6 +475,14 @@ $qaReportContent = @"
 | Blocked | $blockedScenarios |
 | Skipped | $skippedScenarios |
 | Not Run / Not Marked | $notRunScenarios |
+
+## 佐證覆蓋
+
+| 項目 | 數量 |
+|---|---:|
+| 已填測試位址 | $testUrlCount |
+| 已填截圖 | $screenshotCount |
+| 已填其他佐證 | $evidenceCount |
 
 ## 本次測試功能
 
@@ -407,8 +502,8 @@ $acceptanceSummary
 
 ## 功能狀態明細
 
-| 功能 | 狀態 | Scenarios | Test Cases | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
+| 功能 | 狀態 | 情境待確認 | Test Cases | Passed | Failed | Not Run | URL | Evidence | Open PM Questions |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
 $featureRows
 
 ## 檢查結果
@@ -420,6 +515,7 @@ $featureRows
 | 未回答 PM Answer | $openQuestionsTotal |
 | Cypress spec 已建立 | $(($featureData | Where-Object { $_.HasCypressSpec }).Count) |
 | Allure raw results | $(if (($featureData | Where-Object { $_.HasAllureResults }).Count -gt 0) { "OK" } else { "Not Found" }) |
+| QA 回填總表 | qa-workspace/execution-results.csv |
 
 ## 測試範圍來源
 
@@ -427,6 +523,7 @@ $featureRows
 - qa-workspace/specs/{feature}/scenarios.md
 - qa-workspace/specs/{feature}/test-cases.json
 - qa-workspace/specs/{feature}/execution-results.json
+- qa-workspace/execution-results.csv
 
 ## 測試情境矩陣
 
@@ -445,6 +542,7 @@ $featureRows
 原因：
 
 - 尚未標記測試結果的情境數量：$notRunScenarios
+- 仍待確認的測試情境數量：$reviewNeedConfirm
 - 未回答 PM 問題數量：$openQuestionsTotal
 - 未完成任務數量：$openTasks
 "@
@@ -462,6 +560,7 @@ $releaseStatus
 
 - 產生時間：$generatedAt
 - 測試案例數量：$totalTestCases
+- QA 回填來源：qa-workspace/execution-results.csv
 
 ## 本次測試功能
 
@@ -475,7 +574,18 @@ $acceptanceSummary
 
 $businessGoalSummary
 
-## 測試執行結果統計
+## 情境可測性統計
+
+| 項目 | 數量 |
+|---|---:|
+| Total | $reviewTotal |
+| Approved | $reviewApproved |
+| Ready | $reviewReady |
+| Need Confirm | $reviewNeedConfirm |
+| Blocked | $reviewBlocked |
+| Not Marked | $reviewNotMarked |
+
+## 測試案例執行統計
 
 | 項目 | 數量 |
 |---|---:|
@@ -486,6 +596,14 @@ $businessGoalSummary
 | Skipped | $skippedScenarios |
 | Not Run / Not Marked | $notRunScenarios |
 
+## 佐證覆蓋
+
+| 項目 | 數量 |
+|---|---:|
+| 已填測試位址 | $testUrlCount |
+| 已填截圖 | $screenshotCount |
+| 已填其他佐證 | $evidenceCount |
+
 ## QA 任務狀態
 
 | 項目 | 數量 |
@@ -495,8 +613,8 @@ $businessGoalSummary
 
 ## 功能狀態明細
 
-| 功能 | 狀態 | Scenarios | Test Cases | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
-|---|---|---:|---:|---:|---:|---:|---:|---:|
+| 功能 | 狀態 | 情境待確認 | Test Cases | Passed | Failed | Not Run | URL | Evidence | Open PM Questions |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
 $featureRows
 
 ## 發布建議
@@ -508,6 +626,7 @@ $featureRows
 - 尚未回答 PM 問題：$openQuestionsTotal
 - 尚未完成 QA 任務：$openTasks
 - 尚未標記測試結果的情境：$notRunScenarios
+- 仍待確認的測試情境：$reviewNeedConfirm
 
 ## 主要風險
 
@@ -525,13 +644,19 @@ $featureRows
 - 測試情境：qa-workspace/specs/{feature}/scenarios.md
 - 測試案例：qa-workspace/specs/{feature}/test-cases.json
 - 測試執行結果：qa-workspace/specs/{feature}/execution-results.json
+- QA 回填總表：qa-workspace/execution-results.csv
 "@
 
 Set-Content -LiteralPath $QaReport -Value $qaReportContent -Encoding UTF8
-Set-Content -LiteralPath $PmSummary -Value $pmSummaryContent -Encoding UTF8
 
+$pmStatus = "Skipped"
 $wordStatus = "Skipped"
-if (-not $SkipWord) {
+if (-not $SkipPm) {
+    Set-Content -LiteralPath $PmSummary -Value $pmSummaryContent -Encoding UTF8
+    $pmStatus = $PmSummary
+}
+
+if (-not $SkipPm -and -not $SkipWord) {
     $exportScript = Join-Path "scripts" "export-pm-report-docx.ps1"
     if (Test-Path $exportScript) {
         $exportOutput = & ".\$exportScript" -Source $PmSummary -Output $PmWord
@@ -550,7 +675,7 @@ if (-not $SkipWord) {
 Write-Output "Generated QA report:"
 Write-Output "  $QaReport"
 Write-Output "Generated PM summary:"
-Write-Output "  $PmSummary"
+Write-Output "  $pmStatus"
 Write-Output "Generated PM Word report:"
 Write-Output "  $wordStatus"
 Write-Output ""

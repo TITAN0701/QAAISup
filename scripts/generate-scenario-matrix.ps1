@@ -3,8 +3,7 @@
     [string]$SpecsRoot = "qa-workspace/specs",
 
     [Parameter(Mandatory=$false)]
-    [string]$Output = "artifacts/generated/qa/scenario-matrix.md"
-,
+    [string]$Output = "artifacts/generated/qa/scenario-matrix.md",
 
     [Parameter(Mandatory=$false)]
     [string]$ExcelOutput = "artifacts/generated/qa/scenario-matrix.xlsx",
@@ -66,6 +65,33 @@ function Get-ScenarioRows {
     return $rows
 }
 
+function Get-ScenarioReviewStatuses {
+    param([string]$SpecsRoot)
+
+    $statuses = @{}
+    Get-ChildItem -Path $SpecsRoot -Directory |
+        Where-Object { $_.Name -notmatch '^[._]' } |
+        ForEach-Object {
+            $path = Join-Path $_.FullName "execution-results.json"
+            if (-not (Test-Path $path)) {
+                return
+            }
+
+            try {
+                $content = Get-Content -LiteralPath $path -Raw -Encoding UTF8 | ConvertFrom-Json
+                foreach ($review in @($content.scenario_reviews)) {
+                    if ($review.scenario_id) {
+                        $statuses[$review.scenario_id] = if ([string]::IsNullOrWhiteSpace($review.status)) { "Not Marked" } else { $review.status }
+                    }
+                }
+            } catch {
+                Write-Warning "Cannot read scenario reviews: $path"
+            }
+        }
+
+    return $statuses
+}
+
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
@@ -91,10 +117,19 @@ if ($pythonCommand) {
     $normalizeOutput | Write-Output
 }
 
+$scenarioReviewStatuses = Get-ScenarioReviewStatuses -SpecsRoot $SpecsRoot
+foreach ($row in $allRows) {
+    if ($scenarioReviewStatuses.ContainsKey($row.ScenarioId)) {
+        $row.Status = $scenarioReviewStatuses[$row.ScenarioId]
+    }
+}
+
 $generatedAt = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $total = $allRows.Count
-$passed = ($allRows | Where-Object { $_.Status -match '^(Passed|通過)$' }).Count
-$failed = ($allRows | Where-Object { $_.Status -match '^(Failed|失敗)$' }).Count
+$approved = ($allRows | Where-Object { $_.Status -eq "Approved" }).Count
+$ready = ($allRows | Where-Object { $_.Status -eq "Ready" }).Count
+$needConfirm = ($allRows | Where-Object { $_.Status -eq "Need Confirm" }).Count
+$blocked = ($allRows | Where-Object { $_.Status -eq "Blocked" }).Count
 $notMarked = ($allRows | Where-Object { $_.Status -eq "Not Marked" }).Count
 $autoCandidates = ($allRows | Where-Object { $_.AutomationCandidate -match 'true|yes|是' }).Count
 
@@ -113,8 +148,10 @@ $content = @"
 
 - 產生時間：$generatedAt
 - 情境總數：$total
-- Passed：$passed
-- Failed：$failed
+- Approved：$approved
+- Ready：$ready
+- Need Confirm：$needConfirm
+- Blocked：$blocked
 - Not Marked：$notMarked
 - Automation Candidate：$autoCandidates
 
