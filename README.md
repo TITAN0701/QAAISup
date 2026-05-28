@@ -123,12 +123,13 @@ QA 支援 PM 的 SDD 流程工具。
 | PM 摘要 | `artifacts/generated/pm/release-summary.md` |
 | PM Word | `artifacts/generated/pm/release-summary.docx` |
 
-`scenario-matrix.xlsx` 內有四個工作表：
+`scenario-matrix.xlsx` 內有五個工作表：
 
 - `總覽`：顯示情境數、案例數、待確認數、執行結果統計與資料來源。
 - `測試情境`：彙整 `scenarios.md`，並從 `execution-results.json` 顯示可測性與平台結果。
 - `測試案例`：彙整所有 `test-cases.json`，並從 `execution-results.json` 顯示執行狀態。
 - `編碼規則`：說明 `SC-{FEATURE}-001` 與 `TC-{FEATURE}-001` 的命名方式。
+- `填寫說明`：說明 `execution-results.json` 欄位、狀態用法與自動寫入時間的指令。
 
 資料分工：
 

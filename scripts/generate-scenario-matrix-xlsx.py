@@ -400,6 +400,49 @@ def build_id_rule_sheet() -> str:
 </worksheet>'''
 
 
+def build_guide_sheet() -> str:
+    rows = [
+        ("區塊", "欄位 / 狀態", "填寫方式"),
+        ("原則", "Excel", "Excel 是產出報告，不建議當唯一人工維護來源。"),
+        ("原則", "execution-results.json", "QA 回填測試結果與人工狀態的來源。"),
+        ("欄位", "test_case_id", "對應 test-cases.json 的測試案例 ID，不要手動改。"),
+        ("欄位", "platform", "測試平台，例如 Desktop / Win Chrome。"),
+        ("欄位", "status", "只能填 Not Run、Ready、Pass、Fail、Blocked、N/A。"),
+        ("欄位", "executed_at", "實際執行時間，建議用 update-execution-result.py 自動填。"),
+        ("欄位", "evidence", "截圖、影片、Allure、CI artifact、Issue 或 PR 連結。"),
+        ("欄位", "notes", "失敗原因、阻擋原因或補充說明。"),
+        ("狀態", "Not Run", "還沒測。"),
+        ("狀態", "Ready", "已準備好可以測，但尚未執行。"),
+        ("狀態", "Pass", "已測試通過。"),
+        ("狀態", "Fail", "已測試失敗。"),
+        ("狀態", "Blocked", "因環境、帳號、API、需求不清楚等原因無法測。"),
+        ("狀態", "N/A", "這個平台或情境不適用。"),
+        ("建議指令", "更新結果", "python scripts\\update-execution-result.py --feature forgot-password --test-case-id TC-FORGOT-PASSWORD-001 --status Pass"),
+        ("建議指令", "重新產出", "python scripts\\validate-execution-results.py；.\\scripts\\generate-scenario-matrix.ps1"),
+    ]
+    sheet_rows = [
+        row_xml(index, [(col, value, 1 if index == 1 else 12) for col, value in enumerate(row, start=1)], height=34)
+        for index, row in enumerate(rows, start=1)
+    ]
+
+    return f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <sheetViews>
+    <sheetView workbookViewId="0">
+      <pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/>
+    </sheetView>
+  </sheetViews>
+  <cols>
+    <col min="1" max="1" width="18" customWidth="1"/>
+    <col min="2" max="2" width="26" customWidth="1"/>
+    <col min="3" max="3" width="86" customWidth="1"/>
+  </cols>
+  <sheetData>
+    {''.join(sheet_rows)}
+  </sheetData>
+</worksheet>'''
+
+
 def build_overview_sheet(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]]) -> str:
     scenario_total = len(rows)
     test_case_total = len(test_case_rows)
@@ -503,6 +546,7 @@ def write_xlsx(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]],
     scenario_sheet_xml = build_scenario_sheet(rows)
     test_case_sheet_xml = build_test_case_sheet(test_case_rows)
     id_rule_sheet_xml = build_id_rule_sheet()
+    guide_sheet_xml = build_guide_sheet()
     created = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
     files = {
@@ -515,6 +559,7 @@ def write_xlsx(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]],
   <Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
   <Override PartName="/xl/worksheets/sheet3.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
   <Override PartName="/xl/worksheets/sheet4.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
+  <Override PartName="/xl/worksheets/sheet5.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
   <Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>
   <Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>
   <Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
@@ -532,6 +577,7 @@ def write_xlsx(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]],
     <sheet name="測試情境" sheetId="2" r:id="rId2"/>
     <sheet name="測試案例" sheetId="3" r:id="rId3"/>
     <sheet name="編碼規則" sheetId="4" r:id="rId4"/>
+    <sheet name="填寫說明" sheetId="5" r:id="rId5"/>
   </sheets>
 </workbook>''',
         "xl/_rels/workbook.xml.rels": '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -540,12 +586,14 @@ def write_xlsx(rows: list[dict[str, str]], test_case_rows: list[dict[str, str]],
   <Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/>
   <Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet3.xml"/>
   <Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet4.xml"/>
-  <Relationship Id="rId5" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
+  <Relationship Id="rId5" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet5.xml"/>
+  <Relationship Id="rId6" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>
 </Relationships>''',
         "xl/worksheets/sheet1.xml": overview_sheet_xml,
         "xl/worksheets/sheet2.xml": scenario_sheet_xml,
         "xl/worksheets/sheet3.xml": test_case_sheet_xml,
         "xl/worksheets/sheet4.xml": id_rule_sheet_xml,
+        "xl/worksheets/sheet5.xml": guide_sheet_xml,
         "xl/styles.xml": build_styles(),
         "docProps/core.xml": f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
