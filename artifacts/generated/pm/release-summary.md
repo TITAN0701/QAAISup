@@ -8,7 +8,7 @@ Not Evaluated
 
 本摘要根據 QA workspace 文件產生，包含 3 個功能。
 
-- 產生時間：2026-05-28 13:12:02
+- 產生時間：2026-05-28 13:30:25
 - 測試案例數量：14
 
 ## 本次測試功能
@@ -19,7 +19,7 @@ Not Evaluated
 
 ## 驗收重點
 
-- forgot-password: 情境 4 筆，通過 0 筆，未標記 4 筆。
+- forgot-password: 情境 4 筆，通過 0 筆，未標記 0 筆。
 - login: 情境 6 筆，通過 0 筆，未標記 6 筆。
 - register: 情境 4 筆，通過 0 筆，未標記 4 筆。
 
@@ -34,9 +34,9 @@ Not Evaluated
 | Total | 14 |
 | Passed | 0 |
 | Failed | 0 |
-| Blocked | 0 |
+| Blocked | 4 |
 | Skipped | 0 |
-| Not Run / Not Marked | 14 |
+| Not Run / Not Marked | 10 |
 
 ## QA 任務狀態
 
@@ -49,7 +49,7 @@ Not Evaluated
 
 | 功能 | 狀態 | Scenarios | Test Cases | Passed | Failed | Not Run | Open Tasks | Open PM Questions |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
-| forgot-password | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 11 | 4 |
+| forgot-password | Not Recommended | 4 | 4 | 0 | 0 | 0 | 11 | 4 |
 | login | Not Evaluated | 6 | 6 | 0 | 0 | 6 | 11 | 8 |
 | register | Not Evaluated | 4 | 4 | 0 | 0 | 4 | 11 | 4 |
 
@@ -61,7 +61,7 @@ Not Evaluated
 
 - 尚未回答 PM 問題：16
 - 尚未完成 QA 任務：33
-- 尚未標記測試結果的情境：14
+- 尚未標記測試結果的情境：10
 
 ## 主要風險
 

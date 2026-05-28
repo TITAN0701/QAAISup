@@ -49,6 +49,14 @@ QA 可以直接編輯 `execution-results.json`：
 .\scripts\refresh-qa-artifacts.ps1
 ```
 
+若 Cypress 截圖、影片或測試名稱包含 `TC-...`，一鍵更新也會自動把佐證回填到 `screenshot` / `evidence`。
+
+範例命名：
+
+```txt
+artifacts/raw/cypress/screenshots/.../TC-FORGOT-PASSWORD-001.png
+```
+
 若需要連 PM Word 一起產生：
 
 ```powershell

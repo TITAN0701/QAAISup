@@ -16,23 +16,27 @@ $OutputEncoding = $utf8NoBom
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
-Write-Output "Step 1/5 Validate SDD"
+Write-Output "Step 1/6 Validate SDD"
 .\scripts\validate-sdd.ps1
 
 Write-Output ""
-Write-Output "Step 2/5 Validate test cases"
+Write-Output "Step 2/6 Validate test cases"
 python scripts\validate-testcases.py --specs-root $SpecsRoot
 
 Write-Output ""
-Write-Output "Step 3/5 Auto-fill and validate execution results"
+Write-Output "Step 3/6 Sync automation evidence"
+python scripts\sync-automation-evidence.py --specs-root $SpecsRoot
+
+Write-Output ""
+Write-Output "Step 4/6 Auto-fill and validate execution results"
 python scripts\validate-execution-results.py --specs-root $SpecsRoot --fix
 
 Write-Output ""
-Write-Output "Step 4/5 Generate scenario matrix and Excel"
+Write-Output "Step 5/6 Generate scenario matrix and Excel"
 .\scripts\generate-scenario-matrix.ps1 -SpecsRoot $SpecsRoot
 
 Write-Output ""
-Write-Output "Step 5/5 Generate QA / PM reports"
+Write-Output "Step 6/6 Generate QA / PM reports"
 if ($IncludeWord) {
     .\scripts\generate-qa-report.ps1
 } else {

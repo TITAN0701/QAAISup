@@ -65,19 +65,16 @@ jobs:
           TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
           TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
 
-      - name: Generate scenario matrix
-        if: always()
-        shell: pwsh
-        run: ./scripts/generate-scenario-matrix.ps1
-
       - name: Generate Allure report
         if: always()
         run: npm run allure:generate
 
-      - name: Generate QA and PM reports
+      - name: Refresh QA artifacts
         if: always()
         shell: pwsh
-        run: ./scripts/generate-qa-report.ps1
+        run: ./scripts/refresh-qa-artifacts.ps1 -IncludeWord
+        env:
+          CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
 
       - name: Upload Allure report
         if: always()

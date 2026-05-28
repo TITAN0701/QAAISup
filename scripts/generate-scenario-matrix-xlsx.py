@@ -306,21 +306,13 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
     headers = [
         "功能模組",
         "測試案例 ID",
-        "對應情境 ID",
         "標題",
-        "類型",
         "優先級",
-        "前置條件",
-        "測試資料",
-        "步驟",
-        "預期結果",
-        "自動化建議",
         "平台",
         "執行狀態",
         "執行時間",
         "測試位址",
-        "截圖畫面",
-        "佐證",
+        "截圖 / 佐證",
         "備註",
     ]
     sheet_rows = [row_xml(1, [(index, header, 1) for index, header in enumerate(headers, start=1)], height=30)]
@@ -329,28 +321,20 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
         sheet_rows.append(row_xml(row_index, [
             (1, item["feature"], 13),
             (2, item["id"], 13),
-            (3, item["requirement_id"], 13),
-            (4, item["title"], 12),
-            (5, item["type"], 13),
-            (6, item["priority"], 13),
-            (7, item["preconditions"], 12),
-            (8, item["test_data"], 12),
-            (9, item["steps"], 12),
-            (10, item["expected"], 12),
-            (11, item["automation"], 13),
-            (12, item["platform"], 13),
-            (13, item["status"], platform_style(item["status"])),
-            (14, item["executed_at"], 13),
-            (15, item["test_url"], 12),
-            (16, item["screenshot"], 12),
-            (17, item["evidence"], 12),
-            (18, item["notes"], 12),
-        ], height=82))
+            (3, item["title"], 12),
+            (4, item["priority"], 13),
+            (5, item["platform"], 13),
+            (6, item["status"], platform_style(item["status"])),
+            (7, item["executed_at"], 13),
+            (8, item["test_url"], 12),
+            (9, item["screenshot"] or item["evidence"], 12),
+            (10, item["notes"], 12),
+        ], height=46))
 
     last_row = max(2, len(rows) + 1)
     data_validations = f'''
   <dataValidations count="1">
-    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="M2:M{last_row}">
+    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="F2:F{last_row}">
       <formula1>"{TEST_CASE_STATUS_OPTIONS}"</formula1>
     </dataValidation>
   </dataValidations>'''
@@ -364,14 +348,10 @@ def build_test_case_sheet(rows: list[dict[str, str]]) -> str:
   </sheetViews>
   <cols>
     <col min="1" max="1" width="18" customWidth="1"/>
-    <col min="2" max="3" width="30" customWidth="1"/>
-    <col min="4" max="4" width="34" customWidth="1"/>
-    <col min="5" max="5" width="12" customWidth="1"/>
-    <col min="6" max="6" width="12" customWidth="1"/>
-    <col min="7" max="10" width="38" customWidth="1"/>
-    <col min="11" max="13" width="16" customWidth="1"/>
-    <col min="14" max="14" width="20" customWidth="1"/>
-    <col min="15" max="18" width="38" customWidth="1"/>
+    <col min="2" max="2" width="30" customWidth="1"/>
+    <col min="3" max="3" width="34" customWidth="1"/>
+    <col min="4" max="7" width="16" customWidth="1"/>
+    <col min="8" max="10" width="38" customWidth="1"/>
   </cols>
   <sheetData>
     {''.join(sheet_rows)}
@@ -421,6 +401,7 @@ def build_guide_sheet() -> str:
         ("欄位", "screenshot", "截圖檔案路徑或連結，例如 artifacts/screenshots/forgot-password-001.png。"),
         ("欄位", "evidence", "影片、Allure、CI artifact、Issue 或 PR 連結。"),
         ("欄位", "notes", "失敗原因、阻擋原因或補充說明。"),
+        ("自動截圖", "Cypress", "截圖或測試名稱包含 TC-... 時，sync-automation-evidence.py 會自動回填 screenshot/evidence。"),
         ("狀態", "Not Run", "還沒測。"),
         ("狀態", "Ready", "已準備好可以測，但尚未執行。"),
         ("狀態", "Pass", "已測試通過。"),
@@ -428,7 +409,7 @@ def build_guide_sheet() -> str:
         ("狀態", "Blocked", "因環境、帳號、API、需求不清楚等原因無法測。"),
         ("狀態", "N/A", "這個平台或情境不適用。"),
         ("填寫方式", "人工回填", "QA 直接編輯 execution-results.json 的 status、test_url、screenshot、evidence、notes。"),
-        ("自動補齊", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1 會自動補欄位、補 executed_at、驗證、產 Excel、產報告。"),
+        ("自動補齊", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1 會同步自動化佐證、補欄位、補 executed_at、驗證、產 Excel、產報告。"),
         ("建議指令", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1"),
         ("建議指令", "包含 Word", ".\\scripts\\refresh-qa-artifacts.ps1 -IncludeWord"),
     ]
