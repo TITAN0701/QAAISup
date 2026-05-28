@@ -35,8 +35,8 @@ foreach ($feature in $features) {
     foreach ($row in $scenarioRows) {
         $review = $json.scenario_reviews | Where-Object { $_.scenario_id -eq $row.item_id }
         if ($review) {
-            if (-not [string]::IsNullOrWhiteSpace($row.status)) { $review.status = $row.status }
-            if ($null -ne $row.notes) { $review.notes = $row.notes }
+            if (-not [string]::IsNullOrWhiteSpace($row.status)) { $review.PSObject.Properties["status"].Value = $row.status }
+            if ($null -ne $row.notes) { $review.PSObject.Properties["notes"].Value = $row.notes }
         }
     }
 
@@ -44,17 +44,17 @@ foreach ($feature in $features) {
     foreach ($row in $testRows) {
         $result = $json.test_results | Where-Object { $_.test_case_id -eq $row.item_id }
         if ($result) {
-            $result.status   = if (-not [string]::IsNullOrWhiteSpace($row.status)) { $row.status } else { "Not Run" }
-            $result.platform = if ($null -ne $row.platform) { $row.platform } else { "" }
-            $result.test_url = if ($null -ne $row.test_url) { $row.test_url } else { "" }
-            $result.evidence = if ($null -ne $row.evidence) { $row.evidence } else { "" }
-            $result.notes    = if ($null -ne $row.notes)    { $row.notes }    else { "" }
+            $result.PSObject.Properties["status"].Value   = if (-not [string]::IsNullOrWhiteSpace($row.status)) { $row.status } else { "Not Run" }
+            $result.PSObject.Properties["platform"].Value = if ($null -ne $row.platform) { $row.platform } else { "" }
+            $result.PSObject.Properties["test_url"].Value = if ($null -ne $row.test_url) { $row.test_url } else { "" }
+            $result.PSObject.Properties["evidence"].Value = if ($null -ne $row.evidence) { $row.evidence } else { "" }
+            $result.PSObject.Properties["notes"].Value    = if ($null -ne $row.notes)    { $row.notes }    else { "" }
             if (-not [string]::IsNullOrWhiteSpace($row.status) -and $row.status -ne "Not Run") {
                 if ([string]::IsNullOrWhiteSpace($result.executed_at)) {
-                    $result.executed_at = Get-Date -Format "yyyy-MM-ddTHH:mm:sszzz"
+                    $result.PSObject.Properties["executed_at"].Value = Get-Date -Format "yyyy-MM-ddTHH:mm:sszzz"
                 }
             } else {
-                $result.executed_at = ""
+                $result.PSObject.Properties["executed_at"].Value = ""
             }
         }
     }
