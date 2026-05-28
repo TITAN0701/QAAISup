@@ -392,7 +392,10 @@ def build_guide_sheet() -> str:
     rows = [
         ("區塊", "欄位 / 狀態", "填寫方式"),
         ("原則", "Excel", "Excel 是產出報告，不建議當唯一人工維護來源。"),
-        ("原則", "execution-results.json", "QA 回填測試結果與人工狀態的來源。"),
+        ("原則", "qa-workspace/execution-results.csv", "QA 主要回填來源；一張表管理所有功能的情境與案例狀態。"),
+        ("原則", "execution-results.json", "由 CSV 同步產生，保留給 schema 驗證與報告流程使用。"),
+        ("欄位", "record_type", "scenario 代表情境可測性；test_case 代表測試案例執行結果。"),
+        ("欄位", "item_id", "SC-... 或 TC-... 編號。"),
         ("欄位", "test_case_id", "對應 test-cases.json 的測試案例 ID，不要手動改。"),
         ("欄位", "platform", "測試平台，例如 Desktop / Win Chrome。"),
         ("欄位", "status", "只能填 Not Run、Ready、Pass、Fail、Blocked、N/A。"),
@@ -408,8 +411,9 @@ def build_guide_sheet() -> str:
         ("狀態", "Fail", "已測試失敗。"),
         ("狀態", "Blocked", "因環境、帳號、API、需求不清楚等原因無法測。"),
         ("狀態", "N/A", "這個平台或情境不適用。"),
-        ("填寫方式", "人工回填", "QA 直接編輯 execution-results.json 的 status、test_url、screenshot、evidence、notes。"),
-        ("自動補齊", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1 會同步自動化佐證、補欄位、補 executed_at、驗證、產 Excel、產報告。"),
+        ("填寫方式", "人工回填", "QA 直接編輯 qa-workspace/execution-results.csv 的 status、test_url、screenshot、evidence、notes。"),
+        ("自動補齊", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1 會匯入 CSV、同步自動化佐證、補欄位、補 executed_at、驗證、產 Excel、產報告。"),
+        ("建議指令", "重建 CSV", "python scripts\\sync-execution-results-sheet.py --export --sheet qa-workspace\\execution-results.csv"),
         ("建議指令", "一次執行", ".\\scripts\\refresh-qa-artifacts.ps1"),
         ("建議指令", "包含 Word", ".\\scripts\\refresh-qa-artifacts.ps1 -IncludeWord"),
     ]

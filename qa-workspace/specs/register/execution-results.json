@@ -2,15 +2,67 @@
   "feature": "register",
   "source_test_cases": "qa-workspace/specs/register/test-cases.json",
   "scenario_reviews": [
-    { "scenario_id": "SC-REGISTER-001", "status": "Need Confirm", "notes": "需確認創建帳號入口導向規則。" },
-    { "scenario_id": "SC-REGISTER-002", "status": "Need Confirm", "notes": "需確認必填欄位與文案。" },
-    { "scenario_id": "SC-REGISTER-003", "status": "Need Confirm", "notes": "需確認密碼不一致錯誤文案。" },
-    { "scenario_id": "SC-REGISTER-004", "status": "Need Confirm", "notes": "需確認註冊成功後流程。" }
+    {
+      "scenario_id": "SC-REGISTER-001",
+      "status": "Need Confirm",
+      "notes": "需確認創建帳號入口導向規則。"
+    },
+    {
+      "scenario_id": "SC-REGISTER-002",
+      "status": "Need Confirm",
+      "notes": "需確認必填欄位與文案。"
+    },
+    {
+      "scenario_id": "SC-REGISTER-003",
+      "status": "Need Confirm",
+      "notes": "需確認密碼不一致錯誤文案。"
+    },
+    {
+      "scenario_id": "SC-REGISTER-004",
+      "status": "Need Confirm",
+      "notes": "需確認註冊成功後流程。"
+    }
   ],
   "test_results": [
-    { "test_case_id": "TC-REGISTER-001", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "test_url": "", "screenshot": "", "evidence": "", "notes": "" },
-    { "test_case_id": "TC-REGISTER-002", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "test_url": "", "screenshot": "", "evidence": "", "notes": "" },
-    { "test_case_id": "TC-REGISTER-003", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "test_url": "", "screenshot": "", "evidence": "", "notes": "" },
-    { "test_case_id": "TC-REGISTER-004", "platform": "Desktop / Win Chrome", "status": "Not Run", "executed_at": "", "test_url": "", "screenshot": "", "evidence": "", "notes": "" }
+    {
+      "test_case_id": "TC-REGISTER-001",
+      "platform": "Desktop / Win Chrome",
+      "status": "Not Run",
+      "executed_at": "",
+      "test_url": "",
+      "screenshot": "",
+      "evidence": "",
+      "notes": ""
+    },
+    {
+      "test_case_id": "TC-REGISTER-002",
+      "platform": "Desktop / Win Chrome",
+      "status": "Not Run",
+      "executed_at": "",
+      "test_url": "",
+      "screenshot": "",
+      "evidence": "",
+      "notes": ""
+    },
+    {
+      "test_case_id": "TC-REGISTER-003",
+      "platform": "Desktop / Win Chrome",
+      "status": "Not Run",
+      "executed_at": "",
+      "test_url": "",
+      "screenshot": "",
+      "evidence": "",
+      "notes": ""
+    },
+    {
+      "test_case_id": "TC-REGISTER-004",
+      "platform": "Desktop / Win Chrome",
+      "status": "Not Run",
+      "executed_at": "",
+      "test_url": "",
+      "screenshot": "",
+      "evidence": "",
+      "notes": ""
+    }
   ]
 }

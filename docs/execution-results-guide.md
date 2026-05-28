@@ -1,12 +1,16 @@
 # 測試執行結果填寫說明
 
-`execution-results.json` 是 QA 回填測試狀態的來源。不要直接把 Excel 當唯一資料來源，因為 Excel 是由腳本重新產生的輸出檔。
+QA 主要回填 `qa-workspace/execution-results.csv`。這是一張可用 Excel 開啟的總表，用 `record_type` 區分情境與測試案例。
+
+`execution-results.json` 由 CSV 同步產生，保留給 schema 驗證、CI 與報告流程使用。不要逐個功能手動維護 JSON。
 
 ## 欄位說明
 
 | 欄位 | 誰填 | 說明 |
 |---|---|---|
-| `test_case_id` | 系統產生 | 對應 `test-cases.json` 的測試案例 ID，不要手動改。 |
+| `record_type` | 系統產生 | `scenario` 代表情境可測性，`test_case` 代表測試案例執行結果。 |
+| `feature` | 系統產生 | 功能資料夾名稱。 |
+| `item_id` | 系統產生 | `SC-...` 或 `TC-...` 編號，不要手動改。 |
 | `platform` | QA | 測試平台，例如 `Desktop / Win Chrome`。 |
 | `status` | QA | 測試結果，只能填 `Not Run`、`Ready`、`Pass`、`Fail`、`Blocked`、`N/A`。 |
 | `executed_at` | 工具產生 | 實際執行或確認時間。QA 不用手動填，產生 Excel 或執行 `--fix` 時會自動補。 |
@@ -28,18 +32,12 @@
 
 ## 建議更新方式
 
-QA 可以直接編輯 `execution-results.json`：
+QA 可以直接編輯 `qa-workspace/execution-results.csv`：
 
 ```json
 {
-  "test_case_id": "TC-FORGOT-PASSWORD-001",
-  "platform": "Desktop / Win Chrome",
-  "status": "Pass",
-  "executed_at": "",
-  "test_url": "https://qa.example.com/forgot-password",
-  "screenshot": "artifacts/screenshots/forgot-password-001.png",
-  "evidence": "artifacts/generated/allure-report/index.html",
-  "notes": "忘記密碼入口可正常導向。"
+record_type,feature,item_id,title,platform,status,test_url,screenshot,evidence,notes
+test_case,forgot-password,TC-FORGOT-PASSWORD-001,忘記密碼入口導向正確,Desktop / Win Chrome,Pass,https://qa.example.com/forgot-password,artifacts/screenshots/forgot-password-001.png,artifacts/generated/allure-report/index.html,忘記密碼入口可正常導向。
 }
 ```
 
@@ -47,6 +45,12 @@ QA 可以直接編輯 `execution-results.json`：
 
 ```powershell
 .\scripts\refresh-qa-artifacts.ps1
+```
+
+如果新增功能或測試案例後要重建 CSV：
+
+```powershell
+python scripts\sync-execution-results-sheet.py --export --sheet qa-workspace\execution-results.csv
 ```
 
 若 Cypress 截圖、影片或測試名稱包含 `TC-...`，一鍵更新也會自動把佐證回填到 `screenshot` / `evidence`。
