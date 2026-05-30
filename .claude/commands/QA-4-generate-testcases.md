@@ -17,7 +17,7 @@ qa-workspace/schemas/testcase.schema.json
 Generate or update:
 
 ```txt
-artifacts/generated/qa/test-cases.yaml
+artifacts/generated/qa/test-cases.json
 artifacts/generated/qa/test-plan.md
 artifacts/generated/qa/risk-notes.md
 ```

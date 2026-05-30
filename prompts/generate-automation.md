@@ -1,11 +1,11 @@
 # Prompt: Generate Automation Draft
 
-用途：根據已審核的 `test-cases.yaml` 產生自動化測試草稿。
+用途：根據已審核的 `test-cases.json` 產生自動化測試草稿。
 
 ## Input
 
 ```txt
-artifacts/generated/qa/test-cases.yaml
+artifacts/generated/qa/test-cases.json
 qa-workspace/specs/{feature}/scenarios.md
 qa-knowledge/selector-policy.md
 automation/testdata/

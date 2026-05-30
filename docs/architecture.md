@@ -65,7 +65,7 @@ artifacts/generated/qa/
 
 ```txt
 test-plan.md
-test-cases.yaml
+test-cases.json
 risk-notes.md
 ```
 
@@ -122,7 +122,7 @@ qa-workspace/specs/{feature}/questions.md
   ↓
 qa-workspace/specs/{feature}/scenarios.md
   ↓
-artifacts/generated/qa/test-cases.yaml
+artifacts/generated/qa/test-cases.json
   ↓
 automation/
   ↓

@@ -23,7 +23,7 @@
 | `/QA-1-import-pm-request` | 檢查 PM inbox 並準備轉入 QA workspace |
 | `/QA-2-generate-questions` | 根據 spec 產生 PM 釐清問題 |
 | `/QA-3-generate-scenarios` | 根據已確認需求產生 scenarios、plan、tasks |
-| `/QA-4-generate-testcases` | 產生 test-cases.yaml、test-plan、risk-notes |
+| `/QA-4-generate-testcases` | 產生 test-cases.json、test-plan、risk-notes |
 | `/QA-5-generate-automation` | 產生 Cypress-first 自動化草稿 |
 | `/QA-6-generate-report` | 根據 Allure/CI 結果產生 QA/PM 報告 |
 

@@ -32,7 +32,7 @@ PM 也不需要寫：
 - `scenarios.md`
 - `plan.md`
 - `tasks.md`
-- `test-cases.yaml`
+- `test-cases.json`
 - 自動化測試碼
 
 ## QA Scope
@@ -45,7 +45,7 @@ QA 會接觸：
 qa-workspace/specs/{feature}/spec.md
 qa-workspace/specs/{feature}/questions.md
 qa-workspace/specs/{feature}/scenarios.md
-artifacts/generated/qa/test-cases.yaml
+artifacts/generated/qa/test-cases.json
 artifacts/generated/qa/test-plan.md
 artifacts/generated/qa/risk-notes.md
 ```
@@ -57,7 +57,7 @@ AI 適合做：
 - 根據 PM inbox 整理 `spec.md` 草稿
 - 根據 `spec.md` 產生 `questions.md`
 - 根據 PM answer 產生 `scenarios.md`
-- 產生 `test-cases.yaml` 與 `test-plan.md`
+- 產生 `test-cases.json` 與 `test-plan.md`
 - 產生自動化測試草稿
 - 根據 raw report 產生測試報告摘要
 

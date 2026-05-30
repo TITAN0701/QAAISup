@@ -9,7 +9,7 @@ Read approved test cases and generate Cypress-first automation draft.
 Input:
 
 ```txt
-artifacts/generated/qa/test-cases.yaml
+artifacts/generated/qa/test-cases.json
 qa-workspace/specs/{feature}/scenarios.md
 qa-knowledge/selector-policy.md
 ```

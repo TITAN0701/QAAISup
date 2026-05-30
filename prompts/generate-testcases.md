@@ -15,7 +15,7 @@ qa-workspace/schemas/testcase.schema.json
 ## Output
 
 ```txt
-artifacts/generated/qa/test-cases.yaml
+artifacts/generated/qa/test-cases.json
 ```
 
 ## Rules
