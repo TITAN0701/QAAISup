@@ -13,10 +13,10 @@ Copy-Item .env.example .env
 填入實際測試環境：
 
 ```env
-CYPRESS_BASE_URL=https://sit-wetpaint.ddns.net/login
+CYPRESS_BASE_URL=https://your-site.example.com
 API_BASE_URL=https://api-staging.example.com
-TEST_USER_EMAIL=0999999993
-TEST_USER_PASSWORD=password123
+TEST_USER_EMAIL=your_test_email_or_phone
+TEST_USER_PASSWORD=your_test_password
 TEST_ENV=staging
 ```
 
