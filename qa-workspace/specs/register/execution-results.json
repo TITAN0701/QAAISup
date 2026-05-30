@@ -28,37 +28,41 @@
       "test_case_id": "TC-REGISTER-001",
       "platform": "Desktop / Win Chrome",
       "status": "Pass",
-      "executed_at": "",
+      "executed_at": "2026-05-30T15:00:59+08:00",
       "test_url": "",
       "evidence": "",
-      "notes": ""
+      "notes": "",
+      "screenshot": ""
     },
     {
       "test_case_id": "TC-REGISTER-002",
       "platform": "Desktop / Win Chrome",
       "status": "Pass",
-      "executed_at": "",
+      "executed_at": "2026-05-30T15:00:59+08:00",
       "test_url": "",
       "evidence": "",
-      "notes": ""
+      "notes": "",
+      "screenshot": ""
     },
     {
       "test_case_id": "TC-REGISTER-003",
       "platform": "Desktop / Win Chrome",
       "status": "Pass",
-      "executed_at": "",
+      "executed_at": "2026-05-30T15:00:59+08:00",
       "test_url": "",
       "evidence": "",
-      "notes": ""
+      "notes": "",
+      "screenshot": ""
     },
     {
       "test_case_id": "TC-REGISTER-004",
       "platform": "Desktop / Win Chrome",
       "status": "Pass",
-      "executed_at": "",
+      "executed_at": "2026-05-30T15:00:59+08:00",
       "test_url": "",
       "evidence": "",
-      "notes": ""
+      "notes": "",
+      "screenshot": ""
     }
   ]
 }
