@@ -66,13 +66,13 @@ function Get-RequirementTitle {
 function Get-RequirementSections {
     param([string]$Content)
 
-    $matches = [regex]::Matches($Content, '(?m)^###\s*需求\s*(\d+)\s*[:：]\s*(.+?)\s*$')
+    $reqMatches = [regex]::Matches($Content, '(?m)^###\s*需求\s*(\d+)\s*[:：]\s*(.+?)\s*$')
     $sections = @()
 
-    for ($i = 0; $i -lt $matches.Count; $i++) {
-        $match = $matches[$i]
-        if ($i + 1 -lt $matches.Count) {
-            $nextStart = $matches[$i + 1].Index
+    for ($i = 0; $i -lt $reqMatches.Count; $i++) {
+        $match = $reqMatches[$i]
+        if ($i + 1 -lt $reqMatches.Count) {
+            $nextStart = $reqMatches[$i + 1].Index
         } else {
             $nextMajorHeading = [regex]::Match($Content.Substring($match.Index + $match.Length), '(?m)^##\s+')
             $nextStart = if ($nextMajorHeading.Success) {
@@ -96,19 +96,23 @@ function Get-RequirementSections {
     return $sections
 }
 
-function Initialize-SpecDirectory {
+function Expand-Template {
     param(
-        [string]$TargetDir,
-        [string]$TemplateDir
+        [string]$TemplatePath,
+        [hashtable]$Vars
     )
 
-    New-Item -ItemType Directory -Path $TargetDir | Out-Null
-
-    if ($TemplateDir -and (Test-Path $TemplateDir)) {
-        Copy-Item -Path (Join-Path $TemplateDir "*") -Destination $TargetDir -Recurse
-        return
+    $content = Get-Content -LiteralPath $TemplatePath -Raw -Encoding UTF8
+    foreach ($key in $Vars.Keys) {
+        $content = $content.Replace("{{$key}}", $Vars[$key])
     }
+    return $content
+}
 
+function Initialize-SpecDirectory {
+    param([string]$TargetDir)
+
+    New-Item -ItemType Directory -Path $TargetDir | Out-Null
     Set-Content -LiteralPath (Join-Path $TargetDir "README.md") -Value "# QA/AI Spec Workspace`n" -Encoding UTF8
     Set-Content -LiteralPath (Join-Path $TargetDir "questions.md") -Value "# QA/AI Questions for PM`n`n## Need Clarification`n`n## Confirmed Decisions`n" -Encoding UTF8
     Set-Content -LiteralPath (Join-Path $TargetDir "scenarios.md") -Value "# Test Scenarios`n" -Encoding UTF8
@@ -196,7 +200,8 @@ function New-QaDraftDocs {
     param(
         [string]$TargetDir,
         [object]$Section,
-        [string]$SourcePath = "pm-inbox/unknown.md"
+        [string]$SourcePath = "pm-inbox/unknown.md",
+        [Parameter(Mandatory=$true)][string]$TemplateDir
     )
 
     $story = Get-MarkdownSection -Content $Section.Body -Heading "使用者故事"
@@ -211,73 +216,6 @@ function New-QaDraftDocs {
     $scopeLines = Convert-BulletsToMarkdown -Items $descriptionBullets -Fallback "待 QA/AI 根據 PM 需求補充測試範圍。"
     $acceptanceLines = Convert-BulletsToMarkdown -Items $acceptanceBullets -Fallback "待 QA/AI 根據 PM 需求補充驗收條件。"
     $noteLines = Convert-BulletsToMarkdown -Items $noteBullets -Fallback "無。"
-
-    $specContent = @"
-# Feature: $featureName
-
-> Draft generated from PM inbox requirement "$requirementTitle". QA/AI should review and refine before automation.
-
-## PM Inbox Source
-
-- Source file: $SourcePath
-- Requirement: $requirementTitle
-
-~~~md
-$($Section.Body)
-~~~
-
-## Customer Request
-
-$story
-
-## Background
-
-此需求來自會員入口需求集合，目標是讓使用者可以完成「$requirementTitle」相關流程。
-
-## Business Goal
-
-- 支援會員入口的必要使用者流程。
-- 降低使用者在登入、帳號存取或註冊入口上的阻塞。
-
-## User Roles
-
-- 一般使用者
-
-## Scope
-
-### In Scope
-
-$scopeLines
-
-### Out of Scope
-
-- PM 標示為暫不納入或尚未確認的內容。
-- 未在此需求章節列出的延伸流程。
-
-## Acceptance Criteria
-
-$acceptanceLines
-
-## Business Rules
-
-$noteLines
-
-## Error Messages
-
-- 依驗收條件與 PM 回答確認。
-- 若文案尚未確認，測試應先標記為待釐清，不應硬編碼斷言。
-
-## Dependencies
-
-- 測試環境登入入口 URL。
-- 穩定 selector 或 data-testid。
-- 可用測試資料。
-- 若涉及 API 或通知寄送，需後端/API 文件或測試替身。
-
-## Open Questions
-
-- 請參考 questions.md。
-"@
 
     $scenarioLines = @()
     $caseIndex = 1
@@ -322,150 +260,33 @@ $noteLines
         $questionLines += "- 目前 PM 需求足以產生初版測試情境，暫無阻塞問題。"
     }
 
-    $questionsContent = @"
-# QA/AI Questions for PM: $requirementTitle
+    $vars = @{
+        FEATURE_NAME      = $featureName
+        REQUIREMENT_TITLE = $requirementTitle
+        SOURCE_PATH       = $SourcePath
+        SECTION_BODY      = $Section.Body
+        STORY             = $story
+        SCOPE_LINES       = $scopeLines
+        ACCEPTANCE_LINES  = $acceptanceLines
+        NOTE_LINES        = $noteLines
+        QUESTION_LINES    = ($questionLines -join "`n")
+        SCENARIO_LINES    = ($scenarioLines -join "`n")
+    }
 
-## Need Clarification
-
-$($questionLines -join "`n")
-## Confirmed Decisions
-
-- Source requirement: $requirementTitle
-- User story: $story
-"@
-
-    $scenariosContent = @"
-# Test Scenarios: $requirementTitle
-
-## Source
-
-- Feature: $featureName
-- Requirement: $requirementTitle
-
-## Scenarios
-
-$($scenarioLines -join "`n")
-"@
-
-    $planContent = @"
-# Test Plan: $requirementTitle
-
-## Status
-
-- Draft generated from PM inbox.
-- Feature workspace: qa-workspace/specs/$featureName/
-
-## Test Scope
-
-$scopeLines
-
-## Acceptance Coverage
-
-$acceptanceLines
-
-## Out of Scope
-
-- PM 標示為暫不納入或尚未確認的內容。
-- API、selector、實際測試資料尚未提供前，不列為可執行自動化的硬性前提。
-
-## Test Types
-
-- E2E: 覆蓋主要使用者流程。
-- Negative: 覆蓋必填、格式錯誤或錯誤輸入。
-- UI Validation: 覆蓋欄位、導頁、提示訊息。
-- Regression: 確認此功能不破壞相關入口或既有流程。
-
-## Test Data
-
-- Valid user data: 待 QA/PM 提供。
-- Invalid input data: 依驗收條件設計。
-- Empty input data: 用於必填驗證。
-
-## Automation Candidate
-
-- 驗收條件中的主要正向流程。
-- 必填與格式錯誤等穩定負向流程。
-
-## Risks
-
-- Medium: PM 文案、URL、測試資料尚未完全確認，可能影響自動化斷言。
-- Medium: 若缺少穩定 selector 或 API contract，自動化需等開發補齊。
-
-## Open Questions
-
-請參考 questions.md。
-"@
-
-    $readmeContent = @"
-# $requirementTitle
-
-## Purpose
-
-此資料夾是 $featureName 功能的 QA/AI 工作區，從 PM 文件中的「$requirementTitle」需求拆分產生。
-
-## Source
-
-- PM inbox: $SourcePath
-- Feature key: $featureName
-- Requirement title: $requirementTitle
-
-## User Story
-
-$story
-
-## Workspace Files
-
-- spec.md: PM 原始需求與待整理規格。
-- questions.md: QA/AI 需要 PM 釐清的問題。
-- scenarios.md: 初版測試情境。
-- plan.md: 初版測試計畫。
-- tasks.md: QA、PM、Automation 後續任務。
-
-## Review Checklist
-
-- [ ] 確認此資料夾只包含 $requirementTitle 的需求。
-- [ ] 檢查 questions.md 是否需要 PM 回答。
-- [ ] 檢查 scenarios.md 是否完整覆蓋驗收條件。
-- [ ] 檢查 plan.md 的測試範圍與風險是否合理。
-- [ ] 補上測試資料、selector、API contract 或環境限制。
-
-## Current Status
-
-- Draft generated from PM inbox.
-- 等待 QA review 與 PM answer。
-"@
-
-    $tasksContent = @"
-# Tasks: $requirementTitle
-
-## QA
-
-- [ ] 檢查 spec.md，確認 PM 需求已正確拆分到此功能資料夾。
-- [ ] 檢查 questions.md，整理需要 PM 回答的問題。
-- [ ] 將 PM 回答補回 questions.md。
-- [ ] 根據 PM 回答調整 scenarios.md。
-- [ ] 根據實際測試範圍調整 plan.md。
-
-## Automation
-
-- [ ] 確認此功能所需的穩定 selector 或 data-testid。
-- [ ] 準備必要測試資料。
-- [ ] 驗收條件確認後，建立 Cypress E2E 測試。
-- [ ] 執行 E2E 測試並產出測試結果。
-
-## PM
-
-- [ ] 回答 questions.md 中的待釐清問題。
-- [ ] 確認成功訊息、錯誤訊息與頁面導向規則。
-"@
+    $specContent      = Expand-Template -TemplatePath (Join-Path $TemplateDir "spec.md")      -Vars $vars
+    $questionsContent = Expand-Template -TemplatePath (Join-Path $TemplateDir "questions.md") -Vars $vars
+    $scenariosContent = Expand-Template -TemplatePath (Join-Path $TemplateDir "scenarios.md") -Vars $vars
+    $planContent      = Expand-Template -TemplatePath (Join-Path $TemplateDir "plan.md")      -Vars $vars
+    $readmeContent    = Expand-Template -TemplatePath (Join-Path $TemplateDir "README.md")    -Vars $vars
+    $tasksContent     = Expand-Template -TemplatePath (Join-Path $TemplateDir "tasks.md")     -Vars $vars
 
     $updated = @()
-    if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "spec.md") -Value $specContent) { $updated += "spec.md" }
-    if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "README.md") -Value $readmeContent) { $updated += "README.md" }
+    if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "spec.md")      -Value $specContent)      { $updated += "spec.md" }
+    if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "README.md")    -Value $readmeContent)    { $updated += "README.md" }
     if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "questions.md") -Value $questionsContent) { $updated += "questions.md" }
     if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "scenarios.md") -Value $scenariosContent) { $updated += "scenarios.md" }
-    if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "plan.md") -Value $planContent) { $updated += "plan.md" }
-    if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "tasks.md") -Value $tasksContent) { $updated += "tasks.md" }
+    if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "plan.md")      -Value $planContent)      { $updated += "plan.md" }
+    if (Set-IfEmptyOrTemplate -Path (Join-Path $TargetDir "tasks.md")     -Value $tasksContent)     { $updated += "tasks.md" }
 
     return $updated
 }
@@ -482,13 +303,13 @@ function Show-InboxList {
     Write-Output ""
 }
 
-$repoRoot = Split-Path -Parent $PSScriptRoot
-$inboxDir = Join-Path $repoRoot "pm-inbox"
-$specsDir = Join-Path $repoRoot "qa-workspace\specs"
+$repoRoot    = Split-Path -Parent $PSScriptRoot
+$inboxDir    = Join-Path $repoRoot "pm-inbox"
+$specsDir    = Join-Path $repoRoot "qa-workspace\specs"
 $templateDir = Join-Path $specsDir "_template"
+
 if (-not (Test-Path $templateDir)) {
-    $alternateTemplateDir = Join-Path $specsDir ".template"
-    $templateDir = if (Test-Path $alternateTemplateDir) { $alternateTemplateDir } else { $null }
+    throw "Template directory not found: $templateDir. Expected qa-workspace/specs/_template/"
 }
 
 if (-not (Test-Path $inboxDir)) {
@@ -635,7 +456,7 @@ if ($SplitRequirements) {
         $sectionTargetDir = Join-Path $specsDir $section.FeatureName
 
         if (Test-Path $sectionTargetDir) {
-            $updatedFiles = New-QaDraftDocs -TargetDir $sectionTargetDir -Section $section -SourcePath $sourceInboxPath
+            $updatedFiles = New-QaDraftDocs -TargetDir $sectionTargetDir -Section $section -SourcePath $sourceInboxPath -TemplateDir $templateDir
             if ($updatedFiles.Count -gt 0) {
                 $updatedDrafts += ("{0}: {1}" -f $sectionTargetDir, ($updatedFiles -join ", "))
             } else {
@@ -644,72 +465,17 @@ if ($SplitRequirements) {
             continue
         }
 
-        Initialize-SpecDirectory -TargetDir $sectionTargetDir -TemplateDir $templateDir
+        Initialize-SpecDirectory -TargetDir $sectionTargetDir
 
-        $sectionSpecPath = Join-Path $sectionTargetDir "spec.md"
-        $sectionSpecContent = @"
-# Feature: $($section.FeatureName)
+        $sectionSpecContent = Expand-Template -TemplatePath (Join-Path $templateDir "spec-stub.md") -Vars @{
+            FEATURE_NAME      = $section.FeatureName
+            REQUIREMENT_TITLE = $section.Title
+            SOURCE_PATH       = $sourceInboxPath
+            SECTION_BODY      = $section.Body
+        }
+        Set-Content -LiteralPath (Join-Path $sectionTargetDir "spec.md") -Value $sectionSpecContent -Encoding UTF8
 
-> This file was initialized from PM inbox requirement "$($section.Title)". QA/AI should refine it into a testable specification.
-
-## PM Inbox Source
-
-- Source file: $sourceInboxPath
-- Requirement: $($section.Title)
-
-~~~md
-$($section.Body)
-~~~
-
-## Customer Request
-
-To be refined by QA/AI from PM Inbox Source.
-
-## Background
-
-To be refined by QA/AI from PM Inbox Source.
-
-## Business Goal
-
-Not confirmed.
-
-## User Roles
-
-- Not confirmed
-
-## Scope
-
-### In Scope
-
-- To be refined
-
-### Out of Scope
-
-- Not confirmed
-
-## Acceptance Criteria
-
-- To be refined
-
-## Business Rules
-
-- Not confirmed
-
-## Error Messages
-
-Not confirmed.
-
-## Dependencies
-
-- Not confirmed
-
-## Open Questions
-
-- To be refined
-"@
-
-        Set-Content -LiteralPath $sectionSpecPath -Value $sectionSpecContent -Encoding UTF8
-        [void](New-QaDraftDocs -TargetDir $sectionTargetDir -Section $section -SourcePath $sourceInboxPath)
+        [void](New-QaDraftDocs -TargetDir $sectionTargetDir -Section $section -SourcePath $sourceInboxPath -TemplateDir $templateDir)
         $createdDirs += $sectionTargetDir
     }
 
@@ -743,70 +509,14 @@ Not confirmed.
     exit 0
 }
 
-Initialize-SpecDirectory -TargetDir $targetDir -TemplateDir $templateDir
+Initialize-SpecDirectory -TargetDir $targetDir
 
-$specPath = Join-Path $targetDir "spec.md"
-$specContent = @"
-# Feature: $FeatureName
-
-> This file was initialized from PM inbox. QA/AI should refine it into a testable specification.
-
-## PM Inbox Source
-
-- Source file: $sourceInboxPath
-
-~~~md
-$inboxContent
-~~~
-
-## Customer Request
-
-To be refined by QA/AI from PM Inbox Source.
-
-## Background
-
-To be refined by QA/AI from PM Inbox Source.
-
-## Business Goal
-
-Not confirmed.
-
-## User Roles
-
-- Not confirmed
-
-## Scope
-
-### In Scope
-
-- To be refined
-
-### Out of Scope
-
-- Not confirmed
-
-## Acceptance Criteria
-
-- To be refined
-
-## Business Rules
-
-- Not confirmed
-
-## Error Messages
-
-Not confirmed.
-
-## Dependencies
-
-- Not confirmed
-
-## Open Questions
-
-- To be refined
-"@
-
-Set-Content -LiteralPath $specPath -Value $specContent -Encoding UTF8
+$specContent = Expand-Template -TemplatePath (Join-Path $templateDir "spec-stub-single.md") -Vars @{
+    FEATURE_NAME = $FeatureName
+    SOURCE_PATH  = $sourceInboxPath
+    SECTION_BODY = $inboxContent
+}
+Set-Content -LiteralPath (Join-Path $targetDir "spec.md") -Value $specContent -Encoding UTF8
 
 Write-Output ""
 Write-Output "Created feature directory:"
@@ -814,4 +524,3 @@ Write-Output "  $targetDir"
 Write-Output ""
 Write-Output "Next step:"
 Write-Output "  Ask QA/AI to refine spec.md and generate questions.md."
-
