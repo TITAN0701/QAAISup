@@ -32,7 +32,7 @@ def now_text() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
 
 
-def normalize_execution_result_file(path: Path, data: dict) -> bool:
+def normalize_execution_result_file(path: Path, data: dict, write: bool = True) -> bool:
     changed = False
     for item in data.get("test_results", []):
         if not isinstance(item, dict):
@@ -47,7 +47,7 @@ def normalize_execution_result_file(path: Path, data: dict) -> bool:
             item["executed_at"] = now_text()
             changed = True
 
-    if changed:
+    if changed and write:
         dump_json(path, data)
     return changed
 
@@ -57,6 +57,7 @@ def ensure_execution_result_rows(
     data: dict,
     scenario_ids: list[str],
     test_case_ids: list[str],
+    write: bool = True,
 ) -> bool:
     changed = False
 
@@ -94,7 +95,7 @@ def ensure_execution_result_rows(
             test_results.append(row)
             changed = True
 
-    if changed:
+    if changed and write:
         dump_json(path, data)
     return changed
 
@@ -146,7 +147,7 @@ def format_json_path(path_parts: list[object]) -> str:
     return formatted
 
 
-def validate_execution_results(specs_root: Path, schema_path: Path, fix: bool = False) -> int:
+def validate_execution_results(specs_root: Path, schema_path: Path, fix: bool = False, check: bool = False) -> int:
     schema = load_json(schema_path)
     validator = Draft202012Validator(schema)
     errors: list[str] = []
@@ -184,17 +185,23 @@ def validate_execution_results(specs_root: Path, schema_path: Path, fix: bool = 
         scenario_ids = set(scenario_id_list)
         test_case_ids = set(test_case_id_list)
 
-        if fix:
-            fixed = False
-            fixed = ensure_execution_result_rows(
+        if fix or check:
+            needs_fix = False
+            needs_fix = ensure_execution_result_rows(
                 results_path,
                 data,
                 scenario_id_list,
                 test_case_id_list,
-            ) or fixed
-            fixed = normalize_execution_result_file(results_path, data) or fixed
-            if fixed:
+                write=fix,
+            ) or needs_fix
+            needs_fix = normalize_execution_result_file(results_path, data, write=fix) or needs_fix
+            if fix and needs_fix:
                 fixed_files.append(str(results_path).replace("\\", "/"))
+            elif check and needs_fix:
+                errors.append(
+                    f"{feature_dir.name}: execution-results.json has missing rows or fields "
+                    "(run with --fix locally to auto-fill)"
+                )
 
         for index, item in enumerate(data.get("scenario_reviews", [])):
             scenario_id = item.get("scenario_id") if isinstance(item, dict) else None
@@ -240,8 +247,9 @@ def main() -> int:
     parser.add_argument("--specs-root", default="qa-workspace/specs")
     parser.add_argument("--schema", default="qa-workspace/schemas/execution-results.schema.json")
     parser.add_argument("--fix", action="store_true", help="Auto-fill missing executed_at and optional result fields.")
+    parser.add_argument("--check", action="store_true", help="Fail if any file would need --fix; does not write files.")
     args = parser.parse_args()
-    return validate_execution_results(Path(args.specs_root), Path(args.schema), fix=args.fix)
+    return validate_execution_results(Path(args.specs_root), Path(args.schema), fix=args.fix, check=args.check)
 
 
 if __name__ == "__main__":

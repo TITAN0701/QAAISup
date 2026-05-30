@@ -40,7 +40,7 @@ jobs:
         run: python scripts/validate-testcases.py
 
       - name: Validate execution results
-        run: python scripts/validate-execution-results.py --fix
+        run: python scripts/validate-execution-results.py --check
 
       - name: Check QA automation environment
         shell: pwsh
