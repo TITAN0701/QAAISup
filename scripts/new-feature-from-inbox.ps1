@@ -36,25 +36,7 @@ function ConvertTo-RequirementFeatureName {
         return $Matches[1].ToLowerInvariant()
     }
 
-    $cleanTitle = $Title -replace '\{#[a-zA-Z0-9_-]+\}', ''
-    $slug = $cleanTitle.Trim().ToLowerInvariant() -replace '[^a-z0-9_-]+', '-'
-    $slug = $slug.Trim("-")
-
-    if ($slug) {
-        return $slug
-    }
-
-    if ($cleanTitle -match '登入') {
-        return 'login'
-    }
-    if ($cleanTitle -match '忘記密碼|重設密碼') {
-        return 'forgot-password'
-    }
-    if ($cleanTitle -match '創建帳號|註冊|建立帳號') {
-        return 'register'
-    }
-
-    return "requirement-$Index"
+    throw "需求 $Index「$Title」缺少 {#slug}。請在標題後補上，例如：$Title {#your-slug-here}"
 }
 
 function Get-RequirementTitle {
