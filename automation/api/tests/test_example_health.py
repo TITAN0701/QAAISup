@@ -4,10 +4,7 @@ import pytest
 import requests
 
 
-@pytest.mark.skipif(
-    not os.getenv("API_BASE_URL"),
-    reason="API_BASE_URL is not configured. Replace this example with a real test.",
-)
+@pytest.mark.skip(reason="Example test only. Replace with real API tests.")
 def test_api_health_endpoint():
     response = requests.get(f"{os.environ['API_BASE_URL']}/health", timeout=10)
 
