@@ -31,7 +31,7 @@ describe("忘記密碼流程", () => {
     cy.contains('button', ' 忘記密碼？ ').should('be.visible').click();
     cy.url().should('include', forgotPasswordUrl);
 
-    cy.intercept('POST', /\/api\/.*\/forg(?:o|e)t-password/i, {
+    cy.intercept('POST', '**/api/auth/forgot-password**', {
       statusCode: 400,
       body: { msg: 'invalid email' },
     }).as('forgetPasswordApiFail');
@@ -48,7 +48,7 @@ describe("忘記密碼流程", () => {
     cy.contains('button', ' 忘記密碼？ ').should('be.visible').click();
     cy.url().should('include', forgotPasswordUrl);
 
-    cy.intercept('POST', /\/api\/.*\/forg(?:o|e)t-password/i).as('forgetPasswordApi');
+    cy.intercept('POST', '**/api/auth/forgot-password**').as('forgetPasswordApi');
 
     const testEmail = Cypress.env("TEST_USER_EMAIL") || "test@example.com";
     cy.get('input#email, input[name="email"], input[placeholder="example@email.com"]')
