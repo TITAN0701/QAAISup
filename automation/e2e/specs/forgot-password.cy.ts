@@ -45,17 +45,15 @@ describe("忘記密碼流程", () => {
   });
 
   it("[TC-FORGOT-PASSWORD-004] 忘記密碼輸入有效 Email 後送出通知", () => {
+    cy.intercept('POST', /forgot-password/).as('forgetPasswordApi');
+
     cy.contains('button', ' 忘記密碼？ ').should('be.visible').click();
     cy.url().should('include', forgotPasswordUrl);
 
-    cy.intercept('POST', /forgot-password/).as('forgetPasswordApi');
+    cy.get('input#email').should('be.visible').clear().type('qatest@example.com');
+    cy.contains('button', '傳送重設連結').should('be.visible').click();
 
-    const testEmail = Cypress.env("TEST_USER_EMAIL") || "test@example.com";
-    cy.get('input#email, input[name="email"], input[placeholder="example@email.com"]')
-      .first().should('be.visible').clear().type(testEmail);
-    cy.contains('button', /傳送重設連結|下一步|送出/i).should('be.visible').click();
-
-    cy.wait('@forgetPasswordApi').then(({ response }) => {
+    cy.wait('@forgetPasswordApi', { timeout: 10000 }).then(({ response }) => {
       expect(response?.statusCode).to.eq(200);
     });
     cy.screenshot("TC-FORGOT-PASSWORD-004-result");
