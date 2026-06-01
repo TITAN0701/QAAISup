@@ -3,8 +3,8 @@ param(
     [string[]]$RequiredEnv = @(
         "CYPRESS_BASE_URL",
         "API_BASE_URL",
-        "TEST_USER_EMAIL",
-        "TEST_USER_PASSWORD"
+        "CYPRESS_TEST_USER_EMAIL",
+        "CYPRESS_TEST_USER_PASSWORD"
     )
 )
 
