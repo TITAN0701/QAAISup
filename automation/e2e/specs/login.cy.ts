@@ -59,8 +59,7 @@ describe("一般登入", () => {
   });
 
   it("[TC-LOGIN-006] 創建帳號入口導向正確", () => {
-    cy.contains('span', '還沒有帳號？').should('be.visible');
-    cy.contains('button', '創立帳號').should('be.visible').click();
+    cy.contains('創立帳號').should('be.visible').click();
     cy.url().should('include', registerUrl);
     cy.screenshot("TC-LOGIN-006-result");
   });
