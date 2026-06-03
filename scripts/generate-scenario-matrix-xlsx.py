@@ -87,23 +87,23 @@ def read_scenarios(specs_root: Path) -> list[dict[str, str]]:
 
         module_name = get_title(feature_dir / "README.md", feature_dir.name)
         content = scenario_path.read_text(encoding="utf-8")
-        matches = list(re.finditer(r"(?m)^###\s+(SC-[A-Z0-9_-]+)(?:\s*[：:].*)?\s*$", content))
+        matches = list(re.finditer(r"(?m)^###\s+(SC-[A-Z0-9_-]+)(?:\s*[：:]\s*(.+?))?\s*$", content))
 
         for index, match in enumerate(matches):
             next_start = matches[index + 1].start() if index + 1 < len(matches) else len(content)
             block = content[match.start():next_start]
             status = get_field(block, "Status", "Not Marked")
-            acceptance = get_field(block, "Source acceptance")
+            title = (match.group(2) or "").strip()
+            then_text = get_field(block, "Then")
+            item = title or then_text or match.group(1)
             rows.append(
                 {
                     "feature": feature_dir.name,
                     "module": module_name,
                     "scenario_id": match.group(1),
-                    "item": simplify_acceptance(acceptance),
-                    "acceptance": acceptance,
+                    "item": item,
                     "type": get_field(block, "Type"),
                     "priority": get_field(block, "Priority"),
-                    "automation": get_field(block, "Automation candidate"),
                     "status": status,
                     "source": str(scenario_path).replace("\\", "/"),
                 }
@@ -117,10 +117,11 @@ def read_test_cases(specs_root: Path) -> list[dict[str, str]]:
     for test_case_path in sorted(specs_root.glob("*/test-cases.json")):
         data = json.loads(test_case_path.read_text(encoding="utf-8"))
         feature = data.get("feature") or test_case_path.parent.name
+        module_name = get_title(test_case_path.parent / "README.md", feature)
         for test_case in data.get("test_cases", []):
             rows.append(
                 {
-                    "feature": feature,
+                    "feature": module_name,
                     "id": test_case.get("id", ""),
                     "requirement_id": test_case.get("requirement_id", ""),
                     "title": test_case.get("title", ""),
@@ -233,13 +234,15 @@ def build_scenario_sheet(rows: list[dict[str, str]]) -> str:
         (1, "功能模組", 1),
         (2, "測試編號", 1),
         (3, "測試項目", 1),
-        (4, "Desktop", 2),
-        (5, "情境狀態", 1),
+        (4, "類型", 1),
+        (5, "優先級", 1),
+        (6, "Desktop", 2),
+        (7, "情境狀態", 1),
     ], height=26))
     sheet_rows.append(row_xml(2, [
-        (4, "Win Chrome", 1),
+        (6, "Win Chrome", 1),
     ], height=30))
-    merges.extend(["A1:A2", "B1:B2", "C1:C2", "E1:E2"])
+    merges.extend(["A1:A2", "B1:B2", "C1:C2", "D1:D2", "E1:E2", "G1:G2"])
 
     module_styles = [3, 4, 5, 6]
     row_index = 3
@@ -256,8 +259,10 @@ def build_scenario_sheet(rows: list[dict[str, str]]) -> str:
                 (1, module if row_index == start_row else "", module_style),
                 (2, item["scenario_id"], 13),
                 (3, item["item"], 12),
-                (4, platform_status, platform_style(platform_status)),
-                (5, item.get("review_status", "Not Marked"), 13),
+                (4, item.get("type", ""), 13),
+                (5, item.get("priority", ""), 13),
+                (6, platform_status, platform_style(platform_status)),
+                (7, item.get("review_status", "Not Marked"), 13),
             ], height=23))
             row_index += 1
 
@@ -272,10 +277,10 @@ def build_scenario_sheet(rows: list[dict[str, str]]) -> str:
     validation_last_row = max(3, last_row)
     data_validations = f'''
   <dataValidations count="2">
-    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="D3:D{validation_last_row}">
+    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="F3:F{validation_last_row}">
       <formula1>"{PLATFORM_STATUS_OPTIONS}"</formula1>
     </dataValidation>
-    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="E3:E{validation_last_row}">
+    <dataValidation type="list" allowBlank="1" showErrorMessage="1" sqref="G3:G{validation_last_row}">
       <formula1>"{SCENARIO_STATUS_OPTIONS}"</formula1>
     </dataValidation>
   </dataValidations>'''
@@ -290,9 +295,11 @@ def build_scenario_sheet(rows: list[dict[str, str]]) -> str:
   <cols>
     <col min="1" max="1" width="20" customWidth="1"/>
     <col min="2" max="2" width="24" customWidth="1"/>
-    <col min="3" max="3" width="62" customWidth="1"/>
-    <col min="4" max="4" width="14" customWidth="1"/>
-    <col min="5" max="5" width="18" customWidth="1"/>
+    <col min="3" max="3" width="52" customWidth="1"/>
+    <col min="4" max="4" width="12" customWidth="1"/>
+    <col min="5" max="5" width="12" customWidth="1"/>
+    <col min="6" max="6" width="14" customWidth="1"/>
+    <col min="7" max="7" width="18" customWidth="1"/>
   </cols>
   <sheetData>
     {''.join(sheet_rows)}
