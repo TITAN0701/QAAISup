@@ -1,0 +1,1574 @@
+[
+  {
+    "feature": "question-logic",
+    "source_spec": "qa-workspace/specs/question-logic/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-QLOGIC-001",
+        "requirement_id": "SC-QUESTION-LOGIC-001",
+        "title": "從實質年齡層開始出題，答錯後系統降低一個年齡層難度",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統中存在 4M 個案資料",
+          "系統已正確判斷個案實質年齡層為 4M",
+          "施測者已登入並進入測驗頁面"
+        ],
+        "test_data": [
+          "個案月齡：4M",
+          "起始年齡層：4M",
+          "答題結果：連續答錯"
+        ],
+        "steps": [
+          "以 4M 個案身分進入測驗",
+          "確認系統從 4M 年齡層開始出題",
+          "對當前年齡層題目選擇錯誤答案",
+          "觀察系統切換至下一題的年齡層"
+        ],
+        "expected": [
+          "測驗開始時，第一題為 4M 年齡層題目",
+          "答錯後，系統切換至低一個年齡層（如 2M）的題目",
+          "系統不限制下降次數，可持續往下降"
+        ],
+        "automation_candidate": true,
+        "notes": "需模擬答錯行為，驗證跳題邏輯是否正確降一階"
+      },
+      {
+        "id": "TC-QLOGIC-002",
+        "requirement_id": "SC-QUESTION-LOGIC-002",
+        "title": "答對後系統只上升一個年齡層，不可跨越兩階或更多",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案正在較低年齡層答題",
+          "施測者已登入並進入測驗頁面"
+        ],
+        "test_data": [
+          "個案目前答題年齡層：2M",
+          "答題結果：答對"
+        ],
+        "steps": [
+          "使個案在 2M 年齡層答題",
+          "對當前題目選擇正確答案",
+          "觀察系統切換至下一題的年齡層"
+        ],
+        "expected": [
+          "答對後，系統切換至高一個年齡層（如 4M）的題目",
+          "系統不跳過任何中間年齡層，僅上升一階"
+        ],
+        "automation_candidate": true,
+        "notes": "需驗證答對後升階幅度嚴格為 +1 階"
+      },
+      {
+        "id": "TC-QLOGIC-003",
+        "requirement_id": "SC-QUESTION-LOGIC-003",
+        "title": "42M 個案答對後系統最高升至 48M，不跳至 60M 或更高",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統中存在 42M 個案資料",
+          "施測者已登入並進入測驗頁面",
+          "個案已持續答對，系統嘗試升階"
+        ],
+        "test_data": [
+          "個案月齡：42M",
+          "目前年齡層：42M",
+          "答題結果：持續答對"
+        ],
+        "steps": [
+          "以 42M 個案身分進入測驗",
+          "連續答對題目，使系統嘗試升階",
+          "觀察系統在升至 48M 後再次答對的行為"
+        ],
+        "expected": [
+          "系統在升至 48M 後，不再升至 60M 或更高年齡層",
+          "測驗最高顯示 48M 年齡層題目"
+        ],
+        "automation_candidate": true,
+        "notes": "驗證上限邊界：42M 個案最高只能測至 48M"
+      },
+      {
+        "id": "TC-QLOGIC-004",
+        "requirement_id": "SC-QUESTION-LOGIC-004",
+        "title": "跨模組後系統跳回實質年齡層（4M）對應的下一模組",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "一名 4M 個案完成「6M 語言理解」模組",
+          "施測者已登入並在測驗流程中"
+        ],
+        "test_data": [
+          "個案月齡：4M",
+          "剛完成的模組：6M 語言理解",
+          "預期下一模組：4M 語言表達"
+        ],
+        "steps": [
+          "以 4M 個案身分進行測驗",
+          "完成「6M 語言理解」模組所有題目",
+          "觀察系統跳轉至哪個模組"
+        ],
+        "expected": [
+          "系統跳轉至「4M 語言表達」模組，而非「6M 語言表達」模組"
+        ],
+        "automation_candidate": true,
+        "notes": "驗證跨模組後回到實質年齡層對應模組的邏輯"
+      },
+      {
+        "id": "TC-QLOGIC-005",
+        "requirement_id": "SC-QUESTION-LOGIC-005",
+        "title": "觀察題組全錯時結果顯示最低月齡「2 個月」，不顯示「0 個月」",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "一名 6M 受試者進行測驗",
+          "施測者已登入並進入觀察題組"
+        ],
+        "test_data": [
+          "個案月齡：6M",
+          "觀察題組所有題目答題結果：全錯"
+        ],
+        "steps": [
+          "以 6M 個案身分進行測驗，進入觀察題組",
+          "對觀察題組所有題目選擇錯誤答案",
+          "觀察系統計算並顯示的最終結果月齡"
+        ],
+        "expected": [
+          "最終結果顯示「2 個月」",
+          "結果不顯示「0 個月」或負數"
+        ],
+        "automation_candidate": true,
+        "notes": "驗證月齡顯示下限為 2 個月"
+      },
+      {
+        "id": "TC-QLOGIC-006",
+        "requirement_id": "SC-QUESTION-LOGIC-006",
+        "title": "個案在最低年齡層（2M）持續答錯時，系統維持最低階不崩潰",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "個案已在最低年齡層（2M）答題",
+          "施測者已登入並進入測驗頁面"
+        ],
+        "test_data": [
+          "個案目前答題年齡層：2M（最低層）",
+          "答題結果：持續答錯"
+        ],
+        "steps": [
+          "使個案在 2M 年齡層答題",
+          "連續選擇錯誤答案，觀察系統是否嘗試降至 2M 以下",
+          "確認系統行為穩定"
+        ],
+        "expected": [
+          "系統維持在 2M 年齡層，不出現錯誤提示",
+          "系統不崩潰、不出現空白頁面",
+          "測驗流程正常繼續"
+        ],
+        "automation_candidate": true,
+        "notes": "邊界測試：驗證下限保護機制"
+      }
+    ]
+  },
+  {
+    "feature": "question-content",
+    "source_spec": "qa-workspace/specs/question-content/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-QCONTENT-001",
+        "requirement_id": "SC-QUESTION-CONTENT-001",
+        "title": "所有年齡層題目不出現帶有「[測試用]」或「[測試警示題]」標記的題目",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統題庫已更新",
+          "施測者已登入"
+        ],
+        "test_data": [
+          "測試年齡層：2M、36M、48M",
+          "需瀏覽所有顯示的題目"
+        ],
+        "steps": [
+          "分別以 2M、36M、48M 個案身分開始測驗",
+          "瀏覽測驗中顯示的所有題目文字",
+          "檢查是否有包含「[測試用]」或「[測試警示題]」文字的題目"
+        ],
+        "expected": [
+          "所有顯示的題目均不包含「[測試用]」標記",
+          "所有顯示的題目均不包含「[測試警示題]」標記"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-QCONTENT-002",
+        "requirement_id": "SC-QUESTION-CONTENT-002",
+        "title": "作答後系統切換至下一題，不重複顯示同一題目",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "施測者已登入並進入測驗頁面",
+          "個案正在進行測驗，目前顯示第 N 題"
+        ],
+        "test_data": [
+          "任意月齡個案",
+          "答題行為：答對或答錯"
+        ],
+        "steps": [
+          "記錄目前題目的題目 ID 或內容",
+          "選擇任一答案完成作答",
+          "觀察系統跳轉至下一題",
+          "比對下一題與前一題是否相同"
+        ],
+        "expected": [
+          "系統顯示與前一題不同的題目",
+          "題目順序正確推進（N → N+1）"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過比對題目 ID 或題目文字實現自動化驗證"
+      },
+      {
+        "id": "TC-QCONTENT-003",
+        "requirement_id": "SC-QUESTION-CONTENT-003",
+        "title": "48M 個案可正常開始測驗，不顯示題目不足錯誤",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統 48M 年齡層題庫已補足",
+          "施測者已登入"
+        ],
+        "test_data": [
+          "個案月齡：48M"
+        ],
+        "steps": [
+          "選擇 48M 年齡層個案",
+          "點擊「開始測驗」",
+          "觀察系統是否正常進入測驗頁面"
+        ],
+        "expected": [
+          "測驗正常啟動，進入第一題頁面",
+          "不顯示「無法開始測驗：題目不足」或類似錯誤訊息"
+        ],
+        "automation_candidate": true,
+        "notes": ""
+      },
+      {
+        "id": "TC-QCONTENT-004",
+        "requirement_id": "SC-QUESTION-CONTENT-004",
+        "title": "60M 個案可正常開始測驗，不顯示題目不足錯誤",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統 60M 年齡層題庫已補足",
+          "施測者已登入"
+        ],
+        "test_data": [
+          "個案月齡：60M"
+        ],
+        "steps": [
+          "選擇 60M 年齡層個案",
+          "點擊「開始測驗」",
+          "觀察系統是否正常進入測驗頁面"
+        ],
+        "expected": [
+          "測驗正常啟動，進入第一題頁面",
+          "不顯示「無法開始測驗：題目不足」或類似錯誤訊息"
+        ],
+        "automation_candidate": true,
+        "notes": ""
+      },
+      {
+        "id": "TC-QCONTENT-005",
+        "requirement_id": "SC-QUESTION-CONTENT-005",
+        "title": "72M 個案可正常開始測驗，不顯示題目不足錯誤",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統 72M 年齡層題庫已補足",
+          "施測者已登入"
+        ],
+        "test_data": [
+          "個案月齡：72M"
+        ],
+        "steps": [
+          "選擇 72M 年齡層個案",
+          "點擊「開始測驗」",
+          "觀察系統是否正常進入測驗頁面"
+        ],
+        "expected": [
+          "測驗正常啟動，進入第一題頁面",
+          "不顯示「無法開始測驗：題目不足」或類似錯誤訊息"
+        ],
+        "automation_candidate": true,
+        "notes": ""
+      },
+      {
+        "id": "TC-QCONTENT-006",
+        "requirement_id": "SC-QUESTION-CONTENT-006",
+        "title": "答對後顯示正向鼓勵文字，不出現「答對了」字樣",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "施測者已登入並進入測驗頁面",
+          "個案正在進行測驗"
+        ],
+        "test_data": [
+          "任意月齡個案",
+          "答題行為：答對"
+        ],
+        "steps": [
+          "在測驗中選擇正確答案",
+          "觀察系統顯示的回饋文字或圖示"
+        ],
+        "expected": [
+          "系統顯示正向鼓勵文字（如「太棒了」「很棒」）或按讚圖示",
+          "不出現「答對了」字樣"
+        ],
+        "automation_candidate": false,
+        "notes": "需要人工確認文字與圖示是否符合正向鼓勵設計，不適合純自動化"
+      },
+      {
+        "id": "TC-QCONTENT-007",
+        "requirement_id": "SC-QUESTION-CONTENT-007",
+        "title": "答錯後顯示正向鼓勵文字，不出現「答錯了」字樣",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "施測者已登入並進入測驗頁面",
+          "個案正在進行測驗"
+        ],
+        "test_data": [
+          "任意月齡個案",
+          "答題行為：答錯"
+        ],
+        "steps": [
+          "在測驗中選擇錯誤答案",
+          "觀察系統顯示的回饋文字或圖示"
+        ],
+        "expected": [
+          "系統顯示正向鼓勵文字（如「太棒了」「很棒」）或按讚圖示",
+          "不出現「答錯了」字樣"
+        ],
+        "automation_candidate": false,
+        "notes": "需要人工確認文字與圖示是否符合正向鼓勵設計，不適合純自動化"
+      }
+    ]
+  },
+  {
+    "feature": "card-matching",
+    "source_spec": "qa-workspace/specs/card-matching/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-CARDMATCH-001",
+        "requirement_id": "SC-CARD-MATCHING-001",
+        "title": "4M 個案測驗中不顯示圖卡配對題目",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統中存在 4M 個案資料",
+          "施測者已登入並進入測驗頁面"
+        ],
+        "test_data": [
+          "個案月齡：4M"
+        ],
+        "steps": [
+          "以 4M 個案身分開始測驗",
+          "完整走完測驗流程，記錄所有出現的題目類型"
+        ],
+        "expected": [
+          "測驗過程中不出現任何圖卡配對題目",
+          "題目類型皆為 4M 年齡層適用的非配對題型"
+        ],
+        "automation_candidate": true,
+        "notes": "需確認圖卡配對題目的辨識特徵（如 DOM class 或題型標記）"
+      },
+      {
+        "id": "TC-CARDMATCH-002",
+        "requirement_id": "SC-CARD-MATCHING-002",
+        "title": "6M 個案測驗中不顯示圖卡配對題目",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統中存在 6M 個案資料",
+          "施測者已登入並進入測驗頁面"
+        ],
+        "test_data": [
+          "個案月齡：6M"
+        ],
+        "steps": [
+          "以 6M 個案身分開始測驗",
+          "完整走完測驗流程，記錄所有出現的題目類型"
+        ],
+        "expected": [
+          "測驗過程中不出現任何圖卡配對題目"
+        ],
+        "automation_candidate": true,
+        "notes": ""
+      },
+      {
+        "id": "TC-CARDMATCH-003",
+        "requirement_id": "SC-CARD-MATCHING-003",
+        "title": "8M 個案測驗中可正常顯示圖卡配對題目",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "系統中存在 8M 個案資料",
+          "施測者已登入並進入測驗頁面"
+        ],
+        "test_data": [
+          "個案月齡：8M"
+        ],
+        "steps": [
+          "以 8M 個案身分開始測驗",
+          "進行測驗，觀察是否出現圖卡配對題目",
+          "確認圖卡配對題目顯示正常（圖片載入、選項可見）"
+        ],
+        "expected": [
+          "測驗流程中出現圖卡配對題目",
+          "圖卡配對題目顯示正常，無錯誤或空白"
+        ],
+        "automation_candidate": true,
+        "notes": "驗證 8M 為圖卡配對起始年齡層"
+      },
+      {
+        "id": "TC-CARDMATCH-004",
+        "requirement_id": "SC-CARD-MATCHING-005",
+        "title": "圖卡配對題中點擊彩色圖案即算配對成功",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案月齡 >= 8M",
+          "施測者已登入並進入圖卡配對題目頁面"
+        ],
+        "test_data": [
+          "個案月齡：8M",
+          "題目類型：圖卡配對",
+          "操作方式：點擊（非拖拉）"
+        ],
+        "steps": [
+          "進入圖卡配對題目，確認畫面顯示彩色圖案與灰底目標區域",
+          "點擊正確的彩色圖案",
+          "觀察系統記錄的作答結果"
+        ],
+        "expected": [
+          "系統記錄為正確作答",
+          "不需要執行拖拉動作即可完成配對"
+        ],
+        "automation_candidate": true,
+        "notes": "依群健所回應，維持點選方式，無需拖拉"
+      },
+      {
+        "id": "TC-CARDMATCH-005",
+        "requirement_id": "SC-CARD-MATCHING-006",
+        "title": "圖卡配對點擊正確圖案後顯示正向回饋並進入下一題",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "個案月齡 >= 8M",
+          "施測者已登入並進入圖卡配對題目頁面"
+        ],
+        "test_data": [
+          "個案月齡：8M",
+          "題目類型：圖卡配對",
+          "操作：點擊正確彩色圖案"
+        ],
+        "steps": [
+          "進入圖卡配對題目",
+          "點擊正確的彩色圖案",
+          "觀察配對成功後的系統行為"
+        ],
+        "expected": [
+          "系統顯示正向回饋（如鼓勵文字或圖示）",
+          "系統進入下一題，不停留在同一題"
+        ],
+        "automation_candidate": true,
+        "notes": ""
+      }
+    ]
+  },
+  {
+    "feature": "video-recording",
+    "source_spec": "qa-workspace/specs/video-recording/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-VIDEO-001",
+        "requirement_id": "SC-VIDEO-RECORDING-001",
+        "title": "錄製時長不足時系統彈出提醒訊息",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "使用者已登入並進入影片錄製頁面"
+        ],
+        "test_data": [
+          "最低錄製時長要求：15 秒",
+          "實際錄製時長：不足 15 秒"
+        ],
+        "steps": [
+          "進入影片錄製頁面",
+          "開始錄製",
+          "在錄製時長少於 15 秒時停止錄製",
+          "觀察系統是否彈出提醒訊息"
+        ],
+        "expected": [
+          "系統彈出提醒訊息，告知錄製時長不足"
+        ],
+        "automation_candidate": false,
+        "notes": "涉及媒體裝置操作，需評估測試環境是否支援模擬錄製時長"
+      },
+      {
+        "id": "TC-VIDEO-002",
+        "requirement_id": "SC-VIDEO-RECORDING-002",
+        "title": "錄製時長不足時提醒訊息中提供「重新錄製」按鈕",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "使用者已完成錄製但時長不足",
+          "系統顯示時長不足提醒訊息"
+        ],
+        "test_data": [
+          "最低錄製時長要求：15 秒",
+          "實際錄製時長：不足 15 秒"
+        ],
+        "steps": [
+          "完成不足最低時長的錄製",
+          "等待系統彈出提醒訊息",
+          "確認提醒訊息中是否包含「重新錄製」按鈕",
+          "點擊「重新錄製」按鈕，確認可重新錄製"
+        ],
+        "expected": [
+          "提醒訊息中包含「重新錄製」按鈕",
+          "點擊後可重新開始錄製流程"
+        ],
+        "automation_candidate": false,
+        "notes": "需與 TC-VIDEO-001 搭配執行"
+      },
+      {
+        "id": "TC-VIDEO-003",
+        "requirement_id": "SC-VIDEO-RECORDING-003",
+        "title": "未達最低錄製時長前「結束錄製」按鈕不可點擊",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "使用者已登入並進入影片錄製頁面",
+          "頁面提示最低錄製時長（15 秒）"
+        ],
+        "test_data": [
+          "最低錄製時長：15 秒",
+          "嘗試結束時機：錄製開始後 5 秒"
+        ],
+        "steps": [
+          "進入影片錄製頁面，確認最低時長提示",
+          "開始錄製",
+          "在錄製 5 秒時觀察「結束錄製」按鈕狀態",
+          "嘗試點擊「結束錄製」按鈕"
+        ],
+        "expected": [
+          "「結束錄製」按鈕為不可點擊狀態（disabled）",
+          "或系統顯示阻止訊息，不允許提早結束"
+        ],
+        "automation_candidate": false,
+        "notes": "需模擬錄製環境與計時器行為"
+      },
+      {
+        "id": "TC-VIDEO-004",
+        "requirement_id": "SC-VIDEO-RECORDING-004",
+        "title": "AI 模組影片錄製 1~2 秒時系統阻止提早結束",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "使用者已登入並進入 AI 模組影片錄製頁面"
+        ],
+        "test_data": [
+          "模組類型：AI 模組",
+          "嘗試結束時機：錄製 1~2 秒後"
+        ],
+        "steps": [
+          "進入 AI 模組的影片錄製頁面",
+          "開始錄製",
+          "在 1~2 秒內嘗試結束錄製或上傳",
+          "觀察系統是否阻止"
+        ],
+        "expected": [
+          "系統阻止提早結束錄製",
+          "不允許如此短暫的錄製完成上傳"
+        ],
+        "automation_candidate": false,
+        "notes": "需模擬 AI 模組錄製環境"
+      },
+      {
+        "id": "TC-VIDEO-005",
+        "requirement_id": "SC-VIDEO-RECORDING-005",
+        "title": "大肢體模組錄製頁面顯示「超過 30 秒，最多 60 秒」說明文字",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入大肢體模組影片錄製頁面"
+        ],
+        "test_data": [
+          "模組類型：大肢體模組"
+        ],
+        "steps": [
+          "進入大肢體模組的影片錄製頁面",
+          "查看頁面上的錄製說明文字"
+        ],
+        "expected": [
+          "頁面顯示「超過 30 秒，最多 60 秒」說明文字",
+          "不出現其他版本的說明文字"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-VIDEO-006",
+        "requirement_id": "SC-VIDEO-RECORDING-006",
+        "title": "走路側面模組錄製頁面顯示「超過 15 秒」說明文字",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入走路側面模組影片錄製頁面"
+        ],
+        "test_data": [
+          "模組類型：走路側面模組"
+        ],
+        "steps": [
+          "進入走路側面模組的影片錄製頁面",
+          "查看頁面上的錄製說明文字"
+        ],
+        "expected": [
+          "頁面顯示「超過 15 秒」說明文字",
+          "不出現「超過 5 秒」或「超過 30 秒」等錯誤版本"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      }
+    ]
+  },
+  {
+    "feature": "verbal-expression",
+    "source_spec": "qa-workspace/specs/verbal-expression/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-VERBAL-001",
+        "requirement_id": "SC-VERBAL-EXPRESSION-001",
+        "title": "口語表達每張圖片各自獨立倒數 60 秒計時，切換圖片後重置",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案已進入口語表達題目",
+          "畫面顯示第一張圖片"
+        ],
+        "test_data": [
+          "題目類型：口語表達",
+          "計時器預設：60 秒"
+        ],
+        "steps": [
+          "進入口語表達題目，確認第一張圖片的計時器顯示 60 秒",
+          "等待計時器倒數（或記錄初始值）",
+          "當第一張圖計時結束，系統切換至第二張圖",
+          "確認第二張圖的計時器重置為 60 秒"
+        ],
+        "expected": [
+          "每張圖片各自獨立倒數 60 秒",
+          "切換圖片後計時器重置為 60 秒，不延續前一張的剩餘時間"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過計時器 UI 數值或 API 事件驗證"
+      },
+      {
+        "id": "TC-VERBAL-002",
+        "requirement_id": "SC-VERBAL-EXPRESSION-002",
+        "title": "第一張圖 60 秒倒數結束後自動進入第二張圖並重新計時",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案正在進行口語表達",
+          "第一張圖的 60 秒倒數即將結束"
+        ],
+        "test_data": [
+          "題目類型：口語表達",
+          "計時器：60 秒（第一張圖）"
+        ],
+        "steps": [
+          "進入口語表達題目",
+          "等待第一張圖 60 秒計時結束",
+          "觀察系統是否自動切換至第二張圖",
+          "確認第二張圖計時器從 60 秒開始"
+        ],
+        "expected": [
+          "第一張圖計時結束後，系統自動進入第二張圖",
+          "第二張圖重新開始 60 秒倒數"
+        ],
+        "automation_candidate": true,
+        "notes": "可使用 cy.clock() 加速時間模擬計時器倒數完成"
+      },
+      {
+        "id": "TC-VERBAL-003",
+        "requirement_id": "SC-VERBAL-EXPRESSION-003",
+        "title": "影片上傳成功後「下一題」按鈕自動變為可點擊",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案已完成口語表達題目的影片錄製並上傳"
+        ],
+        "test_data": [
+          "題目類型：口語表達",
+          "上傳狀態：成功"
+        ],
+        "steps": [
+          "完成口語表達題目的影片錄製",
+          "等待影片上傳成功",
+          "觀察「下一題」按鈕的可點擊狀態"
+        ],
+        "expected": [
+          "影片上傳成功後，「下一題」按鈕自動變為可點擊（enabled）"
+        ],
+        "automation_candidate": false,
+        "notes": "需等待上傳 API 回應，為外部非同步行為，automation_candidate 設為 false"
+      },
+      {
+        "id": "TC-VERBAL-004",
+        "requirement_id": "SC-VERBAL-EXPRESSION-004",
+        "title": "影片上傳成功後可直接點擊「下一題」，無需先點「取消」",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案已完成口語表達影片錄製並上傳成功"
+        ],
+        "test_data": [
+          "題目類型：口語表達",
+          "上傳狀態：成功"
+        ],
+        "steps": [
+          "完成口語表達影片上傳",
+          "不點擊「取消」，直接點擊「下一題」",
+          "觀察系統是否跳轉至下一題"
+        ],
+        "expected": [
+          "系統直接跳至下一題",
+          "不需要先點擊「取消」才能繼續"
+        ],
+        "automation_candidate": false,
+        "notes": "需等待上傳完成，為外部非同步行為"
+      },
+      {
+        "id": "TC-VERBAL-005",
+        "requirement_id": "SC-VERBAL-EXPRESSION-006",
+        "title": "口語表達題目圖卡與鏡頭視窗不互相遮擋",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "個案已進入口語表達題目",
+          "畫面同時顯示圖卡與鏡頭視窗"
+        ],
+        "test_data": [
+          "題目類型：口語表達"
+        ],
+        "steps": [
+          "進入口語表達題目",
+          "觀察畫面中圖卡與鏡頭視窗的相對位置",
+          "確認圖卡內容是否完整可見"
+        ],
+        "expected": [
+          "圖卡內容不被鏡頭視窗遮擋",
+          "鏡頭視窗不被圖卡遮擋",
+          "兩者皆可完整檢視"
+        ],
+        "automation_candidate": false,
+        "notes": "需要視覺檢查，不適合純自動化；可截圖後人工驗證"
+      }
+    ]
+  },
+  {
+    "feature": "observation-group",
+    "source_spec": "qa-workspace/specs/observation-group/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-OBSERVE-001",
+        "requirement_id": "SC-OBSERVATION-GROUP-001",
+        "title": "超過 15M 個案完成 AI 模組後可正常跳轉至觀察題組",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案月齡 > 15M",
+          "個案已完成 AI 模組影片錄製與上傳",
+          "施測者已登入"
+        ],
+        "test_data": [
+          "個案月齡：24M（或其他 > 15M 的月齡）"
+        ],
+        "steps": [
+          "以超過 15M 個案身分進行測驗，完成 AI 模組",
+          "點擊「下一題」",
+          "觀察系統跳轉目標"
+        ],
+        "expected": [
+          "系統正確跳轉至觀察題組",
+          "不出現無反應或錯誤畫面"
+        ],
+        "automation_candidate": false,
+        "notes": "需等待 AI 模組上傳完成，為外部非同步行為"
+      },
+      {
+        "id": "TC-OBSERVE-002",
+        "requirement_id": "SC-OBSERVATION-GROUP-002",
+        "title": "24M 個案完成 AI 模組後進入 24M 對應的觀察題組",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案月齡：24M",
+          "個案已完成 AI 模組",
+          "施測者已登入"
+        ],
+        "test_data": [
+          "個案月齡：24M",
+          "預期觀察題組：24M 對應題組"
+        ],
+        "steps": [
+          "以 24M 個案身分完成 AI 模組",
+          "點擊「下一題」",
+          "確認跳轉的觀察題組年齡層"
+        ],
+        "expected": [
+          "系統進入 24M 對應的觀察題組",
+          "不進入僅 15M 的題目或其他錯誤年齡層題組"
+        ],
+        "automation_candidate": false,
+        "notes": "需人工確認觀察題組的年齡層標示"
+      },
+      {
+        "id": "TC-OBSERVE-003",
+        "requirement_id": "SC-OBSERVATION-GROUP-003",
+        "title": "AI 模組完成後點擊「下一題」直接進入觀察題組，無需點「取消」",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案已完成 AI 模組",
+          "施測者未執行任何取消操作"
+        ],
+        "test_data": [
+          "個案月齡：39M",
+          "操作：直接點擊「下一題」"
+        ],
+        "steps": [
+          "以 39M 個案身分完成 AI 模組",
+          "不點擊「取消」，直接點擊「下一題」",
+          "觀察系統是否進入觀察題組"
+        ],
+        "expected": [
+          "系統直接進入觀察題組",
+          "無需先點「取消」再重新開始"
+        ],
+        "automation_candidate": false,
+        "notes": "針對已修正 bug 的回歸驗證"
+      },
+      {
+        "id": "TC-OBSERVE-004",
+        "requirement_id": "SC-OBSERVATION-GROUP-004",
+        "title": "重新進入觀察題組時系統保留已完成的 AI 模組結果，無需重錄",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案已完成 AI 模組",
+          "個案進入觀察題組後發生問題並取消"
+        ],
+        "test_data": [
+          "個案：已完成 AI 模組但觀察題組中途取消"
+        ],
+        "steps": [
+          "完成 AI 模組錄製",
+          "進入觀察題組後取消",
+          "再次嘗試進入觀察題組",
+          "觀察系統是否要求重新錄製 AI 模組"
+        ],
+        "expected": [
+          "系統保留已完成的 AI 模組結果",
+          "不需要重新錄製 AI 模組影片",
+          "直接進入觀察題組"
+        ],
+        "automation_candidate": false,
+        "notes": "需模擬觀察題組中途取消的情境"
+      }
+    ]
+  },
+  {
+    "feature": "handwriting-recognition",
+    "source_spec": "qa-workspace/specs/handwriting-recognition/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-HWRITE-001",
+        "requirement_id": "SC-HANDWRITING-002",
+        "title": "手繪圖形辨識拍攝教學示意圖呈現正確場景（無手或筆）",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入手繪圖形辨識拍攝頁面"
+        ],
+        "test_data": [
+          "頁面：手繪圖形辨識拍攝教學頁"
+        ],
+        "steps": [
+          "進入手繪圖形辨識拍攝頁面",
+          "查看拍攝教學示意圖"
+        ],
+        "expected": [
+          "示意圖呈現「放好畫好的圖形紙」的拍攝場景",
+          "示意圖中不出現手或筆",
+          "示意圖與錄影教學示意圖不同"
+        ],
+        "automation_candidate": false,
+        "notes": "需人工視覺確認示意圖內容正確性"
+      },
+      {
+        "id": "TC-HWRITE-002",
+        "requirement_id": "SC-HANDWRITING-003",
+        "title": "手繪圖形辨識注意事項最右側圖片角度與文字說明一致",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入手繪圖形辨識拍攝頁面"
+        ],
+        "test_data": [
+          "頁面：手繪圖形辨識拍攝注意事項區域"
+        ],
+        "steps": [
+          "進入手繪圖形辨識拍攝頁面",
+          "查看拍攝注意事項區域的圖片",
+          "比對最右側圖片的角度與旁邊的文字說明"
+        ],
+        "expected": [
+          "最右側圖片的角度與旁邊文字說明一致",
+          "圖文內容相符，不存在矛盾"
+        ],
+        "automation_candidate": false,
+        "notes": "需人工視覺確認圖文一致性"
+      },
+      {
+        "id": "TC-HWRITE-003",
+        "requirement_id": "SC-HANDWRITING-004",
+        "title": "開始錄製後梯形輔助框從畫面消失",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入手繪圖形辨識頁面",
+          "錄製前畫面顯示梯形輔助框"
+        ],
+        "test_data": [
+          "頁面：手繪圖形辨識錄製頁"
+        ],
+        "steps": [
+          "進入手繪圖形辨識頁面，確認梯形輔助框顯示",
+          "點擊「開始錄製」",
+          "觀察梯形輔助框是否從畫面消失"
+        ],
+        "expected": [
+          "點擊開始錄製後，梯形輔助框從畫面中消失",
+          "正式錄製過程中不顯示梯形輔助框"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 元素可見性（visible/hidden）自動驗證"
+      }
+    ]
+  },
+  {
+    "feature": "gait-analysis",
+    "source_spec": "qa-workspace/specs/gait-analysis/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-GAIT-001",
+        "requirement_id": "SC-GAIT-ANALYSIS-001",
+        "title": "走路步態拍攝提醒頁面包含衣著限制說明文字",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入走路步態（大肢體模組）拍攝提醒頁面"
+        ],
+        "test_data": [
+          "模組類型：走路步態 / 大肢體模組"
+        ],
+        "steps": [
+          "進入走路步態拍攝提醒頁面",
+          "閱讀頁面上所有提醒文字"
+        ],
+        "expected": [
+          "提醒文字包含「請勿讓孩子穿著遮擋四肢或過於寬鬆的衣物」或類似說明"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-GAIT-002",
+        "requirement_id": "SC-GAIT-ANALYSIS-002",
+        "title": "正/背面模組拍攝前提示詞包含全身入鏡說明",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入正面或背面模組拍攝頁面"
+        ],
+        "test_data": [
+          "模組類型：正面模組 或 背面模組"
+        ],
+        "steps": [
+          "進入正面（或背面）模組拍攝頁面",
+          "查看拍攝前提示詞"
+        ],
+        "expected": [
+          "提示詞包含引導孩子全身（從頭到腳）入鏡於綠色輔助框內的說明"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-GAIT-003",
+        "requirement_id": "SC-GAIT-ANALYSIS-003",
+        "title": "正/背面模組提示詞一包含「錄影前避免孩童超出輔助框」文字",
+        "type": "e2e",
+        "priority": "low",
+        "preconditions": [
+          "使用者已登入並進入正面或背面模組拍攝頁面"
+        ],
+        "test_data": [
+          "模組類型：正面模組 或 背面模組"
+        ],
+        "steps": [
+          "進入正面（或背面）模組拍攝頁面",
+          "查看提示詞一的內容"
+        ],
+        "expected": [
+          "提示詞一包含「錄影前避免孩童超出輔助框」文字"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-GAIT-004",
+        "requirement_id": "SC-GAIT-ANALYSIS-004",
+        "title": "正/背面模組提示詞三包含「不干涉」與「多人入鏡」說明",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入正面或背面模組拍攝頁面"
+        ],
+        "test_data": [
+          "模組類型：正面模組 或 背面模組"
+        ],
+        "steps": [
+          "進入正面（或背面）模組拍攝頁面",
+          "查看提示詞三的內容"
+        ],
+        "expected": [
+          "提示詞三包含「拍攝過程中避免干涉孩童動作與多人入鏡」文字"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-GAIT-005",
+        "requirement_id": "SC-GAIT-ANALYSIS-005",
+        "title": "側面模組提示詞包含橫向行走情境說明（非走向鏡頭）",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入側面模組拍攝頁面"
+        ],
+        "test_data": [
+          "模組類型：側面模組"
+        ],
+        "steps": [
+          "進入側面模組拍攝頁面",
+          "查看拍攝提示詞"
+        ],
+        "expected": [
+          "提示詞包含引導孩子由左向右（或由右向左）橫向走過鏡頭前的說明",
+          "不包含「走向鏡頭」的說明"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-GAIT-006",
+        "requirement_id": "SC-GAIT-ANALYSIS-006",
+        "title": "側面模組拍攝畫面輔助框設置於畫面邊緣",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入側面模組拍攝頁面"
+        ],
+        "test_data": [
+          "模組類型：側面模組"
+        ],
+        "steps": [
+          "進入側面模組拍攝頁面",
+          "觀察畫面中輔助框的位置"
+        ],
+        "expected": [
+          "輔助框設置於畫面邊緣，確保孩童全身皆在畫面中"
+        ],
+        "automation_candidate": false,
+        "notes": "需人工視覺確認輔助框位置，不適合純自動化"
+      },
+      {
+        "id": "TC-GAIT-007",
+        "requirement_id": "SC-GAIT-ANALYSIS-007",
+        "title": "側面模組錄製頁面顯示「超過 15 秒」錄製時長要求",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入側面模組錄製頁面"
+        ],
+        "test_data": [
+          "模組類型：側面模組"
+        ],
+        "steps": [
+          "進入側面模組錄製頁面",
+          "查看頁面上的錄製時長說明"
+        ],
+        "expected": [
+          "頁面顯示「超過 15 秒」的錄製時長要求"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-GAIT-008",
+        "requirement_id": "SC-GAIT-ANALYSIS-008",
+        "title": "側面模組錄製未滿 15 秒時系統阻止提早結束",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入側面模組錄製頁面"
+        ],
+        "test_data": [
+          "模組類型：側面模組",
+          "嘗試結束時機：錄製未滿 15 秒"
+        ],
+        "steps": [
+          "進入側面模組，開始錄製",
+          "在錄製未滿 15 秒時嘗試結束錄製",
+          "觀察系統是否阻止"
+        ],
+        "expected": [
+          "系統阻止提早結束錄製",
+          "「結束錄製」按鈕為不可點擊狀態，或顯示阻止訊息"
+        ],
+        "automation_candidate": false,
+        "notes": "需模擬錄製環境與計時器行為"
+      },
+      {
+        "id": "TC-GAIT-009",
+        "requirement_id": "SC-GAIT-ANALYSIS-009",
+        "title": "側面模組拍攝注意事項包含「不干涉」與「多人入鏡」說明",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入側面模組拍攝頁面"
+        ],
+        "test_data": [
+          "模組類型：側面模組"
+        ],
+        "steps": [
+          "進入側面模組拍攝頁面",
+          "查看拍攝注意事項文字"
+        ],
+        "expected": [
+          "注意事項包含「拍攝過程中避免干涉孩童動作與多人入鏡」文字"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 文字比對實現自動化驗證"
+      },
+      {
+        "id": "TC-GAIT-010",
+        "requirement_id": "SC-GAIT-ANALYSIS-010",
+        "title": "口語表達錄製畫面中題目圖片不被錄製視窗遮擋",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已登入並進入口語表達題目的錄製頁面",
+          "畫面同時顯示題目圖片與錄製視窗"
+        ],
+        "test_data": [
+          "題目類型：口語表達錄製"
+        ],
+        "steps": [
+          "進入口語表達題目的錄製頁面",
+          "觀察題目圖片與錄製視窗的相對位置"
+        ],
+        "expected": [
+          "題目圖片不被錄製視窗遮擋，可完整檢視"
+        ],
+        "automation_candidate": false,
+        "notes": "需人工視覺確認，不適合純自動化"
+      }
+    ]
+  },
+  {
+    "feature": "re-recording",
+    "source_spec": "qa-workspace/specs/re-recording/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-REREC-001",
+        "requirement_id": "SC-RE-RECORDING-001",
+        "title": "重新錄製完成第一個模組後系統繼續引導進行下一個待補錄模組",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "個案有多個待補錄影片模組",
+          "使用者已從「檢測紀錄」進入「重新錄製」流程"
+        ],
+        "test_data": [
+          "個案：Lala 41M，有多個待補錄模組"
+        ],
+        "steps": [
+          "從「檢測紀錄」進入「重新錄製」",
+          "完成第一個模組的錄製與上傳",
+          "觀察系統是否繼續引導進行下一個待補錄模組"
+        ],
+        "expected": [
+          "系統繼續引導使用者進行下一個待補錄模組",
+          "流程不中斷"
+        ],
+        "automation_candidate": false,
+        "notes": "需等待上傳完成，涉及外部非同步行為"
+      },
+      {
+        "id": "TC-REREC-002",
+        "requirement_id": "SC-RE-RECORDING-002",
+        "title": "重新錄製完成後不觸發圖卡配對或評測結果頁面",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "使用者已從「檢測紀錄」進入「重新錄製」流程"
+        ],
+        "test_data": [
+          "操作：完成一個影片模組的重新錄製"
+        ],
+        "steps": [
+          "進入重新錄製流程，完成一個影片模組的錄製",
+          "觀察系統下一步顯示的頁面"
+        ],
+        "expected": [
+          "系統不彈出圖卡配對頁面",
+          "系統不顯示評測結果頁面",
+          "流程直接繼續錄製下一個待補錄模組"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 URL 或頁面 DOM 標題驗證跳轉目標"
+      },
+      {
+        "id": "TC-REREC-003",
+        "requirement_id": "SC-RE-RECORDING-003",
+        "title": "所有待補錄模組完成後系統顯示完成提示",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者進入重新錄製流程，有 3 個待補錄模組"
+        ],
+        "test_data": [
+          "待補錄模組數量：3 個"
+        ],
+        "steps": [
+          "依序完成所有 3 個待補錄模組的錄製",
+          "觀察系統在最後一個模組完成後的顯示"
+        ],
+        "expected": [
+          "系統顯示「已完成所有補錄」或類似完成提示",
+          "重新錄製流程正常結束"
+        ],
+        "automation_candidate": false,
+        "notes": "需等待所有上傳完成"
+      },
+      {
+        "id": "TC-REREC-004",
+        "requirement_id": "SC-RE-RECORDING-004",
+        "title": "重新錄製中途中斷後再次進入可繼續剩餘模組，無需重頭開始",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "使用者已在重新錄製流程中完成部分模組後離開"
+        ],
+        "test_data": [
+          "情境：完成 1/3 模組後中途離開"
+        ],
+        "steps": [
+          "進入重新錄製，完成部分模組後離開系統",
+          "再次從「檢測紀錄」進入「重新錄製」",
+          "觀察系統顯示的待補錄模組清單"
+        ],
+        "expected": [
+          "系統顯示剩餘未完成的待補錄模組",
+          "不需要重頭開始所有模組"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過中途中斷並重新進入來驗證狀態保留"
+      }
+    ]
+  },
+  {
+    "feature": "account-register",
+    "source_spec": "qa-workspace/specs/account-register/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-ACCREG-001",
+        "requirement_id": "SC-ACCOUNT-REGISTER-001",
+        "title": "填寫完整必填資料並輸入正確驗證碼後完成帳號註冊",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "使用者已進入帳號註冊頁面",
+          "使用者準備有效的測試電子信箱"
+        ],
+        "test_data": [
+          "必填資料：姓名、電子信箱、密碼（符合格式）",
+          "驗證碼：由系統發送的正確驗證碼"
+        ],
+        "steps": [
+          "進入帳號註冊頁面",
+          "填寫所有必填資料",
+          "提交資料，等待系統發送驗證碼",
+          "輸入收到的正確驗證碼",
+          "點擊送出"
+        ],
+        "expected": [
+          "系統完成註冊，跳轉至登入頁面或首頁",
+          "顯示「註冊成功」或類似提示訊息"
+        ],
+        "automation_candidate": false,
+        "notes": "需等待驗證碼發送，為外部非同步行為；自動化測試需模擬或 mock 驗證碼"
+      },
+      {
+        "id": "TC-ACCREG-002",
+        "requirement_id": "SC-ACCOUNT-REGISTER-002",
+        "title": "輸入正確驗證碼後驗證通過並繼續後續步驟",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "使用者已填寫資料並收到驗證碼"
+        ],
+        "test_data": [
+          "驗證碼：系統發送的正確驗證碼"
+        ],
+        "steps": [
+          "在驗證碼輸入欄位輸入正確驗證碼",
+          "點擊送出"
+        ],
+        "expected": [
+          "驗證通過",
+          "系統繼續完成後續註冊步驟"
+        ],
+        "automation_candidate": false,
+        "notes": "需模擬或 mock 驗證碼 API 回應"
+      },
+      {
+        "id": "TC-ACCREG-003",
+        "requirement_id": "SC-ACCOUNT-REGISTER-003",
+        "title": "輸入錯誤驗證碼後系統顯示錯誤提示並拒絕完成註冊",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "使用者已填寫資料並收到驗證碼"
+        ],
+        "test_data": [
+          "驗證碼：錯誤的驗證碼（如 000000）"
+        ],
+        "steps": [
+          "在驗證碼輸入欄位輸入錯誤驗證碼",
+          "點擊送出"
+        ],
+        "expected": [
+          "系統顯示驗證碼錯誤提示訊息",
+          "不允許完成註冊"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 mock 錯誤驗證碼回應實現自動化驗證"
+      }
+    ]
+  },
+  {
+    "feature": "data-validation",
+    "source_spec": "qa-workspace/specs/data-validation/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-DATAVAL-001",
+        "requirement_id": "SC-DATA-VALIDATION-001",
+        "title": "身分證字號第二碼為「1」（男性）時驗證通過",
+        "type": "api",
+        "priority": "medium",
+        "preconditions": [
+          "系統身分證驗證規則已實作",
+          "測試環境 API 可正常呼叫"
+        ],
+        "test_data": [
+          "身分證字號：A123456789（第二碼為 1，男性）"
+        ],
+        "steps": [
+          "呼叫身分證驗證 API 或於表單輸入第二碼為「1」的身分證字號",
+          "送出驗證請求",
+          "觀察系統回應"
+        ],
+        "expected": [
+          "驗證通過",
+          "系統接受此身分證字號"
+        ],
+        "automation_candidate": true,
+        "notes": "可使用 pytest 呼叫驗證 API 實現自動化"
+      },
+      {
+        "id": "TC-DATAVAL-002",
+        "requirement_id": "SC-DATA-VALIDATION-002",
+        "title": "身分證字號第二碼為「2」（女性）時驗證通過",
+        "type": "api",
+        "priority": "medium",
+        "preconditions": [
+          "系統身分證驗證規則已實作",
+          "測試環境 API 可正常呼叫"
+        ],
+        "test_data": [
+          "身分證字號：A223456789（第二碼為 2，女性）"
+        ],
+        "steps": [
+          "呼叫身分證驗證 API 或於表單輸入第二碼為「2」的身分證字號",
+          "送出驗證請求",
+          "觀察系統回應"
+        ],
+        "expected": [
+          "驗證通過",
+          "系統接受此身分證字號"
+        ],
+        "automation_candidate": true,
+        "notes": "可使用 pytest 呼叫驗證 API 實現自動化"
+      },
+      {
+        "id": "TC-DATAVAL-003",
+        "requirement_id": "SC-DATA-VALIDATION-003",
+        "title": "身分證字號第二碼非「1」或「2」時驗證失敗",
+        "type": "api",
+        "priority": "medium",
+        "preconditions": [
+          "系統身分證驗證規則已實作",
+          "測試環境 API 可正常呼叫"
+        ],
+        "test_data": [
+          "身分證字號：A323456789（第二碼為 3）",
+          "身分證字號：A023456789（第二碼為 0）"
+        ],
+        "steps": [
+          "呼叫身分證驗證 API 或於表單輸入第二碼為「3」的身分證字號",
+          "送出驗證請求",
+          "觀察系統回應"
+        ],
+        "expected": [
+          "系統顯示驗證錯誤訊息",
+          "不接受此身分證字號"
+        ],
+        "automation_candidate": true,
+        "notes": "可使用 pytest 呼叫驗證 API 實現自動化，建議測試多個非 1/2 的值"
+      }
+    ]
+  },
+  {
+    "feature": "admin-backend",
+    "source_spec": "qa-workspace/specs/admin-backend/scenarios.md",
+    "test_cases": [
+      {
+        "id": "TC-ADMIN-001",
+        "requirement_id": "SC-ADMIN-BACKEND-001",
+        "title": "管理員可停用帳號並更新帳號狀態為停用",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "管理員已登入後台",
+          "後台帳號管理頁面可正常存取",
+          "目標帳號目前為啟用狀態"
+        ],
+        "test_data": [
+          "角色：管理員",
+          "目標帳號：測試用一般使用者帳號（啟用中）"
+        ],
+        "steps": [
+          "以管理員身分登入後台",
+          "進入帳號管理頁面",
+          "選擇目標帳號",
+          "執行「停用帳號」操作",
+          "確認帳號狀態顯示"
+        ],
+        "expected": [
+          "帳號狀態更新為停用",
+          "後台顯示該帳號狀態為已停用"
+        ],
+        "automation_candidate": true,
+        "notes": ""
+      },
+      {
+        "id": "TC-ADMIN-002",
+        "requirement_id": "SC-ADMIN-BACKEND-002",
+        "title": "停用帳號後該使用者嘗試登入時系統拒絕並顯示停用訊息",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "管理員已將某帳號設為停用狀態"
+        ],
+        "test_data": [
+          "被停用帳號的帳號與密碼"
+        ],
+        "steps": [
+          "使用被停用的帳號與密碼嘗試登入",
+          "觀察系統回應"
+        ],
+        "expected": [
+          "系統拒絕登入",
+          "顯示「帳號已停用」或類似錯誤訊息"
+        ],
+        "automation_candidate": true,
+        "notes": "需搭配 TC-ADMIN-001 執行，或預先建立停用帳號的測試資料"
+      },
+      {
+        "id": "TC-ADMIN-003",
+        "requirement_id": "SC-ADMIN-BACKEND-003",
+        "title": "管理員進入使用者資料頁面後可執行修改，一般使用者的編輯按鈕已隱藏",
+        "type": "e2e",
+        "priority": "high",
+        "preconditions": [
+          "管理員已登入後台",
+          "使用者資料管理頁面可正常存取"
+        ],
+        "test_data": [
+          "角色：管理員",
+          "目標：一般使用者的資料頁面"
+        ],
+        "steps": [
+          "以管理員身分登入後台",
+          "進入使用者資料管理頁面",
+          "查看一般使用者的資料頁面",
+          "確認管理員可見的操作選項"
+        ],
+        "expected": [
+          "一般使用者在自己操作介面上看不到的編輯按鈕，在管理員後台中可見",
+          "管理員可執行修改他人資料的操作"
+        ],
+        "automation_candidate": true,
+        "notes": "需準備管理員與一般使用者兩組帳號"
+      },
+      {
+        "id": "TC-ADMIN-004",
+        "requirement_id": "SC-ADMIN-BACKEND-004",
+        "title": "一般使用者頁面不顯示編輯他人資料的按鈕",
+        "type": "e2e",
+        "priority": "medium",
+        "preconditions": [
+          "一般使用者已登入系統"
+        ],
+        "test_data": [
+          "角色：一般使用者"
+        ],
+        "steps": [
+          "以一般使用者身分登入系統",
+          "進入個人資料頁面",
+          "觀察頁面上的可操作按鈕"
+        ],
+        "expected": [
+          "編輯他人資料的按鈕不顯示於頁面上",
+          "頁面上僅顯示適合一般使用者的操作選項"
+        ],
+        "automation_candidate": true,
+        "notes": "可透過 DOM 元素存在性驗證按鈕是否隱藏"
+      }
+    ]
+  }
+]

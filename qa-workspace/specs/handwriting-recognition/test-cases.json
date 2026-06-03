@@ -1,0 +1,79 @@
+{
+  "feature": "handwriting-recognition",
+  "source_spec": "qa-workspace/specs/handwriting-recognition/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-HWRITE-001",
+      "requirement_id": "SC-HANDWRITING-002",
+      "title": "手繪圖形辨識拍攝教學示意圖呈現正確場景（無手或筆）",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "使用者已登入並進入手繪圖形辨識拍攝頁面"
+      ],
+      "test_data": [
+        "頁面：手繪圖形辨識拍攝教學頁"
+      ],
+      "steps": [
+        "進入手繪圖形辨識拍攝頁面",
+        "查看拍攝教學示意圖"
+      ],
+      "expected": [
+        "示意圖呈現「放好畫好的圖形紙」的拍攝場景",
+        "示意圖中不出現手或筆",
+        "示意圖與錄影教學示意圖不同"
+      ],
+      "automation_candidate": false,
+      "notes": "需人工視覺確認示意圖內容正確性"
+    },
+    {
+      "id": "TC-HWRITE-002",
+      "requirement_id": "SC-HANDWRITING-003",
+      "title": "手繪圖形辨識注意事項最右側圖片角度與文字說明一致",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "使用者已登入並進入手繪圖形辨識拍攝頁面"
+      ],
+      "test_data": [
+        "頁面：手繪圖形辨識拍攝注意事項區域"
+      ],
+      "steps": [
+        "進入手繪圖形辨識拍攝頁面",
+        "查看拍攝注意事項區域的圖片",
+        "比對最右側圖片的角度與旁邊的文字說明"
+      ],
+      "expected": [
+        "最右側圖片的角度與旁邊文字說明一致",
+        "圖文內容相符，不存在矛盾"
+      ],
+      "automation_candidate": false,
+      "notes": "需人工視覺確認圖文一致性"
+    },
+    {
+      "id": "TC-HWRITE-003",
+      "requirement_id": "SC-HANDWRITING-004",
+      "title": "開始錄製後梯形輔助框從畫面消失",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "使用者已登入並進入手繪圖形辨識頁面",
+        "錄製前畫面顯示梯形輔助框"
+      ],
+      "test_data": [
+        "頁面：手繪圖形辨識錄製頁"
+      ],
+      "steps": [
+        "進入手繪圖形辨識頁面，確認梯形輔助框顯示",
+        "點擊「開始錄製」",
+        "觀察梯形輔助框是否從畫面消失"
+      ],
+      "expected": [
+        "點擊開始錄製後，梯形輔助框從畫面中消失",
+        "正式錄製過程中不顯示梯形輔助框"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過 DOM 元素可見性（visible/hidden）自動驗證"
+    }
+  ]
+}

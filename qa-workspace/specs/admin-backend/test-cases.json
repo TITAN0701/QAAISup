@@ -1,0 +1,109 @@
+{
+  "feature": "admin-backend",
+  "source_spec": "qa-workspace/specs/admin-backend/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-ADMIN-001",
+      "requirement_id": "SC-ADMIN-BACKEND-001",
+      "title": "管理員可停用帳號並更新帳號狀態為停用",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "管理員已登入後台",
+        "後台帳號管理頁面可正常存取",
+        "目標帳號目前為啟用狀態"
+      ],
+      "test_data": [
+        "角色：管理員",
+        "目標帳號：測試用一般使用者帳號（啟用中）"
+      ],
+      "steps": [
+        "以管理員身分登入後台",
+        "進入帳號管理頁面",
+        "選擇目標帳號",
+        "執行「停用帳號」操作",
+        "確認帳號狀態顯示"
+      ],
+      "expected": [
+        "帳號狀態更新為停用",
+        "後台顯示該帳號狀態為已停用"
+      ],
+      "automation_candidate": true,
+      "notes": ""
+    },
+    {
+      "id": "TC-ADMIN-002",
+      "requirement_id": "SC-ADMIN-BACKEND-002",
+      "title": "停用帳號後該使用者嘗試登入時系統拒絕並顯示停用訊息",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "管理員已將某帳號設為停用狀態"
+      ],
+      "test_data": [
+        "被停用帳號的帳號與密碼"
+      ],
+      "steps": [
+        "使用被停用的帳號與密碼嘗試登入",
+        "觀察系統回應"
+      ],
+      "expected": [
+        "系統拒絕登入",
+        "顯示「帳號已停用」或類似錯誤訊息"
+      ],
+      "automation_candidate": true,
+      "notes": "需搭配 TC-ADMIN-001 執行，或預先建立停用帳號的測試資料"
+    },
+    {
+      "id": "TC-ADMIN-003",
+      "requirement_id": "SC-ADMIN-BACKEND-003",
+      "title": "管理員進入使用者資料頁面後可執行修改，一般使用者的編輯按鈕已隱藏",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "管理員已登入後台",
+        "使用者資料管理頁面可正常存取"
+      ],
+      "test_data": [
+        "角色：管理員",
+        "目標：一般使用者的資料頁面"
+      ],
+      "steps": [
+        "以管理員身分登入後台",
+        "進入使用者資料管理頁面",
+        "查看一般使用者的資料頁面",
+        "確認管理員可見的操作選項"
+      ],
+      "expected": [
+        "一般使用者在自己操作介面上看不到的編輯按鈕，在管理員後台中可見",
+        "管理員可執行修改他人資料的操作"
+      ],
+      "automation_candidate": true,
+      "notes": "需準備管理員與一般使用者兩組帳號"
+    },
+    {
+      "id": "TC-ADMIN-004",
+      "requirement_id": "SC-ADMIN-BACKEND-004",
+      "title": "一般使用者頁面不顯示編輯他人資料的按鈕",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "一般使用者已登入系統"
+      ],
+      "test_data": [
+        "角色：一般使用者"
+      ],
+      "steps": [
+        "以一般使用者身分登入系統",
+        "進入個人資料頁面",
+        "觀察頁面上的可操作按鈕"
+      ],
+      "expected": [
+        "編輯他人資料的按鈕不顯示於頁面上",
+        "頁面上僅顯示適合一般使用者的操作選項"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過 DOM 元素存在性驗證按鈕是否隱藏"
+    }
+  ]
+}

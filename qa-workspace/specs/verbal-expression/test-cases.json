@@ -1,0 +1,135 @@
+{
+  "feature": "verbal-expression",
+  "source_spec": "qa-workspace/specs/verbal-expression/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-VERBAL-001",
+      "requirement_id": "SC-VERBAL-EXPRESSION-001",
+      "title": "口語表達每張圖片各自獨立倒數 60 秒計時，切換圖片後重置",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案已進入口語表達題目",
+        "畫面顯示第一張圖片"
+      ],
+      "test_data": [
+        "題目類型：口語表達",
+        "計時器預設：60 秒"
+      ],
+      "steps": [
+        "進入口語表達題目，確認第一張圖片的計時器顯示 60 秒",
+        "等待計時器倒數（或記錄初始值）",
+        "當第一張圖計時結束，系統切換至第二張圖",
+        "確認第二張圖的計時器重置為 60 秒"
+      ],
+      "expected": [
+        "每張圖片各自獨立倒數 60 秒",
+        "切換圖片後計時器重置為 60 秒，不延續前一張的剩餘時間"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過計時器 UI 數值或 API 事件驗證"
+    },
+    {
+      "id": "TC-VERBAL-002",
+      "requirement_id": "SC-VERBAL-EXPRESSION-002",
+      "title": "第一張圖 60 秒倒數結束後自動進入第二張圖並重新計時",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案正在進行口語表達",
+        "第一張圖的 60 秒倒數即將結束"
+      ],
+      "test_data": [
+        "題目類型：口語表達",
+        "計時器：60 秒（第一張圖）"
+      ],
+      "steps": [
+        "進入口語表達題目",
+        "等待第一張圖 60 秒計時結束",
+        "觀察系統是否自動切換至第二張圖",
+        "確認第二張圖計時器從 60 秒開始"
+      ],
+      "expected": [
+        "第一張圖計時結束後，系統自動進入第二張圖",
+        "第二張圖重新開始 60 秒倒數"
+      ],
+      "automation_candidate": true,
+      "notes": "可使用 cy.clock() 加速時間模擬計時器倒數完成"
+    },
+    {
+      "id": "TC-VERBAL-003",
+      "requirement_id": "SC-VERBAL-EXPRESSION-003",
+      "title": "影片上傳成功後「下一題」按鈕自動變為可點擊",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案已完成口語表達題目的影片錄製並上傳"
+      ],
+      "test_data": [
+        "題目類型：口語表達",
+        "上傳狀態：成功"
+      ],
+      "steps": [
+        "完成口語表達題目的影片錄製",
+        "等待影片上傳成功",
+        "觀察「下一題」按鈕的可點擊狀態"
+      ],
+      "expected": [
+        "影片上傳成功後，「下一題」按鈕自動變為可點擊（enabled）"
+      ],
+      "automation_candidate": false,
+      "notes": "需等待上傳 API 回應，為外部非同步行為，automation_candidate 設為 false"
+    },
+    {
+      "id": "TC-VERBAL-004",
+      "requirement_id": "SC-VERBAL-EXPRESSION-004",
+      "title": "影片上傳成功後可直接點擊「下一題」，無需先點「取消」",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案已完成口語表達影片錄製並上傳成功"
+      ],
+      "test_data": [
+        "題目類型：口語表達",
+        "上傳狀態：成功"
+      ],
+      "steps": [
+        "完成口語表達影片上傳",
+        "不點擊「取消」，直接點擊「下一題」",
+        "觀察系統是否跳轉至下一題"
+      ],
+      "expected": [
+        "系統直接跳至下一題",
+        "不需要先點擊「取消」才能繼續"
+      ],
+      "automation_candidate": false,
+      "notes": "需等待上傳完成，為外部非同步行為"
+    },
+    {
+      "id": "TC-VERBAL-005",
+      "requirement_id": "SC-VERBAL-EXPRESSION-006",
+      "title": "口語表達題目圖卡與鏡頭視窗不互相遮擋",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "個案已進入口語表達題目",
+        "畫面同時顯示圖卡與鏡頭視窗"
+      ],
+      "test_data": [
+        "題目類型：口語表達"
+      ],
+      "steps": [
+        "進入口語表達題目",
+        "觀察畫面中圖卡與鏡頭視窗的相對位置",
+        "確認圖卡內容是否完整可見"
+      ],
+      "expected": [
+        "圖卡內容不被鏡頭視窗遮擋",
+        "鏡頭視窗不被圖卡遮擋",
+        "兩者皆可完整檢視"
+      ],
+      "automation_candidate": false,
+      "notes": "需要視覺檢查，不適合純自動化；可截圖後人工驗證"
+    }
+  ]
+}

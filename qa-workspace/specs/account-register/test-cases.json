@@ -1,0 +1,80 @@
+{
+  "feature": "account-register",
+  "source_spec": "qa-workspace/specs/account-register/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-ACCREG-001",
+      "requirement_id": "SC-ACCOUNT-REGISTER-001",
+      "title": "填寫完整必填資料並輸入正確驗證碼後完成帳號註冊",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "使用者已進入帳號註冊頁面",
+        "使用者準備有效的測試電子信箱"
+      ],
+      "test_data": [
+        "必填資料：姓名、電子信箱、密碼（符合格式）",
+        "驗證碼：由系統發送的正確驗證碼"
+      ],
+      "steps": [
+        "進入帳號註冊頁面",
+        "填寫所有必填資料",
+        "提交資料，等待系統發送驗證碼",
+        "輸入收到的正確驗證碼",
+        "點擊送出"
+      ],
+      "expected": [
+        "系統完成註冊，跳轉至登入頁面或首頁",
+        "顯示「註冊成功」或類似提示訊息"
+      ],
+      "automation_candidate": false,
+      "notes": "需等待驗證碼發送，為外部非同步行為；自動化測試需模擬或 mock 驗證碼"
+    },
+    {
+      "id": "TC-ACCREG-002",
+      "requirement_id": "SC-ACCOUNT-REGISTER-002",
+      "title": "輸入正確驗證碼後驗證通過並繼續後續步驟",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "使用者已填寫資料並收到驗證碼"
+      ],
+      "test_data": [
+        "驗證碼：系統發送的正確驗證碼"
+      ],
+      "steps": [
+        "在驗證碼輸入欄位輸入正確驗證碼",
+        "點擊送出"
+      ],
+      "expected": [
+        "驗證通過",
+        "系統繼續完成後續註冊步驟"
+      ],
+      "automation_candidate": false,
+      "notes": "需模擬或 mock 驗證碼 API 回應"
+    },
+    {
+      "id": "TC-ACCREG-003",
+      "requirement_id": "SC-ACCOUNT-REGISTER-003",
+      "title": "輸入錯誤驗證碼後系統顯示錯誤提示並拒絕完成註冊",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "使用者已填寫資料並收到驗證碼"
+      ],
+      "test_data": [
+        "驗證碼：錯誤的驗證碼（如 000000）"
+      ],
+      "steps": [
+        "在驗證碼輸入欄位輸入錯誤驗證碼",
+        "點擊送出"
+      ],
+      "expected": [
+        "系統顯示驗證碼錯誤提示訊息",
+        "不允許完成註冊"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過 mock 錯誤驗證碼回應實現自動化驗證"
+    }
+  ]
+}

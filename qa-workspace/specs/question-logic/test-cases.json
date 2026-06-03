@@ -1,0 +1,169 @@
+{
+  "feature": "question-logic",
+  "source_spec": "qa-workspace/specs/question-logic/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-QLOGIC-001",
+      "requirement_id": "SC-QUESTION-LOGIC-001",
+      "title": "從實質年齡層開始出題，答錯後系統降低一個年齡層難度",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統中存在 4M 個案資料",
+        "系統已正確判斷個案實質年齡層為 4M",
+        "施測者已登入並進入測驗頁面"
+      ],
+      "test_data": [
+        "個案月齡：4M",
+        "起始年齡層：4M",
+        "答題結果：連續答錯"
+      ],
+      "steps": [
+        "以 4M 個案身分進入測驗",
+        "確認系統從 4M 年齡層開始出題",
+        "對當前年齡層題目選擇錯誤答案",
+        "觀察系統切換至下一題的年齡層"
+      ],
+      "expected": [
+        "測驗開始時，第一題為 4M 年齡層題目",
+        "答錯後，系統切換至低一個年齡層（如 2M）的題目",
+        "系統不限制下降次數，可持續往下降"
+      ],
+      "automation_candidate": true,
+      "notes": "需模擬答錯行為，驗證跳題邏輯是否正確降一階"
+    },
+    {
+      "id": "TC-QLOGIC-002",
+      "requirement_id": "SC-QUESTION-LOGIC-002",
+      "title": "答對後系統只上升一個年齡層，不可跨越兩階或更多",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案正在較低年齡層答題",
+        "施測者已登入並進入測驗頁面"
+      ],
+      "test_data": [
+        "個案目前答題年齡層：2M",
+        "答題結果：答對"
+      ],
+      "steps": [
+        "使個案在 2M 年齡層答題",
+        "對當前題目選擇正確答案",
+        "觀察系統切換至下一題的年齡層"
+      ],
+      "expected": [
+        "答對後，系統切換至高一個年齡層（如 4M）的題目",
+        "系統不跳過任何中間年齡層，僅上升一階"
+      ],
+      "automation_candidate": true,
+      "notes": "需驗證答對後升階幅度嚴格為 +1 階"
+    },
+    {
+      "id": "TC-QLOGIC-003",
+      "requirement_id": "SC-QUESTION-LOGIC-003",
+      "title": "42M 個案答對後系統最高升至 48M，不跳至 60M 或更高",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統中存在 42M 個案資料",
+        "施測者已登入並進入測驗頁面",
+        "個案已持續答對，系統嘗試升階"
+      ],
+      "test_data": [
+        "個案月齡：42M",
+        "目前年齡層：42M",
+        "答題結果：持續答對"
+      ],
+      "steps": [
+        "以 42M 個案身分進入測驗",
+        "連續答對題目，使系統嘗試升階",
+        "觀察系統在升至 48M 後再次答對的行為"
+      ],
+      "expected": [
+        "系統在升至 48M 後，不再升至 60M 或更高年齡層",
+        "測驗最高顯示 48M 年齡層題目"
+      ],
+      "automation_candidate": true,
+      "notes": "驗證上限邊界：42M 個案最高只能測至 48M"
+    },
+    {
+      "id": "TC-QLOGIC-004",
+      "requirement_id": "SC-QUESTION-LOGIC-004",
+      "title": "跨模組後系統跳回實質年齡層（4M）對應的下一模組",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "一名 4M 個案完成「6M 語言理解」模組",
+        "施測者已登入並在測驗流程中"
+      ],
+      "test_data": [
+        "個案月齡：4M",
+        "剛完成的模組：6M 語言理解",
+        "預期下一模組：4M 語言表達"
+      ],
+      "steps": [
+        "以 4M 個案身分進行測驗",
+        "完成「6M 語言理解」模組所有題目",
+        "觀察系統跳轉至哪個模組"
+      ],
+      "expected": [
+        "系統跳轉至「4M 語言表達」模組，而非「6M 語言表達」模組"
+      ],
+      "automation_candidate": true,
+      "notes": "驗證跨模組後回到實質年齡層對應模組的邏輯"
+    },
+    {
+      "id": "TC-QLOGIC-005",
+      "requirement_id": "SC-QUESTION-LOGIC-005",
+      "title": "觀察題組全錯時結果顯示最低月齡「2 個月」，不顯示「0 個月」",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "一名 6M 受試者進行測驗",
+        "施測者已登入並進入觀察題組"
+      ],
+      "test_data": [
+        "個案月齡：6M",
+        "觀察題組所有題目答題結果：全錯"
+      ],
+      "steps": [
+        "以 6M 個案身分進行測驗，進入觀察題組",
+        "對觀察題組所有題目選擇錯誤答案",
+        "觀察系統計算並顯示的最終結果月齡"
+      ],
+      "expected": [
+        "最終結果顯示「2 個月」",
+        "結果不顯示「0 個月」或負數"
+      ],
+      "automation_candidate": true,
+      "notes": "驗證月齡顯示下限為 2 個月"
+    },
+    {
+      "id": "TC-QLOGIC-006",
+      "requirement_id": "SC-QUESTION-LOGIC-006",
+      "title": "個案在最低年齡層（2M）持續答錯時，系統維持最低階不崩潰",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "個案已在最低年齡層（2M）答題",
+        "施測者已登入並進入測驗頁面"
+      ],
+      "test_data": [
+        "個案目前答題年齡層：2M（最低層）",
+        "答題結果：持續答錯"
+      ],
+      "steps": [
+        "使個案在 2M 年齡層答題",
+        "連續選擇錯誤答案，觀察系統是否嘗試降至 2M 以下",
+        "確認系統行為穩定"
+      ],
+      "expected": [
+        "系統維持在 2M 年齡層，不出現錯誤提示",
+        "系統不崩潰、不出現空白頁面",
+        "測驗流程正常繼續"
+      ],
+      "automation_candidate": true,
+      "notes": "邊界測試：驗證下限保護機制"
+    }
+  ]
+}

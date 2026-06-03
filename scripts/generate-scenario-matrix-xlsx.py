@@ -13,7 +13,7 @@ TEST_CASE_STATUS_OPTIONS = "Not Run,Ready,Pass,Fail,Blocked,N/A"
 
 
 def get_field(block: str, field: str, default: str = "") -> str:
-    pattern = rf"(?m)^-\s+{re.escape(field)}\s*:\s*(.+?)\s*$"
+    pattern = rf"(?m)^-\s+\**{re.escape(field)}\**\s*:\s*(.+?)\s*$"
     match = re.search(pattern, block)
     return match.group(1).strip() if match else default
 
@@ -87,7 +87,7 @@ def read_scenarios(specs_root: Path) -> list[dict[str, str]]:
 
         module_name = get_title(feature_dir / "README.md", feature_dir.name)
         content = scenario_path.read_text(encoding="utf-8")
-        matches = list(re.finditer(r"(?m)^###\s+(SC-[A-Z0-9_-]+)\s*$", content))
+        matches = list(re.finditer(r"(?m)^###\s+(SC-[A-Z0-9_-]+)(?:\s*[：:].*)?\s*$", content))
 
         for index, match in enumerate(matches):
             next_start = matches[index + 1].start() if index + 1 < len(matches) else len(content)

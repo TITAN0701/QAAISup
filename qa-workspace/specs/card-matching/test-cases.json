@@ -1,0 +1,132 @@
+{
+  "feature": "card-matching",
+  "source_spec": "qa-workspace/specs/card-matching/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-CARDMATCH-001",
+      "requirement_id": "SC-CARD-MATCHING-001",
+      "title": "4M 個案測驗中不顯示圖卡配對題目",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統中存在 4M 個案資料",
+        "施測者已登入並進入測驗頁面"
+      ],
+      "test_data": [
+        "個案月齡：4M"
+      ],
+      "steps": [
+        "以 4M 個案身分開始測驗",
+        "完整走完測驗流程，記錄所有出現的題目類型"
+      ],
+      "expected": [
+        "測驗過程中不出現任何圖卡配對題目",
+        "題目類型皆為 4M 年齡層適用的非配對題型"
+      ],
+      "automation_candidate": true,
+      "notes": "需確認圖卡配對題目的辨識特徵（如 DOM class 或題型標記）"
+    },
+    {
+      "id": "TC-CARDMATCH-002",
+      "requirement_id": "SC-CARD-MATCHING-002",
+      "title": "6M 個案測驗中不顯示圖卡配對題目",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統中存在 6M 個案資料",
+        "施測者已登入並進入測驗頁面"
+      ],
+      "test_data": [
+        "個案月齡：6M"
+      ],
+      "steps": [
+        "以 6M 個案身分開始測驗",
+        "完整走完測驗流程，記錄所有出現的題目類型"
+      ],
+      "expected": [
+        "測驗過程中不出現任何圖卡配對題目"
+      ],
+      "automation_candidate": true,
+      "notes": ""
+    },
+    {
+      "id": "TC-CARDMATCH-003",
+      "requirement_id": "SC-CARD-MATCHING-003",
+      "title": "8M 個案測驗中可正常顯示圖卡配對題目",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統中存在 8M 個案資料",
+        "施測者已登入並進入測驗頁面"
+      ],
+      "test_data": [
+        "個案月齡：8M"
+      ],
+      "steps": [
+        "以 8M 個案身分開始測驗",
+        "進行測驗，觀察是否出現圖卡配對題目",
+        "確認圖卡配對題目顯示正常（圖片載入、選項可見）"
+      ],
+      "expected": [
+        "測驗流程中出現圖卡配對題目",
+        "圖卡配對題目顯示正常，無錯誤或空白"
+      ],
+      "automation_candidate": true,
+      "notes": "驗證 8M 為圖卡配對起始年齡層"
+    },
+    {
+      "id": "TC-CARDMATCH-004",
+      "requirement_id": "SC-CARD-MATCHING-005",
+      "title": "圖卡配對題中點擊彩色圖案即算配對成功",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案月齡 >= 8M",
+        "施測者已登入並進入圖卡配對題目頁面"
+      ],
+      "test_data": [
+        "個案月齡：8M",
+        "題目類型：圖卡配對",
+        "操作方式：點擊（非拖拉）"
+      ],
+      "steps": [
+        "進入圖卡配對題目，確認畫面顯示彩色圖案與灰底目標區域",
+        "點擊正確的彩色圖案",
+        "觀察系統記錄的作答結果"
+      ],
+      "expected": [
+        "系統記錄為正確作答",
+        "不需要執行拖拉動作即可完成配對"
+      ],
+      "automation_candidate": true,
+      "notes": "依群健所回應，維持點選方式，無需拖拉"
+    },
+    {
+      "id": "TC-CARDMATCH-005",
+      "requirement_id": "SC-CARD-MATCHING-006",
+      "title": "圖卡配對點擊正確圖案後顯示正向回饋並進入下一題",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "個案月齡 >= 8M",
+        "施測者已登入並進入圖卡配對題目頁面"
+      ],
+      "test_data": [
+        "個案月齡：8M",
+        "題目類型：圖卡配對",
+        "操作：點擊正確彩色圖案"
+      ],
+      "steps": [
+        "進入圖卡配對題目",
+        "點擊正確的彩色圖案",
+        "觀察配對成功後的系統行為"
+      ],
+      "expected": [
+        "系統顯示正向回饋（如鼓勵文字或圖示）",
+        "系統進入下一題，不停留在同一題"
+      ],
+      "automation_candidate": true,
+      "notes": ""
+    }
+  ]
+}
