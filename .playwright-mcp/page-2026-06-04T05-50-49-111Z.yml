@@ -1,0 +1,62 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e131]:
+    - banner [ref=e132]:
+      - generic [ref=e133]:
+        - img "Logo" [ref=e135] [cursor=pointer]
+        - generic [ref=e136]:
+          - img [ref=e137] [cursor=pointer]
+          - img [ref=e139] [cursor=pointer]
+    - main [ref=e141]:
+      - generic [ref=e143]:
+        - generic [ref=e144]: 孩童檔案
+        - button [ref=e146] [cursor=pointer]:
+          - img [ref=e147]
+      - generic [ref=e149] [cursor=pointer]:
+        - generic [ref=e150]:
+          - img "孩童頭像" [ref=e152]
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - generic [ref=e155]: ewfwef
+              - generic [ref=e156]: 男 | 1歲6個月
+            - generic [ref=e157]: 尚未檢測
+        - img [ref=e159]
+      - generic [ref=e161]:
+        - generic [ref=e165]:
+          - button "ewfwef" [ref=e2347] [cursor=pointer]
+          - generic [ref=e169]:
+            - paragraph [ref=e170]: 1107_MMHT000007
+            - paragraph [ref=e171]: 出生日期：2024/12/03
+        - generic [ref=e172]:
+          - combobox [ref=e174] [cursor=pointer]:
+            - generic: 發展檢測
+            - img [ref=e176]
+          - generic [ref=e2348]:
+            - generic [ref=e2349]:
+              - button "繼續檢測" [ref=e2350] [cursor=pointer]:
+                - generic [ref=e2351]: 繼續檢測
+                - img [ref=e2352]
+              - generic [ref=e2354]: 上一次評測日期：2026/06/03
+              - generic [ref=e2355]:
+                - generic [ref=e2356]:
+                  - img "粗大動作" [ref=e2358]
+                  - generic [ref=e2359]: 粗大動作
+                - generic [ref=e2360]:
+                  - img "精細動作" [ref=e2362]
+                  - generic [ref=e2363]: 精細動作
+                - generic [ref=e2364]:
+                  - img "社會情緒" [ref=e2366]
+                  - generic [ref=e2367]: 社會情緒
+                - generic [ref=e2368]:
+                  - img "語言理解" [ref=e2370]
+                  - generic [ref=e2371]: 語言理解
+                - generic [ref=e2372]:
+                  - img "語言表達" [ref=e2374]
+                  - generic [ref=e2375]: 語言表達
+                - generic [ref=e2376]:
+                  - img "認知" [ref=e2378]
+                  - generic [ref=e2380]: 認知
+            - generic [ref=e2382]:
+              - img [ref=e2383]
+              - text: 下次檢測日期
+  - region "Notifications (F8)":
+    - list

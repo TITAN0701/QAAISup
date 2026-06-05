@@ -1,0 +1,7 @@
+[     192ms] [LOG] [beforeEnter] 進入 /question {step: walk, isRetry: false, from: undefined, fromPath: /} @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     193ms] [LOG] [beforeEnter] 非 bypass step，開始從後端恢復測驗... @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     374ms] [LOG] [beforeEnter] growthMonitoring 回傳 {quizId: 7a8d5bc5-2fa7-4c5c-80ab-a0f4ac0ac501} @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     575ms] [LOG] [beforeEnter] resume/start 回傳 {quizId: 7a8d5bc5-2fa7-4c5c-80ab-a0f4ac0ac501, questionId: d77f88b0-fb75-4faf-8f8f-d1f50ecfe463, type: SE03_LE04} @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     575ms] [LOG] [beforeEnter] resolveNextStep => picture-naming @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     576ms] [LOG] [beforeEnter] 進入 /question {step: picture-naming, isRetry: false, from: undefined, fromPath: /} @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     576ms] [LOG] [beforeEnter] bypass step 或 isRetry 觸發，直接放行 @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34

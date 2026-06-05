@@ -1,0 +1,79 @@
+- generic [ref=e1]:
+  - main [ref=e15]:
+    - generic [ref=e16]:
+      - generic [ref=e18]:
+        - generic [ref=e20]: 粗大動作
+        - generic [ref=e22]: 0%
+      - generic [ref=e28]:
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - paragraph [ref=e34]: 拍攝教學
+            - heading "仰躺動作拍攝" [level=2] [ref=e35]
+            - paragraph [ref=e36]:
+              - text: 請從上往下俯拍，錄製超過 30 秒、最多 60 秒孩子清醒時仰臥於床鋪、手腳揮舞的影片。
+              - text: 錄製過程中請家長不要干預孩子的行為。
+          - img "仰躺動作拍攝" [ref=e38]
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - paragraph [ref=e44]: 拍攝教學
+            - heading "錄影前的道具準備" [level=2] [ref=e45]
+            - paragraph [ref=e46]: 在正式開始前，為了讓拍攝更順利，請您準備以下物品：
+          - generic [ref=e48]:
+            - generic [ref=e49]:
+              - img "準備物品1" [ref=e51]
+              - paragraph [ref=e52]: 腳架或其他可固定手機／平板的裝置，可幫助穩定畫面，避免晃動。
+            - generic [ref=e53]:
+              - img "準備物品2" [ref=e55]
+              - paragraph [ref=e56]: 孩子喜歡的小玩具（如玩具、小球）可用來吸引孩子注視鏡頭。
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - paragraph [ref=e62]: 拍攝教學
+            - heading "拍攝小提醒" [level=2] [ref=e63]
+            - paragraph [ref=e64]: 接下來，請您幫孩子拍攝一段仰躺影片，畫面需為孩子清醒時仰臥於床鋪、手腳揮舞的模樣，協助我們觀察孩子的肢體動作發展。
+          - generic [ref=e66]:
+            - img "duck_point" [ref=e68]
+            - paragraph [ref=e69]: 請將手機或平板直立擺放（直式拍攝）
+            - paragraph [ref=e70]: 請確認孩子的全身（從頭到腳）都在綠色輔助框內，並且清楚入鏡
+            - paragraph [ref=e71]:
+              - text: 錄製時長請 超過 5 秒，最多 60 秒 ，時間剩餘15秒時會給予提醒
+              - generic [ref=e72]:
+                - img [ref=e73]
+                - text: 00:45
+        - generic [ref=e80]:
+          - heading "拍攝注意事項" [level=2] [ref=e82]
+          - generic [ref=e83]:
+            - generic [ref=e84]:
+              - generic [ref=e85]:
+                - img [ref=e86]
+                - generic [ref=e89]: 錄影過程避免孩童超出輔助框
+              - img "step4_1" [ref=e90]
+            - generic [ref=e91]:
+              - generic [ref=e92]:
+                - img [ref=e93]
+                - generic [ref=e96]: 避免鏡頭失焦、模糊與晃動
+              - img "step4_2" [ref=e97]
+            - generic [ref=e98]:
+              - generic [ref=e99]:
+                - img [ref=e100]
+                - generic [ref=e103]: 拍攝過程中避免干涉孩童動作與多人入鏡
+              - img "step4_3" [ref=e104]
+      - generic [ref=e111]:
+        - generic [ref=e112]:
+          - img "avatar" [ref=e113]
+          - generic [ref=e114]:
+            - paragraph [ref=e115]: TEST4
+            - paragraph [ref=e116]: 0119_MMHT000014 | 0歲4個月 | 男
+        - generic [ref=e117]:
+          - button "取消" [active] [ref=e118] [cursor=pointer]
+          - button "開始錄製" [ref=e119] [cursor=pointer]:
+            - img [ref=e120]
+            - text: 開始錄製
+      - generic [ref=e123]:
+        - img "警告圖示" [ref=e125]
+        - heading "確定要取消測驗嗎？" [level=3] [ref=e126]
+        - paragraph [ref=e127]: 下次作答需重新開始喔！
+        - generic [ref=e128]:
+          - button "確定取消" [ref=e129] [cursor=pointer]
+          - button "繼續作答" [ref=e130] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list

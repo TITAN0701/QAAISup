@@ -1,0 +1,50 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img "Logo" [ref=e7] [cursor=pointer]
+        - generic [ref=e8]:
+          - navigation
+          - img "管理者" [ref=e10] [cursor=pointer]
+    - main [ref=e11]:
+      - generic [ref=e14]: 孩童列表
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - generic [ref=e19]:
+            - generic [ref=e20]:
+              - generic [ref=e21]:
+                - textbox "搜尋姓名或案例編號" [ref=e22]
+                - img [ref=e24]
+              - button "搜尋" [ref=e25] [cursor=pointer]
+            - button "篩選器" [ref=e26] [cursor=pointer]
+          - table [ref=e28]:
+            - rowgroup [ref=e29]:
+              - row "孩童姓名 性別 年齡 / (矯正年齡) 地區 最後檢測 下次測驗日期 狀態 動作" [ref=e30]:
+                - columnheader "孩童姓名" [ref=e31]
+                - columnheader "性別" [ref=e32]
+                - columnheader "年齡 / (矯正年齡)" [ref=e33]
+                - columnheader "地區" [ref=e34]
+                - columnheader "最後檢測" [ref=e35]
+                - columnheader "下次測驗日期" [ref=e36]
+                - columnheader "狀態" [ref=e37]
+                - columnheader "動作" [ref=e38]
+              - row [ref=e39]
+            - rowgroup [ref=e40]:
+              - row "No data" [ref=e41]:
+                - cell "No data" [ref=e42]
+        - generic [ref=e44]:
+          - generic [ref=e45]:
+            - generic [ref=e46]: 每頁顯示
+            - combobox [ref=e47] [cursor=pointer]:
+              - generic: "10"
+              - img [ref=e49]
+            - generic [ref=e50]: 筆
+          - navigation [ref=e51]:
+            - button "Page 1" [ref=e53] [cursor=pointer]:
+              - generic [ref=e54]: "1"
+          - generic [ref=e55]:
+            - generic [ref=e56]: 前往
+            - spinbutton [ref=e58]: "1"
+  - region "Notifications (F8)":
+    - list
+  - generic [ref=e62]: 載入中...

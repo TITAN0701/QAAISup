@@ -1,0 +1,81 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e45]:
+    - banner [ref=e199]:
+      - generic [ref=e200]:
+        - img "Logo" [ref=e202] [cursor=pointer]
+        - generic [ref=e203]:
+          - img [ref=e204] [cursor=pointer]
+          - img [ref=e206] [cursor=pointer]
+    - main [ref=e67]:
+      - generic [ref=e240]:
+        - generic [ref=e241]: 孩童檔案
+        - button [ref=e243] [cursor=pointer]:
+          - img [ref=e244]
+      - generic [ref=e246] [cursor=pointer]:
+        - generic [ref=e247]:
+          - img "孩童頭像" [ref=e249]
+          - generic [ref=e250]:
+            - generic [ref=e251]:
+              - generic [ref=e252]: TEST4
+              - generic [ref=e253]: 男 | 4個月
+            - generic [ref=e254]: "下次檢測日期: 2026/05/08"
+        - img [ref=e256]
+      - generic [ref=e258]:
+        - generic [ref=e262]:
+          - button "TEST4" [ref=e264] [cursor=pointer]
+          - generic [ref=e266]:
+            - paragraph [ref=e267]: 0119_MMHT000014
+            - paragraph [ref=e268]: 出生日期：2026/01/22
+        - generic [ref=e269]:
+          - combobox [ref=e271] [cursor=pointer]:
+            - generic: 發展檢測
+            - img [ref=e273]
+          - generic [ref=e277]:
+            - generic [ref=e278]:
+              - button "開始檢測" [ref=e279] [cursor=pointer]:
+                - generic [ref=e280]: 開始檢測
+                - img [ref=e281]
+              - generic [ref=e283]:
+                - generic [ref=e284]:
+                  - img "粗大動作" [ref=e286]
+                  - generic [ref=e287]: 粗大動作
+                - generic [ref=e288]:
+                  - img "精細動作" [ref=e290]
+                  - generic [ref=e291]: 精細動作
+                - generic [ref=e292]:
+                  - img "社會情緒" [ref=e294]
+                  - generic [ref=e295]: 社會情緒
+                - generic [ref=e296]:
+                  - img "語言理解" [ref=e298]
+                  - generic [ref=e299]: 語言理解
+                - generic [ref=e300]:
+                  - img "語言表達" [ref=e302]
+                  - generic [ref=e303]: 語言表達
+                - generic [ref=e304]:
+                  - img "認知" [ref=e306]
+                  - generic [ref=e308]: 認知
+            - generic [ref=e309]:
+              - generic [ref=e310]:
+                - img [ref=e311]
+                - text: 下次檢測日期
+              - generic [ref=e313]:
+                - generic [ref=e314]:
+                  - generic [ref=e315]: 2026/05/08 - 4月齡
+                  - generic [ref=e316]: 粗大動作
+                - generic [ref=e317]:
+                  - generic [ref=e318]: 2026/05/08 - 4月齡
+                  - generic [ref=e319]: 精細動作
+                - generic [ref=e320]:
+                  - generic [ref=e321]: 2026/05/08 - 4月齡
+                  - generic [ref=e322]: 社會情緒
+                - generic [ref=e323]:
+                  - generic [ref=e324]: 2026/05/08 - 4月齡
+                  - generic [ref=e325]: 語言理解
+                - generic [ref=e326]:
+                  - generic [ref=e327]: 2026/05/08 - 4月齡
+                  - generic [ref=e328]: 語言表達
+                - generic [ref=e329]:
+                  - generic [ref=e330]: 2026/05/08 - 4月齡
+                  - generic [ref=e331]: 認知
+  - region "Notifications (F8)":
+    - list

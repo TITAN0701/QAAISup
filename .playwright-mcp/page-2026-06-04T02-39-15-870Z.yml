@@ -1,0 +1,36 @@
+- generic [active] [ref=e1]:
+  - main [ref=e190]:
+    - generic [ref=e191]:
+      - generic [ref=e193]:
+        - img "logo" [ref=e194]
+        - img "whiteNotebook" [ref=e195]
+        - img "動作情緒語言認知" [ref=e196]
+        - img "頭像" [ref=e197]
+        - generic [ref=e198]:
+          - paragraph [ref=e199]: 兒童發展智慧偵測平台
+          - generic [ref=e200]:
+            - paragraph [ref=e201]: 輕鬆掌握關鍵發展面向
+            - separator [ref=e202]
+            - paragraph [ref=e203]: 即時追蹤孩子在動作、認知、社交與語言能力
+            - separator [ref=e204]
+            - paragraph [ref=e205]: 的成長進度。
+            - separator [ref=e206]
+      - generic [ref=e209]:
+        - heading "歡迎回來" [level=2] [ref=e210]
+        - generic [ref=e211]:
+          - generic [ref=e212]: 帳號
+          - textbox "帳號" [ref=e213]:
+            - /placeholder: 請輸入手機號碼或電子郵件
+        - generic [ref=e214]:
+          - generic [ref=e215]: 密碼
+          - generic [ref=e216]:
+            - textbox "密碼" [ref=e217]:
+              - /placeholder: 請輸入密碼
+            - button [ref=e218] [cursor=pointer]:
+              - img [ref=e219]
+          - button "忘記密碼？" [ref=e222] [cursor=pointer]
+        - button "登入" [ref=e223] [cursor=pointer]:
+          - generic [ref=e224]: 登入
+    - generic [ref=e231]: Copyright © 2025 WETPAINT | All Rights Reserved
+  - region "Notifications (F8)":
+    - list

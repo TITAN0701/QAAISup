@@ -1,0 +1,62 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img "Logo" [ref=e7] [cursor=pointer]
+        - generic [ref=e8]:
+          - img [ref=e34] [cursor=pointer]
+          - img [ref=e9] [cursor=pointer]
+    - main [ref=e10]:
+      - generic [ref=e12]:
+        - generic [ref=e13]: 孩童檔案
+        - button [ref=e15] [cursor=pointer]:
+          - img [ref=e16]
+      - generic [ref=e38] [cursor=pointer]:
+        - generic [ref=e39]:
+          - img "孩童頭像" [ref=e41]
+          - generic [ref=e42]:
+            - generic [ref=e43]:
+              - generic [ref=e44]: testolo
+              - generic [ref=e45]: 男 | 3歲10個月
+            - generic [ref=e46]: "下次檢測日期: 2026/06/30"
+        - img [ref=e48]
+      - generic [ref=e17]:
+        - generic [ref=e53]:
+          - button "testolo" [ref=e1378] [cursor=pointer]
+          - generic [ref=e57]:
+            - paragraph [ref=e58]: 3212_MMHT000010
+            - paragraph [ref=e59]: 出生日期：2022/07/14
+        - generic [ref=e18]:
+          - combobox [ref=e20] [cursor=pointer]:
+            - generic: 發展檢測
+            - img [ref=e22]
+          - generic [ref=e1379]:
+            - generic [ref=e1380]:
+              - button "等待下次檢測時間" [disabled] [ref=e1381] [cursor=pointer]:
+                - generic [ref=e1382]: 等待下次檢測時間
+              - generic [ref=e1383]: 上一次評測日期：2026/06/04
+            - generic [ref=e1384]:
+              - generic [ref=e1385]:
+                - img [ref=e1386]
+                - text: 下次檢測日期
+              - generic [ref=e1388]:
+                - generic [ref=e1389]:
+                  - generic [ref=e1390]: 2026/06/30 - 48月齡
+                  - generic [ref=e1391]: 粗大動作
+                - generic [ref=e1392]:
+                  - generic [ref=e1393]: 2026/06/30 - 48月齡
+                  - generic [ref=e1394]: 精細動作
+                - generic [ref=e1395]:
+                  - generic [ref=e1396]: 2026/06/30 - 48月齡
+                  - generic [ref=e1397]: 社會情緒
+                - generic [ref=e1398]:
+                  - generic [ref=e1399]: 2026/06/30 - 48月齡
+                  - generic [ref=e1400]: 語言理解
+                - generic [ref=e1401]:
+                  - generic [ref=e1402]: 2026/06/30 - 48月齡
+                  - generic [ref=e1403]: 語言表達
+                - generic [ref=e1404]:
+                  - generic [ref=e1405]: 2026/06/30 - 48月齡
+                  - generic [ref=e1406]: 認知
+  - region "Notifications (F8)":
+    - list

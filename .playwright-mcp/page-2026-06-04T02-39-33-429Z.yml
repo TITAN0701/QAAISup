@@ -1,0 +1,67 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e9]:
+      - heading "創立帳號" [level=2] [ref=e10]
+      - generic [ref=e11]:
+        - generic [ref=e12]: 填寫人姓名
+        - textbox "填寫人姓名" [ref=e13]:
+          - /placeholder: 請輸入全名
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: 密碼 請輸入 8 碼以上含大小寫英文
+          - generic [ref=e17]:
+            - textbox "密碼 請輸入 8 碼以上含大小寫英文" [ref=e18]:
+              - /placeholder: ""
+            - button [ref=e19] [cursor=pointer]:
+              - img [ref=e20]
+        - generic [ref=e22]:
+          - generic [ref=e23]: 確認密碼
+          - generic [ref=e24]:
+            - textbox "確認密碼" [ref=e25]:
+              - /placeholder: ""
+            - button [ref=e26] [cursor=pointer]:
+              - img [ref=e27]
+      - generic [ref=e29]:
+        - generic [ref=e30]: 性別
+        - generic [ref=e31]:
+          - generic [ref=e32] [cursor=pointer]:
+            - radio "男性" [ref=e33]
+            - generic [ref=e34]: 男性
+          - generic [ref=e35] [cursor=pointer]:
+            - radio "女性" [ref=e36]
+            - generic [ref=e37]: 女性
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - generic [ref=e40]: Email
+          - textbox "Email" [ref=e41]:
+            - /placeholder: example@email.com
+        - generic [ref=e42]:
+          - generic [ref=e43]: 手機號碼
+          - textbox "手機號碼" [ref=e44]:
+            - /placeholder: 0900-000-000
+      - generic [ref=e45]:
+        - generic [ref=e46]: 填寫驗證碼 (擇一方式)
+        - generic [ref=e47]:
+          - generic [ref=e48] [cursor=pointer]:
+            - radio "Email" [checked] [ref=e49]
+            - generic [ref=e50]: Email
+          - generic [ref=e51] [cursor=pointer]:
+            - radio "手機簡訊" [ref=e52]
+            - generic [ref=e53]: 手機簡訊
+      - generic [ref=e54]:
+        - textbox "XXXXXXXX" [ref=e55]
+        - button "取得驗證碼" [disabled] [ref=e56] [cursor=pointer]
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - checkbox [ref=e60]
+          - img
+        - generic [ref=e61]:
+          - text: 請閱讀
+          - button "請閱讀" [ref=e62] [cursor=pointer]: 服務條款
+      - button "確認送出" [ref=e63] [cursor=pointer]
+      - generic [ref=e64]:
+        - text: 已經有帳號了？
+        - button "登入" [ref=e65] [cursor=pointer]
+    - generic [ref=e66]: Copyright © 2025 WETPAINT | All Rights Reserved
+  - region "Notifications (F8)":
+    - list

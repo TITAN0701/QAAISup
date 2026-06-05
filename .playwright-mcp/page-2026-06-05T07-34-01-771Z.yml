@@ -1,0 +1,62 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img "Logo" [ref=e7] [cursor=pointer]
+        - generic [ref=e8]:
+          - img [ref=e9] [cursor=pointer]
+          - img [ref=e10] [cursor=pointer]
+    - main [ref=e12]:
+      - generic [ref=e373]:
+        - generic [ref=e374]: 孩童檔案
+        - button [active] [ref=e376] [cursor=pointer]:
+          - img [ref=e377]
+      - generic [ref=e379] [cursor=pointer]:
+        - generic [ref=e380]:
+          - img "孩童頭像" [ref=e382]
+          - generic [ref=e383]:
+            - generic [ref=e384]:
+              - generic [ref=e385]: 41mweqe12
+              - generic [ref=e386]: 男 | 3歲5個月
+            - generic [ref=e387]: "下次檢測日期: 2026/06/06"
+        - img [ref=e389]
+      - generic [ref=e391]:
+        - generic [ref=e395]:
+          - button "41mweqe12" [ref=e397] [cursor=pointer]
+          - generic [ref=e399]:
+            - paragraph [ref=e400]: 0102_MMHT000038
+            - paragraph [ref=e401]: 出生日期：2022/12/21
+        - generic [ref=e402]:
+          - combobox [ref=e404] [cursor=pointer]:
+            - generic: 發展檢測
+            - img [ref=e406]
+          - generic [ref=e410]:
+            - generic [ref=e411]:
+              - button "等待下次檢測時間" [disabled] [ref=e412] [cursor=pointer]:
+                - generic [ref=e413]: 等待下次檢測時間
+              - generic [ref=e414]: 上一次評測日期：2026/06/05
+            - generic [ref=e415]:
+              - generic [ref=e416]:
+                - img [ref=e417]
+                - text: 下次檢測日期
+              - generic [ref=e419]:
+                - generic [ref=e420]:
+                  - generic [ref=e421]: 2026/06/06 - 42月齡
+                  - generic [ref=e422]: 粗大動作
+                - generic [ref=e423]:
+                  - generic [ref=e424]: 2026/06/06 - 42月齡
+                  - generic [ref=e425]: 精細動作
+                - generic [ref=e426]:
+                  - generic [ref=e427]: 2026/06/06 - 42月齡
+                  - generic [ref=e428]: 社會情緒
+                - generic [ref=e429]:
+                  - generic [ref=e430]: 2026/06/06 - 42月齡
+                  - generic [ref=e431]: 語言理解
+                - generic [ref=e432]:
+                  - generic [ref=e433]: 2026/06/06 - 42月齡
+                  - generic [ref=e434]: 語言表達
+                - generic [ref=e435]:
+                  - generic [ref=e436]: 2026/06/06 - 42月齡
+                  - generic [ref=e437]: 認知
+  - region "Notifications (F8)":
+    - list

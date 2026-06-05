@@ -1,0 +1,10 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img "Logo" [ref=e7] [cursor=pointer]
+        - img [ref=e9] [cursor=pointer]
+    - main [ref=e10]
+  - region "Notifications (F8)":
+    - list
+  - generic [ref=e14]: 載入中...

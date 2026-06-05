@@ -1,0 +1,30 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img "Logo" [ref=e7] [cursor=pointer]
+        - generic [ref=e8]:
+          - img [ref=e9] [cursor=pointer]
+          - img [ref=e10] [cursor=pointer]
+    - main [ref=e12]:
+      - generic [ref=e344]:
+        - tablist [ref=e345]:
+          - tab "新訊息 (2)" [selected] [ref=e347] [cursor=pointer]:
+            - generic [ref=e348]: 新訊息 (2)
+          - tab "已讀" [ref=e349] [cursor=pointer]:
+            - generic [ref=e350]: 已讀
+        - tabpanel "新訊息 (2)" [ref=e351]:
+          - generic [ref=e352]:
+            - button "陳小明 小朋友 | 已可參加6個月齡的發展評測 ! 4月4日 ‧ 評測通知" [ref=e355] [cursor=pointer]:
+              - generic [ref=e357]:
+                - generic [ref=e358]: 陳小明 小朋友 | 已可參加6個月齡的發展評測 !
+                - generic [ref=e359]: 4月4日 ‧ 評測通知
+              - img [ref=e360]
+            - button "王小華 小朋友 | 「大肢體動作題組」影片檔案出現錯誤 請於一周內進行更行測試 5月5日 ‧ 錄製異常" [ref=e364] [cursor=pointer]:
+              - generic [ref=e366]:
+                - generic [ref=e367]: 王小華 小朋友 | 「大肢體動作題組」影片檔案出現錯誤 請於一周內進行更行測試
+                - generic [ref=e368]: 5月5日 ‧ 錄製異常
+              - img [ref=e369]
+          - generic [ref=e371] [cursor=pointer]: 載入更多
+  - region "Notifications (F8)":
+    - list

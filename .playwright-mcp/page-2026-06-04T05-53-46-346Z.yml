@@ -1,0 +1,62 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2638]:
+    - banner [ref=e2639]:
+      - generic [ref=e2640]:
+        - img "Logo" [ref=e2642] [cursor=pointer]
+        - generic [ref=e2643]:
+          - img [ref=e2644] [cursor=pointer]
+          - img [ref=e2646] [cursor=pointer]
+    - main [ref=e2648]:
+      - generic [ref=e2650]:
+        - generic [ref=e2651]: 孩童檔案
+        - button [ref=e2653] [cursor=pointer]:
+          - img [ref=e2654]
+      - generic [ref=e2656] [cursor=pointer]:
+        - generic [ref=e2657]:
+          - img "孩童頭像" [ref=e2659]
+          - generic [ref=e2660]:
+            - generic [ref=e2661]:
+              - generic [ref=e2662]: TEST4
+              - generic [ref=e2663]: 男 | 4個月
+            - generic [ref=e2664]: 尚未檢測
+        - img [ref=e2666]
+      - generic [ref=e2668]:
+        - generic [ref=e2672]:
+          - button "TEST4" [ref=e2674] [cursor=pointer]
+          - generic [ref=e2676]:
+            - paragraph [ref=e2677]: 0119_MMHT000014
+            - paragraph [ref=e2678]: 出生日期：2026/01/22
+        - generic [ref=e2679]:
+          - combobox [ref=e2681] [cursor=pointer]:
+            - generic: 發展檢測
+            - img [ref=e2683]
+          - generic [ref=e2687]:
+            - generic [ref=e2688]:
+              - button "繼續檢測" [ref=e2689] [cursor=pointer]:
+                - generic [ref=e2690]: 繼續檢測
+                - img [ref=e2691]
+              - generic [ref=e2693]: 上一次評測日期：2026/06/04
+              - generic [ref=e2694]:
+                - generic [ref=e2695]:
+                  - img "粗大動作" [ref=e2697]
+                  - generic [ref=e2698]: 粗大動作
+                - generic [ref=e2699]:
+                  - img "精細動作" [ref=e2701]
+                  - generic [ref=e2702]: 精細動作
+                - generic [ref=e2703]:
+                  - img "社會情緒" [ref=e2705]
+                  - generic [ref=e2706]: 社會情緒
+                - generic [ref=e2707]:
+                  - img "語言理解" [ref=e2709]
+                  - generic [ref=e2710]: 語言理解
+                - generic [ref=e2711]:
+                  - img "語言表達" [ref=e2713]
+                  - generic [ref=e2714]: 語言表達
+                - generic [ref=e2715]:
+                  - img "認知" [ref=e2717]
+                  - generic [ref=e2719]: 認知
+            - generic [ref=e2721]:
+              - img [ref=e2722]
+              - text: 下次檢測日期
+  - region "Notifications (F8)":
+    - list

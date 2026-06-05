@@ -1,0 +1,16 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2385]:
+    - generic [ref=e2386]:
+      - generic [ref=e2388]:
+        - generic [ref=e2390]: 口語表達
+        - generic [ref=e2392]: 0%
+      - generic [ref=e2587]:
+        - img "avatar" [ref=e2588]
+        - generic [ref=e2589]:
+          - paragraph [ref=e2590]: ewfwef
+          - paragraph [ref=e2591]: 1107_MMHT000007 | 1歲6個月 | 男
+  - region "Notifications (F8)":
+    - list
+  - button "返回" [ref=e2602] [cursor=pointer]:
+    - img [ref=e2603]
+    - text: 返回

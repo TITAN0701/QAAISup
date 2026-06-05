@@ -1,0 +1,6 @@
+[     164ms] [LOG] [beforeEnter] 進入 /question {step: gait-analysis, isRetry: false, from: undefined, fromPath: /} @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     165ms] [LOG] [beforeEnter] 非 bypass step，開始從後端恢復測驗... @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     247ms] [LOG] [beforeEnter] growthMonitoring 回傳 {quizId: null} @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[     364ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://sit-wetpaint.nhri.org.tw/cskapi/api/child/475/quizattempts/start:0
+[     365ms] [WARNING] [beforeEnter] 測驗已完成，導回首頁 @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
+[    1775ms] [LOG] 發展檢測資料: Proxy(Object) @ https://sit-wetpaint.nhri.org.tw/assets/developmental-CgDtllCt.js:0

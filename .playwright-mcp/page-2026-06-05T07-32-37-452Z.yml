@@ -1,0 +1,66 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img "Logo" [ref=e7] [cursor=pointer]
+        - generic [ref=e8]:
+          - img [ref=e9] [cursor=pointer]
+          - img [ref=e10] [cursor=pointer]
+    - main [ref=e12]:
+      - generic [ref=e15]: 孩童列表
+      - generic [ref=e17]:
+        - generic [ref=e18]:
+          - generic [ref=e20]:
+            - generic [ref=e21]:
+              - generic [ref=e22]:
+                - textbox "搜尋姓名或案例編號" [ref=e23]: ewrttd
+                - img [ref=e25]
+                - button "清除搜尋" [ref=e318] [cursor=pointer]:
+                  - img [ref=e319]
+              - button "搜尋" [active] [ref=e26] [cursor=pointer]
+            - button "篩選器" [ref=e27] [cursor=pointer]
+          - table [ref=e29]:
+            - rowgroup [ref=e30]:
+              - row "孩童姓名 性別 年齡 / (矯正年齡) 地區 最後檢測 下次測驗日期 狀態 動作" [ref=e31]:
+                - columnheader "孩童姓名" [ref=e32]
+                - columnheader "性別" [ref=e33]
+                - columnheader "年齡 / (矯正年齡)" [ref=e34]
+                - columnheader "地區" [ref=e35]
+                - columnheader "最後檢測" [ref=e36]
+                - columnheader "下次測驗日期" [ref=e37]
+                - columnheader "狀態" [ref=e38]
+                - columnheader "動作" [ref=e39]
+              - row [ref=e40]
+            - rowgroup [ref=e41]:
+              - row "ewrttd MMH0000405 男 2歲9個月 桃園市 龍潭區" [ref=e321]:
+                - cell "ewrttd MMH0000405" [ref=e322]:
+                  - generic [ref=e68]:
+                    - generic [ref=e69]: ewrttd
+                    - generic [ref=e70]: MMH0000405
+                - cell "男" [ref=e71]:
+                  - generic [ref=e72]: 男
+                - cell "2歲9個月" [ref=e323]:
+                  - generic [ref=e75]: 2歲9個月
+                - cell "桃園市 龍潭區" [ref=e324]:
+                  - generic [ref=e77]: 桃園市 龍潭區
+                - cell [ref=e325]
+                - cell [ref=e326]
+                - cell [ref=e327]
+                - cell [ref=e86]:
+                  - button [ref=e93] [cursor=pointer]:
+                    - img [ref=e94]
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - generic [ref=e47]: 每頁顯示
+            - combobox [ref=e48] [cursor=pointer]:
+              - generic: "10"
+              - img [ref=e50]
+            - generic [ref=e51]: 筆
+          - navigation [ref=e52]:
+            - button "Page 1" [ref=e54] [cursor=pointer]:
+              - generic [ref=e55]: "1"
+          - generic [ref=e56]:
+            - generic [ref=e57]: 前往
+            - spinbutton [ref=e59]: "1"
+  - region "Notifications (F8)":
+    - list

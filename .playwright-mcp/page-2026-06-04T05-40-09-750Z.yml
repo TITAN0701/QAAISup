@@ -1,0 +1,109 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - img "Logo" [ref=e7] [cursor=pointer]
+        - generic [ref=e8]:
+          - navigation [ref=e9]:
+            - link "儀錶板" [ref=e10] [cursor=pointer]:
+              - /url: /admin/dashboard
+              - generic [ref=e11]: 儀錶板
+            - link "孩童列表" [ref=e12] [cursor=pointer]:
+              - /url: /admin/child-list
+              - generic [ref=e13]: 孩童列表
+            - link "題目管理" [ref=e14] [cursor=pointer]:
+              - /url: /admin/question
+              - generic [ref=e15]: 題目管理
+            - link "邀請管理" [ref=e16] [cursor=pointer]:
+              - /url: /admin/invite
+              - generic [ref=e17]: 邀請管理
+            - link "關於我們" [ref=e18] [cursor=pointer]:
+              - /url: /admin/about
+              - generic [ref=e19]: 關於我們
+          - img [ref=e21] [cursor=pointer]
+          - img "管理者" [ref=e24] [cursor=pointer]
+    - main [ref=e25]:
+      - generic [ref=e27]:
+        - generic [ref=e28]: 孩童檢測紀錄
+        - button "返回" [ref=e164] [cursor=pointer]:
+          - img [ref=e165]
+          - generic [ref=e167]: 返回
+      - generic [ref=e168]:
+        - generic [ref=e169]:
+          - generic [ref=e172]:
+            - button "60m" [ref=e174] [cursor=pointer]
+            - generic [ref=e176]:
+              - paragraph [ref=e177]: MMHT000004
+              - paragraph [ref=e178]: 出生日期：2021/06/02
+          - generic [ref=e182]:
+            - button "發展結果與建議" [ref=e183] [cursor=pointer]
+            - button "孩童資料" [ref=e184] [cursor=pointer]
+        - generic [ref=e187]:
+          - generic [ref=e188]:
+            - combobox [ref=e189] [cursor=pointer]:
+              - generic: 2026/06/02
+              - img [ref=e191]
+            - button "歷史紀錄" [ref=e193] [cursor=pointer]
+            - button "匯出報告" [ref=e194] [cursor=pointer]
+          - generic [ref=e195]:
+            - generic [ref=e197]:
+              - generic [ref=e198]:
+                - heading "最新檢測結果" [level=2] [ref=e199]
+                - paragraph [ref=e200]: 測驗日期 2026/06/02
+              - generic [ref=e202]: 生理年齡（矯正年齡）60個月
+              - generic [ref=e207]:
+                - generic [ref=e208] [cursor=pointer]:
+                  - heading "粗大動作" [level=4] [ref=e209]
+                  - paragraph [ref=e210]: 60 個月
+                  - generic [ref=e211]: 發展正常
+                - generic [ref=e212] [cursor=pointer]:
+                  - heading "精細動作" [level=4] [ref=e213]
+                  - paragraph [ref=e214]: 60 個月
+                  - generic [ref=e215]: 發展正常
+                - generic [ref=e216] [cursor=pointer]:
+                  - heading "社會情緒" [level=4] [ref=e217]
+                  - paragraph [ref=e218]: 42 個月
+                  - generic [ref=e219]: 發展遲緩
+                - generic [ref=e220] [cursor=pointer]:
+                  - heading "語言理解" [level=4] [ref=e221]
+                  - paragraph [ref=e222]: 72 個月
+                  - generic [ref=e223]: 發展正常
+                - generic [ref=e224] [cursor=pointer]:
+                  - heading "語言表達" [level=4] [ref=e225]
+                  - paragraph [ref=e226]: 60 個月
+                  - generic [ref=e227]: 發展正常
+                - generic [ref=e228] [cursor=pointer]:
+                  - heading "認知" [level=4] [ref=e229]
+                  - paragraph [ref=e230]: 60 個月
+                  - generic [ref=e231]: 發展正常
+            - generic [ref=e232]:
+              - generic [ref=e234]:
+                - heading "衛教建議" [level=3] [ref=e236]
+                - generic [ref=e237]:
+                  - heading "粗大動作" [level=4] [ref=e239]
+                  - generic [ref=e240]:
+                    - paragraph [ref=e241]: 目前發展良好。
+                    - generic [ref=e242] [cursor=pointer]:
+                      - generic [ref=e243]:
+                        - img "影片縮圖" [ref=e244]
+                        - img [ref=e246]
+                      - generic [ref=e248]:
+                        - generic [ref=e249]: 粗大動作影片標題
+                        - img [ref=e250]
+              - generic [ref=e253]:
+                - generic [ref=e254]:
+                  - heading "諮詢醫療院所" [level=3] [ref=e255]
+                  - paragraph [ref=e256]: 提供您當期醫療院所
+                - generic [ref=e257]:
+                  - img "building-office" [ref=e258]
+                  - link "查看就醫地圖" [ref=e259] [cursor=pointer]:
+                    - /url: https://healthforkids.mohw.gov.tw/HospitalMap/?id=920da57226144ffab67339c1a5f2fec1
+        - img "folder-decoration" [ref=e261]
+        - img "folder-decoration" [ref=e263]
+        - img "folder-decoration" [ref=e265]
+        - img "folder-decoration" [ref=e267]
+        - img "folder-decoration" [ref=e269]
+        - img "folder-decoration" [ref=e271]
+        - img "folder-decoration" [ref=e273]
+  - region "Notifications (F8)":
+    - list
