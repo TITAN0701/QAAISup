@@ -1,0 +1,14 @@
+{
+  "admin": {
+    "email": "admin@test.example",
+    "password": "TestAdmin@123"
+  },
+  "regular_user": {
+    "email": "user@test.example",
+    "password": "TestUser@123"
+  },
+  "disabled_user": {
+    "email": "disabled@test.example",
+    "password": "TestDisabled@123"
+  }
+}
