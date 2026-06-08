@@ -1,0 +1,176 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+---
+
+## 專案簡介
+
+AI 輔助、規格驅動的 QA 自動化框架。從 PM 需求到 QA 報告的全流程 AI 協作，針對「國衛院學齡前兒童發展數位評估系統」（代號 wetpaint）進行測試。
+
+目標 SIT 環境：`https://sit-wetpaint.nhri.org.tw/`
+
+---
+
+## 核心流程（PM → QA → 自動化 → 報告）
+
+```
+PM 填需求 (pm-inbox/)
+  ↓ /PM-1-create-intake → .\scripts\new-feature-from-inbox.ps1
+QA/AI 產規格與問題 (qa-workspace/specs/{feature}/)
+  ↓ /QA-1 /QA-2 → spec.md, questions.md
+PM 回答問題
+  ↓ /PM-2-answer-questions → questions.md 填 PM Answer
+QA/AI 產情境與案例
+  ↓ /QA-3 /QA-4 → scenarios.md, test-cases.json
+QA/AI 產自動化草稿
+  ↓ /QA-5 → automation/e2e/specs/*.cy.ts, automation/api/tests/*.py
+執行測試 & 回填結果 (artifacts/raw/)
+  ↓ .\scripts\refresh-qa-artifacts.ps1
+報告產出 (artifacts/generated/)
+  ↓ /QA-6 → test-report.md, scenario-matrix.xlsx
+```
+
+---
+
+## 常用指令
+
+```powershell
+# 建立新功能工作區（從 pm-inbox 匯入）
+.\scripts\new-feature-from-inbox.ps1
+
+# 執行 Cypress E2E（讀 .env 的 CYPRESS_BASE_URL）
+npm run test:e2e
+
+# 執行單一 Cypress 測試檔
+npx cypress run --spec "automation/e2e/specs/login.cy.ts"
+
+# 執行 pytest API 測試
+pytest automation/api/tests/
+
+# 產出所有 QA 產物（回填執行結果後）
+.\scripts\refresh-qa-artifacts.ps1
+
+# 含 PM release summary
+.\scripts\refresh-qa-artifacts.ps1 -IncludePm
+
+# 驗證 SDD 文件結構完整性
+.\scripts\validate-sdd.ps1
+
+# 匯出 PM 報告（Word）
+.\scripts\export-pm-report-docx.ps1
+```
+
+---
+
+## Slash Commands
+
+| 指令 | 用途 |
+|------|------|
+| `/PM-1-create-intake` | PM 建立需求（整理 pm-inbox） |
+| `/PM-2-answer-questions` | PM 回答 questions.md |
+| `/PM-3-review-release-summary` | PM 審查 release summary |
+| `/PM-4-import-xlsx` | 匯入 XLSX 需求表 |
+| `/QA-1-import-pm-request` | 檢查 pm-inbox，準備建立工作區 |
+| `/QA-2-generate-questions` | 根據 spec 產生 PM 釐清問題 |
+| `/QA-3-generate-scenarios` | 產生測試情境（scenarios、plan、tasks） |
+| `/QA-4-generate-testcases` | 產生 test-cases.json、test-plan、risk-notes |
+| `/QA-5-generate-automation` | 產自動化草稿（Cypress + pytest） |
+| `/QA-6-generate-report` | 根據執行結果產 QA/PM 報告 |
+| `/check-project` | 掃描專案整體檔案結構（只用 Glob，最小 token）|
+| `/playwright-smoke-test` | 用 Playwright MCP 截圖所有主要頁面 |
+
+---
+
+## 目錄結構
+
+```
+pm-inbox/                    # PM 需求輸入（.md 或 .xlsx）
+qa-workspace/
+  specs/{feature}/           # 每個功能的工作區
+    spec.md                  # 功能規格
+    questions.md             # 待 PM 確認的問題（含 PM Answer）
+    scenarios.md             # 測試情境（Given/When/Then）
+    test-cases.json          # 測試案例
+    execution-results.json   # 執行結果回填
+  schemas/                   # JSON Schema 驗證
+qa-knowledge/                # QA 知識庫（test-strategy, risk-rules, selector-policy）
+artifacts/
+  generated/qa/              # AI 產出：test-plan.md, test-cases.json, scenario-matrix.xlsx
+  generated/pm/              # PM 報告：release-summary.md
+  raw/                       # 原始執行結果（Allure, screenshots）
+automation/
+  e2e/
+    specs/                   # Cypress 測試案例 (*.cy.ts)
+    pages/                   # Page Object selectors
+    flows/                   # 跨頁流程
+    fixtures/                # 測試資料與登入狀態
+  api/tests/                 # pytest API 測試 (*.py)
+scripts/                     # PowerShell/Python 工具腳本
+docs/                        # 架構、協作、環境設定文件
+```
+
+---
+
+## 架構重點
+
+**五層架構**：PM Input → QA/AI Specification → Test Design → Automation → Execution & Report
+
+每層的關鍵限制：
+- **AI 不可自行創造測試結果**：Pass/Fail 必須來自測試框架或 CI
+- **AI 產出需 QA 審核後才能進入自動化**
+- **缺少 `data-testid` 時**，應在 `automation/ENGINEERING-TASKS.md` 新增 Engineering Task，不要寫脆弱 selector
+
+---
+
+## 環境設定（.env）
+
+```env
+CYPRESS_BASE_URL=https://sit-wetpaint.nhri.org.tw/
+API_BASE_URL=https://api-staging.example.com
+TEST_USER_EMAIL=0999999993
+TEST_USER_PASSWORD=password123
+TEST_ENV=staging
+```
+
+`.env` 不提交 Git。CI 使用 GitHub Secrets：`CYPRESS_BASE_URL`、`API_BASE_URL`、`TEST_USER_EMAIL`、`TEST_USER_PASSWORD`。
+
+---
+
+## Selector 規則
+
+優先順序：`data-testid` > semantic role > label > 穩定唯一文字。
+禁止：CSS nth-child、不穩定 class name、完整 XPath。
+
+命名格式範例：`data-testid="login-email-input"`、`data-testid="login-submit-button"`
+
+---
+
+## 重要限制（SIT 環境）
+
+- **不可點「開始測驗」或「開始檢測」**，除非使用者明確授權
+- **不可送出任何會新增/修改資料的表單**
+- Playwright MCP 截圖任務僅截圖，不操作資料
+
+---
+
+## 功能狀態快照（2026-06-08）
+
+| 功能 | spec | questions | scenarios | test-cases | .cy.ts |
+|------|:----:|:---------:|:---------:|:----------:|:------:|
+| login | ✅ | ✅ | ✅ | ✅ | ✅ |
+| forgot-password | ✅ | ✅ | ✅ | ✅ | ✅ |
+| register | ✅ | ✅ | ✅ | ✅ | ✅ |
+| question-logic | ✅ | ✅ | ✅ | ❌ | ✅ |
+| question-content | ✅ | ✅ | ✅ | ❌ | ✅ |
+| card-matching | ✅ | ✅ | ✅ | ❌ | ✅ |
+| video-recording | ✅ | ✅ | ✅ | ❌ | ✅ |
+| verbal-expression | ✅ | ✅ | ✅ | ❌ | ✅ |
+| observation-group | ✅ | ✅ | ✅ | ❌ | ❌ |
+| handwriting-recognition | ✅ | ✅ | ✅ | ❌ | ✅ |
+| gait-analysis | ✅ | ✅ | ✅ | ❌ | ✅ |
+| re-recording | ✅ | ✅ | ✅ | ❌ | ✅ |
+| progress-bar | ✅ | ✅ | ✅ | ❌ | ❌ |
+| account-register | ✅ | ✅ | ❌ | ❌ | ✅ |
+| data-validation | ✅ | ✅ | ❌ | ❌ | ❌ |
+| admin-backend | ✅ | ✅ | ❌ | ❌ | ✅ |
