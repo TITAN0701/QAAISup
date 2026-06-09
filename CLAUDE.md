@@ -28,7 +28,7 @@ QA/AI 產自動化草稿
 執行測試 & 回填結果 (artifacts/raw/)
   ↓ .\scripts\refresh-qa-artifacts.ps1
 報告產出 (artifacts/generated/)
-  ↓ /QA-6 → test-report.md, scenario-matrix.xlsx
+  ↓ /QA-6 → test-cases.md, test-report.md, scenario-matrix.xlsx
 ```
 
 ---
@@ -62,6 +62,9 @@ pytest automation/api/tests/
 
 # 同步 TC 至 Google Sheet（供 PM 查閱）
 npm run sync:sheet
+
+# 初始化新專案（清空舊內容、更新設定）
+.\scripts\project-init.ps1 -ProjectName "..." -ProjectCode "..." -SitUrl "..." -TestEmail "..." -TestPassword "..."
 ```
 
 ---
@@ -78,11 +81,12 @@ npm run sync:sheet
 | `/QA-2-generate-questions` | 根據 spec 產生 PM 釐清問題 |
 | `/QA-3-generate-scenarios` | 產生測試情境（scenarios、plan、tasks） |
 | `/QA-4-generate-testcases` | 產生 test-cases.json、test-plan、risk-notes |
-| `/QA-5-generate-automation` | 產自動化草稿（Cypress + pytest） |
+| `/QA-5-generate-automation` | 產自動化草稿（Cypress + pytest）；AI 依 test-cases.json 與 scenarios.md 推斷產出，非真實執行，需 QA/Engineer review 後才可跑 |
 | `/QA-6-generate-report` | 根據執行結果產 QA/PM 報告 |
 | `/QA-bug-report` | 將 bug 描述整理成 RIDER 格式報告（輸出至 artifacts/generated/qa/bugs/） |
 | `/check-project` | 掃描專案整體檔案結構（只用 Glob，最小 token）|
 | `/playwright-smoke-test` | 用 Playwright MCP 截圖所有主要頁面 |
+| `/project-init` | 清空舊專案內容、更新設定，快速切換至新系統 |
 
 ---
 
@@ -123,6 +127,7 @@ docs/                        # 架構、協作、環境設定文件
 每層的關鍵限制：
 - **AI 不可自行創造測試結果**：Pass/Fail 必須來自測試框架或 CI
 - **AI 產出需 QA 審核後才能進入自動化**
+- **QA-5 產出為草稿**：AI 依文件推斷寫出 Cypress 程式碼，未實際跑瀏覽器；需 QA/Engineer 確認 selector 正確後才可執行 `npm run test:e2e`
 - **缺少 `data-testid` 時**，應在 `automation/ENGINEERING-TASKS.md` 新增 Engineering Task，不要寫脆弱 selector
 
 ---
@@ -152,6 +157,54 @@ TEST_ENV=staging
 
 ---
 
+## 外部工具設定
+
+### Google Drive MCP
+- 用途：唯讀搜尋 Drive 檔案（`mcp__gdrive__search`）
+- Token：`.claude/gdrive-token.json`
+- Credentials：`.claude/google-credentials.json`
+- 範圍：`drive.readonly`
+
+### Google Sheets 同步
+- 用途：將 TC、Scenarios、Report、Risk Notes、Bug Reports 同步至 Google Sheet 供 PM 查閱
+- 執行：`npm run sync:sheet`（腳本：`scripts/sync-to-sheet.js`）
+- Token：`.claude/sheets-token.json`（範圍：`spreadsheets` + `drive.readonly`）
+- 初次授權：`node scripts/auth-sheets.js`（會開啟瀏覽器，完成後自動存 token）
+- Spreadsheet ID：`1-EO-84MVnU7zyBoCJUcJvNJpPYYYCzmRldCwDvEcO1Q`
+
+### Playwright MCP
+- 用途：截圖主要頁面（`/playwright-smoke-test`），不操作資料
+- 透過 Claude Code MCP 整合，不需額外安裝
+- 限制：不可點「開始測驗」或送出表單
+
+### GitHub CLI（gh）
+- 用途：`/QA-bug-report` 自動推送 Bug 至 GitHub Issues
+- 目標 Repo：`TITAN0701/QAAISup`
+- 前置確認：`gh auth status`
+
+> 以上 token 檔案均不提交 Git。
+
+---
+
+## 切換新專案
+
+將此框架套用至不同系統時，執行 `/project-init`，AI 會依序詢問：
+
+| 欄位 | 說明 |
+|------|------|
+| 專案名稱 | 中文全名，例如：成人健康評估系統 |
+| 專案代號 | 英文小寫，例如：adult-health |
+| SIT URL | 新系統的測試環境網址 |
+| 測試帳號 / 密碼 | 新系統的登入憑證 |
+| API URL | 若無可略過 |
+
+確認後自動執行 `scripts/project-init.ps1`，清空所有舊內容並更新 `.env` 與 `CLAUDE.md`。完成後直接從 `/QA-1-import-pm-request` 開始新專案。
+
+> 清空範圍：`pm-inbox/`、`qa-workspace/specs/`、`automation/e2e/specs/*.cy.ts`、`automation/api/tests/*.py`、`artifacts/`
+> 保留範圍：`scripts/`、`.claude/commands/`、`qa-knowledge/`、Page Object 結構、`package.json`
+
+---
+
 ## Selector 規則
 
 優先順序：`data-testid` > semantic role > label > 穩定唯一文字。
@@ -169,23 +222,23 @@ TEST_ENV=staging
 
 ---
 
-## 功能狀態快照（2026-06-08）
+## 功能狀態快照（2026-06-09）
 
 | 功能 | spec | questions | scenarios | test-cases | .cy.ts |
 |------|:----:|:---------:|:---------:|:----------:|:------:|
 | login | ✅ | ✅ | ✅ | ✅ | ✅ |
 | forgot-password | ✅ | ✅ | ✅ | ✅ | ✅ |
 | register | ✅ | ✅ | ✅ | ✅ | ✅ |
-| question-logic | ✅ | ✅ | ✅ | ❌ | ✅ |
-| question-content | ✅ | ✅ | ✅ | ❌ | ✅ |
-| card-matching | ✅ | ✅ | ✅ | ❌ | ✅ |
-| video-recording | ✅ | ✅ | ✅ | ❌ | ✅ |
-| verbal-expression | ✅ | ✅ | ✅ | ❌ | ✅ |
-| observation-group | ✅ | ✅ | ✅ | ❌ | ❌ |
-| handwriting-recognition | ✅ | ✅ | ✅ | ❌ | ✅ |
-| gait-analysis | ✅ | ✅ | ✅ | ❌ | ✅ |
-| re-recording | ✅ | ✅ | ✅ | ❌ | ✅ |
-| progress-bar | ✅ | ✅ | ✅ | ❌ | ❌ |
-| account-register | ✅ | ✅ | ❌ | ❌ | ✅ |
-| data-validation | ✅ | ✅ | ❌ | ❌ | ❌ |
-| admin-backend | ✅ | ✅ | ❌ | ❌ | ✅ |
+| question-logic | ✅ | ✅ | ✅ | ✅ | ✅ |
+| question-content | ✅ | ✅ | ✅ | ✅ | ✅ |
+| card-matching | ✅ | ✅ | ✅ | ✅ | ✅ |
+| video-recording | ✅ | ✅ | ✅ | ✅ | ✅ |
+| verbal-expression | ✅ | ✅ | ✅ | ✅ | ✅ |
+| observation-group | ✅ | ✅ | ✅ | ✅ | ❌ |
+| handwriting-recognition | ✅ | ✅ | ✅ | ✅ | ✅ |
+| gait-analysis | ✅ | ✅ | ✅ | ✅ | ✅ |
+| re-recording | ✅ | ✅ | ✅ | ✅ | ✅ |
+| account-register | ✅ | ✅ | ✅ | ✅ | ✅ |
+| data-validation | ✅ | ✅ | ✅ | ✅ | ❌ |
+| admin-backend | ✅ | ✅ | ✅ | ✅ | ✅ |
+| progress-bar | ✅ | ✅ | ✅ | ❌ BLOCKED | ❌ |

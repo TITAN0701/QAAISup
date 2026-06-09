@@ -144,19 +144,24 @@ function loadRiskNotes() {
   const riskFile = path.join(ARTIFACTS_QA, 'risk-notes.md');
   if (!fs.existsSync(riskFile)) return rows;
   const content = fs.readFileSync(riskFile, 'utf8');
-  const blocks = content.split(/(?=^## )/m).filter(b => b.startsWith('## '));
+  const blocks = content.split(/(?=^## )/m).filter(b => b.startsWith('## ') && !b.startsWith('## 整體'));
   for (const block of blocks) {
     const featureMatch = block.match(/^## (.+)/);
-    const levelMatch = block.match(/風險等級[：:]\s*\*\*([^*]+)\*\*/);
-    const impactMatch = block.match(/影響範圍[：:][\s\S]*?\n([\s\S]*?)(?=\n\*\*|\n---)/);
+    // 支援 **風險等級：HIGH** 和 風險等級：**HIGH** 兩種格式
+    const levelMatch = block.match(/\*\*風險等級[：:]([^*\n]+)\*\*/) ||
+                       block.match(/風險等級[：:]\s*\*\*([^*]+)\*\*/);
+    const impactMatch = block.match(/影響範圍[^：:]*[：:]\**\s*\n([\s\S]*?)(?=\n\*\*|\n---)/);
+
+    // owner/release 去除行首殘留的 ** 前綴
     const ownerMatch = block.match(/建議 Owner[：:]\s*([^\n]+)/);
     const releaseMatch = block.match(/是否建議 Release[：:]\s*([^\n]+)/);
+    const cleanStars = s => s ? s.replace(/^\*\*\s*/, '').trim() : '';
     rows.push([
       featureMatch ? featureMatch[1].trim() : '',
       levelMatch ? levelMatch[1].trim() : '',
       impactMatch ? impactMatch[1].trim().replace(/\n/g, ' ') : '',
-      ownerMatch ? ownerMatch[1].trim() : '',
-      releaseMatch ? releaseMatch[1].trim() : '',
+      ownerMatch ? cleanStars(ownerMatch[1]) : '',
+      releaseMatch ? cleanStars(releaseMatch[1]) : '',
     ]);
   }
   return rows;

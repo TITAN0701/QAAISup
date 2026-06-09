@@ -23,7 +23,9 @@
      ↓
 [產報告 & Excel]  /QA-6  或  refresh-qa-artifacts.ps1
      ↓
-[test-report.md  scenario-matrix.xlsx]
+[test-cases.md  test-report.md  scenario-matrix.xlsx]
+     ↓
+[同步 Google Sheet]  npm run sync:sheet
 ```
 
 ---
@@ -53,6 +55,9 @@
 
 # 驗證 SDD 結構
 .\scripts\validate-sdd.ps1
+
+# 同步 TC 至 Google Sheet（供 PM 查閱）
+npm run sync:sheet
 ```
 
 ---
@@ -68,7 +73,11 @@
 | `/QA-3-generate-scenarios` | 產生測試情境 |
 | `/QA-4-generate-testcases` | 產生測試案例 |
 | `/QA-5-generate-automation` | 產自動化腳本草稿 |
-| `/QA-6-generate-report` | 產 QA / PM 報告 |
+| `/QA-6-generate-report` | 產 QA / PM 報告（含 test-cases.md） |
+| `/QA-bug-report` | Bug 整理成 RIDER 格式並推送 GitHub Issues |
+| `/check-project` | 掃描專案整體檔案結構 |
+| `/playwright-smoke-test` | 截圖所有主要頁面 |
+| `/project-init` | 清空舊內容、更新設定，快速切換至新系統 |
 
 ---
 
