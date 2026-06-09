@@ -1,0 +1,1524 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Skip to content" [ref=e4] [cursor=pointer]:
+      - /url: "#start-of-content"
+    - banner [ref=e6]:
+      - heading "Navigation Menu" [level=2] [ref=e7]
+      - generic [ref=e8]:
+        - link "Homepage" [ref=e10] [cursor=pointer]:
+          - /url: /
+          - img [ref=e11]
+        - generic [ref=e13]:
+          - navigation "Global" [ref=e16]:
+            - list [ref=e17]:
+              - listitem [ref=e18]:
+                - button "Platform" [ref=e20] [cursor=pointer]:
+                  - text: Platform
+                  - img [ref=e21]
+              - listitem [ref=e23]:
+                - button "Solutions" [ref=e25] [cursor=pointer]:
+                  - text: Solutions
+                  - img [ref=e26]
+              - listitem [ref=e28]:
+                - button "Resources" [ref=e30] [cursor=pointer]:
+                  - text: Resources
+                  - img [ref=e31]
+              - listitem [ref=e33]:
+                - button "Open Source" [ref=e35] [cursor=pointer]:
+                  - text: Open Source
+                  - img [ref=e36]
+              - listitem [ref=e38]:
+                - button "Enterprise" [ref=e40] [cursor=pointer]:
+                  - text: Enterprise
+                  - img [ref=e41]
+              - listitem [ref=e43]:
+                - link "Pricing" [ref=e44] [cursor=pointer]:
+                  - /url: https://github.com/pricing
+                  - generic [ref=e45]: Pricing
+          - generic [ref=e46]:
+            - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+              - img [ref=e51]
+            - link "Sign in" [ref=e54] [cursor=pointer]:
+              - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Fkao273183%2Fqa-claude-skill
+            - link "Sign up" [ref=e55] [cursor=pointer]:
+              - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E&source=header-repo&source_repo=kao273183%2Fqa-claude-skill
+            - button "Appearance settings" [ref=e58] [cursor=pointer]:
+              - img
+  - main [ref=e62]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - generic [ref=e66]:
+          - img [ref=e67]
+          - link "kao273183" [ref=e70] [cursor=pointer]:
+            - /url: /kao273183
+          - generic [ref=e71]: /
+          - strong [ref=e72]:
+            - link "qa-claude-skill" [ref=e73] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill
+          - generic [ref=e74]: Public
+        - generic [ref=e75]:
+          - list:
+            - listitem [ref=e76]:
+              - link "You must be signed in to change notification settings" [ref=e77] [cursor=pointer]:
+                - /url: /login?return_to=%2Fkao273183%2Fqa-claude-skill
+                - img [ref=e78]
+                - text: Notifications
+            - listitem [ref=e80]:
+              - link "Fork 1" [ref=e81] [cursor=pointer]:
+                - /url: /login?return_to=%2Fkao273183%2Fqa-claude-skill
+                - img [ref=e82]
+                - text: Fork
+                - generic "1" [ref=e84]
+            - listitem [ref=e85]:
+              - link "You must be signed in to star a repository" [ref=e87] [cursor=pointer]:
+                - /url: /login?return_to=%2Fkao273183%2Fqa-claude-skill
+                - img [ref=e88]
+                - text: Star
+                - generic "6 users starred this repository" [ref=e90]: "6"
+      - navigation "Repository" [ref=e91]:
+        - list [ref=e92]:
+          - listitem [ref=e93]:
+            - link "Code" [ref=e94] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill
+              - img [ref=e95]
+              - generic [ref=e97]: Code
+          - listitem [ref=e98]:
+            - link "Issues" [ref=e99] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/issues
+              - img [ref=e100]
+              - generic [ref=e103]: Issues
+          - listitem [ref=e104]:
+            - link "Pull requests" [ref=e105] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/pulls
+              - img [ref=e106]
+              - generic [ref=e108]: Pull requests
+          - listitem [ref=e109]:
+            - link "Discussions" [ref=e110] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/discussions
+              - img [ref=e111]
+              - generic [ref=e113]: Discussions
+          - listitem [ref=e114]:
+            - link "Actions" [ref=e115] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/actions
+              - img [ref=e116]
+              - generic [ref=e118]: Actions
+          - listitem [ref=e119]:
+            - link "Projects" [ref=e120] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/projects
+              - img [ref=e121]
+              - generic [ref=e123]: Projects
+          - listitem [ref=e124]:
+            - link "Security and quality" [ref=e125] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/security
+              - img [ref=e126]
+              - generic [ref=e128]: Security and quality
+          - listitem [ref=e129]:
+            - link "Insights" [ref=e130] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/pulse
+              - img [ref=e131]
+              - generic [ref=e133]: Insights
+    - generic [ref=e146]:
+      - heading "kao273183/qa-claude-skill" [level=1] [ref=e148]
+      - generic [ref=e149]:
+        - generic [ref=e152]:
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - button "main branch" [ref=e156] [cursor=pointer]:
+                - generic [ref=e157]:
+                  - generic [ref=e159]:
+                    - img [ref=e161]
+                    - generic [ref=e164]: main
+                  - generic:
+                    - img
+              - generic [ref=e165]:
+                - link "Go to Branches page" [ref=e166] [cursor=pointer]:
+                  - /url: /kao273183/qa-claude-skill/branches
+                  - img [ref=e167]
+                - link "Go to Tags page" [ref=e169] [cursor=pointer]:
+                  - /url: /kao273183/qa-claude-skill/tags
+                  - img [ref=e170]
+            - generic [ref=e172]:
+              - generic [ref=e176]:
+                - img [ref=e178]
+                - combobox "Go to file" [ref=e180]
+              - button "Code" [ref=e181] [cursor=pointer]:
+                - generic [ref=e182]:
+                  - generic:
+                    - img
+                  - generic [ref=e183]: Code
+                  - generic:
+                    - img
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - heading "Folders and files" [level=2] [ref=e186]
+              - table "Folders and files" [ref=e187]:
+                - rowgroup:
+                  - row "Name Last commit message Last commit date":
+                    - columnheader "Name"
+                    - columnheader "Last commit message":
+                      - generic "Last commit message"
+                    - columnheader "Last commit date":
+                      - generic "Last commit date"
+                - rowgroup [ref=e188]:
+                  - 'row "Latest commit kao273183 claude commits by kao273183 and commits by claude docs(i18n): 加日語 README + 修 English README 兩個 stale 數字 Open commit details Commit ce6def4 · Jun 2, 2026last week History 40 Commits" [ref=e189]':
+                    - 'cell "Latest commit kao273183 claude commits by kao273183 and commits by claude docs(i18n): 加日語 README + 修 English README 兩個 stale 數字 Open commit details Commit ce6def4 · Jun 2, 2026last week History 40 Commits" [ref=e190]':
+                      - generic [ref=e191]:
+                        - heading "Latest commit" [level=2] [ref=e192]
+                        - generic [ref=e193]:
+                          - generic [ref=e194]:
+                            - generic [ref=e196]:
+                              - img "kao273183" [ref=e197]
+                              - img "claude" [ref=e198]
+                            - link "commits by kao273183" [ref=e200] [cursor=pointer]:
+                              - /url: /kao273183/qa-claude-skill/commits?author=kao273183
+                              - text: kao273183
+                            - generic [ref=e201]: and
+                            - link "commits by claude" [ref=e203] [cursor=pointer]:
+                              - /url: /kao273183/qa-claude-skill/commits?author=claude
+                              - text: claude
+                          - generic [ref=e204]:
+                            - 'link "docs(i18n): 加日語 README + 修 English README 兩個 stale 數字" [ref=e207] [cursor=pointer]':
+                              - /url: /kao273183/qa-claude-skill/commit/ce6def4983bbf6cc7ddbaf8125c1323198c67d1b
+                            - button "Open commit details" [ref=e208] [cursor=pointer]:
+                              - img [ref=e209]
+                        - generic [ref=e211]:
+                          - generic [ref=e213]:
+                            - link "Commit ce6def4" [ref=e214] [cursor=pointer]:
+                              - /url: /kao273183/qa-claude-skill/commit/ce6def4983bbf6cc7ddbaf8125c1323198c67d1b
+                              - text: ce6def4
+                            - text: ·
+                            - generic "Jun 2, 2026, 4:04 PM GMT+8" [ref=e215]: Jun 2, 2026last week
+                          - generic [ref=e216]:
+                            - heading "History" [level=2] [ref=e217]
+                            - link "40 Commits" [ref=e218] [cursor=pointer]:
+                              - /url: /kao273183/qa-claude-skill/commits/main/
+                              - generic [ref=e219]:
+                                - generic:
+                                  - img
+                                - generic [ref=e220]: 40 Commits
+                  - row ".github, (Directory)" [ref=e221]:
+                    - cell ".github, (Directory)" [ref=e222]:
+                      - generic [ref=e223]:
+                        - img [ref=e224]
+                        - link ".github, (Directory)" [ref=e229] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/tree/main/.github
+                          - text: .github
+                    - cell [ref=e230]
+                    - cell [ref=e232]
+                  - row "config, (Directory)" [ref=e235]:
+                    - cell "config, (Directory)" [ref=e236]:
+                      - generic [ref=e237]:
+                        - img [ref=e238]
+                        - link "config, (Directory)" [ref=e243] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/tree/main/config
+                          - text: config
+                    - cell [ref=e244]
+                    - cell [ref=e246]
+                  - row "docs, (Directory)" [ref=e249]:
+                    - cell "docs, (Directory)" [ref=e250]:
+                      - generic [ref=e251]:
+                        - img [ref=e252]
+                        - link "docs, (Directory)" [ref=e257] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/tree/main/docs
+                          - text: docs
+                    - cell [ref=e258]
+                    - cell [ref=e260]
+                  - row "examples, (Directory)" [ref=e263]:
+                    - cell "examples, (Directory)" [ref=e264]:
+                      - generic [ref=e265]:
+                        - img [ref=e266]
+                        - link "examples, (Directory)" [ref=e271] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/tree/main/examples
+                          - text: examples
+                    - cell [ref=e272]
+                    - cell [ref=e274]
+                  - row "licenses, (Directory)" [ref=e277]:
+                    - cell "licenses, (Directory)" [ref=e278]:
+                      - generic [ref=e279]:
+                        - img [ref=e280]
+                        - link "licenses, (Directory)" [ref=e285] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/tree/main/licenses
+                          - text: licenses
+                    - cell [ref=e286]
+                    - cell [ref=e288]
+                  - row "scripts, (Directory)" [ref=e291]:
+                    - cell "scripts, (Directory)" [ref=e292]:
+                      - generic [ref=e293]:
+                        - img [ref=e294]
+                        - link "scripts, (Directory)" [ref=e299] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/tree/main/scripts
+                          - text: scripts
+                    - cell [ref=e300]
+                    - cell [ref=e302]
+                  - row "skills, (Directory)" [ref=e305]:
+                    - cell "skills, (Directory)" [ref=e306]:
+                      - generic [ref=e307]:
+                        - img [ref=e308]
+                        - link "skills, (Directory)" [ref=e313] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/tree/main/skills
+                          - text: skills
+                    - cell [ref=e314]
+                    - cell [ref=e316]
+                  - row "templates/ci, (Directory)" [ref=e319]:
+                    - cell "templates/ci, (Directory)" [ref=e320]:
+                      - generic [ref=e321]:
+                        - img [ref=e322]
+                        - link "templates/ci, (Directory)" [ref=e327] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/tree/main/templates/ci
+                          - text: templates/ci
+                    - cell [ref=e328]
+                    - cell [ref=e330]
+                  - row ".gitignore, (File)" [ref=e333]:
+                    - cell ".gitignore, (File)" [ref=e334]:
+                      - generic [ref=e335]:
+                        - img [ref=e336]
+                        - link ".gitignore, (File)" [ref=e341] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/.gitignore
+                          - text: .gitignore
+                    - cell [ref=e342]
+                    - cell [ref=e344]
+                  - row "CHANGELOG.md, (File)" [ref=e347]:
+                    - cell "CHANGELOG.md, (File)" [ref=e348]:
+                      - generic [ref=e349]:
+                        - img [ref=e350]
+                        - link "CHANGELOG.md, (File)" [ref=e355] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/CHANGELOG.md
+                          - text: CHANGELOG.md
+                    - cell [ref=e356]
+                    - cell [ref=e358]
+                  - row "CONTRIBUTING.md, (File)" [ref=e361]:
+                    - cell "CONTRIBUTING.md, (File)" [ref=e362]:
+                      - generic [ref=e363]:
+                        - img [ref=e364]
+                        - link "CONTRIBUTING.md, (File)" [ref=e369] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/CONTRIBUTING.md
+                          - text: CONTRIBUTING.md
+                    - cell [ref=e370]
+                    - cell [ref=e372]
+                  - row "INSTALL.md, (File)" [ref=e375]:
+                    - cell "INSTALL.md, (File)" [ref=e376]:
+                      - generic [ref=e377]:
+                        - img [ref=e378]
+                        - link "INSTALL.md, (File)" [ref=e383] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/INSTALL.md
+                          - text: INSTALL.md
+                    - cell [ref=e384]
+                    - cell [ref=e386]
+                  - row "LICENSE, (File)" [ref=e389]:
+                    - cell "LICENSE, (File)" [ref=e390]:
+                      - generic [ref=e391]:
+                        - img [ref=e392]
+                        - link "LICENSE, (File)" [ref=e397] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/LICENSE
+                          - text: LICENSE
+                    - cell [ref=e398]
+                    - cell [ref=e400]
+                  - row "README.ja.md, (File)" [ref=e403]:
+                    - cell "README.ja.md, (File)" [ref=e404]:
+                      - generic [ref=e405]:
+                        - img [ref=e406]
+                        - link "README.ja.md, (File)" [ref=e411] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/README.ja.md
+                          - text: README.ja.md
+                    - cell [ref=e412]
+                    - cell [ref=e414]
+                  - row "README.md, (File)" [ref=e417]:
+                    - cell "README.md, (File)" [ref=e418]:
+                      - generic [ref=e419]:
+                        - img [ref=e420]
+                        - link "README.md, (File)" [ref=e425] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/README.md
+                          - text: README.md
+                    - cell [ref=e426]
+                    - cell [ref=e428]
+                  - row "README.zh-CN.md, (File)" [ref=e431]:
+                    - cell "README.zh-CN.md, (File)" [ref=e432]:
+                      - generic [ref=e433]:
+                        - img [ref=e434]
+                        - link "README.zh-CN.md, (File)" [ref=e439] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/README.zh-CN.md
+                          - text: README.zh-CN.md
+                    - cell [ref=e440]
+                    - cell [ref=e442]
+                  - row "README.zh-TW.md, (File)" [ref=e445]:
+                    - cell "README.zh-TW.md, (File)" [ref=e446]:
+                      - generic [ref=e447]:
+                        - img [ref=e448]
+                        - link "README.zh-TW.md, (File)" [ref=e453] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/README.zh-TW.md
+                          - text: README.zh-TW.md
+                    - cell [ref=e454]
+                    - cell [ref=e456]
+                  - row "ROADMAP.md, (File)" [ref=e459]:
+                    - cell "ROADMAP.md, (File)" [ref=e460]:
+                      - generic [ref=e461]:
+                        - img [ref=e462]
+                        - link "ROADMAP.md, (File)" [ref=e467] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/ROADMAP.md
+                          - text: ROADMAP.md
+                    - cell [ref=e468]
+                    - cell [ref=e470]
+                  - row "SECURITY.md, (File)" [ref=e473]:
+                    - cell "SECURITY.md, (File)" [ref=e474]:
+                      - generic [ref=e475]:
+                        - img [ref=e476]
+                        - link "SECURITY.md, (File)" [ref=e481] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/SECURITY.md
+                          - text: SECURITY.md
+                    - cell [ref=e482]
+                    - cell [ref=e484]
+                  - row "TRADEMARK.md, (File)" [ref=e487]:
+                    - cell "TRADEMARK.md, (File)" [ref=e488]:
+                      - generic [ref=e489]:
+                        - img [ref=e490]
+                        - link "TRADEMARK.md, (File)" [ref=e495] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/TRADEMARK.md
+                          - text: TRADEMARK.md
+                    - cell [ref=e496]
+                    - cell [ref=e498]
+                  - row "install.ps1, (File)" [ref=e501]:
+                    - cell "install.ps1, (File)" [ref=e502]:
+                      - generic [ref=e503]:
+                        - img [ref=e504]
+                        - link "install.ps1, (File)" [ref=e509] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/install.ps1
+                          - text: install.ps1
+                    - cell [ref=e510]
+                    - cell [ref=e512]
+                  - row "install.sh, (File)" [ref=e515]:
+                    - cell "install.sh, (File)" [ref=e516]:
+                      - generic [ref=e517]:
+                        - img [ref=e518]
+                        - link "install.sh, (File)" [ref=e523] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/install.sh
+                          - text: install.sh
+                    - cell [ref=e524]
+                    - cell [ref=e526]
+                  - row "uninstall.ps1, (File)" [ref=e529]:
+                    - cell "uninstall.ps1, (File)" [ref=e530]:
+                      - generic [ref=e531]:
+                        - img [ref=e532]
+                        - link "uninstall.ps1, (File)" [ref=e537] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/uninstall.ps1
+                          - text: uninstall.ps1
+                    - cell [ref=e538]
+                    - cell [ref=e540]
+                  - row "uninstall.sh, (File)" [ref=e543]:
+                    - cell "uninstall.sh, (File)" [ref=e544]:
+                      - generic [ref=e545]:
+                        - img [ref=e546]
+                        - link "uninstall.sh, (File)" [ref=e551] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/uninstall.sh
+                          - text: uninstall.sh
+                    - cell [ref=e552]
+                    - cell [ref=e554]
+            - generic [ref=e558]:
+              - generic [ref=e559]:
+                - heading "Repository files navigation" [level=2] [ref=e560]
+                - navigation "Repository files" [ref=e561]:
+                  - list [ref=e562]:
+                    - listitem [ref=e563]:
+                      - link "README" [ref=e564] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e566]
+                        - generic [ref=e568]: README
+                    - listitem [ref=e569]:
+                      - link "Contributing" [ref=e570] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e572]
+                        - generic [ref=e574]: Contributing
+                    - listitem [ref=e575]:
+                      - link "License" [ref=e576] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e578]
+                        - generic [ref=e580]: License
+                    - listitem [ref=e581]:
+                      - link "Security" [ref=e582] [cursor=pointer]:
+                        - /url: "#"
+                        - img [ref=e584]
+                        - generic [ref=e586]: Security
+                - button "Outline" [ref=e587] [cursor=pointer]:
+                  - img [ref=e588]
+              - article [ref=e591]:
+                - generic [ref=e592]:
+                  - heading "QA Claude Skill" [level=1] [ref=e593]
+                  - 'link "Permalink: QA Claude Skill" [ref=e594] [cursor=pointer]':
+                    - /url: "#qa-claude-skill"
+                    - img [ref=e595]
+                - paragraph [ref=e597]:
+                  - emphasis [ref=e598]: 32 production-grade QA workflow skills for Claude Code — from spec to release.
+                - paragraph [ref=e599]:
+                  - strong [ref=e600]: English
+                  - text: ·
+                  - link "繁體中文" [ref=e601] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/README.zh-TW.md
+                  - text: ·
+                  - link "简体中文" [ref=e602] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/README.zh-CN.md
+                  - text: ·
+                  - link "日本語" [ref=e603] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/README.ja.md
+                - paragraph [ref=e604]:
+                  - 'link "License: MIT" [ref=e605] [cursor=pointer]':
+                    - /url: /kao273183/qa-claude-skill/blob/main/LICENSE
+                    - 'img "License: MIT" [ref=e606]'
+                  - link "32 skills" [ref=e607] [cursor=pointer]:
+                    - /url: https://camo.githubusercontent.com/7a98d5f5d05f1f2b901c1afc042690d7b600433ac438e28cb3b13b872d6d9aa6/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f736b696c6c732d33322d323536334542
+                    - img "32 skills" [ref=e608]
+                  - link "Claude Code Compatible" [ref=e609] [cursor=pointer]:
+                    - /url: https://camo.githubusercontent.com/53196afe9d3c1806a77b2ea4845ae26cf13a590d06502aed215729ee056ac9c2/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f436c61756465253230436f64652d436f6d70617469626c652d3743334145443f6c6f676f3d616e7468726f706963266c6f676f436f6c6f723d7768697465
+                    - img "Claude Code Compatible" [ref=e610]
+                  - link "3 modes" [ref=e611] [cursor=pointer]:
+                    - /url: https://camo.githubusercontent.com/1ba698b4fa86f989dd4224f4955d81683b230c020303fa6be67907a2e2c01814/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f4d6f64652d66756c6c2d2d6d63702532302537432532307061727469616c2d2d6d63702532302537432532306d61726b646f776e2d2d6f6e6c792d313042393831
+                    - img "3 modes" [ref=e612]
+                  - link "Multilingual" [ref=e613] [cursor=pointer]:
+                    - /url: https://camo.githubusercontent.com/8cf0e13628df604504e9ceac2b2619c2bade81de1f5073d3dd3f6015de1583b5/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6931386e2d656e2532302537432532307a682d2d54572532302537432532307a682d2d434e2532302537432532306a612d464239323343
+                    - img "Multilingual" [ref=e614]
+                  - link "Buy Me a Coffee" [ref=e615] [cursor=pointer]:
+                    - /url: https://www.buymeacoffee.com/minikao
+                    - img "Buy Me a Coffee" [ref=e616]
+                - blockquote [ref=e617]:
+                  - paragraph [ref=e618]:
+                    - text: A configurable suite of
+                    - strong [ref=e619]: 32 QA skills
+                    - text: for
+                    - link "Claude Code" [ref=e620] [cursor=pointer]:
+                      - /url: https://claude.ai/code
+                    - text: ", covering the full test lifecycle:"
+                    - strong [ref=e621]: spec → TC → automation → performance → security → review → regression → publish
+                    - text: . Extracted from a personal QA workspace and generalized via
+                    - code [ref=e622]: config.json
+                    - text: — drop in your team's IDs and it works in any team, any tool stack.
+                - separator [ref=e623]
+                - generic [ref=e624]:
+                  - heading "👀 See it in action" [level=2] [ref=e625]
+                  - 'link "Permalink: 👀 See it in action" [ref=e626] [cursor=pointer]':
+                    - /url: "#-see-it-in-action"
+                    - img [ref=e627]
+                - generic [ref=e629]:
+                  - heading "⚡ One-command install" [level=3] [ref=e630]
+                  - 'link "Permalink: ⚡ One-command install" [ref=e631] [cursor=pointer]':
+                    - /url: "#-one-command-install"
+                    - img [ref=e632]
+                - paragraph [ref=e634]:
+                  - link "Install demo" [ref=e635] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/docs/assets/demo-1-install.png
+                    - img "Install demo" [ref=e636]
+                - generic [ref=e637]:
+                  - heading "💬 Natural-language skill triggers" [level=3] [ref=e638]
+                  - 'link "Permalink: 💬 Natural-language skill triggers" [ref=e639] [cursor=pointer]':
+                    - /url: "#-natural-language-skill-triggers"
+                    - img [ref=e640]
+                - paragraph [ref=e642]:
+                  - link "Claude Code interaction demo" [ref=e643] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/docs/assets/demo-2-claude-code.png
+                    - img "Claude Code interaction demo" [ref=e644]
+                - generic [ref=e645]:
+                  - heading "📤 Real outputs ready to ship" [level=3] [ref=e646]
+                  - 'link "Permalink: 📤 Real outputs ready to ship" [ref=e647] [cursor=pointer]':
+                    - /url: "#-real-outputs-ready-to-ship"
+                    - img [ref=e648]
+                - paragraph [ref=e650]:
+                  - link "Output demo" [ref=e651] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/docs/assets/demo-3-output.png
+                    - img "Output demo" [ref=e652]
+                - separator [ref=e653]
+                - generic [ref=e654]:
+                  - heading "✨ Highlights" [level=2] [ref=e655]
+                  - 'link "Permalink: ✨ Highlights" [ref=e656] [cursor=pointer]':
+                    - /url: "#-highlights"
+                    - img [ref=e657]
+                - list [ref=e659]:
+                  - listitem [ref=e660]:
+                    - text: 🧪
+                    - strong [ref=e661]: Full lifecycle coverage
+                    - text: — Spec parsing, TC design, automation generation, code review, regression planning, bug filing, mutation testing, and dashboard publishing
+                  - listitem [ref=e662]:
+                    - text: 🔌
+                    - strong [ref=e663]: Tool-agnostic via 3 modes
+                    - text: —
+                    - code [ref=e664]: full-mcp
+                    - text: (Atlassian + Slack + Google) /
+                    - code [ref=e665]: partial-mcp
+                    - text: (degrade gracefully when tools missing) /
+                    - code [ref=e666]: markdown-only
+                    - text: (zero external dependencies)
+                  - listitem [ref=e667]:
+                    - text: 🔔
+                    - strong [ref=e668]: Multi-channel notifications
+                    - text: — Slack (MCP) +
+                    - strong [ref=e669]: Telegram / Line
+                    - text: (Bot API), can run in parallel; especially handy for Taiwan/Asia teams (Line > Slack)
+                  - listitem [ref=e670]:
+                    - text: 🌐
+                    - strong [ref=e671]: Bilingual
+                    - text: — Every skill ships with
+                    - code [ref=e672]: SKILL.md
+                    - text: (zh-TW) +
+                    - code [ref=e673]: SKILL.en.md
+                    - text: ; 4 concept guides in 繁中 for unfamiliar topics
+                  - listitem [ref=e674]:
+                    - text: 📦
+                    - strong [ref=e675]: One-config customization
+                    - text: — 28 variables in
+                    - code [ref=e676]: config.json
+                    - text: cover JIRA / Slack / Google / iOS / Android / BE pytest / AWS dashboard
+                  - listitem [ref=e677]:
+                    - text: 🧩
+                    - strong [ref=e678]: Pluggable modules
+                    - text: — Each skill has
+                    - code [ref=e679]: "modules/{config-loader, jira/slack-integration, multichannel-notify, markdown-fallback}.md"
+                    - text: for clean separation
+                  - listitem [ref=e680]:
+                    - text: 🚀
+                    - strong [ref=e681]: One-command install
+                    - text: —
+                    - code [ref=e682]: ./install.sh
+                    - text: validates config, renders 28 placeholders, backs up existing skills, installs to
+                    - code [ref=e683]: ~/.claude/skills/
+                  - listitem [ref=e684]:
+                    - text: 🇹🇼
+                    - strong [ref=e685]: Designed in Taiwan, ready for global teams
+                    - text: — Includes a11y mandatory checks (Dynamic Type / TalkBack / contrast) and cross-platform pairing baked into every skill
+                - separator [ref=e686]
+                - generic [ref=e687]:
+                  - heading "📦 What's in the box" [level=2] [ref=e688]
+                  - 'link "Permalink: 📦 What''s in the box" [ref=e689] [cursor=pointer]':
+                    - /url: "#-whats-in-the-box"
+                    - img [ref=e690]
+                - paragraph [ref=e692]: "32 skills across 10 categories:"
+                - generic [ref=e693]:
+                  - heading "Test Design (8)" [level=3] [ref=e694]
+                  - 'link "Permalink: Test Design (8)" [ref=e695] [cursor=pointer]':
+                    - /url: "#test-design-8"
+                    - img [ref=e696]
+                - table [ref=e699]:
+                  - rowgroup [ref=e700]:
+                    - row "Skill Purpose" [ref=e701]:
+                      - columnheader "Skill" [ref=e702]
+                      - columnheader "Purpose" [ref=e703]
+                  - rowgroup [ref=e704]:
+                    - row "test-master Full test plan + black-box/white-box TC generation (native iOS/Android + Web)" [ref=e705]:
+                      - cell "test-master" [ref=e706]:
+                        - link "test-master" [ref=e707] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/test-master
+                          - code [ref=e708]: test-master
+                      - cell "Full test plan + black-box/white-box TC generation (native iOS/Android + Web)" [ref=e709]:
+                        - text: Full test plan + black-box/white-box TC generation (native iOS/Android +
+                        - strong [ref=e710]: Web
+                        - text: )
+                    - row "flutter-test-master Flutter 3-tier pyramid (Unit/Widget/Integration) + Golden + Platform Channel" [ref=e711]:
+                      - cell "flutter-test-master" [ref=e712]:
+                        - link "flutter-test-master" [ref=e713] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/flutter-test-master
+                          - code [ref=e714]: flutter-test-master
+                      - cell "Flutter 3-tier pyramid (Unit/Widget/Integration) + Golden + Platform Channel" [ref=e715]
+                    - row "test-review TC + code review on 10 weighted dimensions; supports Swift/Kotlin/Dart/Python" [ref=e716]:
+                      - cell "test-review" [ref=e717]:
+                        - link "test-review" [ref=e718] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/test-review
+                          - code [ref=e719]: test-review
+                      - cell "TC + code review on 10 weighted dimensions; supports Swift/Kotlin/Dart/Python" [ref=e720]
+                    - row "regression-test Release-level cross-platform regression plans (JIRA + historical bug analysis)" [ref=e721]:
+                      - cell "regression-test" [ref=e722]:
+                        - link "regression-test" [ref=e723] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/regression-test
+                          - code [ref=e724]: regression-test
+                      - cell "Release-level cross-platform regression plans (JIRA + historical bug analysis)" [ref=e725]
+                    - row "speckit-to-tc Spec Kit / SDD spec → 14-column BB+WB TC draft" [ref=e726]:
+                      - cell "speckit-to-tc" [ref=e727]:
+                        - link "speckit-to-tc" [ref=e728] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/speckit-to-tc
+                          - code [ref=e729]: speckit-to-tc
+                      - cell "Spec Kit / SDD spec → 14-column BB+WB TC draft" [ref=e730]
+                    - row "tc-version-diff Diff TC versions; produce changelog + retest checklist" [ref=e731]:
+                      - cell "tc-version-diff" [ref=e732]:
+                        - link "tc-version-diff" [ref=e733] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/tc-version-diff
+                          - code [ref=e734]: tc-version-diff
+                      - cell "Diff TC versions; produce changelog + retest checklist" [ref=e735]
+                    - row "sheet-md-sync Two-way sync between Google Sheet ↔ Markdown (for git diff / PR review)" [ref=e736]:
+                      - cell "sheet-md-sync" [ref=e737]:
+                        - link "sheet-md-sync" [ref=e738] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/sheet-md-sync
+                          - code [ref=e739]: sheet-md-sync
+                      - cell "Two-way sync between Google Sheet ↔ Markdown (for git diff / PR review)" [ref=e740]
+                    - row "smoke-test-analyzer Tier existing automated tests into T0/T1/T2/T3 + generate CI configs" [ref=e741]:
+                      - cell "smoke-test-analyzer" [ref=e742]:
+                        - link "smoke-test-analyzer" [ref=e743] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/smoke-test-analyzer
+                          - code [ref=e744]: smoke-test-analyzer
+                      - cell "Tier existing automated tests into T0/T1/T2/T3 + generate CI configs" [ref=e745]
+                - generic [ref=e746]:
+                  - heading "Automation (3)" [level=3] [ref=e747]
+                  - 'link "Permalink: Automation (3)" [ref=e748] [cursor=pointer]':
+                    - /url: "#automation-3"
+                    - img [ref=e749]
+                - table [ref=e752]:
+                  - rowgroup [ref=e753]:
+                    - row "Skill Purpose" [ref=e754]:
+                      - columnheader "Skill" [ref=e755]
+                      - columnheader "Purpose" [ref=e756]
+                  - rowgroup [ref=e757]:
+                    - row "test-automation iOS (Swift Testing + XCUITest) / Android (JUnit + Espresso + Mockk) / Web (Playwright + Cypress + Selenium/WebdriverIO + Vitest) script generation" [ref=e758]:
+                      - cell "test-automation" [ref=e759]:
+                        - link "test-automation" [ref=e760] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/test-automation
+                          - code [ref=e761]: test-automation
+                      - cell "iOS (Swift Testing + XCUITest) / Android (JUnit + Espresso + Mockk) / Web (Playwright + Cypress + Selenium/WebdriverIO + Vitest) script generation" [ref=e762]:
+                        - text: iOS (Swift Testing + XCUITest) / Android (JUnit + Espresso + Mockk) /
+                        - strong [ref=e763]: Web (Playwright + Cypress + Selenium/WebdriverIO + Vitest)
+                        - text: script generation
+                    - row "flutter-test-automation Dart automation scripts (flutter_test / integration_test / Patrol / Golden)" [ref=e764]:
+                      - cell "flutter-test-automation" [ref=e765]:
+                        - link "flutter-test-automation" [ref=e766] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/flutter-test-automation
+                          - code [ref=e767]: flutter-test-automation
+                      - cell "Dart automation scripts (flutter_test / integration_test / Patrol / Golden)" [ref=e768]
+                    - row "tc-to-pytest White-box API TC → pytest-api-kit triplet (schemas.py + conftest.py + tests/test_*_api.py)" [ref=e769]:
+                      - cell "tc-to-pytest" [ref=e770]:
+                        - link "tc-to-pytest" [ref=e771] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/tc-to-pytest
+                          - code [ref=e772]: tc-to-pytest
+                      - cell "White-box API TC → pytest-api-kit triplet (schemas.py + conftest.py + tests/test_*_api.py)" [ref=e773]:
+                        - text: White-box API TC → pytest-api-kit triplet (
+                        - code [ref=e774]: schemas.py
+                        - text: +
+                        - code [ref=e775]: conftest.py
+                        - text: +
+                        - code [ref=e776]: tests/test_*_api.py
+                        - text: )
+                - generic [ref=e777]:
+                  - heading "Bug Management (1)" [level=3] [ref=e778]
+                  - 'link "Permalink: Bug Management (1)" [ref=e779] [cursor=pointer]':
+                    - /url: "#bug-management-1"
+                    - img [ref=e780]
+                - table [ref=e783]:
+                  - rowgroup [ref=e784]:
+                    - row "Skill Purpose" [ref=e785]:
+                      - columnheader "Skill" [ref=e786]
+                      - columnheader "Purpose" [ref=e787]
+                  - rowgroup [ref=e788]:
+                    - row "bug-report RIDER-format bug reports + auto-create JIRA + Slack notification + cross-platform pairing" [ref=e789]:
+                      - cell "bug-report" [ref=e790]:
+                        - link "bug-report" [ref=e791] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/bug-report
+                          - code [ref=e792]: bug-report
+                      - cell "RIDER-format bug reports + auto-create JIRA + Slack notification + cross-platform pairing" [ref=e793]
+                - generic [ref=e794]:
+                  - heading "Quality Quantification (2)" [level=3] [ref=e795]
+                  - 'link "Permalink: Quality Quantification (2)" [ref=e796] [cursor=pointer]':
+                    - /url: "#quality-quantification-2"
+                    - img [ref=e797]
+                - table [ref=e800]:
+                  - rowgroup [ref=e801]:
+                    - row "Skill Purpose" [ref=e802]:
+                      - columnheader "Skill" [ref=e803]
+                      - columnheader "Purpose" [ref=e804]
+                  - rowgroup [ref=e805]:
+                    - row "mutation-testing mutmut mutation testing — quantify TC strength beyond line coverage" [ref=e806]:
+                      - cell "mutation-testing" [ref=e807]:
+                        - link "mutation-testing" [ref=e808] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/mutation-testing
+                          - code [ref=e809]: mutation-testing
+                      - cell "mutmut mutation testing — quantify TC strength beyond line coverage" [ref=e810]
+                    - row "property-based-test-gen Generate hypothesis @given strategies to auto-explore boundary bugs" [ref=e811]:
+                      - cell "property-based-test-gen" [ref=e812]:
+                        - link "property-based-test-gen" [ref=e813] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/property-based-test-gen
+                          - code [ref=e814]: property-based-test-gen
+                      - cell "Generate hypothesis @given strategies to auto-explore boundary bugs" [ref=e815]
+                - generic [ref=e816]:
+                  - heading "Reporting (2)" [level=3] [ref=e817]
+                  - 'link "Permalink: Reporting (2)" [ref=e818] [cursor=pointer]':
+                    - /url: "#reporting-2"
+                    - img [ref=e819]
+                - table [ref=e822]:
+                  - rowgroup [ref=e823]:
+                    - row "Skill Purpose" [ref=e824]:
+                      - columnheader "Skill" [ref=e825]
+                      - columnheader "Purpose" [ref=e826]
+                  - rowgroup [ref=e827]:
+                    - row "publish-regression Publish manual regression reports to S3 + invalidate CloudFront + Slack notification" [ref=e828]:
+                      - cell "publish-regression" [ref=e829]:
+                        - link "publish-regression" [ref=e830] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/publish-regression
+                          - code [ref=e831]: publish-regression
+                      - cell "Publish manual regression reports to S3 + invalidate CloudFront + Slack notification" [ref=e832]
+                    - row "qa-signoff Pre-release go/no-go gate — aggregate signals (open P0/P1, security/compliance/a11y/perf/offline blockers, flaky, pass rate) → readiness score → signable sign-off doc — ✨ v1.7.0" [ref=e833]:
+                      - cell "qa-signoff" [ref=e834]:
+                        - link "qa-signoff" [ref=e835] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/qa-signoff
+                          - code [ref=e836]: qa-signoff
+                      - cell "Pre-release go/no-go gate — aggregate signals (open P0/P1, security/compliance/a11y/perf/offline blockers, flaky, pass rate) → readiness score → signable sign-off doc — ✨ v1.7.0" [ref=e837]
+                - generic [ref=e838]:
+                  - heading "Performance & Security (4) — ✨ NEW in v1.5.0" [level=3] [ref=e839]
+                  - 'link "Permalink: Performance & Security (4) — ✨ NEW in v1.5.0" [ref=e840] [cursor=pointer]':
+                    - /url: "#performance--security-4---new-in-v150"
+                    - img [ref=e841]
+                - table [ref=e844]:
+                  - rowgroup [ref=e845]:
+                    - row "Skill Purpose" [ref=e846]:
+                      - columnheader "Skill" [ref=e847]
+                      - columnheader "Purpose" [ref=e848]
+                  - rowgroup [ref=e849]:
+                    - row "performance-test-gen k6 / JMeter / Locust load test scripts + SLA thresholds + ramp-up curves + CI integration" [ref=e850]:
+                      - cell "performance-test-gen" [ref=e851]:
+                        - link "performance-test-gen" [ref=e852] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/performance-test-gen
+                          - code [ref=e853]: performance-test-gen
+                      - cell "k6 / JMeter / Locust load test scripts + SLA thresholds + ramp-up curves + CI integration" [ref=e854]
+                    - row "mobile-resource-test On-device perf — cold/warm startup, memory leaks, battery, ANR, jank/dropped frames (XCTest Metrics / Macrobenchmark / LeakCanary / Flutter DevTools) — ✨ v1.7.0" [ref=e855]:
+                      - cell "mobile-resource-test" [ref=e856]:
+                        - link "mobile-resource-test" [ref=e857] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/mobile-resource-test
+                          - code [ref=e858]: mobile-resource-test
+                      - cell "On-device perf — cold/warm startup, memory leaks, battery, ANR, jank/dropped frames (XCTest Metrics / Macrobenchmark / LeakCanary / Flutter DevTools) — ✨ v1.7.0" [ref=e859]
+                    - row "security-scan SAST (Semgrep) + DAST (OWASP ZAP) + SCA (Snyk/Trivy) + Secret scan (gitleaks) — unified CVSS report" [ref=e860]:
+                      - cell "security-scan" [ref=e861]:
+                        - link "security-scan" [ref=e862] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/security-scan
+                          - code [ref=e863]: security-scan
+                      - cell "SAST (Semgrep) + DAST (OWASP ZAP) + SCA (Snyk/Trivy) + Secret scan (gitleaks) — unified CVSS report" [ref=e864]
+                    - row "api-contract-test Pact / Schemathesis / Spring Cloud Contract — catch microservice breaking changes at PR time" [ref=e865]:
+                      - cell "api-contract-test" [ref=e866]:
+                        - link "api-contract-test" [ref=e867] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/api-contract-test
+                          - code [ref=e868]: api-contract-test
+                      - cell "Pact / Schemathesis / Spring Cloud Contract — catch microservice breaking changes at PR time" [ref=e869]
+                - generic [ref=e870]:
+                  - heading "CI Health (3) — ✨ NEW in v1.5.0" [level=3] [ref=e871]
+                  - 'link "Permalink: CI Health (3) — ✨ NEW in v1.5.0" [ref=e872] [cursor=pointer]':
+                    - /url: "#ci-health-3---new-in-v150"
+                    - img [ref=e873]
+                - table [ref=e876]:
+                  - rowgroup [ref=e877]:
+                    - row "Skill Purpose" [ref=e878]:
+                      - columnheader "Skill" [ref=e879]
+                      - columnheader "Purpose" [ref=e880]
+                  - rowgroup [ref=e881]:
+                    - row "visual-regression-gen Playwright snapshot / Percy / Chromatic / BackstopJS — auto-mask dynamic elements" [ref=e882]:
+                      - cell "visual-regression-gen" [ref=e883]:
+                        - link "visual-regression-gen" [ref=e884] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/visual-regression-gen
+                          - code [ref=e885]: visual-regression-gen
+                      - cell "Playwright snapshot / Percy / Chromatic / BackstopJS — auto-mask dynamic elements" [ref=e886]
+                    - row "flaky-test-hunter Analyze CI history → identify flaky tests → suggest fixes + auto-quarantine" [ref=e887]:
+                      - cell "flaky-test-hunter" [ref=e888]:
+                        - link "flaky-test-hunter" [ref=e889] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/flaky-test-hunter
+                          - code [ref=e890]: flaky-test-hunter
+                      - cell "Analyze CI history → identify flaky tests → suggest fixes + auto-quarantine" [ref=e891]
+                    - row "test-impact-analyzer Test Impact Analysis — from git diff, run only affected tests on PRs to cut CI time (coverage / dep-graph / path), with full-run safety net — ✨ v1.8.0" [ref=e892]:
+                      - cell "test-impact-analyzer" [ref=e893]:
+                        - link "test-impact-analyzer" [ref=e894] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/test-impact-analyzer
+                          - code [ref=e895]: test-impact-analyzer
+                      - cell "Test Impact Analysis — from git diff, run only affected tests on PRs to cut CI time (coverage / dep-graph / path), with full-run safety net — ✨ v1.8.0" [ref=e896]
+                - generic [ref=e897]:
+                  - heading "Quality Specialties (5) — ✨ NEW in v1.6.0" [level=3] [ref=e898]
+                  - 'link "Permalink: Quality Specialties (5) — ✨ NEW in v1.6.0" [ref=e899] [cursor=pointer]':
+                    - /url: "#quality-specialties-5---new-in-v160"
+                    - img [ref=e900]
+                - table [ref=e903]:
+                  - rowgroup [ref=e904]:
+                    - row "Skill Purpose" [ref=e905]:
+                      - columnheader "Skill" [ref=e906]
+                      - columnheader "Purpose" [ref=e907]
+                  - rowgroup [ref=e908]:
+                    - row "a11y-audit Deep accessibility audit (Lighthouse / axe / iOS Inspector / Android Scanner) — WCAG 2.1/2.2 AA scored report" [ref=e909]:
+                      - cell "a11y-audit" [ref=e910]:
+                        - link "a11y-audit" [ref=e911] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/a11y-audit
+                          - code [ref=e912]: a11y-audit
+                      - cell "Deep accessibility audit (Lighthouse / axe / iOS Inspector / Android Scanner) — WCAG 2.1/2.2 AA scored report" [ref=e913]
+                    - row "offline-mode-test Weak-network / offline / reconnect — 8 resilience scenarios (offline read/write queue, reconnect idempotency, optimistic rollback, conflict resolution) across iOS/Android/Flutter/Web — ✨ v1.7.0" [ref=e914]:
+                      - cell "offline-mode-test" [ref=e915]:
+                        - link "offline-mode-test" [ref=e916] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/offline-mode-test
+                          - code [ref=e917]: offline-mode-test
+                      - cell "Weak-network / offline / reconnect — 8 resilience scenarios (offline read/write queue, reconnect idempotency, optimistic rollback, conflict resolution) across iOS/Android/Flutter/Web — ✨ v1.7.0" [ref=e918]
+                    - row "localization-test i18n/l10n verification — missing translations / string overflow / RTL / format / pluralization / locale switch" [ref=e919]:
+                      - cell "localization-test" [ref=e920]:
+                        - link "localization-test" [ref=e921] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/localization-test
+                          - code [ref=e922]: localization-test
+                      - cell "i18n/l10n verification — missing translations / string overflow / RTL / format / pluralization / locale switch" [ref=e923]
+                    - row "push-notification-test APNs / FCM / Web Push — 8 test scenarios (delivery / click / deep link / permission / batch perf)" [ref=e924]:
+                      - cell "push-notification-test" [ref=e925]:
+                        - link "push-notification-test" [ref=e926] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/push-notification-test
+                          - code [ref=e927]: push-notification-test
+                      - cell "APNs / FCM / Web Push — 8 test scenarios (delivery / click / deep link / permission / batch perf)" [ref=e928]
+                    - row "test-data-factory Cross-platform unified fixtures (Swift / Kotlin / Dart / TypeScript / Python) — one schema → 5 factories aligned" [ref=e929]:
+                      - cell "test-data-factory" [ref=e930]:
+                        - link "test-data-factory" [ref=e931] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/test-data-factory
+                          - code [ref=e932]: test-data-factory
+                      - cell "Cross-platform unified fixtures (Swift / Kotlin / Dart / TypeScript / Python) — one schema → 5 factories aligned" [ref=e933]
+                - generic [ref=e934]:
+                  - heading "Compliance & Governance (1) — ✨ NEW in v1.7.0" [level=3] [ref=e935]
+                  - 'link "Permalink: Compliance & Governance (1) — ✨ NEW in v1.7.0" [ref=e936] [cursor=pointer]':
+                    - /url: "#compliance--governance-1---new-in-v170"
+                    - img [ref=e937]
+                - table [ref=e940]:
+                  - rowgroup [ref=e941]:
+                    - row "Skill Purpose" [ref=e942]:
+                      - columnheader "Skill" [ref=e943]
+                      - columnheader "Purpose" [ref=e944]
+                  - rowgroup [ref=e945]:
+                    - row "compliance-test GDPR / CCPA·CPRA / PCI-DSS / HIPAA / SOC 2 / EU EAA — translate regulations into verifiable controls + TCs, scan code for evidence gaps, output a severity-graded report with statute citations + audit log" [ref=e946]:
+                      - cell "compliance-test" [ref=e947]:
+                        - link "compliance-test" [ref=e948] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/compliance-test
+                          - code [ref=e949]: compliance-test
+                      - cell "GDPR / CCPA·CPRA / PCI-DSS / HIPAA / SOC 2 / EU EAA — translate regulations into verifiable controls + TCs, scan code for evidence gaps, output a severity-graded report with statute citations + audit log" [ref=e950]
+                - generic [ref=e951]:
+                  - heading "Domain Specialties (3) — ✨ NEW in v1.8.0" [level=3] [ref=e952]
+                  - 'link "Permalink: Domain Specialties (3) — ✨ NEW in v1.8.0" [ref=e953] [cursor=pointer]':
+                    - /url: "#domain-specialties-3---new-in-v180"
+                    - img [ref=e954]
+                - table [ref=e957]:
+                  - rowgroup [ref=e958]:
+                    - row "Skill Purpose" [ref=e959]:
+                      - columnheader "Skill" [ref=e960]
+                      - columnheader "Purpose" [ref=e961]
+                  - rowgroup [ref=e962]:
+                    - row "oauth-flow-test OAuth 2.0 / OIDC / SSO login flows — auth code + PKCE, token refresh/rotation, logout/revocation, state/nonce, multi-IdP, with security assertions" [ref=e963]:
+                      - cell "oauth-flow-test" [ref=e964]:
+                        - link "oauth-flow-test" [ref=e965] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/oauth-flow-test
+                          - code [ref=e966]: oauth-flow-test
+                      - cell "OAuth 2.0 / OIDC / SSO login flows — auth code + PKCE, token refresh/rotation, logout/revocation, state/nonce, multi-IdP, with security assertions" [ref=e967]
+                    - row "payment-test IAP (StoreKit 2 / Play Billing) / Stripe / Apple Pay — purchase, subscription lifecycle, refund, restore, server-side receipt validation, idempotency (sandbox only)" [ref=e968]:
+                      - cell "payment-test" [ref=e969]:
+                        - link "payment-test" [ref=e970] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/payment-test
+                          - code [ref=e971]: payment-test
+                      - cell "IAP (StoreKit 2 / Play Billing) / Stripe / Apple Pay — purchase, subscription lifecycle, refund, restore, server-side receipt validation, idempotency (sandbox only)" [ref=e972]
+                    - row "llm-quality-eval AI/LLM quality — hallucination/groundedness, prompt-injection resistance, structured output, cost/latency, regression via eval set + LLM-as-judge" [ref=e973]:
+                      - cell "llm-quality-eval" [ref=e974]:
+                        - link "llm-quality-eval" [ref=e975] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/llm-quality-eval
+                          - code [ref=e976]: llm-quality-eval
+                      - cell "AI/LLM quality — hallucination/groundedness, prompt-injection resistance, structured output, cost/latency, regression via eval set + LLM-as-judge" [ref=e977]
+                - blockquote [ref=e978]:
+                  - paragraph [ref=e979]:
+                    - text: 💡
+                    - strong [ref=e980]: First time hearing of mutation testing / property-based testing / spec-driven dev / test tiering?
+                    - text: Each has a 5-minute Chinese intro at
+                    - code [ref=e981]: skills/<name>/concept-zh.md
+                    - text: . See
+                    - link "Concept Guides" [ref=e982] [cursor=pointer]:
+                      - /url: "#-concept-guides"
+                    - text: .
+                - separator [ref=e983]
+                - generic [ref=e984]:
+                  - heading "🚀 Quick start" [level=2] [ref=e985]
+                  - 'link "Permalink: 🚀 Quick start" [ref=e986] [cursor=pointer]':
+                    - /url: "#-quick-start"
+                    - img [ref=e987]
+                - generic [ref=e989]:
+                  - generic [ref=e990]:
+                    - generic [ref=e991]: "# 1. Clone"
+                    - text: git clone https://github.com/kao273183/qa-claude-skill.git ~/Desktop/QA_Claude_Skill cd ~/Desktop/QA_Claude_Skill
+                    - generic [ref=e992]: "# 2. Create your config"
+                    - text: cp config/config.example.json config/config.json
+                    - generic [ref=e993]: "# 3. Fill in the 4 minimum fields:"
+                    - generic [ref=e994]: "# - jira.instance_url"
+                    - generic [ref=e995]: "# - jira.project_key"
+                    - generic [ref=e996]: "# - platforms.ios.default_device"
+                    - generic [ref=e997]: "# - platforms.android.default_device"
+                    - generic [ref=e998]: "# 4. Install (renders 28 placeholders → ~/.claude/skills/)"
+                    - text: ./install.sh
+                    - generic [ref=e999]: "# 5. In Claude Code, try a trigger phrase:"
+                    - generic [ref=e1000]: "# \"Generate test plan for feature X\""
+                    - generic [ref=e1001]: "# \"Write a bug report for this crash\""
+                    - generic [ref=e1002]: "# \"Review these test cases\""
+                  - button "Copy code to clipboard" [ref=e1004] [cursor=pointer]:
+                    - img [ref=e1005]
+                - generic [ref=e1008]:
+                  - heading "Dry-run before installing" [level=3] [ref=e1009]
+                  - 'link "Permalink: Dry-run before installing" [ref=e1010] [cursor=pointer]':
+                    - /url: "#dry-run-before-installing"
+                    - img [ref=e1011]
+                - generic [ref=e1013]:
+                  - generic [ref=e1014]:
+                    - text: CLAUDE_SKILLS_DIR=/tmp/preview ./install.sh ls /tmp/preview/
+                    - generic [ref=e1015]: "# 32 skill directories"
+                    - text: grep -r
+                    - generic [ref=e1016]: "'{{'"
+                    - text: /tmp/preview/ | grep -v
+                    - generic [ref=e1017]: "'變數'"
+                    - generic [ref=e1018]: "# should be empty"
+                  - button "Copy code to clipboard" [ref=e1020] [cursor=pointer]:
+                    - img [ref=e1021]
+                - separator [ref=e1024]
+                - generic [ref=e1025]:
+                  - heading "🎛 The 3 modes" [level=2] [ref=e1026]
+                  - 'link "Permalink: 🎛 The 3 modes" [ref=e1027] [cursor=pointer]':
+                    - /url: "#-the-3-modes"
+                    - img [ref=e1028]
+                - paragraph [ref=e1030]: "Each skill works in all 3 modes; pick the one that matches your team's tooling:"
+                - table [ref=e1032]:
+                  - rowgroup [ref=e1033]:
+                    - row "Mode When to use Behavior" [ref=e1034]:
+                      - columnheader "Mode" [ref=e1035]
+                      - columnheader "When to use" [ref=e1036]
+                      - columnheader "Behavior" [ref=e1037]
+                  - rowgroup [ref=e1038]:
+                    - row "full-mcp You have Atlassian + Slack + Google Workspace MCPs installed Auto-creates tickets, sends Slack notifications, writes Sheets" [ref=e1039]:
+                      - cell "full-mcp" [ref=e1040]:
+                        - code [ref=e1041]: full-mcp
+                      - cell "You have Atlassian + Slack + Google Workspace MCPs installed" [ref=e1042]
+                      - cell "Auto-creates tickets, sends Slack notifications, writes Sheets" [ref=e1043]
+                    - row "partial-mcp Some MCPs missing Uses MCPs when available, falls back to Markdown otherwise" [ref=e1044]:
+                      - cell "partial-mcp" [ref=e1045]:
+                        - code [ref=e1046]: partial-mcp
+                      - cell "Some MCPs missing" [ref=e1047]
+                      - cell "Uses MCPs when available, falls back to Markdown otherwise" [ref=e1048]
+                    - row "markdown-only Solo developer / no MCP / pure documentation flow Zero external calls; produces .md reports under .claude/testing/" [ref=e1049]:
+                      - cell "markdown-only" [ref=e1050]:
+                        - code [ref=e1051]: markdown-only
+                      - cell "Solo developer / no MCP / pure documentation flow" [ref=e1052]
+                      - cell "Zero external calls; produces .md reports under .claude/testing/" [ref=e1053]:
+                        - text: Zero external calls; produces
+                        - code [ref=e1054]: .md
+                        - text: reports under
+                        - code [ref=e1055]: .claude/testing/
+                - paragraph [ref=e1056]:
+                  - text: 3 ready-to-use presets ship in
+                  - link "config/presets/" [ref=e1057] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/config/presets
+                    - code [ref=e1058]: config/presets/
+                  - text: "— copy one and edit:"
+                - generic [ref=e1059]:
+                  - generic [ref=e1060]:
+                    - text: cp config/presets/full-stack.json config/config.json
+                    - generic [ref=e1061]: "# All MCPs"
+                    - text: cp config/presets/jira-only.json config/config.json
+                    - generic [ref=e1062]: "# JIRA only"
+                    - text: cp config/presets/markdown-only.json config/config.json
+                    - generic [ref=e1063]: "# Pure docs"
+                  - button "Copy code to clipboard" [ref=e1065] [cursor=pointer]:
+                    - img [ref=e1066]
+                - separator [ref=e1069]
+                - generic [ref=e1070]:
+                  - heading "⚙️ Customization" [level=2] [ref=e1071]
+                  - 'link "Permalink: ⚙️ Customization" [ref=e1072] [cursor=pointer]':
+                    - /url: "#️-customization"
+                    - img [ref=e1073]
+                - paragraph [ref=e1075]: "Three layers of configurability:"
+                - list [ref=e1076]:
+                  - listitem [ref=e1077]:
+                    - strong [ref=e1078]:
+                      - code [ref=e1079]: config.json
+                    - text: — 28 variables. See
+                    - link "docs/customization-guide.md" [ref=e1080] [cursor=pointer]:
+                      - /url: /kao273183/qa-claude-skill/blob/main/docs/customization-guide.md
+                    - text: for the full mapping.
+                  - listitem [ref=e1081]:
+                    - strong [ref=e1082]:
+                      - code [ref=e1083]: config/presets/
+                    - text: — 3 starter scenarios (full-stack / jira-only / markdown-only)
+                  - listitem [ref=e1084]:
+                    - strong [ref=e1085]: Per-skill modules
+                    - text: — Each skill has
+                    - code [ref=e1086]: modules/markdown-fallback.md
+                    - text: defining degraded behavior
+                - generic [ref=e1087]:
+                  - heading "Example configurations" [level=3] [ref=e1088]
+                  - 'link "Permalink: Example configurations" [ref=e1089] [cursor=pointer]':
+                    - /url: "#example-configurations"
+                    - img [ref=e1090]
+                - list [ref=e1092]:
+                  - listitem [ref=e1093]:
+                    - text: 🏢
+                    - link "Large team — ACME Corp" [ref=e1094] [cursor=pointer]:
+                      - /url: /kao273183/qa-claude-skill/blob/main/examples/jira-acme-corp/config.json
+                    - text: — Full JIRA + Slack + Google + AWS dashboard
+                  - listitem [ref=e1095]:
+                    - text: 👤
+                    - link "Solo developer" [ref=e1096] [cursor=pointer]:
+                      - /url: /kao273183/qa-claude-skill/blob/main/examples/solo-developer/config.json
+                    - text: — Pure Markdown, no external deps
+                - separator [ref=e1097]
+                - generic [ref=e1098]:
+                  - heading "🧩 Architecture" [level=2] [ref=e1099]
+                  - 'link "Permalink: 🧩 Architecture" [ref=e1100] [cursor=pointer]':
+                    - /url: "#-architecture"
+                    - img [ref=e1101]
+                - paragraph [ref=e1103]: "Each skill follows the same pluggable structure:"
+                - generic [ref=e1104]:
+                  - code [ref=e1106]: skills/<skill-name>/ ├── SKILL.md ← Main spec (zh-TW) ├── SKILL.en.md ← English mirror ├── concept-zh.md ← Beginner intro (for unfamiliar topics) ├── examples.md ← 3-5 real usage scenarios ├── templates.md / patterns.md ← Templates / code patterns └── modules/ ← Pluggable integrations ├── config-loader.md ← Load config.json values ├── jira-integration.md ← (optional) JIRA MCP calls ├── slack-integration.md ← (optional) Slack MCP calls ├── multichannel-notify.md ← (optional) Telegram / Line via Bot API └── markdown-fallback.md ← Pure Markdown degradation path
+                  - button "Copy code to clipboard" [ref=e1108] [cursor=pointer]:
+                    - img [ref=e1109]
+                - paragraph [ref=e1112]: "This means:"
+                - list [ref=e1113]:
+                  - listitem [ref=e1114]:
+                    - strong [ref=e1115]: Removing JIRA?
+                    - text: Delete
+                    - code [ref=e1116]: modules/jira-integration.md
+                    - text: references — Slack still works.
+                  - listitem [ref=e1117]:
+                    - strong [ref=e1118]: No Google?
+                    - text: Switch to
+                    - code [ref=e1119]: markdown-only
+                    - text: mode — every skill stays functional.
+                  - listitem [ref=e1120]:
+                    - strong [ref=e1121]: Adding a new tool integration?
+                    - text: Add
+                    - code [ref=e1122]: modules/<your-tool>.md
+                    - text: and reference it from
+                    - code [ref=e1123]: SKILL.md
+                    - text: .
+                - separator [ref=e1124]
+                - generic [ref=e1125]:
+                  - heading "📖 Concept Guides" [level=2] [ref=e1126]
+                  - 'link "Permalink: 📖 Concept Guides" [ref=e1127] [cursor=pointer]':
+                    - /url: "#-concept-guides"
+                    - img [ref=e1128]
+                - paragraph [ref=e1130]: "For unfamiliar testing concepts, ship-in 繁中 quick reads (5 min each):"
+                - table [ref=e1132]:
+                  - rowgroup [ref=e1133]:
+                    - row "Concept What's it about Guide" [ref=e1134]:
+                      - columnheader "Concept" [ref=e1135]
+                      - columnheader "What's it about" [ref=e1136]
+                      - columnheader "Guide" [ref=e1137]
+                  - rowgroup [ref=e1138]:
+                    - row "Property-based testing Why fuzzing 200 inputs beats writing 2 examples property-based-test-gen/concept-zh.md" [ref=e1139]:
+                      - cell "Property-based testing" [ref=e1140]:
+                        - strong [ref=e1141]: Property-based testing
+                      - cell "Why fuzzing 200 inputs beats writing 2 examples" [ref=e1142]
+                      - cell "property-based-test-gen/concept-zh.md" [ref=e1143]:
+                        - link "property-based-test-gen/concept-zh.md" [ref=e1144] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/property-based-test-gen/concept-zh.md
+                    - row "Mutation testing Why 100% line coverage isn't enough mutation-testing/concept-zh.md" [ref=e1145]:
+                      - cell "Mutation testing" [ref=e1146]:
+                        - strong [ref=e1147]: Mutation testing
+                      - cell "Why 100% line coverage isn't enough" [ref=e1148]
+                      - cell "mutation-testing/concept-zh.md" [ref=e1149]:
+                        - link "mutation-testing/concept-zh.md" [ref=e1150] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/mutation-testing/concept-zh.md
+                    - row "Spec-Driven Dev (Spec Kit) Why spec ticket → 30-second TC draft is possible speckit-to-tc/concept-zh.md" [ref=e1151]:
+                      - cell "Spec-Driven Dev (Spec Kit)" [ref=e1152]:
+                        - strong [ref=e1153]: Spec-Driven Dev (Spec Kit)
+                      - cell "Why spec ticket → 30-second TC draft is possible" [ref=e1154]
+                      - cell "speckit-to-tc/concept-zh.md" [ref=e1155]:
+                        - link "speckit-to-tc/concept-zh.md" [ref=e1156] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/speckit-to-tc/concept-zh.md
+                    - row "Test tiering (T0/T1/T2/T3) Why running all tests on every PR is wasteful smoke-test-analyzer/concept-zh.md" [ref=e1157]:
+                      - cell "Test tiering (T0/T1/T2/T3)" [ref=e1158]:
+                        - strong [ref=e1159]: Test tiering (T0/T1/T2/T3)
+                      - cell "Why running all tests on every PR is wasteful" [ref=e1160]
+                      - cell "smoke-test-analyzer/concept-zh.md" [ref=e1161]:
+                        - link "smoke-test-analyzer/concept-zh.md" [ref=e1162] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/skills/smoke-test-analyzer/concept-zh.md
+                - separator [ref=e1163]
+                - generic [ref=e1164]:
+                  - heading "🌊 Typical workflows" [level=2] [ref=e1165]
+                  - 'link "Permalink: 🌊 Typical workflows" [ref=e1166] [cursor=pointer]':
+                    - /url: "#-typical-workflows"
+                    - img [ref=e1167]
+                - paragraph [ref=e1169]:
+                  - text: See
+                  - link "docs/workflow-diagrams.md" [ref=e1170] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/docs/workflow-diagrams.md
+                  - text: "for ASCII diagrams of:"
+                - list [ref=e1171]:
+                  - listitem [ref=e1172]:
+                    - strong [ref=e1173]: Spec → Release pipeline (BE feature)
+                    - text: —
+                    - code [ref=e1174]: speckit-to-tc
+                    - text: →
+                    - code [ref=e1175]: test-review
+                    - text: →
+                    - code [ref=e1176]: sheet-md-sync
+                    - text: →
+                    - code [ref=e1177]: tc-to-pytest
+                    - text: →
+                    - code [ref=e1178]: mutation-testing
+                    - text: →
+                    - code [ref=e1179]: property-based-test-gen
+                  - listitem [ref=e1180]:
+                    - strong [ref=e1181]: Pre-release prep (mobile)
+                    - text: —
+                    - code [ref=e1182]: test-master
+                    - text: →
+                    - code [ref=e1183]: test-automation
+                    - text: →
+                    - code [ref=e1184]: smoke-test-analyzer
+                    - text: →
+                    - code [ref=e1185]: regression-test
+                    - text: →
+                    - code [ref=e1186]: bug-report
+                    - text: →
+                    - code [ref=e1187]: publish-regression
+                  - listitem [ref=e1188]:
+                    - strong [ref=e1189]: TC version bump
+                    - text: —
+                    - code [ref=e1190]: test-master --quick
+                    - text: →
+                    - code [ref=e1191]: test-review
+                    - text: →
+                    - code [ref=e1192]: tc-version-diff
+                    - text: →
+                    - code [ref=e1193]: tc-to-pytest --incremental
+                  - listitem [ref=e1194]:
+                    - strong [ref=e1195]: Markdown-only flow (solo dev)
+                    - text: — All skills produce
+                    - code [ref=e1196]: .md
+                    - text: under
+                    - code [ref=e1197]: .claude/testing/
+                  - listitem [ref=e1198]:
+                    - strong [ref=e1199]: Tri-party review
+                    - text: — Claude + Codex + Gemini reviewing the same TC, with weighted consensus
+                - separator [ref=e1200]
+                - generic [ref=e1201]:
+                  - heading "🧰 Compatibility" [level=2] [ref=e1202]
+                  - 'link "Permalink: 🧰 Compatibility" [ref=e1203] [cursor=pointer]':
+                    - /url: "#-compatibility"
+                    - img [ref=e1204]
+                - table [ref=e1207]:
+                  - rowgroup [ref=e1208]:
+                    - row "What Requirements" [ref=e1209]:
+                      - columnheader "What" [ref=e1210]
+                      - columnheader "Requirements" [ref=e1211]
+                  - rowgroup [ref=e1212]:
+                    - row "Claude Code Latest (skills are first-class)" [ref=e1213]:
+                      - cell "Claude Code" [ref=e1214]:
+                        - strong [ref=e1215]: Claude Code
+                      - cell "Latest (skills are first-class)" [ref=e1216]
+                    - row "OS macOS / Linux / Windows native (v1.3.0+) — see docs/install-windows.md" [ref=e1217]:
+                      - cell "OS" [ref=e1218]:
+                        - strong [ref=e1219]: OS
+                      - cell "macOS / Linux / Windows native (v1.3.0+) — see docs/install-windows.md" [ref=e1220]:
+                        - text: macOS / Linux /
+                        - strong [ref=e1221]: Windows native (v1.3.0+)
+                        - text: — see
+                        - link "docs/install-windows.md" [ref=e1222] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/docs/install-windows.md
+                    - row "MCP servers (optional) atlassian, slack, google-workspace, mcp-google-full, mcp-context-mode" [ref=e1223]:
+                      - cell "MCP servers (optional)" [ref=e1224]:
+                        - strong [ref=e1225]: MCP servers (optional)
+                      - cell "atlassian, slack, google-workspace, mcp-google-full, mcp-context-mode" [ref=e1226]
+                    - row "Required CLI tools bash, jq, git" [ref=e1227]:
+                      - cell "Required CLI tools" [ref=e1228]:
+                        - strong [ref=e1229]: Required CLI tools
+                      - cell "bash, jq, git" [ref=e1230]:
+                        - code [ref=e1231]: bash
+                        - text: ","
+                        - code [ref=e1232]: jq
+                        - text: ","
+                        - code [ref=e1233]: git
+                    - row "Optional CLI tools gh (GitHub Actions), aws (S3 publish), python3 + pytest (BE skills), flutter (Flutter skills), xcodebuild (iOS), Gradle (Android)" [ref=e1234]:
+                      - cell "Optional CLI tools" [ref=e1235]:
+                        - strong [ref=e1236]: Optional CLI tools
+                      - cell "gh (GitHub Actions), aws (S3 publish), python3 + pytest (BE skills), flutter (Flutter skills), xcodebuild (iOS), Gradle (Android)" [ref=e1237]:
+                        - code [ref=e1238]: gh
+                        - text: (GitHub Actions),
+                        - code [ref=e1239]: aws
+                        - text: (S3 publish),
+                        - code [ref=e1240]: python3
+                        - text: +
+                        - code [ref=e1241]: pytest
+                        - text: (BE skills),
+                        - code [ref=e1242]: flutter
+                        - text: (Flutter skills),
+                        - code [ref=e1243]: xcodebuild
+                        - text: (iOS), Gradle (Android)
+                - separator [ref=e1244]
+                - generic [ref=e1245]:
+                  - heading "🗺 Roadmap" [level=2] [ref=e1246]
+                  - 'link "Permalink: 🗺 Roadmap" [ref=e1247] [cursor=pointer]':
+                    - /url: "#-roadmap"
+                    - img [ref=e1248]
+                - paragraph [ref=e1250]:
+                  - text: See
+                  - link "ROADMAP.md" [ref=e1251] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/ROADMAP.md
+                  - text: for the full picture — what's shipped, what's planned, and what we're explicitly not doing.
+                - paragraph [ref=e1252]:
+                  - strong [ref=e1253]: Highlights of what's next
+                  - text: ":"
+                - list [ref=e1254]:
+                  - listitem [ref=e1255]: 9 more skills (test-impact-analyzer, oauth-flow-test, payment-test, graphql-test, llm-quality-eval, ...)
+                  - listitem [ref=e1256]: Japanese translation
+                  - listitem [ref=e1257]: Video walkthrough + demo GIF
+                - paragraph [ref=e1258]:
+                  - text: Want to influence priority? Open a
+                  - link "GitHub Discussion" [ref=e1259] [cursor=pointer]:
+                    - /url: https://github.com/kao273183/qa-claude-skill/discussions/categories/ideas
+                  - text: .
+                - generic [ref=e1260]:
+                  - heading "🔒 Security" [level=2] [ref=e1261]
+                  - 'link "Permalink: 🔒 Security" [ref=e1262] [cursor=pointer]':
+                    - /url: "#-security"
+                    - img [ref=e1263]
+                - paragraph [ref=e1265]:
+                  - text: Found a vulnerability? See
+                  - link "SECURITY.md" [ref=e1266] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/SECURITY.md
+                  - text: — preferred channel is GitHub Security Advisory.
+                - separator [ref=e1267]
+                - generic [ref=e1268]:
+                  - heading "🤝 Contributing" [level=2] [ref=e1269]
+                  - 'link "Permalink: 🤝 Contributing" [ref=e1270] [cursor=pointer]':
+                    - /url: "#-contributing"
+                    - img [ref=e1271]
+                - paragraph [ref=e1273]:
+                  - text: PRs welcome! See
+                  - link "CONTRIBUTING.md" [ref=e1274] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/CONTRIBUTING.md
+                  - text: "for:"
+                - list [ref=e1275]:
+                  - listitem [ref=e1276]: How to add a new skill
+                  - listitem [ref=e1277]: How to contribute translations
+                  - listitem [ref=e1278]: How to modify existing skills
+                  - listitem [ref=e1279]: PR checklist
+                - separator [ref=e1280]
+                - generic [ref=e1281]:
+                  - heading "📝 License & Trademark" [level=2] [ref=e1282]
+                  - 'link "Permalink: 📝 License & Trademark" [ref=e1283] [cursor=pointer]':
+                    - /url: "#-license--trademark"
+                    - img [ref=e1284]
+                - paragraph [ref=e1286]:
+                  - strong [ref=e1287]: Dual-licensed software
+                  - text: — see
+                  - link "LICENSE" [ref=e1288] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/LICENSE
+                  - text: "for full details:"
+                - table [ref=e1290]:
+                  - rowgroup [ref=e1291]:
+                    - row "Use Case License" [ref=e1292]:
+                      - columnheader "Use Case" [ref=e1293]
+                      - columnheader "License" [ref=e1294]
+                  - rowgroup [ref=e1295]:
+                    - row "🟢 Personal / education / research / non-profit / evaluation (< 30 days) MIT (free)" [ref=e1296]:
+                      - cell "🟢 Personal / education / research / non-profit / evaluation (< 30 days)" [ref=e1297]
+                      - cell "MIT (free)" [ref=e1298]:
+                        - link "MIT" [ref=e1299] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/licenses/MIT.md
+                        - text: (free)
+                    - row "🟢 Open-source contributions to this repo MIT (free)" [ref=e1300]:
+                      - cell "🟢 Open-source contributions to this repo" [ref=e1301]
+                      - cell "MIT (free)" [ref=e1302]:
+                        - link "MIT" [ref=e1303] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/licenses/MIT.md
+                        - text: (free)
+                    - row "🔴 For-profit organization internal use Commercial (paid)" [ref=e1304]:
+                      - cell "🔴 For-profit organization internal use" [ref=e1305]
+                      - cell "Commercial (paid)" [ref=e1306]:
+                        - link "Commercial" [ref=e1307] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/licenses/COMMERCIAL.md
+                        - text: (paid)
+                    - row "🔴 Bundling in paid product / SaaS / consulting Commercial (paid)" [ref=e1308]:
+                      - cell "🔴 Bundling in paid product / SaaS / consulting" [ref=e1309]
+                      - cell "Commercial (paid)" [ref=e1310]:
+                        - link "Commercial" [ref=e1311] [cursor=pointer]:
+                          - /url: /kao273183/qa-claude-skill/blob/main/licenses/COMMERCIAL.md
+                        - text: (paid)
+                - paragraph [ref=e1312]:
+                  - text: For commercial licensing, open a
+                  - link "GitHub Issue with commercial-license label" [ref=e1313] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/licenses/COMMERCIAL.md#step-1-open-a-github-issue
+                    - text: GitHub Issue with
+                    - code [ref=e1314]: commercial-license
+                    - text: label
+                  - text: .
+                - paragraph [ref=e1315]:
+                  - strong [ref=e1316]: Trademark
+                  - text: ": \"QA Claude Skill\" is a trademark of Jack Kao — see"
+                  - link "TRADEMARK.md" [ref=e1317] [cursor=pointer]:
+                    - /url: /kao273183/qa-claude-skill/blob/main/TRADEMARK.md
+                  - text: for usage rules. The MIT/Commercial license grants source-code rights,
+                  - strong [ref=e1318]: not
+                  - text: trademark rights. You may not name a fork "QA Claude Skill X" without permission.
+                - blockquote [ref=e1319]:
+                  - paragraph [ref=e1320]:
+                    - text: This is a
+                    - strong [ref=e1321]: community / personal project
+                    - text: for
+                    - link "Claude Code" [ref=e1322] [cursor=pointer]:
+                      - /url: https://claude.ai/code
+                    - text: users — NOT an official Anthropic product.
+                - separator [ref=e1323]
+                - generic [ref=e1324]:
+                  - heading "☕ Support" [level=2] [ref=e1325]
+                  - 'link "Permalink: ☕ Support" [ref=e1326] [cursor=pointer]':
+                    - /url: "#-support"
+                    - img [ref=e1327]
+                - paragraph [ref=e1329]: "If this project saves your QA team time, consider buying me a coffee — it keeps the project iterating:"
+                - paragraph [ref=e1330]:
+                  - link "Buy Me a Coffee" [ref=e1331] [cursor=pointer]:
+                    - /url: https://buymeacoffee.com/minikao
+                    - img "Buy Me a Coffee" [ref=e1332]
+                - paragraph [ref=e1333]: Or just give the repo a ⭐ — it costs nothing and helps others find it.
+                - separator [ref=e1334]
+                - paragraph [ref=e1335]: Made with ❤️ for QA teams who want to focus on quality, not paperwork.
+        - generic [ref=e1339]:
+          - generic [ref=e1342]:
+            - heading "About" [level=2] [ref=e1343]
+            - paragraph [ref=e1344]: 32 production-grade QA skills for Claude Code — 規格→測試→自動化→效能→安全→發布一條龍。支援 iOS/Android/Web/Flutter，可離線工作。
+            - generic [ref=e1345]:
+              - img [ref=e1346]
+              - link "github.com/kao273183/qa-claude-skill" [ref=e1349] [cursor=pointer]:
+                - /url: https://github.com/kao273183/qa-claude-skill
+            - heading "Topics" [level=3] [ref=e1350]
+            - generic [ref=e1352]:
+              - link "testing" [ref=e1353] [cursor=pointer]:
+                - /url: /topics/testing
+              - link "qa" [ref=e1354] [cursor=pointer]:
+                - /url: /topics/qa
+              - link "mcp" [ref=e1355] [cursor=pointer]:
+                - /url: /topics/mcp
+              - link "test-automation" [ref=e1356] [cursor=pointer]:
+                - /url: /topics/test-automation
+              - link "claude-code" [ref=e1357] [cursor=pointer]:
+                - /url: /topics/claude-code
+            - heading "Resources" [level=3] [ref=e1358]
+            - link "Readme" [ref=e1360] [cursor=pointer]:
+              - /url: "#readme-ov-file"
+              - img [ref=e1361]
+              - text: Readme
+            - heading "License" [level=3] [ref=e1363]
+            - link "View license" [ref=e1365] [cursor=pointer]:
+              - /url: "#License-1-ov-file"
+              - img [ref=e1366]
+              - text: View license
+            - heading "Contributing" [level=3] [ref=e1368]
+            - link "Contributing" [ref=e1370] [cursor=pointer]:
+              - /url: "#contributing-ov-file"
+              - img [ref=e1371]
+              - text: Contributing
+            - heading "Security policy" [level=3] [ref=e1373]
+            - link "Security policy" [ref=e1375] [cursor=pointer]:
+              - /url: "#security-ov-file"
+              - img [ref=e1376]
+              - text: Security policy
+            - link "Activity" [ref=e1379] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/activity
+              - img [ref=e1380]
+              - text: Activity
+            - heading "Stars" [level=3] [ref=e1382]
+            - link "6 stars" [ref=e1384] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/stargazers
+              - img [ref=e1385]
+              - strong [ref=e1387]: "6"
+              - text: stars
+            - heading "Watchers" [level=3] [ref=e1388]
+            - link "0 watching" [ref=e1390] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/watchers
+              - img [ref=e1391]
+              - strong [ref=e1393]: "0"
+              - text: watching
+            - heading "Forks" [level=3] [ref=e1394]
+            - link "1 fork" [ref=e1396] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/forks
+              - img [ref=e1397]
+              - strong [ref=e1399]: "1"
+              - text: fork
+            - link "Report repository" [ref=e1401] [cursor=pointer]:
+              - /url: /contact/report-content?content_url=https%3A%2F%2Fgithub.com%2Fkao273183%2Fqa-claude-skill&report=kao273183+%28user%29
+          - generic [ref=e1403]:
+            - heading "Releases 12" [level=2] [ref=e1404]:
+              - link "Releases 12" [ref=e1405] [cursor=pointer]:
+                - /url: /kao273183/qa-claude-skill/releases
+                - text: Releases
+                - generic "12" [ref=e1406]
+            - link "v1.8.1 — Telegram / Line 多通知管道 + 日語 README Latest Jun 2, 2026last week" [ref=e1407] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/releases/tag/v1.8.1
+              - img [ref=e1408]
+              - generic [ref=e1410]:
+                - generic [ref=e1411]:
+                  - generic [ref=e1412]: v1.8.1 — Telegram / Line 多通知管道 + 日語 README
+                  - 'generic "Label: Latest" [ref=e1413]': Latest
+                - generic [ref=e1414]: Jun 2, 2026last week
+            - link "+ 11 releases" [ref=e1416] [cursor=pointer]:
+              - /url: /kao273183/qa-claude-skill/releases
+          - generic [ref=e1418]:
+            - heading "Packages" [level=2] [ref=e1419]:
+              - link "Packages" [ref=e1420] [cursor=pointer]:
+                - /url: /users/kao273183/packages?repo_name=qa-claude-skill
+            - generic [ref=e1421]: No packages published
+          - generic [ref=e1423]:
+            - heading "Contributors 3" [level=2] [ref=e1424]:
+              - link "Contributors 3" [ref=e1425] [cursor=pointer]:
+                - /url: /kao273183/qa-claude-skill/graphs/contributors
+                - text: Contributors
+                - generic "3" [ref=e1426]
+            - list [ref=e1427]:
+              - listitem [ref=e1428]:
+                - link "@JACK-KAO216" [ref=e1429] [cursor=pointer]:
+                  - /url: https://github.com/JACK-KAO216
+                  - img "@JACK-KAO216" [ref=e1430]
+                - link "JACK-KAO216" [ref=e1432] [cursor=pointer]:
+                  - /url: https://github.com/JACK-KAO216
+                  - strong [ref=e1433]: JACK-KAO216
+              - listitem [ref=e1434]:
+                - link "@claude" [ref=e1435] [cursor=pointer]:
+                  - /url: https://github.com/claude
+                  - img "@claude" [ref=e1436]
+                - link "claude Claude" [ref=e1438] [cursor=pointer]:
+                  - /url: https://github.com/claude
+                  - strong [ref=e1439]: claude
+                  - text: Claude
+              - listitem [ref=e1440]:
+                - link "@kao273183" [ref=e1441] [cursor=pointer]:
+                  - /url: https://github.com/kao273183
+                  - img "@kao273183" [ref=e1442]
+                - link "kao273183 MiniKao" [ref=e1444] [cursor=pointer]:
+                  - /url: https://github.com/kao273183
+                  - strong [ref=e1445]: kao273183
+                  - text: MiniKao
+          - generic [ref=e1447]:
+            - heading "Languages" [level=2] [ref=e1448]
+            - list [ref=e1453]:
+              - listitem [ref=e1454]:
+                - link "PowerShell 54.0%" [ref=e1455] [cursor=pointer]:
+                  - /url: /kao273183/qa-claude-skill/search?l=powershell
+                  - img [ref=e1456]
+                  - generic [ref=e1458]: PowerShell
+                  - generic [ref=e1459]: 54.0%
+              - listitem [ref=e1460]:
+                - link "Shell 46.0%" [ref=e1461] [cursor=pointer]:
+                  - /url: /kao273183/qa-claude-skill/search?l=shell
+                  - img [ref=e1462]
+                  - generic [ref=e1464]: Shell
+                  - generic [ref=e1465]: 46.0%
+  - contentinfo [ref=e1467]:
+    - heading "Footer" [level=2] [ref=e1468]
+    - generic [ref=e1469]:
+      - generic [ref=e1470]:
+        - link "GitHub Homepage" [ref=e1471] [cursor=pointer]:
+          - /url: https://github.com
+          - img [ref=e1472]
+        - generic [ref=e1474]: © 2026 GitHub, Inc.
+      - navigation "Footer" [ref=e1475]:
+        - heading "Footer navigation" [level=3] [ref=e1476]
+        - list "Footer navigation" [ref=e1477]:
+          - listitem [ref=e1478]:
+            - link "Terms" [ref=e1479] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/github-terms/github-terms-of-service
+          - listitem [ref=e1480]:
+            - link "Privacy" [ref=e1481] [cursor=pointer]:
+              - /url: https://docs.github.com/site-policy/privacy-policies/github-privacy-statement
+          - listitem [ref=e1482]:
+            - link "Security" [ref=e1483] [cursor=pointer]:
+              - /url: https://github.com/security
+          - listitem [ref=e1484]:
+            - link "Status" [ref=e1485] [cursor=pointer]:
+              - /url: https://www.githubstatus.com/
+          - listitem [ref=e1486]:
+            - link "Community" [ref=e1487] [cursor=pointer]:
+              - /url: https://github.community/
+          - listitem [ref=e1488]:
+            - link "Docs" [ref=e1489] [cursor=pointer]:
+              - /url: https://docs.github.com/
+          - listitem [ref=e1490]:
+            - link "Contact" [ref=e1491] [cursor=pointer]:
+              - /url: https://support.github.com?tags=dotcom-footer
+          - listitem [ref=e1492]:
+            - button "Manage cookies" [ref=e1494] [cursor=pointer]
+          - listitem [ref=e1495]:
+            - button "Do not share my personal information" [ref=e1497] [cursor=pointer]

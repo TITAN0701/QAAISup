@@ -59,6 +59,9 @@ pytest automation/api/tests/
 
 # 匯出 PM 報告（Word）
 .\scripts\export-pm-report-docx.ps1
+
+# 同步 TC 至 Google Sheet（供 PM 查閱）
+npm run sync:sheet
 ```
 
 ---
@@ -77,6 +80,7 @@ pytest automation/api/tests/
 | `/QA-4-generate-testcases` | 產生 test-cases.json、test-plan、risk-notes |
 | `/QA-5-generate-automation` | 產自動化草稿（Cypress + pytest） |
 | `/QA-6-generate-report` | 根據執行結果產 QA/PM 報告 |
+| `/QA-bug-report` | 將 bug 描述整理成 RIDER 格式報告（輸出至 artifacts/generated/qa/bugs/） |
 | `/check-project` | 掃描專案整體檔案結構（只用 Glob，最小 token）|
 | `/playwright-smoke-test` | 用 Playwright MCP 截圖所有主要頁面 |
 
@@ -120,6 +124,17 @@ docs/                        # 架構、協作、環境設定文件
 - **AI 不可自行創造測試結果**：Pass/Fail 必須來自測試框架或 CI
 - **AI 產出需 QA 審核後才能進入自動化**
 - **缺少 `data-testid` 時**，應在 `automation/ENGINEERING-TASKS.md` 新增 Engineering Task，不要寫脆弱 selector
+
+---
+
+## AI 行為限制
+
+- **不可擅自新增使用者未要求的欄位、區塊或功能**
+- **修改檔案時只改使用者指定的部分**，不做額外調整或「順手優化」
+- **產出格式以參考來源為準**（如 qa-claude-skill），不自行發明新欄位
+- **有疑問先問，不要假設**：不確定是否該加某個東西時，先詢問使用者確認
+- **對話過程中只執行使用者明確說的事**：不把討論中的想法、建議或分析自動實作進去，除非使用者明確說「請做」或「幫我加」
+- **每次對話開始時必須讀取 memory**：路徑 `C:\Users\suppo\.claude\projects\c--Users-suppo-Desktop-QAAI--\memory\MEMORY.md`，根據內容了解專案現況與過去決策，不需使用者提醒
 
 ---
 
