@@ -7,7 +7,7 @@
 
 - **系統名稱**：國衛院學齡前兒童發展數位評估系統（wetpaint）
 - **SIT URL**：https://sit-wetpaint.nhri.org.tw/
-- **最後更新**：2026-06-10（補充 step=choice 跳題行為）
+- **最後更新**：2026-06-10（補充 supine 完整錄影流程與 choice radio selector）
 
 ---
 
@@ -42,24 +42,55 @@
 | `supine` | 仰躺動作拍攝（影片錄製） | ❌ |
 | 其他 | 圖卡配對、語言理解等 step code 未知 | ❓ |
 
-### step=choice 跳題行為（2026-06-10 確認）
+**已確認的 step 順序（2M 個案，2026-06-10）**：
 
-- URL 永遠是 `/question?step=choice`，題目靠內容換頁，**不換 step**
-- 答題後 `button "下一題"` 才啟用（disabled → enabled）
-- 點「下一題」後換下一題，「下一題」再次變 disabled
-- 進度條在同一 step 內遞增（例：50% → 下一題後增加）
-- 題目標題為 `heading level=2`；題目類型標籤含文字 `"觀察題組"`
+`overview` → 點「開始檢測」→ `supine`（仰躺錄影）→ 上傳成功 → 點「下一題」→ `choice`（觀察題組）
 
-**已確認的 selector**：
+### step=supine 錄影流程（2026-06-10 確認，個案：qatest01 0歲2個月）
+
+1. 教學頁（多頁輪播，底部有 4 個點）→ 按「開始錄製」
+2. 系統要求**直式視窗**（橫式會顯示「請將裝置轉成直式」）
+3. 錄影介面：攝影機畫面 + 綠色輔助框 + 右上倒數計時
+4. 未滿 30 秒停止 → 警告「錄製時間未滿 30 秒」→ 按「我知道了」繼續
+5. 達 60 秒自動停止 → 提示「影片錄製已達 1 分鐘」→ 進入確認頁
+6. 確認頁：影片預覽 + **取消 / 重新錄製 / 上傳影片**
+7. 上傳成功後顯示「上傳成功！」→ 按「下一題」→ 跳至 `step=choice`
+
+**supine selector**：
 
 | 元素 | Selector |
 |------|----------|
-| 答案選項 | `cy.contains('button', '是')` / `cy.contains('button', '否')` / `cy.contains('button', '未觀察')` |
+| 開始錄製（教學頁） | `cy.contains('button', '開始錄製')` |
+| 開始錄製（錄影介面） | `cy.contains('button', '開始錄製')` |
+| 我知道了（未滿30秒警告） | `cy.contains('button', '我知道了')` |
+| 重新錄製 | `cy.contains('button', '重新錄製')` |
+| 上傳影片 | `cy.contains('button', '上傳影片')` |
+| 返回 | `cy.contains('button', '返回')` |
+
+> ⚠️ supine 需要攝影機權限與真實錄影，**無法自動化**；需手動測試或 mock API。
+
+### step=choice 跳題行為（2026-06-10 確認）
+
+- URL 永遠是 `/question?step=choice`，題目靠內容換頁，**不換 step**
+- 答題後「下一題」才啟用（disabled → enabled）；點後換下一題，再次 disabled
+- 進度條在同一 step 內遞增
+
+**⚠️ 答案選項樣式因月齡不同而異**：
+
+| 月齡 | 樣式 | Selector |
+|------|------|----------|
+| 高月齡（39M，39test1042） | button | `cy.contains('button', '是')` / `cy.contains('button', '否')` / `cy.contains('button', '未觀察')` |
+| 低月齡（2M，qatest01） | radio button | `cy.contains('是')` / `cy.contains('否')` / `cy.contains('未觀察')` |
+
+**共用 selector**：
+
+| 元素 | Selector |
+|------|----------|
 | 下一題 | `cy.contains('button', '下一題')` |
 | 題目類型標籤 | `cy.contains('觀察題組')` |
 | 取消 | `cy.contains('button', '取消')` |
 
-> 已測試個案：39test1042（3歲3個月）
+> 已測試個案：39test1042（3歲3個月）、qatest01（0歲2個月）
 
 ---
 
