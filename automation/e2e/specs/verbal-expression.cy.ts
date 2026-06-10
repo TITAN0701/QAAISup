@@ -3,8 +3,9 @@
 // Automation candidates: TC-VERBAL-001, TC-VERBAL-002 (timer verification)
 // TC-VERBAL-003~005 marked automation_candidate=false
 
-// [ENG TASK] Add data-testid="timer-display" to show countdown timer value
-// [ENG TASK] Add data-testid="image-index" to show current image index (1st, 2nd, ...)
+// [ENG TASK] Confirm URL for verbal expression question page (e.g. /exam/verbal-expression)
+// [ENG TASK] Add data-testid="timer-display" — countdown timer value (seconds remaining)
+// [ENG TASK] Add data-testid="image-index" — current image index label (1st, 2nd, ...)
 
 import { loginAs } from '../flows/loginFlow';
 

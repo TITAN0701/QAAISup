@@ -21,3 +21,5 @@ artifacts/generated/**/~$*
 
 __pycache__/
 .pytest_cache/
+
+.playwright-mcp/

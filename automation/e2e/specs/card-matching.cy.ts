@@ -2,9 +2,13 @@
 // Feature: 圖卡配對
 // Automation candidates: TC-CARDMATCH-001 ~ TC-CARDMATCH-005
 
-// [ENG TASK] Add data-testid="question-type" to identify question type (e.g. "card-matching")
-// [ENG TASK] Add data-testid="card-option" to each colored card option
-// [ENG TASK] Add data-testid="feedback-message" for post-answer feedback
+// [ENG TASK] Confirm URL for exam start by age (e.g. /exam/start?age=8 or /frontdesk/exam)
+// [ENG TASK] Add data-testid="question-type" — value "card-matching" or "standard"
+// [ENG TASK] Add data-testid="card-option" — each colored card option (clickable)
+// [ENG TASK] Add data-testid="card-option-correct" — the correct card (or expose via fixture)
+// [ENG TASK] Add data-testid="answer-result" — post-click feedback element
+// [ENG TASK] Add data-testid="feedback-message" — positive feedback after correct answer
+// [ENG TASK] Add data-testid="question-id" — unique identifier per question
 
 import { loginAs } from '../flows/loginFlow';
 

@@ -3,9 +3,11 @@
 // Automation candidates: TC-REREC-002, TC-REREC-004
 // TC-REREC-001, TC-REREC-003 = async upload dependency, manual review recommended
 
-// [ENG TASK] Add data-testid="re-recording-module-list" listing pending modules
-// [ENG TASK] Add data-testid="page-title" or check URL to verify page after re-record
-// [ENG TASK] Confirm URL for 檢測紀錄 and 重新錄製 pages
+// [ENG TASK] Confirm URL for 檢測紀錄 page (e.g. /records or /frontdesk/records)
+// [ENG TASK] Add data-testid="re-recording-entry-button" — entry button per record row
+// [ENG TASK] Add data-testid="complete-module-button" — finish/next button in re-recording flow
+// [ENG TASK] Add data-testid="re-recording-module-list" — pending module queue list
+// [ENG TASK] Seed test data: cases with pending re-record modules (2+ and 3 with 1 done)
 
 import { loginAs } from '../flows/loginFlow';
 

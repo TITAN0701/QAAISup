@@ -2,9 +2,16 @@
 // Feature: 跳題邏輯
 // Automation candidates: TC-QLOGIC-001 ~ TC-QLOGIC-006
 
-// [ENG TASK] Confirm URL patterns for exam pages (e.g. /exam/:caseId)
-// [ENG TASK] Add data-testid to: question-age-level, answer-option, result-age-display
-// [ENG TASK] Provide a way to select a test case by age_months in the UI or via API seeding
+// [ENG TASK] Confirm URL patterns for exam pages (e.g. /exam/:caseId or /frontdesk/exam)
+// [ENG TASK] Add data-testid="question-age-level" — shows current age level label
+// [ENG TASK] Add data-testid="answer-option" — each answer option button
+// [ENG TASK] Add data-testid="answer-option-correct" / "answer-option-wrong" — or expose via fixture
+// [ENG TASK] Add data-testid="result-age-display" on result page
+// [ENG TASK] Add data-testid="complete-module-button" — next/finish button in module
+// [ENG TASK] Add data-testid="current-module-label" — shows module name + age level
+// [ENG TASK] Add data-testid="observation-group-section" — observation question group container
+// [ENG TASK] Add data-testid="exam-container" — outermost exam wrapper
+// [ENG TASK] Provide fixture cases.json with case_2m, case_4m, case_6m, case_42m fields
 
 import { loginAs } from '../flows/loginFlow';
 

@@ -3,8 +3,9 @@
 // Automation candidates: TC-HWRITE-003 (trapezoid guide frame visibility)
 // TC-HWRITE-001~002 marked automation_candidate=false (visual inspection required)
 
-// [ENG TASK] Add data-testid="trapezoid-guide-frame" to the guide frame element
-// [ENG TASK] Add data-testid="start-recording-button" to the start recording button
+// [ENG TASK] Confirm URL for handwriting recognition page (e.g. /exam/handwriting-recognition)
+// [ENG TASK] Add data-testid="trapezoid-guide-frame" — trapezoid guide overlay element
+// [ENG TASK] Add data-testid="start-recording-button" — start recording button
 
 import { loginAs } from '../flows/loginFlow';
 

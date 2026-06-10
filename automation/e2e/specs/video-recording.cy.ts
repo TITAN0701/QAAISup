@@ -3,7 +3,9 @@
 // Automation candidates: TC-VIDEO-005, TC-VIDEO-006 (text comparison only)
 // TC-VIDEO-001~004 marked automation_candidate=false (require media device simulation)
 
-// [ENG TASK] Add data-testid="recording-duration-hint" to display duration instruction text
+// [ENG TASK] Confirm URL for 大肢體 module recording page (e.g. /exam/module/gross-motor/record)
+// [ENG TASK] Confirm URL for 走路側面 module recording page (e.g. /exam/module/gait-side/record)
+// [ENG TASK] Add data-testid="recording-duration-hint" — duration instruction text element
 
 import { loginAs } from '../flows/loginFlow';
 

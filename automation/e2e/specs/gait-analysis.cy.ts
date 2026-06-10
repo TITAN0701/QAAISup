@@ -3,10 +3,14 @@
 // Automation candidates: TC-GAIT-001 ~ TC-GAIT-005, TC-GAIT-007, TC-GAIT-009
 // TC-GAIT-006 (visual), TC-GAIT-008 (recording timer), TC-GAIT-010 (visual) = manual only
 
-// [ENG TASK] Add data-testid="shooting-reminder-text" to shooting reminder page content
-// [ENG TASK] Add data-testid="prompt-1", "prompt-3" to individual prompt items
-// [ENG TASK] Add data-testid="recording-duration-hint" on recording page
-// [ENG TASK] Confirm URL for each gait sub-module page
+// [ENG TASK] Confirm URL for gait reminder page (e.g. /exam/module/gait/reminder)
+// [ENG TASK] Confirm URL for gait front/back record page (e.g. /exam/module/gait-front/record)
+// [ENG TASK] Confirm URL for gait side record page (e.g. /exam/module/gait-side/record)
+// [ENG TASK] Add data-testid="shooting-reminder-text" — clothing restriction reminder text
+// [ENG TASK] Add data-testid="pre-shoot-prompt" — pre-shoot tips area
+// [ENG TASK] Add data-testid="prompt-1", "prompt-3" — individual numbered prompt items
+// [ENG TASK] Add data-testid="recording-duration-hint" — duration requirement text
+// [ENG TASK] Add data-testid="shooting-notes" — notes section on gait-side record page
 
 import { loginAs } from '../flows/loginFlow';
 

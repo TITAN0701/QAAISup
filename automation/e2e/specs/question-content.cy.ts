@@ -2,8 +2,11 @@
 // Feature: 題目內容
 // Automation candidates: TC-QCONTENT-001 ~ TC-QCONTENT-005
 
-// [ENG TASK] Add data-testid to: question-text, question-item (each rendered question)
-// [ENG TASK] Confirm navigation URL for starting exam by age level
+// [ENG TASK] Confirm URL for starting exam by age level (e.g. /exam/start?age=48 or /frontdesk/exam)
+// [ENG TASK] Add data-testid="question-text" — question body element
+// [ENG TASK] Add data-testid="question-id" — hidden or visible unique question identifier
+// [ENG TASK] Add data-testid="answer-option" — each answer option button
+// [ENG TASK] Add data-testid="exam-container" — outermost exam wrapper
 
 import { loginAs } from '../flows/loginFlow';
 
