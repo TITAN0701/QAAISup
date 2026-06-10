@@ -1,14 +1,15 @@
 export class LoginPage {
   visit() {
     cy.visit('/login');
+    cy.contains('h2', '歡迎回來').should('be.visible');
   }
 
   fillEmail(email: string) {
-    cy.get('#username').clear().type(email);
+    cy.get('input[placeholder="請輸入手機號碼或電子郵件"]').clear().type(email);
   }
 
   fillPassword(password: string) {
-    cy.get('#password').clear().type(password, { log: false });
+    cy.get('input[placeholder="請輸入密碼"]').clear().type(password, { log: false });
   }
 
   submit() {
@@ -22,8 +23,7 @@ export class LoginPage {
   }
 
   getErrorMessage() {
-    // 尚未確認錯誤訊息的實際 selector，暫用文字比對
-    return cy.contains('登入失敗');
+    return cy.contains('div,span,p', /帳號或密碼錯誤|登入失敗/i);
   }
 }
 

@@ -2,5 +2,9 @@
   "admin": {
     "email": "0999999993",
     "password": "password123"
+  },
+  "regular_user": {
+    "email": "0999999993",
+    "password": "password123"
   }
 }
