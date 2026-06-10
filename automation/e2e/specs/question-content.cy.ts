@@ -1,7 +1,7 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 題目內容
 // Automation candidates: TC-QCONTENT-001 ~ TC-QCONTENT-005
-// SKIP REASON: 前台測驗頁 URL 待確認；所有 data-testid 待工程師補上（見 ENG TASK）
+// SKIP REASON: 前台測驗頁 URL 待確認；需取得真實 selector（id/class/text）後才能執行
 
 // [ENG TASK] Confirm URL for starting exam by age level (e.g. /exam/start?age=48 or /frontdesk/exam)
 // [ENG TASK] Add data-testid="question-text" — question body element

@@ -1,14 +1,10 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 圖卡配對
 // Automation candidates: TC-CARDMATCH-001 ~ TC-CARDMATCH-005
+// SKIP REASON: 前台測驗頁 URL 待確認；需取得真實 selector（id/class/text）後才能執行
 
 // [ENG TASK] Confirm URL for exam start by age (e.g. /exam/start?age=8 or /frontdesk/exam)
-// [ENG TASK] Add data-testid="question-type" — value "card-matching" or "standard"
-// [ENG TASK] Add data-testid="card-option" — each colored card option (clickable)
-// [ENG TASK] Add data-testid="card-option-correct" — the correct card (or expose via fixture)
-// [ENG TASK] Add data-testid="answer-result" — post-click feedback element
-// [ENG TASK] Add data-testid="feedback-message" — positive feedback after correct answer
-// [ENG TASK] Add data-testid="question-id" — unique identifier per question
+// [ENG TASK] Confirm real selectors for question type indicator, card options, feedback elements
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -17,7 +13,7 @@ describe('圖卡配對', () => {
     loginAs('regular_user');
   });
 
-  it('TC-CARDMATCH-001 4M 個案測驗中不顯示圖卡配對題目', () => {
+  it.skip('TC-CARDMATCH-001 4M 個案測驗中不顯示圖卡配對題目', () => {
     cy.visit('/exam/start?age=4');
 
     // Walk through all questions and verify none are card-matching type
@@ -27,7 +23,7 @@ describe('圖卡配對', () => {
     });
   });
 
-  it('TC-CARDMATCH-002 6M 個案測驗中不顯示圖卡配對題目', () => {
+  it.skip('TC-CARDMATCH-002 6M 個案測驗中不顯示圖卡配對題目', () => {
     cy.visit('/exam/start?age=6');
 
     cy.get('[data-testid="question-type"]').each(($el) => {
@@ -35,7 +31,7 @@ describe('圖卡配對', () => {
     });
   });
 
-  it('TC-CARDMATCH-003 8M 個案測驗中可正常顯示圖卡配對題目', () => {
+  it.skip('TC-CARDMATCH-003 8M 個案測驗中可正常顯示圖卡配對題目', () => {
     cy.visit('/exam/start?age=8');
 
     // At least one card-matching question should appear
@@ -44,7 +40,7 @@ describe('圖卡配對', () => {
     cy.get('[data-testid="card-option"]').should('be.visible');
   });
 
-  it('TC-CARDMATCH-004 圖卡配對題中點擊彩色圖案即算配對成功（無需拖拉）', () => {
+  it.skip('TC-CARDMATCH-004 圖卡配對題中點擊彩色圖案即算配對成功（無需拖拉）', () => {
     cy.visit('/exam/start?age=8');
 
     // Navigate to a card-matching question
@@ -58,7 +54,7 @@ describe('圖卡配對', () => {
     cy.get('[data-testid="answer-result"]').should('contain', '正確');
   });
 
-  it('TC-CARDMATCH-005 圖卡配對點擊正確圖案後顯示正向回饋並進入下一題', () => {
+  it.skip('TC-CARDMATCH-005 圖卡配對點擊正確圖案後顯示正向回饋並進入下一題', () => {
     cy.visit('/exam/start?age=8');
 
     cy.get('[data-testid="question-type"][value="card-matching"]').should('exist');

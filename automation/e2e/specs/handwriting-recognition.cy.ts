@@ -3,9 +3,9 @@
 // Automation candidates: TC-HWRITE-003 (trapezoid guide frame visibility)
 // TC-HWRITE-001~002 marked automation_candidate=false (visual inspection required)
 
-// [ENG TASK] Confirm URL for handwriting recognition page (e.g. /exam/handwriting-recognition)
-// [ENG TASK] Add data-testid="trapezoid-guide-frame" — trapezoid guide overlay element
-// [ENG TASK] Add data-testid="start-recording-button" — start recording button
+// SKIP REASON: 前台測驗頁 URL 待確認；需取得真實 selector（id/class/text）後才能執行
+// [ENG TASK] Confirm URL for handwriting recognition page
+// [ENG TASK] Confirm real selectors for trapezoid guide frame and start recording button
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -14,7 +14,7 @@ describe('手繪圖形辨識', () => {
     loginAs('regular_user');
   });
 
-  it('TC-HWRITE-003 開始錄製後梯形輔助框從畫面消失', () => {
+  it.skip('TC-HWRITE-003 開始錄製後梯形輔助框從畫面消失', () => {
     // [ENG TASK] Confirm URL for handwriting recognition page
     cy.visit('/exam/handwriting-recognition');
 

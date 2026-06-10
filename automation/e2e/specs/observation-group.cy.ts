@@ -1,7 +1,7 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 觀察題組
 // Automation candidates: SC-OBSERVATION-GROUP-001 ~ SC-OBSERVATION-GROUP-004
-// SKIP REASON: cases.json id 欄位待填入真實個案 ID；所有 data-testid 待工程師補上（見 ENG TASK）
+// SKIP REASON: cases.json id 欄位待填入真實個案 ID；需取得真實 selector（id/class/text）後才能執行
 // Source: qa-workspace/specs/observation-group/scenarios.md
 
 // [ENG TASK] Confirm URL for exam page after AI module completion

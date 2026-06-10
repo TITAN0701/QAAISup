@@ -3,9 +3,9 @@
 // Automation candidates: TC-VERBAL-001, TC-VERBAL-002 (timer verification)
 // TC-VERBAL-003~005 marked automation_candidate=false
 
-// [ENG TASK] Confirm URL for verbal expression question page (e.g. /exam/verbal-expression)
-// [ENG TASK] Add data-testid="timer-display" — countdown timer value (seconds remaining)
-// [ENG TASK] Add data-testid="image-index" — current image index label (1st, 2nd, ...)
+// SKIP REASON: 前台測驗頁 URL 待確認；需取得真實 selector（id/class/text）後才能執行
+// [ENG TASK] Confirm URL for verbal expression question page
+// [ENG TASK] Confirm real selectors for timer display and image index indicator
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -14,7 +14,7 @@ describe('口語表達', () => {
     loginAs('regular_user');
   });
 
-  it('TC-VERBAL-001 口語表達每張圖片各自獨立倒數 60 秒，切換圖片後重置', () => {
+  it.skip('TC-VERBAL-001 口語表達每張圖片各自獨立倒數 60 秒，切換圖片後重置', () => {
     // [ENG TASK] Confirm URL for verbal expression question page
     cy.visit('/exam/verbal-expression');
 
@@ -31,7 +31,7 @@ describe('口語表達', () => {
     cy.get('[data-testid="timer-display"]').should('contain', '60');
   });
 
-  it('TC-VERBAL-002 第一張圖 60 秒倒數結束後自動進入第二張圖並重新計時', () => {
+  it.skip('TC-VERBAL-002 第一張圖 60 秒倒數結束後自動進入第二張圖並重新計時', () => {
     cy.visit('/exam/verbal-expression');
 
     cy.clock();

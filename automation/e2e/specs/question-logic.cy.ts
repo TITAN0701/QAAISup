@@ -1,7 +1,7 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 跳題邏輯
 // Automation candidates: TC-QLOGIC-001 ~ TC-QLOGIC-006
-// SKIP REASON: 前台測驗頁 URL 待確認；所有 data-testid 待工程師補上（見 ENG TASK）
+// SKIP REASON: 前台測驗頁 URL 待確認；需取得真實 selector（id/class/text）後才能執行
 
 // [ENG TASK] Confirm URL patterns for exam pages (e.g. /exam/:caseId or /frontdesk/exam)
 // [ENG TASK] Add data-testid="question-age-level" — shows current age level label
