@@ -23,3 +23,7 @@ __pycache__/
 .pytest_cache/
 
 .playwright-mcp/
+
+cypress/downloads/
+cypress/videos/
+cypress/screenshots/
