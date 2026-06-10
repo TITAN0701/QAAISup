@@ -11,7 +11,10 @@ Input:
 ```txt
 artifacts/generated/qa/test-cases.json
 qa-workspace/specs/{feature}/scenarios.md
+qa-knowledge/glossary.md
 qa-knowledge/selector-policy.md
+qa-knowledge/test-strategy.md
+qa-knowledge/risk-rules.md
 ```
 
 Output:

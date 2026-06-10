@@ -9,6 +9,7 @@ Read:
 ```txt
 pm-inbox/{source}.md
 qa-workspace/specs/{feature}/spec.md
+qa-knowledge/glossary.md
 qa-knowledge/test-strategy.md
 qa-knowledge/risk-rules.md
 ```

@@ -9,6 +9,7 @@ Read:
 ```txt
 qa-workspace/specs/{feature}/spec.md
 qa-workspace/specs/{feature}/scenarios.md
+qa-knowledge/glossary.md
 qa-knowledge/test-strategy.md
 qa-knowledge/risk-rules.md
 qa-workspace/schemas/testcase.schema.json

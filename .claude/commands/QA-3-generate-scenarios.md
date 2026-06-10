@@ -9,6 +9,7 @@ Read:
 ```txt
 qa-workspace/specs/{feature}/spec.md
 qa-workspace/specs/{feature}/questions.md
+qa-knowledge/glossary.md
 ```
 
 Generate or update:

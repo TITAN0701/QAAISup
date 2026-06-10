@@ -10,6 +10,7 @@ Read:
 artifacts/raw/allure-results/
 artifacts/generated/allure-report/
 qa-workspace/specs/*/test-cases.json
+qa-knowledge/glossary.md
 CI logs if available
 ```
 
