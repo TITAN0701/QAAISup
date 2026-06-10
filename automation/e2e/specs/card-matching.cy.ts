@@ -1,9 +1,13 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 圖卡配對
 // Automation candidates: TC-CARDMATCH-001 ~ TC-CARDMATCH-005
-// SKIP REASON: 測驗頁真實 URL 為 /question?step=overview（點「發展檢測」進入）；後續題目頁 URL 與 selector 待確認
+// SKIP REASON: cases.json id 待填入；圖卡配對題 step code 待確認；data-testid 元素尚未加入 DOM
+//
+// 已確認（2026-06-10 Playwright 探索）：
+//   - 測驗進入點: /question?step=overview → 點「開始檢測」
+//   - 圖卡配對題目 step code 未知（不是 choice/supine）→ 需工程確認
 
-// [ENG TASK] Confirm URL for actual question step after clicking 「開始檢測」 on /question?step=overview
+// [ENG TASK] Confirm step code for card-matching questions (e.g. /question?step=card or similar)
 // [ENG TASK] Confirm real selectors for question type indicator, card options, feedback elements
 
 import { loginAs } from '../flows/loginFlow';
@@ -14,7 +18,7 @@ describe('圖卡配對', () => {
   });
 
   it.skip('TC-CARDMATCH-001 4M 個案測驗中不顯示圖卡配對題目', () => {
-    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam page URL for 4M case after clicking 「發展檢測」
+    cy.visit('/question?step=overview'); // [ENG TASK] Need to be in the correct child's session context
 
     // Walk through all questions and verify none are card-matching type
     // [ENG TASK] Add data-testid="question-type" with value like "card-matching" or "standard"
