@@ -1,9 +1,9 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 題目內容
 // Automation candidates: TC-QCONTENT-001 ~ TC-QCONTENT-005
-// SKIP REASON: 前台測驗頁 URL 待確認；需取得真實 selector（id/class/text）後才能執行
+// SKIP REASON: 前台測驗入口為 /{userId}/developmental → 點「發展檢測」進入；測驗頁實際 URL 待確認，需取得真實 selector 後才能執行
 
-// [ENG TASK] Confirm URL for starting exam by age level (e.g. /exam/start?age=48 or /frontdesk/exam)
+// [ENG TASK] Confirm exam page URL after clicking 「發展檢測」 from /{userId}/developmental
 // [ENG TASK] Add data-testid="question-text" — question body element
 // [ENG TASK] Add data-testid="question-id" — hidden or visible unique question identifier
 // [ENG TASK] Add data-testid="answer-option" — each answer option button
@@ -25,7 +25,7 @@ describe('題目內容', () => {
   it.skip('TC-QCONTENT-001 所有年齡層題目不出現測試用標記文字', () => {
     // [ENG TASK] Provide a way to scan all questions for a given case
     cy.fixture('cases').then((cases) => {
-      cy.visit(`/exam/start?age=48`);
+      cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 48M case after clicking 「發展檢測」
 
       // Walk through questions and check for test labels
       // [ENG TASK] Add data-testid="question-text" to question body element
@@ -37,7 +37,7 @@ describe('題目內容', () => {
   });
 
   it.skip('TC-QCONTENT-002 作答後系統切換至下一題，不重複顯示同一題目', () => {
-    cy.visit('/exam/start?age=36');
+    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 36M case after clicking 「發展檢測」
 
     // [ENG TASK] Add data-testid="question-id" (hidden or visible) to identify current question
     cy.get('[data-testid="question-id"]').invoke('text').then((firstId) => {
@@ -49,21 +49,21 @@ describe('題目內容', () => {
   });
 
   it.skip('TC-QCONTENT-003 48M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
-    cy.visit('/exam/start?age=48');
+    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 48M case after clicking 「發展檢測」
     cy.get('[data-testid="exam-container"]').should('be.visible');
     cy.get('body').should('not.contain', '題目不足');
     cy.get('body').should('not.contain', '無法開始測驗');
   });
 
   it.skip('TC-QCONTENT-004 60M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
-    cy.visit('/exam/start?age=60');
+    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 60M case after clicking 「發展檢測」
     cy.get('[data-testid="exam-container"]').should('be.visible');
     cy.get('body').should('not.contain', '題目不足');
     cy.get('body').should('not.contain', '無法開始測驗');
   });
 
   it.skip('TC-QCONTENT-005 72M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
-    cy.visit('/exam/start?age=72');
+    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 72M case after clicking 「發展檢測」
     cy.get('[data-testid="exam-container"]').should('be.visible');
     cy.get('body').should('not.contain', '題目不足');
     cy.get('body').should('not.contain', '無法開始測驗');
