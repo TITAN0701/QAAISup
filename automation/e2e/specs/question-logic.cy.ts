@@ -7,8 +7,10 @@
 //   - 觀察題組 URL: /question?step=choice（同一 URL 內依序換題，不換 step）
 //   - 進度條: 同一 step 內百分比遞增（例：50%）
 //   - 答題後「下一題」按鈕啟用；點後換下一題，「下一題」再次 disabled 等新答題
-//   - 答案選項: button "是" / button "否" / button "未觀察"
-//   - 下一題: button "下一題"
+//   - 答案選項樣式依月齡不同：
+//     * 高月齡（15M+）: button "是" / button "否" / button "未觀察"
+//     * 低月齡（2M~9M）: radio button（cy.contains('是') 不含 button role）
+//   - 下一題: button "下一題"（共用）
 //   - 題目類型標籤: 含文字 "觀察題組"
 //   - 題目標題: heading level=2（題目內容）
 
@@ -113,8 +115,8 @@ describe('跳題邏輯', () => {
       cy.contains('觀察題組').should('be.visible');
 
       // Answer all observation group questions "否" (wrong/negative)
-      // step=choice stays same URL while questions cycle through
-      cy.contains('button', '否').click();
+      // 6M 個案為 radio button 樣式（不是 button role）
+      cy.contains('否').click();
       cy.contains('button', '下一題').click();
       // [ENG TASK] Need to iterate all observation questions — count unknown without real data
 
@@ -131,8 +133,9 @@ describe('跳題邏輯', () => {
       cy.contains('button', '開始檢測').click();
 
       // Keep answering wrong at 2M — system should stay stable
+      // 4M 個案為低月齡，答案為 radio button 樣式
       for (let i = 0; i < 5; i++) {
-        cy.contains('button', '否').click();
+        cy.contains('否').click(); // radio button 樣式（低月齡）
         cy.contains('button', '下一題').click();
         // [ENG TASK] Add data-testid="question-age-level" to verify stays at 2M
       }
