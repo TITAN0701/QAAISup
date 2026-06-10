@@ -17,11 +17,23 @@
 |------|------|------|------|
 | 01 | frontdesk-home | `/frontdesk` | 自動跳轉至 `/{userId}/developmental`（孩童檔案列表） |
 | 02 | question-overview | `/question?step=overview` | 測驗總覽頁（點「發展檢測」或「繼續檢測」後跳轉）|
+| 03 | question-choice | `/question?step=choice` | 觀察題組選擇題（15M+ 個案可進入）|
+| 04 | question-supine | `/question?step=supine` | 仰躺動作拍攝（影片錄製，低月齡個案）|
 
 > **實際 URL 模式**：
 > - 孩童檔案列表：`/{userId}/developmental`（userId 依登入帳號而異，例：`/522/developmental`）
-> - 測驗入口：`/question?step=overview`（有「開始檢測」與「取消」按鈕）
-> - 測驗頁後續路徑（step=xxx）待繼續探索
+> - 測驗總覽：`/question?step=overview`（兩種進入方式：「開始檢測」全新 / 「繼續檢測」中途繼續）
+> - 題目頁：`/question?step={題目代碼}`（step 值為動態代碼，例：`supine` = 仰躺動作拍攝）
+>
+> **已確認的 step 代碼**：
+> - `overview` — 測驗總覽說明
+> - `choice` — 觀察題組選擇題（selector：`button "是"` / `button "否"` / `button "未觀察"` / `button "下一題"`）
+> - `supine` — 仰躺動作拍攝（影片錄製，不可自動化）
+> - 其他 step 代碼待探索
+>
+> **兩種進入狀況**：
+> - 全新個案：`/{userId}/developmental` → 點「發展檢測」→ 右側顯示「開始檢測」→ 點擊 → `/question?step=overview`
+> - 中途繼續：`/{userId}/developmental` → 點「發展檢測」→ 右側顯示「繼續檢測」→ 點擊 → `/question?step=overview`
 
 ---
 

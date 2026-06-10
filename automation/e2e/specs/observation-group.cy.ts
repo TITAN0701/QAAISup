@@ -1,15 +1,17 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 觀察題組
 // Automation candidates: SC-OBSERVATION-GROUP-001 ~ SC-OBSERVATION-GROUP-004
-// SKIP REASON: 測驗頁真實 URL 為 /question?step=overview（點「發展檢測」進入）；後續題目頁 URL 與 selector 待確認，cases.json id 待填入
+// SKIP REASON: cases.json id 待填入（需真實 SIT 個案 ID）；AI 模組完成狀態無法自動觸發，需工程確認
 // Source: qa-workspace/specs/observation-group/scenarios.md
+//
+// 已確認（2026-06-10 Playwright 探索）：
+//   - 觀察題組 URL: /question?step=choice
+//   - 答案選項: button "是" / button "否" / button "未觀察"
+//   - 下一題按鈕: button "下一題"（答題後才啟用）
+//   - 題目類型標籤: cy.contains('觀察題組')
 
-// [ENG TASK] Confirm URL for actual question step after clicking 「開始檢測」 on /question?step=overview
-// [ENG TASK] Confirm URL / trigger for entering observation group after AI module completion
-// [ENG TASK] Add data-testid="next-question-button" — 下一題 button after AI module
-// [ENG TASK] Add data-testid="observation-group-title" or check URL to verify entry
-// [ENG TASK] Add data-testid="ai-module-status" — shows AI module completion state
-// [ENG TASK] Seed test data: cases at 15M, 24M, 39M with AI module marked completed
+// [ENG TASK] Seed test data: 15M+/24M/39M 個案且 AI 模組已完成，提供 cases.json 真實 id
+// [ENG TASK] Confirm how to verify AI module completion state (URL change or DOM element)
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -19,63 +21,54 @@ describe('觀察題組', () => {
   });
 
   it.skip('SC-OBSERVATION-GROUP-001 超過 15M 個案完成 AI 模組後點下一題可進入觀察題組', () => {
-    // Precondition: 15M+ case with AI module completed
+    // Precondition: 15M+ case with AI module completed (cases.json id 待填入)
     cy.fixture('cases').then((cases) => {
-      cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 15M+ case after clicking 「發展檢測」
+      cy.visit('/question?step=overview');
+      cy.contains('button', '開始檢測').click();
 
-      // Wait for AI module to be marked complete
-      // [ENG TASK] Add data-testid="ai-module-status" showing completion
-      cy.get('[data-testid="ai-module-status"]').should('contain', '完成');
-
-      // Click 下一題
-      cy.get('[data-testid="next-question-button"]').click();
-
-      // Verify entered observation group (not stuck or no response)
-      // [ENG TASK] Add data-testid="observation-group-title" or verify URL
-      cy.get('[data-testid="observation-group-title"]').should('be.visible');
+      // [ENG TASK] Confirm how AI module completion is indicated before observation group
+      cy.url().should('include', 'step=choice');
+      cy.contains('觀察題組').should('be.visible');
     });
   });
 
   it.skip('SC-OBSERVATION-GROUP-002 24M 個案完成 AI 模組後進入 24M 對應觀察題組', () => {
     cy.fixture('cases').then((cases) => {
-      cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 24M case after clicking 「發展檢測」
+      cy.visit('/question?step=overview');
+      cy.contains('button', '開始檢測').click();
 
-      cy.get('[data-testid="next-question-button"]').click();
-
-      // Should enter 24M observation group, not 15M
-      cy.get('[data-testid="observation-group-title"]').should('be.visible');
-      cy.url().should('not.contain', '15m');
+      cy.url().should('include', 'step=choice');
+      cy.contains('觀察題組').should('be.visible');
+      // [ENG TASK] Confirm how to verify 24M-specific observation group vs 15M
     });
   });
 
   it.skip('SC-OBSERVATION-GROUP-003 39M 個案完成 AI 模組後無需取消重來即可進入觀察題組', () => {
     cy.fixture('cases').then((cases) => {
-      cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 39M case after clicking 「發展檢測」
+      cy.visit('/question?step=overview');
+      cy.contains('button', '開始檢測').click();
 
-      cy.get('[data-testid="next-question-button"]').click();
-
-      // Should navigate directly to observation group — no cancel/restart required
-      cy.get('[data-testid="observation-group-title"]').should('be.visible');
-      cy.url().should('not.contain', '/cancel');
-      cy.url().should('not.contain', '/restart');
+      cy.url().should('include', 'step=choice');
+      cy.contains('觀察題組').should('be.visible');
+      cy.url().should('not.include', 'cancel');
     });
   });
 
   it.skip('SC-OBSERVATION-GROUP-004 重新進入觀察題組時 AI 模組結果保留，不需重做', () => {
     cy.fixture('cases').then((cases) => {
-      cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam URL for 15M+ case after clicking 「發展檢測」
+      cy.visit('/question?step=overview');
+      cy.contains('button', '開始檢測').click();
 
-      // Simulate: enter observation group, cancel, re-enter
-      cy.get('[data-testid="next-question-button"]').click();
-      cy.get('[data-testid="observation-group-title"]').should('be.visible');
+      cy.url().should('include', 'step=choice');
+      cy.contains('觀察題組').should('be.visible');
 
-      // Go back and re-enter
-      cy.go('back');
-      cy.get('[data-testid="next-question-button"]').click();
+      // Cancel and re-enter
+      cy.contains('button', '取消').click();
+      cy.visit('/question?step=overview');
+      cy.contains('button', '開始檢測').click();
 
-      // AI module should still show as completed — not reset
-      cy.get('[data-testid="ai-module-status"]').should('contain', '完成');
-      cy.get('[data-testid="observation-group-title"]').should('be.visible');
+      // Should return to choice step, not restart from beginning
+      cy.url().should('include', 'step=choice');
     });
   });
 });
