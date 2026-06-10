@@ -9,15 +9,19 @@
 
 原因：SIT 環境的 DOM 目前尚未加入 `data-testid`，用 `[data-testid="..."]` 會導致測試全部失敗。
 
-**遇到沒有穩定 selector 的元素，一律改用以下替代方案：**
+**遇到沒有穩定 selector 的元素，依下列優先順序選用：**
 
-| 情況 | 替代 selector |
-|------|-------------|
-| input 欄位 | `input[placeholder="實際文字"]` |
-| 按鈕 | `cy.contains('button', '按鈕文字')` |
-| 連結 | `cy.contains('a', '連結文字')` 或 `a[href="/path"]` |
-| 標題確認 | `cy.contains('h1,h2,h3', '標題文字')` |
-| 表格欄位 | `cy.get('table thead').within(() => cy.contains('欄位名稱'))` |
+| 優先順序 | 情況 | 替代 selector |
+|---------|------|-------------|
+| 1 | 元素有唯一穩定 `id` | `cy.get('#element-id')` |
+| 2 | 元素有語意明確的穩定 `class` | `cy.get('.class-name')` |
+| 3 | input 欄位有 placeholder | `input[placeholder="實際文字"]` |
+| 4 | 按鈕、連結有文字 | `cy.contains('button', '按鈕文字')` |
+| 5 | 連結有固定 href | `a[href="/path"]` |
+| 6 | 標題確認 | `cy.contains('h1,h2,h3', '標題文字')` |
+| 7 | 表格欄位 | `cy.get('table thead').within(() => cy.contains('欄位名稱'))` |
+
+**class 使用條件**：只用語意明確、不因 UI 改版而變動的 class（例如 `.btn-primary`、`.error-message`）。避免使用 Tailwind utility class（如 `.bg-white`、`.text-sm`）或框架自動產生的 hash class。
 
 若以上替代方案也無法確認 selector，該 TC 改為 `it.skip()`，並在頂部加 `[ENG TASK]` 說明需補哪個屬性。
 
@@ -33,9 +37,9 @@
 避免使用：
 
 ```txt
-[data-testid="..."]          ← 目前禁用，DOM 尚未加入
-CSS nth-child
-不穩定 class name
+[data-testid="..."]                    ← 目前禁用，DOM 尚未加入
+CSS nth-child（如 li:nth-child(2)）
+Tailwind / hash class（如 .bg-white、.text-sm、.jsx-abc123）
 完整 XPath
 依賴畫面位置的 selector
 ```
