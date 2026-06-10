@@ -10,7 +10,7 @@ export default defineConfig({
     retries: { runMode: 1, openMode: 0 },
     supportFile: "automation/e2e/support/e2e.ts",
     fixturesFolder: "automation/e2e/fixtures",
-    screenshotsFolder: "artifacts/raw/cypress/screenshots",
+    screenshotsFolder: "artifacts/raw/screenshots/cypress",
     videosFolder: "artifacts/raw/cypress/videos",
     setupNodeEvents(on, config) {
       allureWriter(on, config);

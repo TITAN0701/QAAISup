@@ -11,6 +11,10 @@ artifacts/raw/*
 !artifacts/raw/allure-results/
 artifacts/raw/allure-results/*
 !artifacts/raw/allure-results/.gitkeep
+!artifacts/raw/screenshots/
+artifacts/raw/screenshots/smoke/*
+artifacts/raw/screenshots/snapshots/*
+artifacts/raw/screenshots/cypress/*
 
 artifacts/generated/allure-report/*
 !artifacts/generated/allure-report/.gitkeep
@@ -27,3 +31,4 @@ __pycache__/
 cypress/downloads/
 cypress/videos/
 cypress/screenshots/
+artifacts/raw/cypress/screenshots/

@@ -1,6 +1,11 @@
 # Playwright Smoke Test
 
-使用 Playwright MCP 自動登入系統，巡覽所有主要頁面並截圖，存到 `artifacts/raw/cypress/screenshots/`。
+使用 Playwright MCP 自動登入系統，巡覽所有主要頁面並截圖。
+
+截圖分三類存放：
+- 頁面截圖 → `artifacts/raw/screenshots/smoke/`
+- Accessibility tree → `artifacts/raw/screenshots/snapshots/`
+- Cypress 執行截圖 → `artifacts/raw/screenshots/cypress/`（由 Cypress 自動存入，此指令不處理）
 
 ## Arguments
 
@@ -37,7 +42,8 @@ $ARGUMENTS
 ### Step 3 — 建立截圖資料夾
 
 ```bash
-mkdir -p artifacts/raw/cypress/screenshots
+mkdir -p artifacts/raw/screenshots/smoke
+mkdir -p artifacts/raw/screenshots/snapshots
 ```
 
 ### Step 4 — 登入系統
@@ -51,8 +57,8 @@ mkdir -p artifacts/raw/cypress/screenshots
 
 以下每個頁面都要：
 1. 導覽到 `{BASE_URL}{路徑}`
-2. 截全頁截圖（`fullPage: true`）
-3. 存到 `artifacts/raw/cypress/screenshots/smoke-{編號}-{名稱}.png`
+2. 截全頁截圖（`fullPage: true`）→ 存到 `artifacts/raw/screenshots/smoke/smoke-{編號}-{名稱}.png`
+3. 取 accessibility tree snapshot → 存到 `artifacts/raw/screenshots/snapshots/snapshot-{編號}-{名稱}.yml`
 
 | 編號 | 名稱 | 路徑 | 需登出 |
 |------|------|------|--------|
@@ -81,7 +87,8 @@ mkdir -p artifacts/raw/cypress/screenshots
 
 ```
 ✅ 截圖完成：N 張
-📁 存放路徑：artifacts/raw/cypress/screenshots/
+📁 smoke 截圖：artifacts/raw/screenshots/smoke/
+📁 snapshots：artifacts/raw/screenshots/snapshots/
 
 | 檔案 | 頁面 | 狀態 |
 |------|------|------|
