@@ -36,12 +36,12 @@
 
 ## Selector Rule
 
-優先順序：`data-testid` > semantic role（button/input） > placeholder/label 文字 > 穩定唯一中文文字
+**目前禁止使用 `data-testid` selector**（SIT DOM 尚未加入，詳見 selector-policy.md）。
 
-若目標元素缺少 `data-testid`：
-- 使用 `input[placeholder="..."]` 或 `cy.contains('button', '...')` 作為過渡 selector
-- 在 `.cy.ts` 頂部新增 `[ENG TASK]` 註記，要求工程師補上 `data-testid`
-- 禁止使用 CSS nth-child、不穩定 class name、完整 XPath
+現階段使用順序：`input[placeholder]` > `cy.contains('button/a', '文字')` > `a[href]` > 穩定唯一中文文字
+
+無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[ENG TASK]`。
+禁止使用 CSS nth-child、不穩定 class name、完整 XPath。
 
 ## Review Rule
 
