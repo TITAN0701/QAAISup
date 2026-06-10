@@ -84,6 +84,7 @@ npm run sync:sheet
 | `/QA-5-generate-automation` | 產自動化草稿（Cypress + pytest）；AI 依 test-cases.json 與 scenarios.md 推斷產出，非真實執行，需 QA/Engineer review 後才可跑 |
 | `/QA-6-generate-report` | 根據執行結果產 QA/PM 報告 |
 | `/QA-bug-report` | 將 bug 描述整理成 RIDER 格式報告（輸出至 artifacts/generated/qa/bugs/） |
+| `/QA-knowledge-update` | 審視 qa-knowledge 四個檔案是否與現有 spec 一致，列出差異後確認再更新（系統改版後執行）|
 | `/check-project` | 掃描專案整體檔案結構（只用 Glob，最小 token）|
 | `/playwright-smoke-test` | 用 Playwright MCP 截圖所有主要頁面 |
 | `/project-init` | 清空舊專案內容、更新設定，快速切換至新系統 |
