@@ -1,3 +1,0 @@
-[     305ms] [LOG] 發展檢測資料: Proxy(Object) @ https://sit-wetpaint.nhri.org.tw/assets/developmental-CgDtllCt.js:0
-[    9907ms] [LOG] [beforeEnter] 進入 /question {step: overview, isRetry: false, from: HomeDevelopmentalAssessment, fromPath: /405/developmental} @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
-[    9907ms] [LOG] [beforeEnter] bypass step 或 isRetry 觸發，直接放行 @ https://sit-wetpaint.nhri.org.tw/assets/index-5fILQhu0.js:34
