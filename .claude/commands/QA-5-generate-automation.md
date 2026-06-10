@@ -38,8 +38,9 @@ $ARGUMENTS
 
 - Cypress is the default.
 - Use pytest only for API/backend validation.
-- Prefer `data-testid`.
-- If stable selectors are missing, add an Engineering task instead of writing brittle selectors.
+- **禁止使用 `cy.get('[data-testid="..."]')`** — SIT DOM 尚未加入 data-testid，詳見 qa-knowledge/selector-policy.md
+- Selector 優先順序：`#id` > `.stable-class` > `input[placeholder]` > `cy.contains('button/a', '文字')` > `a[href]`
+- 無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[ENG TASK]` 說明需確認的 URL 或 selector
 - Do not use real credentials or production data.
 - Generated code is draft and needs QA/Engineer review.
 
