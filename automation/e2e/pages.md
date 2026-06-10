@@ -7,7 +7,7 @@
 
 - **系統名稱**：國衛院學齡前兒童發展數位評估系統（wetpaint）
 - **SIT URL**：https://sit-wetpaint.nhri.org.tw/
-- **最後更新**：2026-06-10
+- **最後更新**：2026-06-10（補充 step=choice 跳題行為）
 
 ---
 
@@ -29,7 +29,15 @@
 > - `overview` — 測驗總覽說明
 > - `choice` — 觀察題組選擇題（selector：`button "是"` / `button "否"` / `button "未觀察"` / `button "下一題"`）
 > - `supine` — 仰躺動作拍攝（影片錄製，不可自動化）
-> - 其他 step 代碼待探索
+> - 其他 step 代碼待探索（圖卡配對、語言理解等 step code 未知）
+>
+> **`step=choice` 跳題行為（2026-06-10 確認）**：
+> - URL 永遠是 `/question?step=choice`，題目靠內容換頁，不換 step
+> - 答題後 `button "下一題"` 才啟用（disabled → enabled）
+> - 點「下一題」後換下一題，「下一題」再次變 disabled
+> - 進度條在同一 step 內遞增（例：50% → 下一題後增加）
+> - 題目標題為 `heading level=2`；題目類型標籤含文字 `"觀察題組"`
+> - 已測試個案：39test1042（3歲3個月）
 >
 > **兩種進入狀況**：
 > - 全新個案：`/{userId}/developmental` → 點「發展檢測」→ 右側顯示「開始檢測」→ 點擊 → `/question?step=overview`
