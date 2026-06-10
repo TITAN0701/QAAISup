@@ -11,6 +11,7 @@ export default defineConfig({
     supportFile: "automation/e2e/support/e2e.ts",
     fixturesFolder: "automation/e2e/fixtures",
     screenshotsFolder: "artifacts/raw/screenshots/cypress",
+    trashAssetsBeforeRuns: true,
     videosFolder: "artifacts/raw/cypress/videos",
     setupNodeEvents(on, config) {
       allureWriter(on, config);
