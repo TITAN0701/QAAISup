@@ -2,5 +2,9 @@
   "admin": {
     "email": "REDACTED_EMAIL",
     "password": "REDACTED_PASSWORD"
+  },
+  "regular_user": {
+    "email": "REDACTED_EMAIL",
+    "password": "REDACTED_PASSWORD"
   }
 }
