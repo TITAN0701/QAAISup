@@ -20,28 +20,46 @@
 | 03 | question-choice | `/question?step=choice` | 觀察題組選擇題（15M+ 個案可進入）|
 | 04 | question-supine | `/question?step=supine` | 仰躺動作拍攝（影片錄製，低月齡個案）|
 
-> **實際 URL 模式**：
-> - 孩童檔案列表：`/{userId}/developmental`（userId 依登入帳號而異，例：`/522/developmental`）
-> - 測驗總覽：`/question?step=overview`（兩種進入方式：「開始檢測」全新 / 「繼續檢測」中途繼續）
-> - 題目頁：`/question?step={題目代碼}`（step 值為動態代碼，例：`supine` = 仰躺動作拍攝）
->
-> **已確認的 step 代碼**：
-> - `overview` — 測驗總覽說明
-> - `choice` — 觀察題組選擇題（selector：`button "是"` / `button "否"` / `button "未觀察"` / `button "下一題"`）
-> - `supine` — 仰躺動作拍攝（影片錄製，不可自動化）
-> - 其他 step 代碼待探索（圖卡配對、語言理解等 step code 未知）
->
-> **`step=choice` 跳題行為（2026-06-10 確認）**：
-> - URL 永遠是 `/question?step=choice`，題目靠內容換頁，不換 step
-> - 答題後 `button "下一題"` 才啟用（disabled → enabled）
-> - 點「下一題」後換下一題，「下一題」再次變 disabled
-> - 進度條在同一 step 內遞增（例：50% → 下一題後增加）
-> - 題目標題為 `heading level=2`；題目類型標籤含文字 `"觀察題組"`
-> - 已測試個案：39test1042（3歲3個月）
->
-> **兩種進入狀況**：
-> - 全新個案：`/{userId}/developmental` → 點「發展檢測」→ 右側顯示「開始檢測」→ 點擊 → `/question?step=overview`
-> - 中途繼續：`/{userId}/developmental` → 點「發展檢測」→ 右側顯示「繼續檢測」→ 點擊 → `/question?step=overview`
+### URL 模式與進入方式
+
+- 孩童檔案列表：`/{userId}/developmental`（userId 依登入帳號而異，例：`/522/developmental`）
+- 測驗總覽：`/question?step=overview`
+- 題目頁：`/question?step={題目代碼}`（step 值為動態代碼）
+
+**兩種進入狀況**：
+
+| 狀況 | 路徑 |
+|------|------|
+| 全新個案 | `/{userId}/developmental` → 點「發展檢測」→「開始檢測」→ `/question?step=overview` |
+| 中途繼續 | `/{userId}/developmental` → 點「發展檢測」→「繼續檢測」→ `/question?step=overview` |
+
+**已確認的 step 代碼**：
+
+| step | 說明 | 可自動化 |
+|------|------|:--------:|
+| `overview` | 測驗總覽說明 | ✅ |
+| `choice` | 觀察題組選擇題 | ✅（部分） |
+| `supine` | 仰躺動作拍攝（影片錄製） | ❌ |
+| 其他 | 圖卡配對、語言理解等 step code 未知 | ❓ |
+
+### step=choice 跳題行為（2026-06-10 確認）
+
+- URL 永遠是 `/question?step=choice`，題目靠內容換頁，**不換 step**
+- 答題後 `button "下一題"` 才啟用（disabled → enabled）
+- 點「下一題」後換下一題，「下一題」再次變 disabled
+- 進度條在同一 step 內遞增（例：50% → 下一題後增加）
+- 題目標題為 `heading level=2`；題目類型標籤含文字 `"觀察題組"`
+
+**已確認的 selector**：
+
+| 元素 | Selector |
+|------|----------|
+| 答案選項 | `cy.contains('button', '是')` / `cy.contains('button', '否')` / `cy.contains('button', '未觀察')` |
+| 下一題 | `cy.contains('button', '下一題')` |
+| 題目類型標籤 | `cy.contains('觀察題組')` |
+| 取消 | `cy.contains('button', '取消')` |
+
+> 已測試個案：39test1042（3歲3個月）
 
 ---
 
