@@ -1,9 +1,14 @@
 {
-  "case_4m": { "age_months": 4, "label": "4M 個案" },
-  "case_6m": { "age_months": 6, "label": "6M 個案" },
-  "case_8m": { "age_months": 8, "label": "8M 個案" },
-  "case_42m": { "age_months": 42, "label": "42M 個案" },
-  "case_48m": { "age_months": 48, "label": "48M 個案" },
-  "case_60m": { "age_months": 60, "label": "60M 個案" },
-  "case_72m": { "age_months": 72, "label": "72M 個案" }
+  "case_2m":       { "id": null, "age_months": 2,  "label": "2M 個案" },
+  "case_4m":       { "id": null, "age_months": 4,  "label": "4M 個案" },
+  "case_6m":       { "id": null, "age_months": 6,  "label": "6M 個案" },
+  "case_8m":       { "id": null, "age_months": 8,  "label": "8M 個案" },
+  "case_15m_plus": { "id": null, "age_months": 15, "label": "15M+ 個案（觀察題組用）" },
+  "case_24m":      { "id": null, "age_months": 24, "label": "24M 個案" },
+  "case_36m":      { "id": null, "age_months": 36, "label": "36M 個案" },
+  "case_39m":      { "id": null, "age_months": 39, "label": "39M 個案" },
+  "case_42m":      { "id": null, "age_months": 42, "label": "42M 個案" },
+  "case_48m":      { "id": null, "age_months": 48, "label": "48M 個案" },
+  "case_60m":      { "id": null, "age_months": 60, "label": "60M 個案" },
+  "case_72m":      { "id": null, "age_months": 72, "label": "72M 個案" }
 }

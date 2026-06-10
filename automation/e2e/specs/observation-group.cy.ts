@@ -1,6 +1,7 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 觀察題組
 // Automation candidates: SC-OBSERVATION-GROUP-001 ~ SC-OBSERVATION-GROUP-004
+// SKIP REASON: cases.json id 欄位待填入真實個案 ID；所有 data-testid 待工程師補上（見 ENG TASK）
 // Source: qa-workspace/specs/observation-group/scenarios.md
 
 // [ENG TASK] Confirm URL for exam page after AI module completion
@@ -17,7 +18,7 @@ describe('觀察題組', () => {
     loginAs('regular_user');
   });
 
-  it('SC-OBSERVATION-GROUP-001 超過 15M 個案完成 AI 模組後點下一題可進入觀察題組', () => {
+  it.skip('SC-OBSERVATION-GROUP-001 超過 15M 個案完成 AI 模組後點下一題可進入觀察題組', () => {
     // Precondition: 15M+ case with AI module completed
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?caseId=${cases.case_15m_plus.id}`);
@@ -35,7 +36,7 @@ describe('觀察題組', () => {
     });
   });
 
-  it('SC-OBSERVATION-GROUP-002 24M 個案完成 AI 模組後進入 24M 對應觀察題組', () => {
+  it.skip('SC-OBSERVATION-GROUP-002 24M 個案完成 AI 模組後進入 24M 對應觀察題組', () => {
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?caseId=${cases.case_24m.id}`);
 
@@ -47,7 +48,7 @@ describe('觀察題組', () => {
     });
   });
 
-  it('SC-OBSERVATION-GROUP-003 39M 個案完成 AI 模組後無需取消重來即可進入觀察題組', () => {
+  it.skip('SC-OBSERVATION-GROUP-003 39M 個案完成 AI 模組後無需取消重來即可進入觀察題組', () => {
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?caseId=${cases.case_39m.id}`);
 
@@ -60,7 +61,7 @@ describe('觀察題組', () => {
     });
   });
 
-  it('SC-OBSERVATION-GROUP-004 重新進入觀察題組時 AI 模組結果保留，不需重做', () => {
+  it.skip('SC-OBSERVATION-GROUP-004 重新進入觀察題組時 AI 模組結果保留，不需重做', () => {
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?caseId=${cases.case_15m_plus.id}`);
 

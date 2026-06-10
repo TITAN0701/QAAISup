@@ -1,6 +1,7 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 題目內容
 // Automation candidates: TC-QCONTENT-001 ~ TC-QCONTENT-005
+// SKIP REASON: 前台測驗頁 URL 待確認；所有 data-testid 待工程師補上（見 ENG TASK）
 
 // [ENG TASK] Confirm URL for starting exam by age level (e.g. /exam/start?age=48 or /frontdesk/exam)
 // [ENG TASK] Add data-testid="question-text" — question body element
@@ -21,7 +22,7 @@ describe('題目內容', () => {
     { fixture: 'case_48m', label: '48M' },
   ];
 
-  it('TC-QCONTENT-001 所有年齡層題目不出現測試用標記文字', () => {
+  it.skip('TC-QCONTENT-001 所有年齡層題目不出現測試用標記文字', () => {
     // [ENG TASK] Provide a way to scan all questions for a given case
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?age=48`);
@@ -35,7 +36,7 @@ describe('題目內容', () => {
     });
   });
 
-  it('TC-QCONTENT-002 作答後系統切換至下一題，不重複顯示同一題目', () => {
+  it.skip('TC-QCONTENT-002 作答後系統切換至下一題，不重複顯示同一題目', () => {
     cy.visit('/exam/start?age=36');
 
     // [ENG TASK] Add data-testid="question-id" (hidden or visible) to identify current question
@@ -47,21 +48,21 @@ describe('題目內容', () => {
     });
   });
 
-  it('TC-QCONTENT-003 48M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
+  it.skip('TC-QCONTENT-003 48M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
     cy.visit('/exam/start?age=48');
     cy.get('[data-testid="exam-container"]').should('be.visible');
     cy.get('body').should('not.contain', '題目不足');
     cy.get('body').should('not.contain', '無法開始測驗');
   });
 
-  it('TC-QCONTENT-004 60M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
+  it.skip('TC-QCONTENT-004 60M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
     cy.visit('/exam/start?age=60');
     cy.get('[data-testid="exam-container"]').should('be.visible');
     cy.get('body').should('not.contain', '題目不足');
     cy.get('body').should('not.contain', '無法開始測驗');
   });
 
-  it('TC-QCONTENT-005 72M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
+  it.skip('TC-QCONTENT-005 72M 個案可正常開始測驗，不顯示題目不足錯誤', () => {
     cy.visit('/exam/start?age=72');
     cy.get('[data-testid="exam-container"]').should('be.visible');
     cy.get('body').should('not.contain', '題目不足');

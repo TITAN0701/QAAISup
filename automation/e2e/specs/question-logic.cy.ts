@@ -1,6 +1,7 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 跳題邏輯
 // Automation candidates: TC-QLOGIC-001 ~ TC-QLOGIC-006
+// SKIP REASON: 前台測驗頁 URL 待確認；所有 data-testid 待工程師補上（見 ENG TASK）
 
 // [ENG TASK] Confirm URL patterns for exam pages (e.g. /exam/:caseId or /frontdesk/exam)
 // [ENG TASK] Add data-testid="question-age-level" — shows current age level label
@@ -20,7 +21,7 @@ describe('跳題邏輯', () => {
     loginAs('regular_user');
   });
 
-  it('TC-QLOGIC-001 從實質年齡層開始出題，答錯後系統降低一個年齡層難度', () => {
+  it.skip('TC-QLOGIC-001 從實質年齡層開始出題，答錯後系統降低一個年齡層難度', () => {
     // Preconditions: 4M 個案存在且年齡層已判斷
     cy.fixture('cases').then((cases) => {
       const c = cases.case_4m;
@@ -40,7 +41,7 @@ describe('跳題邏輯', () => {
     });
   });
 
-  it('TC-QLOGIC-002 答對後系統只上升一個年齡層，不可跨越兩階', () => {
+  it.skip('TC-QLOGIC-002 答對後系統只上升一個年齡層，不可跨越兩階', () => {
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?age=${cases.case_4m.age_months}&start_level=2`);
 
@@ -53,7 +54,7 @@ describe('跳題邏輯', () => {
     });
   });
 
-  it('TC-QLOGIC-003 42M 個案答對後最高升至 48M，不跳至 60M 或更高', () => {
+  it.skip('TC-QLOGIC-003 42M 個案答對後最高升至 48M，不跳至 60M 或更高', () => {
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?age=${cases.case_42m.age_months}&start_level=42`);
 
@@ -69,7 +70,7 @@ describe('跳題邏輯', () => {
     });
   });
 
-  it('TC-QLOGIC-004 跨模組後系統跳回實質年齡層（4M）對應的下一模組', () => {
+  it.skip('TC-QLOGIC-004 跨模組後系統跳回實質年齡層（4M）對應的下一模組', () => {
     // Preconditions: 4M 個案剛完成「6M 語言理解」模組
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?age=${cases.case_4m.age_months}`);
@@ -84,7 +85,7 @@ describe('跳題邏輯', () => {
     });
   });
 
-  it('TC-QLOGIC-005 觀察題組全錯時結果顯示最低月齡「2 個月」', () => {
+  it.skip('TC-QLOGIC-005 觀察題組全錯時結果顯示最低月齡「2 個月」', () => {
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?age=${cases.case_6m.age_months}`);
 
@@ -102,7 +103,7 @@ describe('跳題邏輯', () => {
     });
   });
 
-  it('TC-QLOGIC-006 個案在最低年齡層（2M）持續答錯時系統不崩潰', () => {
+  it.skip('TC-QLOGIC-006 個案在最低年齡層（2M）持續答錯時系統不崩潰', () => {
     cy.fixture('cases').then((cases) => {
       cy.visit(`/exam/start?age=${cases.case_4m.age_months}&start_level=2`);
 
