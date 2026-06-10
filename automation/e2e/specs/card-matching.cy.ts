@@ -1,9 +1,9 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 圖卡配對
 // Automation candidates: TC-CARDMATCH-001 ~ TC-CARDMATCH-005
-// SKIP REASON: 前台測驗入口為 /{userId}/developmental → 點「發展檢測」進入；測驗頁實際 URL 待確認，需取得真實 selector 後才能執行
+// SKIP REASON: 測驗頁真實 URL 為 /question?step=overview（點「發展檢測」進入）；後續題目頁 URL 與 selector 待確認
 
-// [ENG TASK] Confirm exam page URL after clicking 「發展檢測」 from /{userId}/developmental
+// [ENG TASK] Confirm URL for actual question step after clicking 「開始檢測」 on /question?step=overview
 // [ENG TASK] Confirm real selectors for question type indicator, card options, feedback elements
 
 import { loginAs } from '../flows/loginFlow';

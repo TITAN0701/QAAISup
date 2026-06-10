@@ -1,10 +1,10 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 觀察題組
 // Automation candidates: SC-OBSERVATION-GROUP-001 ~ SC-OBSERVATION-GROUP-004
-// SKIP REASON: 前台測驗入口為 /{userId}/developmental → 點「發展檢測」進入；測驗頁實際 URL 待確認，cases.json id 待填入，需取得真實 selector 後才能執行
+// SKIP REASON: 測驗頁真實 URL 為 /question?step=overview（點「發展檢測」進入）；後續題目頁 URL 與 selector 待確認，cases.json id 待填入
 // Source: qa-workspace/specs/observation-group/scenarios.md
 
-// [ENG TASK] Confirm exam page URL after clicking 「發展檢測」 from /{userId}/developmental
+// [ENG TASK] Confirm URL for actual question step after clicking 「開始檢測」 on /question?step=overview
 // [ENG TASK] Confirm URL / trigger for entering observation group after AI module completion
 // [ENG TASK] Add data-testid="next-question-button" — 下一題 button after AI module
 // [ENG TASK] Add data-testid="observation-group-title" or check URL to verify entry

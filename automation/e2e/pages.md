@@ -16,9 +16,12 @@
 | 編號 | 名稱 | 路徑 | 備註 |
 |------|------|------|------|
 | 01 | frontdesk-home | `/frontdesk` | 自動跳轉至 `/{userId}/developmental`（孩童檔案列表） |
+| 02 | question-overview | `/question?step=overview` | 測驗總覽頁（點「發展檢測」或「繼續檢測」後跳轉）|
 
-> **實際 URL 模式**：`/{userId}/developmental`，其中 userId 依登入帳號而異（例：`/522/developmental`）
-> 點「發展檢測」後進入測驗流程（路徑待確認）。
+> **實際 URL 模式**：
+> - 孩童檔案列表：`/{userId}/developmental`（userId 依登入帳號而異，例：`/522/developmental`）
+> - 測驗入口：`/question?step=overview`（有「開始檢測」與「取消」按鈕）
+> - 測驗頁後續路徑（step=xxx）待繼續探索
 
 ---
 
