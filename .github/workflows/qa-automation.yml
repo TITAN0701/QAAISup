@@ -85,22 +85,22 @@ jobs:
         env:
           CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
-          CYPRESS_TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          CYPRESS_TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          CYPRESS_TEST_USER_EMAIL: ${{ secrets.CYPRESS_TEST_USER_EMAIL }}
+          CYPRESS_TEST_USER_PASSWORD: ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
 
       - name: Run Cypress E2E
         run: npm run test:e2e
         env:
           CYPRESS_BASE_URL: ${{ secrets.CYPRESS_BASE_URL }}
-          CYPRESS_TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          CYPRESS_TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          CYPRESS_TEST_USER_EMAIL: ${{ secrets.CYPRESS_TEST_USER_EMAIL }}
+          CYPRESS_TEST_USER_PASSWORD: ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
 
       - name: Run pytest API
         run: pytest
         env:
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
-          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
-          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          TEST_USER_EMAIL: ${{ secrets.CYPRESS_TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
 
       - name: Generate Allure report
         if: always()

@@ -63,11 +63,11 @@ GitHub repo 需要設定（4 個，名稱如下）：
 ```txt
 CYPRESS_BASE_URL
 API_BASE_URL
-TEST_USER_EMAIL
-TEST_USER_PASSWORD
+CYPRESS_TEST_USER_EMAIL
+CYPRESS_TEST_USER_PASSWORD
 ```
 
-注意：CI workflow 會自動將 `TEST_USER_EMAIL` / `TEST_USER_PASSWORD` 對應成 Cypress 所需的 `CYPRESS_TEST_USER_EMAIL` / `CYPRESS_TEST_USER_PASSWORD`，**不需要另外設定 `CYPRESS_TEST_USER_*` 的 Secret**。
+CI workflow 會自動將 `CYPRESS_TEST_USER_EMAIL` / `CYPRESS_TEST_USER_PASSWORD` 同時對應給 Cypress 與 pytest 使用，只需設這 4 個 Secret。
 
 設定位置：
 
