@@ -48,6 +48,8 @@
 
 ### #1 `data-validation.test.py` BASE_URL 寫死
 
+**根本原因：** 獨立程式碼問題（與架構無關）
+
 **問題：** `automation/api/tests/data-validation.test.py` 內有 `BASE_URL = "http://localhost:3000"`，在 CI 或 SIT 環境執行時會連到不存在的位址，測試必然失敗。
 
 **修法：**
@@ -58,17 +60,20 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ---
 
-### #2 Playwright smoke test 沒有 MCP 斷線 fallback
+### #2 框架無運作模式切換，MCP 不可用時全面失效
 
-**問題：** `/playwright-smoke-test` 完全依賴 Playwright MCP。MCP 無法連線時指令直接卡住，沒有任何提示或替代方案。
+**根本原因：** 核心差異「運作模式」缺失（對應 qa-claude-skill 的 full-mcp / partial-mcp / markdown-only 三模式）
 
-**修法：** 在 `.claude/commands/playwright-smoke-test.md` 開頭加入：
+**問題：** 整個框架假設 MCP 工具（Playwright、Google Drive）永遠可用，沒有任何降級機制。具體表現：
+- `/playwright-smoke-test` MCP 斷線時直接卡住，沒有提示
+- 沒有明確說明哪些 command 離線可用、哪些需要 MCP
 
+**修法：**
+1. 在 `.claude/commands/playwright-smoke-test.md` 開頭加入：
 ```
-如果 Playwright MCP 工具無法使用（連線錯誤或工具不存在），
-立即告知使用者「MCP 無法連線，請確認 Claude Code MCP 設定」，
-不要嘗試其他替代操作，直接結束。
+如果 Playwright MCP 工具無法使用，立即告知使用者「MCP 無法連線，請確認 Claude Code MCP 設定」，直接結束。
 ```
+2. 在 CLAUDE.md 加入說明：`/QA-1` 到 `/QA-6` 完全離線可用；`/playwright-smoke-test` 需要 MCP。
 
 ---
 
@@ -100,6 +105,8 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ### #5 `ENGINEERING-TASKS.md` 51 個任務無優先順序
 
+**根本原因：** 獨立執行管理問題（與架構無關）
+
 **問題：** `automation/ENGINEERING-TASKS.md` 列出 51 個待補 `data-testid` 任務，全部平排，沒有依功能風險或測試重要性排序。
 
 **影響：** QA / 工程師不知道先做哪個，高風險功能的 selector 可能遲遲沒有補上。
@@ -112,13 +119,18 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ### #6 Bug 回報只進 GitHub Issues，PM 無法統一查閱
 
+
+**根本原因：** S4（專案綁定，無統一輸出整合）
+
 **問題：** `/QA-bug-report` 將 bug 推到 GitHub Issues。PM 通常不看 GitHub，需要另開系統對照。
 
-**建議：** 參考 qa-claude-skill bug-report skill 的做法，在 `/QA-bug-report` 輸出時同步寫一份 `artifacts/generated/qa/bugs/{bug-id}.md`，並在下次 `npm run sync:sheet` 時一併推到 Google Sheet 的 Bug 頁籤。
+**建議：** 在 `/QA-bug-report` 輸出時同步寫一份 `artifacts/generated/qa/bugs/{bug-id}.md`，並在下次 `npm run sync:sheet` 時一併推到 Google Sheet 的 Bug 頁籤。
 
 ---
 
 ### #7 `progress-bar` BLOCKED 無追蹤機制
+
+**根本原因：** 獨立追蹤缺失問題（與架構無關）
 
 **問題：** `progress-bar` 功能的 `test-cases.json` 因等待 PM 回答而標記 BLOCKED，但沒有任何地方記錄 blocker 是什麼、誰負責解除。
 
@@ -129,15 +141,7 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ---
 
-### #8 沒有 markdown-only 模式
-
-**問題：** 目前框架假設 MCP 工具（Playwright、Google Drive）一定可用。qa-claude-skill 有明確的 `markdown-only` 模式，在工具不可用時仍能產出所有文件產物。
-
-**建議：** 在 CLAUDE.md 加入說明：哪些 command 需要 MCP（`/playwright-smoke-test`）、哪些完全離線可用（`/QA-1` 到 `/QA-6`），讓使用者清楚哪些功能在受限環境下仍可運作。
-
----
-
-### #9 沒有 Preset 設定
+### #8 沒有 Preset 設定
 
 **根本原因：** S4（專案綁定，無可攜框架）
 
@@ -152,14 +156,13 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ## 進度追蹤
 
-| # | 問題 | 優先 | 狀態 |
-|---|------|------|------|
-| 1 | `data-validation.test.py` BASE_URL 寫死 | 🔴 P1 | ❌ 待修 |
-| 2 | Playwright smoke test 無 MCP fallback | 🔴 P1 | ❌ 待修 |
-| 3 | 切換專案後 command 路徑假設不更新 | 🟡 P2 | ❌ 待修 |
-| 4 | Command 檔未模組化，重複邏輯分散 | 🟡 P2 | ❌ 待修 |
-| 5 | ENGINEERING-TASKS.md 無優先排序 | 🟡 P2 | ❌ 待修 |
-| 6 | Bug 回報無 Google Sheet 整合 | 🟢 P3 | ❌ 待修 |
-| 7 | progress-bar BLOCKED 無追蹤機制 | 🟢 P3 | ❌ 待修 |
-| 8 | 沒有 markdown-only 模式說明 | 🟢 P3 | ❌ 待修 |
-| 9 | 沒有政府/醫療場景 Preset | 🟢 P3 | ❌ 待修 |
+| # | 問題 | 根本原因 | 優先 | 狀態 |
+|---|------|---------|------|------|
+| 1 | `data-validation.test.py` BASE_URL 寫死 | 獨立程式碼問題 | 🔴 P1 | ❌ 待修 |
+| 2 | 框架無運作模式切換，MCP 不可用時全面失效 | 運作模式缺失 | 🔴 P1 | ❌ 待修 |
+| 3 | 切換專案後 command 路徑假設不更新 | S1、S3、S4 | 🟡 P2 | ❌ 待修 |
+| 4 | Command 檔未模組化，重複邏輯分散 | S1、S2 | 🟡 P2 | ❌ 待修 |
+| 5 | ENGINEERING-TASKS.md 無優先排序 | 獨立執行管理問題 | 🟡 P2 | ❌ 待修 |
+| 6 | Bug 回報無 Google Sheet 整合 | S4 | 🟢 P3 | ❌ 待修 |
+| 7 | progress-bar BLOCKED 無追蹤機制 | 獨立追蹤缺失 | 🟢 P3 | ❌ 待修 |
+| 8 | 沒有政府/醫療場景 Preset | S4 | 🟢 P3 | ❌ 待修 |
