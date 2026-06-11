@@ -111,7 +111,7 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 **影響：** QA / 工程師不知道先做哪個，高風險功能的 selector 可能遲遲沒有補上。
 
-**修法：** 依 `qa-knowledge/test-strategy.md` 的風險分級，在每個任務前標記 `[🔴 HIGH]` / `[🟡 MED]` / `[🟢 LOW]`，並在檔案頂部按優先序排列。
+**修法：** 依 `qa-knowledge/risk-rules.md` 的風險分級（High / Medium / Low），在每個任務前標記 `[🔴 HIGH]` / `[🟡 MED]` / `[🟢 LOW]`，並在檔案頂部按優先序排列。
 
 ---
 
