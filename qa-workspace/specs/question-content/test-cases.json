@@ -1,0 +1,184 @@
+{
+  "feature": "question-content",
+  "source_spec": "qa-workspace/specs/question-content/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-QCONTENT-001",
+      "requirement_id": "SC-QUESTION-CONTENT-001",
+      "title": "所有年齡層題目不出現帶有「[測試用]」或「[測試警示題]」標記的題目",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統題庫已更新",
+        "施測者已登入"
+      ],
+      "test_data": [
+        "測試年齡層：2M、36M、48M",
+        "需瀏覽所有顯示的題目"
+      ],
+      "steps": [
+        "分別以 2M、36M、48M 個案身分開始測驗",
+        "瀏覽測驗中顯示的所有題目文字",
+        "檢查是否有包含「[測試用]」或「[測試警示題]」文字的題目"
+      ],
+      "expected": [
+        "所有顯示的題目均不包含「[測試用]」標記",
+        "所有顯示的題目均不包含「[測試警示題]」標記"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過 DOM 文字比對實現自動化驗證"
+    },
+    {
+      "id": "TC-QCONTENT-002",
+      "requirement_id": "SC-QUESTION-CONTENT-002",
+      "title": "作答後系統切換至下一題，不重複顯示同一題目",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "施測者已登入並進入測驗頁面",
+        "個案正在進行測驗，目前顯示第 N 題"
+      ],
+      "test_data": [
+        "任意月齡個案",
+        "答題行為：答對或答錯"
+      ],
+      "steps": [
+        "記錄目前題目的題目 ID 或內容",
+        "選擇任一答案完成作答",
+        "觀察系統跳轉至下一題",
+        "比對下一題與前一題是否相同"
+      ],
+      "expected": [
+        "系統顯示與前一題不同的題目",
+        "題目順序正確推進（N → N+1）"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過比對題目 ID 或題目文字實現自動化驗證"
+    },
+    {
+      "id": "TC-QCONTENT-003",
+      "requirement_id": "SC-QUESTION-CONTENT-003",
+      "title": "48M 個案可正常開始測驗，不顯示題目不足錯誤",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統 48M 年齡層題庫已補足",
+        "施測者已登入"
+      ],
+      "test_data": [
+        "個案月齡：48M"
+      ],
+      "steps": [
+        "選擇 48M 年齡層個案",
+        "點擊「開始測驗」",
+        "觀察系統是否正常進入測驗頁面"
+      ],
+      "expected": [
+        "測驗正常啟動，進入第一題頁面",
+        "不顯示「無法開始測驗：題目不足」或類似錯誤訊息"
+      ],
+      "automation_candidate": true,
+      "notes": ""
+    },
+    {
+      "id": "TC-QCONTENT-004",
+      "requirement_id": "SC-QUESTION-CONTENT-004",
+      "title": "60M 個案可正常開始測驗，不顯示題目不足錯誤",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統 60M 年齡層題庫已補足",
+        "施測者已登入"
+      ],
+      "test_data": [
+        "個案月齡：60M"
+      ],
+      "steps": [
+        "選擇 60M 年齡層個案",
+        "點擊「開始測驗」",
+        "觀察系統是否正常進入測驗頁面"
+      ],
+      "expected": [
+        "測驗正常啟動，進入第一題頁面",
+        "不顯示「無法開始測驗：題目不足」或類似錯誤訊息"
+      ],
+      "automation_candidate": true,
+      "notes": ""
+    },
+    {
+      "id": "TC-QCONTENT-005",
+      "requirement_id": "SC-QUESTION-CONTENT-005",
+      "title": "72M 個案可正常開始測驗，不顯示題目不足錯誤",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "系統 72M 年齡層題庫已補足",
+        "施測者已登入"
+      ],
+      "test_data": [
+        "個案月齡：72M"
+      ],
+      "steps": [
+        "選擇 72M 年齡層個案",
+        "點擊「開始測驗」",
+        "觀察系統是否正常進入測驗頁面"
+      ],
+      "expected": [
+        "測驗正常啟動，進入第一題頁面",
+        "不顯示「無法開始測驗：題目不足」或類似錯誤訊息"
+      ],
+      "automation_candidate": true,
+      "notes": ""
+    },
+    {
+      "id": "TC-QCONTENT-006",
+      "requirement_id": "SC-QUESTION-CONTENT-006",
+      "title": "答對後顯示正向鼓勵文字，不出現「答對了」字樣",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "施測者已登入並進入測驗頁面",
+        "個案正在進行測驗"
+      ],
+      "test_data": [
+        "任意月齡個案",
+        "答題行為：答對"
+      ],
+      "steps": [
+        "在測驗中選擇正確答案",
+        "觀察系統顯示的回饋文字或圖示"
+      ],
+      "expected": [
+        "系統顯示正向鼓勵文字（如「太棒了」「很棒」）或按讚圖示",
+        "不出現「答對了」字樣"
+      ],
+      "automation_candidate": false,
+      "notes": "需要人工確認文字與圖示是否符合正向鼓勵設計，不適合純自動化"
+    },
+    {
+      "id": "TC-QCONTENT-007",
+      "requirement_id": "SC-QUESTION-CONTENT-007",
+      "title": "答錯後顯示正向鼓勵文字，不出現「答錯了」字樣",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "施測者已登入並進入測驗頁面",
+        "個案正在進行測驗"
+      ],
+      "test_data": [
+        "任意月齡個案",
+        "答題行為：答錯"
+      ],
+      "steps": [
+        "在測驗中選擇錯誤答案",
+        "觀察系統顯示的回饋文字或圖示"
+      ],
+      "expected": [
+        "系統顯示正向鼓勵文字（如「太棒了」「很棒」）或按讚圖示",
+        "不出現「答錯了」字樣"
+      ],
+      "automation_candidate": false,
+      "notes": "需要人工確認文字與圖示是否符合正向鼓勵設計，不適合純自動化"
+    }
+  ]
+}

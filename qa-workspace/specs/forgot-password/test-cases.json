@@ -1,0 +1,54 @@
+{
+  "feature": "forgot-password",
+  "source_spec": "qa-workspace/specs/forgot-password/spec.md",
+  "test_cases": [
+    {
+      "id": "TC-FORGOT-PASSWORD-001",
+      "requirement_id": "SC-FORGOT-PASSWORD-001",
+      "title": "忘記密碼入口導向正確",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": ["使用者位於登入頁"],
+      "steps": ["點擊忘記密碼入口"],
+      "expected": ["系統進入忘記密碼流程"],
+      "automation_candidate": true,
+      "notes": "導向 URL 或頁面狀態需依 PM Answer 確認。"
+    },
+    {
+      "id": "TC-FORGOT-PASSWORD-002",
+      "requirement_id": "SC-FORGOT-PASSWORD-002",
+      "title": "忘記密碼未輸入 Email 時提示必填",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": ["使用者位於忘記密碼頁"],
+      "steps": ["保留 Email 欄位空白", "送出申請"],
+      "expected": ["系統提示 Email 為必填"],
+      "automation_candidate": true,
+      "notes": "提示文案需依 PM Answer 確認。"
+    },
+    {
+      "id": "TC-FORGOT-PASSWORD-003",
+      "requirement_id": "SC-FORGOT-PASSWORD-003",
+      "title": "忘記密碼輸入錯誤 Email 格式時提示錯誤",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": ["使用者位於忘記密碼頁"],
+      "steps": ["輸入格式錯誤的 Email", "送出申請"],
+      "expected": ["系統提示 Email 格式錯誤"],
+      "automation_candidate": true,
+      "notes": "錯誤格式樣本與文案需依 PM Answer 確認。"
+    },
+    {
+      "id": "TC-FORGOT-PASSWORD-004",
+      "requirement_id": "SC-FORGOT-PASSWORD-004",
+      "title": "忘記密碼輸入有效 Email 後送出通知",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": ["使用者位於忘記密碼頁", "測試 Email 可用"],
+      "steps": ["輸入有效 Email", "送出申請"],
+      "expected": ["系統提示已送出密碼重設通知"],
+      "automation_candidate": true,
+      "notes": "是否實際驗證信件送達需依測試環境能力決定。"
+    }
+  ]
+}

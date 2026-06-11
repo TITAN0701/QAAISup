@@ -1,0 +1,82 @@
+{
+  "feature": "data-validation",
+  "source_spec": "qa-workspace/specs/data-validation/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-DATAVAL-001",
+      "requirement_id": "SC-DATA-VALIDATION-001",
+      "title": "身分證字號第二碼為「1」（男性）時驗證通過",
+      "type": "api",
+      "priority": "medium",
+      "preconditions": [
+        "系統身分證驗證規則已實作",
+        "測試環境 API 可正常呼叫"
+      ],
+      "test_data": [
+        "身分證字號：A123456789（第二碼為 1，男性）"
+      ],
+      "steps": [
+        "呼叫身分證驗證 API 或於表單輸入第二碼為「1」的身分證字號",
+        "送出驗證請求",
+        "觀察系統回應"
+      ],
+      "expected": [
+        "驗證通過",
+        "系統接受此身分證字號"
+      ],
+      "automation_candidate": true,
+      "notes": "可使用 pytest 呼叫驗證 API 實現自動化"
+    },
+    {
+      "id": "TC-DATAVAL-002",
+      "requirement_id": "SC-DATA-VALIDATION-002",
+      "title": "身分證字號第二碼為「2」（女性）時驗證通過",
+      "type": "api",
+      "priority": "medium",
+      "preconditions": [
+        "系統身分證驗證規則已實作",
+        "測試環境 API 可正常呼叫"
+      ],
+      "test_data": [
+        "身分證字號：A223456789（第二碼為 2，女性）"
+      ],
+      "steps": [
+        "呼叫身分證驗證 API 或於表單輸入第二碼為「2」的身分證字號",
+        "送出驗證請求",
+        "觀察系統回應"
+      ],
+      "expected": [
+        "驗證通過",
+        "系統接受此身分證字號"
+      ],
+      "automation_candidate": true,
+      "notes": "可使用 pytest 呼叫驗證 API 實現自動化"
+    },
+    {
+      "id": "TC-DATAVAL-003",
+      "requirement_id": "SC-DATA-VALIDATION-003",
+      "title": "身分證字號第二碼非「1」或「2」時驗證失敗",
+      "type": "api",
+      "priority": "medium",
+      "preconditions": [
+        "系統身分證驗證規則已實作",
+        "測試環境 API 可正常呼叫"
+      ],
+      "test_data": [
+        "身分證字號：A323456789（第二碼為 3）",
+        "身分證字號：A023456789（第二碼為 0）"
+      ],
+      "steps": [
+        "呼叫身分證驗證 API 或於表單輸入第二碼為「3」的身分證字號",
+        "送出驗證請求",
+        "觀察系統回應"
+      ],
+      "expected": [
+        "系統顯示驗證錯誤訊息",
+        "不接受此身分證字號"
+      ],
+      "automation_candidate": true,
+      "notes": "可使用 pytest 呼叫驗證 API 實現自動化，建議測試多個非 1/2 的值"
+    }
+  ]
+}

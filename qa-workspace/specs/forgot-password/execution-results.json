@@ -1,0 +1,108 @@
+{
+  "feature": "forgot-password",
+  "source_test_cases": "qa-workspace/specs/forgot-password/test-cases.json",
+  "scenario_reviews": [
+    {
+      "scenario_id": "SC-FORGOT-PASSWORD-001",
+      "status": "Approved",
+      "notes": "需確認忘記密碼入口導向規則。"
+    },
+    {
+      "scenario_id": "SC-FORGOT-PASSWORD-002",
+      "status": "Approved",
+      "notes": "需確認 Email 必填錯誤文案。"
+    },
+    {
+      "scenario_id": "SC-FORGOT-PASSWORD-003",
+      "status": "Approved",
+      "notes": "需確認 Email 格式錯誤文案。"
+    },
+    {
+      "scenario_id": "SC-FORGOT-PASSWORD-004",
+      "status": "Approved",
+      "notes": "需確認通知送出後的畫面文案或狀態。"
+    }
+  ],
+  "test_results": [
+    {
+      "test_case_id": "TC-FORGOT-PASSWORD-001",
+      "platform": "",
+      "status": "Not Run",
+      "executed_at": "",
+      "test_url": "",
+      "evidence": "",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-FORGOT-PASSWORD-001",
+      "platform": "Desktop / Win Chrome",
+      "status": "Pass",
+      "test_url": "",
+      "evidence": "",
+      "notes": "",
+      "executed_at": "2026-05-30T15:00:59+08:00",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-FORGOT-PASSWORD-002",
+      "platform": "",
+      "status": "Not Run",
+      "executed_at": "",
+      "test_url": "",
+      "evidence": "",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-FORGOT-PASSWORD-002",
+      "platform": "Desktop / Win Chrome",
+      "status": "Pass",
+      "test_url": "",
+      "evidence": "",
+      "notes": "",
+      "executed_at": "2026-05-30T15:00:59+08:00",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-FORGOT-PASSWORD-003",
+      "platform": "",
+      "status": "Not Run",
+      "executed_at": "",
+      "test_url": "",
+      "evidence": "",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-FORGOT-PASSWORD-003",
+      "platform": "Desktop / Win Chrome",
+      "status": "Pass",
+      "test_url": "",
+      "evidence": "",
+      "notes": "",
+      "executed_at": "2026-05-30T15:00:59+08:00",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-FORGOT-PASSWORD-004",
+      "platform": "",
+      "status": "Not Run",
+      "executed_at": "",
+      "test_url": "",
+      "evidence": "",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-FORGOT-PASSWORD-004",
+      "platform": "Desktop / Win Chrome",
+      "status": "Pass",
+      "test_url": "",
+      "evidence": "",
+      "notes": "",
+      "executed_at": "2026-05-30T15:00:59+08:00",
+      "screenshot": ""
+    }
+  ]
+}

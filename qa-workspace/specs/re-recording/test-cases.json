@@ -1,0 +1,102 @@
+{
+  "feature": "re-recording",
+  "source_spec": "qa-workspace/specs/re-recording/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-REREC-001",
+      "requirement_id": "SC-RE-RECORDING-001",
+      "title": "重新錄製完成第一個模組後系統繼續引導進行下一個待補錄模組",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案有多個待補錄影片模組",
+        "使用者已從「檢測紀錄」進入「重新錄製」流程"
+      ],
+      "test_data": [
+        "個案：Lala 41M，有多個待補錄模組"
+      ],
+      "steps": [
+        "從「檢測紀錄」進入「重新錄製」",
+        "完成第一個模組的錄製與上傳",
+        "觀察系統是否繼續引導進行下一個待補錄模組"
+      ],
+      "expected": [
+        "系統繼續引導使用者進行下一個待補錄模組",
+        "流程不中斷"
+      ],
+      "automation_candidate": false,
+      "notes": "需等待上傳完成，涉及外部非同步行為"
+    },
+    {
+      "id": "TC-REREC-002",
+      "requirement_id": "SC-RE-RECORDING-002",
+      "title": "重新錄製完成後不觸發圖卡配對或評測結果頁面",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "使用者已從「檢測紀錄」進入「重新錄製」流程"
+      ],
+      "test_data": [
+        "操作：完成一個影片模組的重新錄製"
+      ],
+      "steps": [
+        "進入重新錄製流程，完成一個影片模組的錄製",
+        "觀察系統下一步顯示的頁面"
+      ],
+      "expected": [
+        "系統不彈出圖卡配對頁面",
+        "系統不顯示評測結果頁面",
+        "流程直接繼續錄製下一個待補錄模組"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過 URL 或頁面 DOM 標題驗證跳轉目標"
+    },
+    {
+      "id": "TC-REREC-003",
+      "requirement_id": "SC-RE-RECORDING-003",
+      "title": "所有待補錄模組完成後系統顯示完成提示",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "使用者進入重新錄製流程，有 3 個待補錄模組"
+      ],
+      "test_data": [
+        "待補錄模組數量：3 個"
+      ],
+      "steps": [
+        "依序完成所有 3 個待補錄模組的錄製",
+        "觀察系統在最後一個模組完成後的顯示"
+      ],
+      "expected": [
+        "系統顯示「已完成所有補錄」或類似完成提示",
+        "重新錄製流程正常結束"
+      ],
+      "automation_candidate": false,
+      "notes": "需等待所有上傳完成"
+    },
+    {
+      "id": "TC-REREC-004",
+      "requirement_id": "SC-RE-RECORDING-004",
+      "title": "重新錄製中途中斷後再次進入可繼續剩餘模組，無需重頭開始",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "使用者已在重新錄製流程中完成部分模組後離開"
+      ],
+      "test_data": [
+        "情境：完成 1/3 模組後中途離開"
+      ],
+      "steps": [
+        "進入重新錄製，完成部分模組後離開系統",
+        "再次從「檢測紀錄」進入「重新錄製」",
+        "觀察系統顯示的待補錄模組清單"
+      ],
+      "expected": [
+        "系統顯示剩餘未完成的待補錄模組",
+        "不需要重頭開始所有模組"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過中途中斷並重新進入來驗證狀態保留"
+    }
+  ]
+}

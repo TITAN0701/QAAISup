@@ -1,0 +1,157 @@
+{
+  "feature": "video-recording",
+  "source_spec": "qa-workspace/specs/video-recording/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-VIDEO-001",
+      "requirement_id": "SC-VIDEO-RECORDING-001",
+      "title": "錄製時長不足時系統彈出提醒訊息",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "使用者已登入並進入影片錄製頁面"
+      ],
+      "test_data": [
+        "最低錄製時長要求：15 秒",
+        "實際錄製時長：不足 15 秒"
+      ],
+      "steps": [
+        "進入影片錄製頁面",
+        "開始錄製",
+        "在錄製時長少於 15 秒時停止錄製",
+        "觀察系統是否彈出提醒訊息"
+      ],
+      "expected": [
+        "系統彈出提醒訊息，告知錄製時長不足"
+      ],
+      "automation_candidate": false,
+      "notes": "涉及媒體裝置操作，需評估測試環境是否支援模擬錄製時長"
+    },
+    {
+      "id": "TC-VIDEO-002",
+      "requirement_id": "SC-VIDEO-RECORDING-002",
+      "title": "錄製時長不足時提醒訊息中提供「重新錄製」按鈕",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "使用者已完成錄製但時長不足",
+        "系統顯示時長不足提醒訊息"
+      ],
+      "test_data": [
+        "最低錄製時長要求：15 秒",
+        "實際錄製時長：不足 15 秒"
+      ],
+      "steps": [
+        "完成不足最低時長的錄製",
+        "等待系統彈出提醒訊息",
+        "確認提醒訊息中是否包含「重新錄製」按鈕",
+        "點擊「重新錄製」按鈕，確認可重新錄製"
+      ],
+      "expected": [
+        "提醒訊息中包含「重新錄製」按鈕",
+        "點擊後可重新開始錄製流程"
+      ],
+      "automation_candidate": false,
+      "notes": "需與 TC-VIDEO-001 搭配執行"
+    },
+    {
+      "id": "TC-VIDEO-003",
+      "requirement_id": "SC-VIDEO-RECORDING-003",
+      "title": "未達最低錄製時長前「結束錄製」按鈕不可點擊",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "使用者已登入並進入影片錄製頁面",
+        "頁面提示最低錄製時長（15 秒）"
+      ],
+      "test_data": [
+        "最低錄製時長：15 秒",
+        "嘗試結束時機：錄製開始後 5 秒"
+      ],
+      "steps": [
+        "進入影片錄製頁面，確認最低時長提示",
+        "開始錄製",
+        "在錄製 5 秒時觀察「結束錄製」按鈕狀態",
+        "嘗試點擊「結束錄製」按鈕"
+      ],
+      "expected": [
+        "「結束錄製」按鈕為不可點擊狀態（disabled）",
+        "或系統顯示阻止訊息，不允許提早結束"
+      ],
+      "automation_candidate": false,
+      "notes": "需模擬錄製環境與計時器行為"
+    },
+    {
+      "id": "TC-VIDEO-004",
+      "requirement_id": "SC-VIDEO-RECORDING-004",
+      "title": "AI 模組影片錄製 1~2 秒時系統阻止提早結束",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "使用者已登入並進入 AI 模組影片錄製頁面"
+      ],
+      "test_data": [
+        "模組類型：AI 模組",
+        "嘗試結束時機：錄製 1~2 秒後"
+      ],
+      "steps": [
+        "進入 AI 模組的影片錄製頁面",
+        "開始錄製",
+        "在 1~2 秒內嘗試結束錄製或上傳",
+        "觀察系統是否阻止"
+      ],
+      "expected": [
+        "系統阻止提早結束錄製",
+        "不允許如此短暫的錄製完成上傳"
+      ],
+      "automation_candidate": false,
+      "notes": "需模擬 AI 模組錄製環境"
+    },
+    {
+      "id": "TC-VIDEO-005",
+      "requirement_id": "SC-VIDEO-RECORDING-005",
+      "title": "大肢體模組錄製頁面顯示「超過 30 秒，最多 60 秒」說明文字",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "使用者已登入並進入大肢體模組影片錄製頁面"
+      ],
+      "test_data": [
+        "模組類型：大肢體模組"
+      ],
+      "steps": [
+        "進入大肢體模組的影片錄製頁面",
+        "查看頁面上的錄製說明文字"
+      ],
+      "expected": [
+        "頁面顯示「超過 30 秒，最多 60 秒」說明文字",
+        "不出現其他版本的說明文字"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過 DOM 文字比對實現自動化驗證"
+    },
+    {
+      "id": "TC-VIDEO-006",
+      "requirement_id": "SC-VIDEO-RECORDING-006",
+      "title": "走路側面模組錄製頁面顯示「超過 15 秒」說明文字",
+      "type": "e2e",
+      "priority": "medium",
+      "preconditions": [
+        "使用者已登入並進入走路側面模組影片錄製頁面"
+      ],
+      "test_data": [
+        "模組類型：走路側面模組"
+      ],
+      "steps": [
+        "進入走路側面模組的影片錄製頁面",
+        "查看頁面上的錄製說明文字"
+      ],
+      "expected": [
+        "頁面顯示「超過 15 秒」說明文字",
+        "不出現「超過 5 秒」或「超過 30 秒」等錯誤版本"
+      ],
+      "automation_candidate": true,
+      "notes": "可透過 DOM 文字比對實現自動化驗證"
+    }
+  ]
+}

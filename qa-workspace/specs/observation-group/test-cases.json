@@ -1,0 +1,112 @@
+{
+  "feature": "observation-group",
+  "source_spec": "qa-workspace/specs/observation-group/scenarios.md",
+  "test_cases": [
+    {
+      "id": "TC-OBSERVE-001",
+      "requirement_id": "SC-OBSERVATION-GROUP-001",
+      "title": "超過 15M 個案完成 AI 模組後可正常跳轉至觀察題組",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案月齡 > 15M",
+        "個案已完成 AI 模組影片錄製與上傳",
+        "施測者已登入"
+      ],
+      "test_data": [
+        "個案月齡：24M（或其他 > 15M 的月齡）"
+      ],
+      "steps": [
+        "以超過 15M 個案身分進行測驗，完成 AI 模組",
+        "點擊「下一題」",
+        "觀察系統跳轉目標"
+      ],
+      "expected": [
+        "系統正確跳轉至觀察題組",
+        "不出現無反應或錯誤畫面"
+      ],
+      "automation_candidate": false,
+      "notes": "需等待 AI 模組上傳完成，為外部非同步行為"
+    },
+    {
+      "id": "TC-OBSERVE-002",
+      "requirement_id": "SC-OBSERVATION-GROUP-002",
+      "title": "24M 個案完成 AI 模組後進入 24M 對應的觀察題組",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案月齡：24M",
+        "個案已完成 AI 模組",
+        "施測者已登入"
+      ],
+      "test_data": [
+        "個案月齡：24M",
+        "預期觀察題組：24M 對應題組"
+      ],
+      "steps": [
+        "以 24M 個案身分完成 AI 模組",
+        "點擊「下一題」",
+        "確認跳轉的觀察題組年齡層"
+      ],
+      "expected": [
+        "系統進入 24M 對應的觀察題組",
+        "不進入僅 15M 的題目或其他錯誤年齡層題組"
+      ],
+      "automation_candidate": false,
+      "notes": "需人工確認觀察題組的年齡層標示"
+    },
+    {
+      "id": "TC-OBSERVE-003",
+      "requirement_id": "SC-OBSERVATION-GROUP-003",
+      "title": "AI 模組完成後點擊「下一題」直接進入觀察題組，無需點「取消」",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案已完成 AI 模組",
+        "施測者未執行任何取消操作"
+      ],
+      "test_data": [
+        "個案月齡：39M",
+        "操作：直接點擊「下一題」"
+      ],
+      "steps": [
+        "以 39M 個案身分完成 AI 模組",
+        "不點擊「取消」，直接點擊「下一題」",
+        "觀察系統是否進入觀察題組"
+      ],
+      "expected": [
+        "系統直接進入觀察題組",
+        "無需先點「取消」再重新開始"
+      ],
+      "automation_candidate": false,
+      "notes": "針對已修正 bug 的回歸驗證"
+    },
+    {
+      "id": "TC-OBSERVE-004",
+      "requirement_id": "SC-OBSERVATION-GROUP-004",
+      "title": "重新進入觀察題組時系統保留已完成的 AI 模組結果，無需重錄",
+      "type": "e2e",
+      "priority": "high",
+      "preconditions": [
+        "個案已完成 AI 模組",
+        "個案進入觀察題組後發生問題並取消"
+      ],
+      "test_data": [
+        "個案：已完成 AI 模組但觀察題組中途取消"
+      ],
+      "steps": [
+        "完成 AI 模組錄製",
+        "進入觀察題組後取消",
+        "再次嘗試進入觀察題組",
+        "觀察系統是否要求重新錄製 AI 模組"
+      ],
+      "expected": [
+        "系統保留已完成的 AI 模組結果",
+        "不需要重新錄製 AI 模組影片",
+        "直接進入觀察題組"
+      ],
+      "automation_candidate": false,
+      "notes": "需模擬觀察題組中途取消的情境"
+    }
+  ]
+}

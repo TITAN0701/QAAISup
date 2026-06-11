@@ -1,0 +1,26 @@
+# QA/AI Questions for PM: 觀察題組
+
+## Need Clarification
+
+1. Issue #20、#21：AI→觀察題組的流程修正，是否已覆蓋所有年齡層？還是只有特定年齡層已修正？
+   - Impact: 影響測試需要覆蓋的年齡層範圍。
+   - PM Answer:
+
+2. Issue #21：「保留已完成的 AI 模組結果」，若使用者中途離開再回來，AI 模組結果的保留機制是什麼？有時間限制嗎？
+   - Impact: 影響中途中斷後回來的測試情境設計。
+   - PM Answer:
+
+3. 觀察題組的題目數量依年齡層是否不同？各年齡層各有幾題？
+   - Impact: 影響測試流程步驟數與完整度驗證。
+   - PM Answer:
+
+4. 觀察題組的答題方式為何（選擇題、是/否題還是其他形式）？
+   - Impact: 影響自動化測試的操作設計。
+   - PM Answer:
+
+## Confirmed Decisions
+
+- Source: pm-inbox/issue-tracking-0507.md
+- Issue #20、#21 狀態均為「已完成」，待 QA 驗證。
+- 修正範圍：所有年齡層在 AI 模組完成後可正確進入觀察題組。
+- AI 模組結果保留，不需重做。
