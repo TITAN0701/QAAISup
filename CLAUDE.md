@@ -140,7 +140,26 @@ docs/                        # 架構、協作、環境設定文件
 - **產出格式以參考來源為準**（如 qa-claude-skill），不自行發明新欄位
 - **有疑問先問，不要假設**：不確定是否該加某個東西時，先詢問使用者確認
 - **對話過程中只執行使用者明確說的事**：不把討論中的想法、建議或分析自動實作進去，除非使用者明確說「請做」或「幫我加」
-- **每次對話開始時必須讀取 memory**：路徑 `C:\Users\suppo\.claude\projects\c--Users-suppo-Desktop-QAAI--\memory\MEMORY.md`，根據內容了解專案現況與過去決策，不需使用者提醒
+- **每次對話開始時必須讀取本專案的 memory**：從 Claude Code 的專案 memory 目錄讀取 `MEMORY.md`（路徑由系統自動提供，不需寫死）。根據內容了解專案現況與過去決策，讀取失敗時不需提示使用者，直接繼續。
+
+## Git 高風險指令絕對限制
+
+以下指令**執行前必須先備份，且必須列出將要執行的完整指令讓使用者確認，不得直接執行**：
+
+- `git filter-repo`（任何參數組合）
+- `git push --force` / `git push -f`
+- `git reset --hard`
+- `git rebase`（改寫歷史模式）
+- `git clean -f` / `git clean -fd`
+- 任何會**改寫 commit 歷史**或**刪除工作目錄檔案**的指令
+
+**備份流程（每次執行上述指令前強制執行）：**
+```powershell
+# 建立 zip 備份
+Compress-Archive -Path "c:\Users\abc86\Desktop\QAAISup" -DestinationPath "c:\Users\abc86\Desktop\QAAISup-backup-$(Get-Date -Format 'yyyyMMdd-HHmm').zip" -Exclude "*/node_modules/*"
+```
+
+**特別禁止**：`git filter-repo --path <單一路徑> --replace-text` 組合使用 — 這會刪除所有其他檔案。正確用法只用 `--replace-text`，不加 `--path`。
 
 ---
 
