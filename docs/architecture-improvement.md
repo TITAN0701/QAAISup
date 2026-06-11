@@ -31,6 +31,19 @@
 
 ---
 
+## 整體架構結構差異（撇除功能）
+
+這四個結構差距是下方所有問題的根本原因：
+
+| # | 結構差距 | QAAISup 現況 | qa-claude-skill 做法 | 對應問題 |
+|---|---------|-------------|---------------------|---------|
+| S1 | **Skill 自包含 vs 分散** | command 依賴 `qa-knowledge/`、CLAUDE.md、.env 三處才能完整運作，沒有單一入口 | 每個 skill 目錄內包含所有需要的東西，自給自足 | #3、#4 |
+| S2 | **平鋪 vs 層次結構** | 16 個 command .md 全部同一層，沒有層次 | 明確三層：`config → modules → skill` | #4 |
+| S3 | **輸入輸出定義分離** | 每個 command 的 Input/Output 定義在 CLAUDE.md 流程圖，和 command 檔是兩個地方 | Input/Output 定義在 SKILL.md 內，和指令放在一起 | #3 |
+| S4 | **專案綁定 vs 可攜框架** | 框架和專案內容混在一起，無法拆出重用於其他系統 | 設計為可安裝到任何專案的獨立框架（install.ps1） | #3、#9 |
+
+---
+
 ## P1 — 立即修復
 
 ### #1 `data-validation.test.py` BASE_URL 寫死
@@ -63,21 +76,25 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ### #3 切換專案後 command 檔內容不會自動更新
 
-**問題：** 16 個 `.claude/commands/*.md` 檔內部有硬寫的路徑假設（如 `qa-workspace/specs/{feature}/`）。`/project-init` 執行後只更新 `.env` 和 `CLAUDE.md`，command 檔的邏輯不會跟著改。
+**根本原因：** S1（分散）、S3（輸入輸出分離）、S4（專案綁定）
 
-**影響：** 換專案後 slash command 的行為可能與新專案結構不符。
+**問題：** 16 個 `.claude/commands/*.md` 內部硬寫路徑假設（如 `qa-workspace/specs/{feature}/`）。`/project-init` 只更新 `.env` 和 `CLAUDE.md`，command 邏輯不會跟著改。
 
-**建議方向：** 參考 qa-claude-skill 的 `config.json` 設計，讓 command 讀取統一設定，而非在每個 command 檔重複寫死假設。短期先在 `CLAUDE.md` 的 project-init 步驟加上「確認 command 路徑假設與新專案一致」的提醒。
+**影響：** 換專案後 slash command 行為可能與新專案結構不符。
+
+**修法：** 建立 `config.json` 集中管理路徑與專案設定，讓 command 讀取 config 而非硬寫假設；`/project-init` 只需更新 config.json 一個檔案。
 
 ---
 
 ### #4 Command 檔未模組化，重複邏輯分散
 
-**問題：** 16 個 command 中有重複的邏輯（如登入流程假設、錯誤處理方式、路徑規則），各自維護，改一處不會自動同步。
+**根本原因：** S1（分散）、S2（平鋪）
+
+**問題：** 16 個 command 有重複邏輯（登入流程假設、錯誤處理、路徑規則），各自維護，改一處不同步。
 
 **影響：** command 行為不一致，維護成本高。
 
-**修法：** 建立 `.claude/modules/` 目錄，將共用邏輯抽出為獨立 `.md` 檔（如 `login-flow.md`、`error-handling.md`），在各 command 開頭加入「先讀 `.claude/modules/xxx.md`」指示。
+**修法：** 建立 `.claude/modules/` 目錄，共用邏輯抽出為獨立 `.md`，各 command 開頭加「先讀 `.claude/modules/xxx.md`」指示 AI 載入。
 
 ---
 
@@ -122,9 +139,11 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ### #9 沒有 Preset 設定
 
-**問題：** 切換到新專案（`/project-init`）時，所有設定都要從頭填入，沒有針對「政府/醫療」場景的預設值。
+**根本原因：** S4（專案綁定，無可攜框架）
 
-**建議：** 參考 qa-claude-skill 的 `government.json` preset，在 `scripts/project-init.ps1` 加入「醫療/政府合規」選項，預設啟用：
+**問題：** 切換到新專案時所有設定從頭填入，沒有醫療/政府場景的預設值。
+
+**建議：** 參考 qa-claude-skill 的 `government.json` preset，建立 `config/presets/medical-gov.json`，預設啟用：
 - 4 大瀏覽器支援
 - WCAG AA 無障礙要求
 - 所有產出留存 `.md` 可審計格式
