@@ -1,10 +1,7 @@
 {
-  "admin": {
-    "email": "REDACTED_EMAIL",
-    "password": "REDACTED_PASSWORD"
-  },
-  "regular_user": {
-    "email": "REDACTED_EMAIL",
-    "password": "REDACTED_PASSWORD"
+  "_note": "Do not store real credentials here. Use CYPRESS_TEST_USER_EMAIL and CYPRESS_TEST_USER_PASSWORD env vars instead.",
+  "disabled_user": {
+    "email": "set_via_env",
+    "password": "set_via_env"
   }
 }
