@@ -247,7 +247,7 @@ TEST_ENV=staging
 
 ---
 
-## 功能狀態快照（2026-06-09）
+## 功能狀態快照（2026-06-11）
 
 | 功能 | spec | questions | scenarios | test-cases | .cy.ts |
 |------|:----:|:---------:|:---------:|:----------:|:------:|
@@ -259,11 +259,11 @@ TEST_ENV=staging
 | card-matching | ✅ | ✅ | ✅ | ✅ | ✅ |
 | video-recording | ✅ | ✅ | ✅ | ✅ | ✅ |
 | verbal-expression | ✅ | ✅ | ✅ | ✅ | ✅ |
-| observation-group | ✅ | ✅ | ✅ | ✅ | ❌ |
+| observation-group | ✅ | ✅ | ✅ | ✅ | ✅ |
 | handwriting-recognition | ✅ | ✅ | ✅ | ✅ | ✅ |
 | gait-analysis | ✅ | ✅ | ✅ | ✅ | ✅ |
 | re-recording | ✅ | ✅ | ✅ | ✅ | ✅ |
 | account-register | ✅ | ✅ | ✅ | ✅ | ✅ |
-| data-validation | ✅ | ✅ | ✅ | ✅ | ❌ |
+| data-validation | ✅ | ✅ | ✅ | ✅ | ✅ |
 | admin-backend | ✅ | ✅ | ✅ | ✅ | ✅ |
 | progress-bar | ✅ | ✅ | ✅ | ❌ BLOCKED | ❌ |
