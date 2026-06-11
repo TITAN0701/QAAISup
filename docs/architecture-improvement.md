@@ -11,7 +11,7 @@
 |------|-------------|---------------------|------|
 | **設定系統** | 無 `config.json`，設定散落在 CLAUDE.md、.env、各 command 檔 | 單一 `config.json`（有 schema 驗證），含 JIRA/Slack/Google 設定 | 切換專案要改多個檔案，容易遺漏 |
 | **運作模式** | 假設 MCP 一定可用，沒有 fallback | 三模式：`full-mcp` / `partial-mcp` / `markdown-only` | MCP 無法連線時 command 會卡住 |
-| **Skill 結構** | 單一大型 `.md` 檔，全部邏輯塞在一起 | 每個 skill 有 `SKILL.md` + `modules/config-loader.md` + `modules/markdown-fallback.md` | AI 每次讀取整個 command，token 浪費 |
+| **Skill 結構** | 單一大型 `.md` 檔，全部邏輯塞在一起，重複邏輯分散在各 command | 每個 skill 有 `SKILL.md` + `modules/config-loader.md` + `modules/markdown-fallback.md` | 可透過在 command 內指示 AI 讀取 `.claude/modules/` 實現模組化，目前未導入 |
 | **JIRA 整合** | 無 | 原生支援：建 bug ticket、設 reviewer、對應優先級 | Bug 只能推 GitHub Issues，PM 要另外看 |
 | **通知機制** | 無 | Slack / Telegram：測試失敗時自動通知 | 測試結果只能手動查 |
 | **Preset 設定** | 無（每次從頭設定） | government / enterprise / startup preset JSON | 換專案要重新設定所有參數 |
@@ -23,6 +23,7 @@
 | 功能 | 建議 | 說明 |
 |------|------|------|
 | `config.json` + schema | ✅ 值得 | 讓 `/project-init` 真正一鍵切換 |
+| Skill 模組化（`.claude/modules/`） | ✅ 值得 | command 內指示 AI 讀取共用模組，消除 16 個 command 的重複邏輯 |
 | `markdown-fallback` module | ✅ 值得 | 防止 MCP 斷線讓 smoke test 卡死 |
 | government preset | ✅ 值得 | 醫療/政府場景的預設設定直接可用 |
 | JIRA 整合 | ⏸ 暫緩 | 目前用 GitHub Issues 已足夠 |
@@ -70,7 +71,17 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ---
 
-### #4 `ENGINEERING-TASKS.md` 51 個任務無優先順序
+### #4 Command 檔未模組化，重複邏輯分散
+
+**問題：** 16 個 command 中有重複的邏輯（如登入流程假設、錯誤處理方式、路徑規則），各自維護，改一處不會自動同步。
+
+**影響：** command 行為不一致，維護成本高。
+
+**修法：** 建立 `.claude/modules/` 目錄，將共用邏輯抽出為獨立 `.md` 檔（如 `login-flow.md`、`error-handling.md`），在各 command 開頭加入「先讀 `.claude/modules/xxx.md`」指示。
+
+---
+
+### #5 `ENGINEERING-TASKS.md` 51 個任務無優先順序
 
 **問題：** `automation/ENGINEERING-TASKS.md` 列出 51 個待補 `data-testid` 任務，全部平排，沒有依功能風險或測試重要性排序。
 
@@ -82,7 +93,7 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ## P3 — 長期優化
 
-### #5 Bug 回報只進 GitHub Issues，PM 無法統一查閱
+### #6 Bug 回報只進 GitHub Issues，PM 無法統一查閱
 
 **問題：** `/QA-bug-report` 將 bug 推到 GitHub Issues。PM 通常不看 GitHub，需要另開系統對照。
 
@@ -90,7 +101,7 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ---
 
-### #6 `progress-bar` BLOCKED 無追蹤機制
+### #7 `progress-bar` BLOCKED 無追蹤機制
 
 **問題：** `progress-bar` 功能的 `test-cases.json` 因等待 PM 回答而標記 BLOCKED，但沒有任何地方記錄 blocker 是什麼、誰負責解除。
 
@@ -101,7 +112,7 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ---
 
-### #7 沒有 markdown-only 模式
+### #8 沒有 markdown-only 模式
 
 **問題：** 目前框架假設 MCP 工具（Playwright、Google Drive）一定可用。qa-claude-skill 有明確的 `markdown-only` 模式，在工具不可用時仍能產出所有文件產物。
 
@@ -109,7 +120,7 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ---
 
-### #8 沒有 Preset 設定
+### #9 沒有 Preset 設定
 
 **問題：** 切換到新專案（`/project-init`）時，所有設定都要從頭填入，沒有針對「政府/醫療」場景的預設值。
 
@@ -127,8 +138,9 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 | 1 | `data-validation.test.py` BASE_URL 寫死 | 🔴 P1 | ❌ 待修 |
 | 2 | Playwright smoke test 無 MCP fallback | 🔴 P1 | ❌ 待修 |
 | 3 | 切換專案後 command 路徑假設不更新 | 🟡 P2 | ❌ 待修 |
-| 4 | ENGINEERING-TASKS.md 無優先排序 | 🟡 P2 | ❌ 待修 |
-| 5 | Bug 回報無 Google Sheet 整合 | 🟢 P3 | ❌ 待修 |
-| 6 | progress-bar BLOCKED 無追蹤機制 | 🟢 P3 | ❌ 待修 |
-| 7 | 沒有 markdown-only 模式說明 | 🟢 P3 | ❌ 待修 |
-| 8 | 沒有政府/醫療場景 Preset | 🟢 P3 | ❌ 待修 |
+| 4 | Command 檔未模組化，重複邏輯分散 | 🟡 P2 | ❌ 待修 |
+| 5 | ENGINEERING-TASKS.md 無優先排序 | 🟡 P2 | ❌ 待修 |
+| 6 | Bug 回報無 Google Sheet 整合 | 🟢 P3 | ❌ 待修 |
+| 7 | progress-bar BLOCKED 無追蹤機制 | 🟢 P3 | ❌ 待修 |
+| 8 | 沒有 markdown-only 模式說明 | 🟢 P3 | ❌ 待修 |
+| 9 | 沒有政府/醫療場景 Preset | 🟢 P3 | ❌ 待修 |
