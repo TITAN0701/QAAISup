@@ -1,7 +1,7 @@
 # 架構改善清單
 
 參考來源：[qa-claude-skill](https://github.com/TITAN0701/qa-claude-skill)
-分析日期：2026-06-11
+分析日期：2026-06-12
 
 ---
 
@@ -40,7 +40,7 @@
 | S1 | **Skill 自包含 vs 分散** | command 依賴 `qa-knowledge/`、CLAUDE.md、.env 三處才能完整運作，沒有單一入口 | 每個 skill 目錄內包含所有需要的東西，自給自足 | #3、#4 |
 | S2 | **平鋪 vs 層次結構** | 16 個 command .md 全部同一層，沒有層次 | 明確三層：`config → modules → skill` | #4 |
 | S3 | **輸入輸出定義分離** | 每個 command 的 Input/Output 定義在 CLAUDE.md 流程圖，和 command 檔是兩個地方 | Input/Output 定義在 SKILL.md 內，和指令放在一起 | #3 |
-| S4 | **專案綁定 vs 可攜框架** | 框架和專案內容混在一起，無法拆出重用於其他系統 | 設計為可安裝到任何專案的獨立框架（install.ps1） | #3、#9 |
+| S4 | **專案綁定 vs 可攜框架** | 框架和專案內容混在一起，無法拆出重用於其他系統 | 設計為可安裝到任何專案的獨立框架（install.ps1） | #3、#8 |
 
 ---
 
@@ -118,7 +118,6 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 ## P3 — 長期優化
 
 ### #6 Bug 回報只進 GitHub Issues，PM 無法統一查閱
-
 
 **根本原因：** S4（專案綁定，無統一輸出整合）
 
