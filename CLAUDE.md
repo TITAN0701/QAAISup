@@ -227,10 +227,15 @@ TEST_ENV=staging
 
 ## Selector 規則
 
-優先順序：`data-testid` > semantic role > label > 穩定唯一文字。
-禁止：CSS nth-child、不穩定 class name、完整 XPath。
+完整規則見 `qa-knowledge/selector-policy.md`。
 
-命名格式範例：`data-testid="login-email-input"`、`data-testid="login-submit-button"`
+**目前限制（SIT 環境，2026-06-10 起）：**
+- **禁止使用 `data-testid`** — SIT 環境 DOM 尚未加入，寫了會全部失敗
+- 替代優先順序：唯一穩定 `id` > 語意 `class` > `placeholder` > 按鈕文字 > `href` > 標題文字
+- 無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[ENG TASK]`
+- 禁止：CSS nth-child、Tailwind utility class、hash class、完整 XPath
+
+**長期目標（data-testid 補上後）：** `data-testid` > semantic role > label > 穩定唯一文字
 
 ---
 
