@@ -30,19 +30,6 @@
 
 ---
 
-## 改成 qa-claude-skill 做法的限制
-
-| 面向 | 限制說明 |
-|------|---------|
-| **Skill 模組化** | Claude Code 的 slash command 是單一 `.md` 檔，**沒有 include 機制**。qa-claude-skill 的 modules/ 子目錄設計在 Claude Code 環境下無法直接複製，AI 不會自動讀取子目錄，模組化效果有限 |
-| **config.json 統一設定** | 需重構 16 個 command 檔讓它們改讀 config.json；現有設定散落三處（CLAUDE.md、.env、command 內部），遷移是一次性但不小的工作量 |
-| **三模式運作** | 每個 command 都要加條件判斷邏輯（MCP 是否可用），16 個 command 全部需要改寫，改寫量大 |
-| **JIRA 整合** | 技術不難，但是決策問題：目前用 GitHub Issues，換 JIRA 代表 PM 要多一套工具；若不換則只能雙軌並行，維護成本增加 |
-| **Slack / Telegram 通知** | 需要 Slack workspace + Bot token；SIT 環境若沒有 Slack 則完全無法使用 |
-| **安裝腳本** | 現有 `project-init.ps1` 與 qa-claude-skill 的 install.ps1 功能重疊，直接複製會衝突，需要合併重構 |
-
----
-
 ## P1 — 立即修復
 
 ### #1 `data-validation.test.py` BASE_URL 寫死
