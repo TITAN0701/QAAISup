@@ -140,7 +140,29 @@ docs/                        # 架構、協作、環境設定文件
 - **產出格式以參考來源為準**（如 qa-claude-skill），不自行發明新欄位
 - **有疑問先問，不要假設**：不確定是否該加某個東西時，先詢問使用者確認
 - **對話過程中只執行使用者明確說的事**：不把討論中的想法、建議或分析自動實作進去，除非使用者明確說「請做」或「幫我加」
-- **每次對話開始時必須讀取 memory**：路徑 `C:\Users\suppo\.claude\projects\c--Users-suppo-Desktop-QAAI--\memory\MEMORY.md`，根據內容了解專案現況與過去決策，不需使用者提醒
+- **使用者只是提問或討論時，不可動任何檔案**：問題就回答問題，分析就給分析，沒有收到明確指令前不得寫入、新增或修改任何檔案
+- **分析技術可行性前必須先驗證假設，不可把未經確認的推斷當結論寫入文件**：若無法驗證，應明確說明「尚未確認」，不得以猜測作為分析依據
+- **每次對話開始時必須讀取本專案的 memory**：從 Claude Code 的專案 memory 目錄讀取 `MEMORY.md`（路徑由系統自動提供，不需寫死）。讀取失敗時不需提示使用者，直接繼續。
+
+---
+
+## Git 高風險指令絕對限制
+
+以下指令**執行前必須先備份，且必須列出將要執行的完整指令讓使用者確認，不得直接執行**：
+
+- `git filter-repo`（任何參數組合）
+- `git push --force` / `git push -f`
+- `git reset --hard`
+- `git rebase`（改寫歷史模式）
+- `git clean -f` / `git clean -fd`
+- 任何會**改寫 commit 歷史**或**刪除工作目錄檔案**的指令
+
+**備份流程（每次執行上述指令前強制執行）：**
+```powershell
+Compress-Archive -Path "c:\Users\suppo\Desktop\QAAI專案" -DestinationPath "c:\Users\suppo\Desktop\QAAI專案-backup-$(Get-Date -Format 'yyyyMMdd-HHmm').zip" -Exclude "*/node_modules/*"
+```
+
+**特別禁止**：`git filter-repo --path <單一路徑> --replace-text` 組合使用 — 這會刪除所有其他檔案。正確用法只用 `--replace-text`，不加 `--path`。
 
 ---
 
@@ -208,10 +230,15 @@ TEST_ENV=staging
 
 ## Selector 規則
 
-優先順序：`data-testid` > semantic role > label > 穩定唯一文字。
-禁止：CSS nth-child、不穩定 class name、完整 XPath。
+完整規則見 `qa-knowledge/selector-policy.md`。
 
-命名格式範例：`data-testid="login-email-input"`、`data-testid="login-submit-button"`
+**目前限制（SIT 環境，2026-06-10 起）：**
+- **禁止使用 `data-testid`** — SIT 環境 DOM 尚未加入，寫了會全部失敗
+- 替代優先順序：唯一穩定 `id` > 語意 `class` > `placeholder` > 按鈕文字 > `href` > 標題文字
+- 無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[ENG TASK]`
+- 禁止：CSS nth-child、Tailwind utility class、hash class、完整 XPath
+
+**長期目標（data-testid 補上後）：** `data-testid` > semantic role > label > 穩定唯一文字
 
 ---
 
@@ -223,7 +250,7 @@ TEST_ENV=staging
 
 ---
 
-## 功能狀態快照（2026-06-09）
+## 功能狀態快照（2026-06-12）
 
 | 功能 | spec | questions | scenarios | test-cases | .cy.ts |
 |------|:----:|:---------:|:---------:|:----------:|:------:|
@@ -235,11 +262,11 @@ TEST_ENV=staging
 | card-matching | ✅ | ✅ | ✅ | ✅ | ✅ |
 | video-recording | ✅ | ✅ | ✅ | ✅ | ✅ |
 | verbal-expression | ✅ | ✅ | ✅ | ✅ | ✅ |
-| observation-group | ✅ | ✅ | ✅ | ✅ | ❌ |
+| observation-group | ✅ | ✅ | ✅ | ✅ | ✅ |
 | handwriting-recognition | ✅ | ✅ | ✅ | ✅ | ✅ |
 | gait-analysis | ✅ | ✅ | ✅ | ✅ | ✅ |
 | re-recording | ✅ | ✅ | ✅ | ✅ | ✅ |
 | account-register | ✅ | ✅ | ✅ | ✅ | ✅ |
-| data-validation | ✅ | ✅ | ✅ | ✅ | ❌ |
+| data-validation | ✅ | ✅ | ✅ | ✅ | ✅ |
 | admin-backend | ✅ | ✅ | ✅ | ✅ | ✅ |
 | progress-bar | ✅ | ✅ | ✅ | ❌ BLOCKED | ❌ |
