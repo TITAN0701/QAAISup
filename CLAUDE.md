@@ -86,12 +86,6 @@ npm run sync:sheet
 | `/playwright-smoke-test` | 用 Playwright MCP 截圖所有主要頁面 |
 | `/project-init` | 清空舊專案內容、更新設定，快速切換至新系統 |
 
-**備用工具（非常規流程）：**
-
-| 指令 | 用途 |
-|------|------|
-| `/PM-2-answer-questions` | PM 若需書面紀錄時才使用，將釐清結果填入 questions.md |
-
 ---
 
 ## 目錄結構
