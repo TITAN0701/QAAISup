@@ -6,10 +6,11 @@
 # [ENG TASK] Confirm request/response schema
 # Do NOT use real personal ID numbers in production
 
+import os
 import pytest
 import requests
 
-BASE_URL = "http://localhost:3000"  # [ENG TASK] Replace with actual test env URL
+BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 VALIDATE_ENDPOINT = f"{BASE_URL}/api/validate/id-number"
 
 

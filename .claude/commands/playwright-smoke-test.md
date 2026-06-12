@@ -25,7 +25,7 @@ $ARGUMENTS
 
 ### Step 1 — 確認 Playwright MCP 可用
 
-使用 `mcp__playwright__browser_navigate` 工具。如果工具不存在，停止並告知使用者需要重啟 VSCode 讓 Playwright MCP 載入。
+使用 `mcp__playwright__browser_navigate` 工具。如果工具不存在或無法呼叫，立即告知使用者：「Playwright MCP 無法連線，請確認 Claude Code MCP 設定後重啟 VSCode，再重新執行此指令。」直接結束，不繼續後續步驟。
 
 ### Step 2 — 讀取頁面清單
 

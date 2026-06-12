@@ -157,8 +157,8 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 | # | 問題 | 根本原因 | 優先 | 狀態 |
 |---|------|---------|------|------|
-| 1 | `data-validation.test.py` BASE_URL 寫死 | 獨立程式碼問題 | 🔴 P1 | ❌ 待修 |
-| 2 | 框架無運作模式切換，MCP 不可用時全面失效 | 運作模式缺失 | 🔴 P1 | ❌ 待修 |
+| 1 | `data-validation.test.py` BASE_URL 寫死 | 獨立程式碼問題 | 🔴 P1 | ✅ 已修 |
+| 2 | 框架無運作模式切換，MCP 不可用時全面失效 | 運作模式缺失 | 🔴 P1 | ✅ 已修 |
 | 3 | 切換專案後 command 路徑假設不更新 | S1、S3、S4 | 🟡 P2 | ❌ 待修 |
 | 4 | Command 檔未模組化，重複邏輯分散 | S1、S2 | 🟡 P2 | ❌ 待修 |
 | 5 | ENGINEERING-TASKS.md 無優先排序 | 獨立執行管理問題 | 🟡 P2 | ❌ 待修 |
