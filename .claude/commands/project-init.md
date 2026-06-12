@@ -65,7 +65,20 @@
 
 ### Step 2 — 使用者確認後執行腳本
 
-使用者輸入 `y` 後，執行：
+使用者輸入 `y` 後，依序執行：
+
+**2a — 更新 config.json**
+
+讀取 `config.json`，更新以下欄位：
+
+```json
+{
+  "project": { "name": "{專案名稱}", "code": "{專案代號}" },
+  "env": { "sitUrl": "{SIT URL}", "testEmail": "{測試帳號}", "apiBaseUrl": "{API URL}" }
+}
+```
+
+**2b — 執行清空腳本**
 
 ```powershell
 .\scripts\project-init.ps1 `

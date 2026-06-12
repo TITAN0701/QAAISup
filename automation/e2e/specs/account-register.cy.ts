@@ -5,8 +5,8 @@
 // Selector 驗證：Playwright snapshot 2026-06-09
 
 // SKIP REASON: 錯誤訊息真實 selector 待確認（目前無 id/class/text 可用）
-// [ENG TASK] Confirm verification code API endpoint to intercept/mock
-// [ENG TASK] Confirm real selector for register error message element
+// [SDET TODO] Confirm verification code API endpoint to intercept/mock
+// [SDET TODO] Confirm real selector for register error message element
 
 describe('帳號註冊', () => {
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('帳號註冊', () => {
     cy.contains('button', '確認送出').click();
     cy.wait('@verifyOtp');
 
-    // [ENG TASK] Add data-testid="register-error-message" to error alert
+    // [SDET TODO] Add data-testid="register-error-message" to error alert
     cy.get('[data-testid="register-error-message"]')
       .should('be.visible')
       .and('contain', '驗證碼');

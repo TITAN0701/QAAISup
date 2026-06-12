@@ -1,28 +1,23 @@
-# QA/AI Questions for PM: 跳題邏輯
+# QA 釐清備忘 - 跳題邏輯
 
-## Need Clarification
+## 待釐清項目
 
 1. Issue #1：「下降年齡層一階」的「一階」具體指多少個月？（例如 4M→2M、6M→4M）是固定階距嗎？是否有完整的年齡層階距對照表？
    - Impact: 影響跳題邏輯自動化測試的測試資料設計，需確認各年齡層階距才能正確驗證跳題行為。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 2. Issue #1：答對後上升一階，若已是最高年齡層（如 72M），上升行為是什麼？停留原地還是結束測驗？
    - Impact: 影響邊界條件測試案例設計。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 3. Issue #3：完成某模組後應回到「實際年齡層對應的下一個模組」，是否有年齡層與模組的完整對照表？
    - Impact: 缺少對照表無法驗證跨模組跳轉是否正確。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 4. Issue #4：全錯時顯示「2個月」，此最低月齡下限是固定值嗎？若未來新增低於 2M 的年齡層，邏輯是否會調整？
    - Impact: 影響最低月齡邊界測試的斷言值設定。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 5. 修正後的跳題邏輯是否有完整規格文件可供 QA 參考，以確保覆蓋所有跳題路徑？
    - Impact: 缺少規格文件可能導致測試路徑遺漏。
-   - PM Answer:
-
-## Confirmed Decisions
+   - QA Assumption: （待 QA 評估後填入）
+## 已確認項目
 
 - Source: pm-inbox/issue-tracking-0507.md
 - Issue #1~#4 狀態均為「已完成」，待 QA 驗證。

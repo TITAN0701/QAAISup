@@ -3,10 +3,10 @@
 // Automation candidates: TC-ADMIN-001 ~ TC-ADMIN-004
 // Selectors verified from Playwright snapshot 2026-06-09
 
-// [ENG TASK] Add data-testid to action buttons in account/child table rows
+// [SDET TODO] Add data-testid to action buttons in account/child table rows
 //   e.g. data-testid="account-disable-button", "account-edit-button"
 //   e.g. data-testid="child-row-action-button"
-// [ENG TASK] Add data-testid="login-error-message" for disabled account error
+// [SDET TODO] Add data-testid="login-error-message" for disabled account error
 
 import { loginAs } from '../flows/loginFlow';
 

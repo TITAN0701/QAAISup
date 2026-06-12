@@ -1,7 +1,7 @@
-// [DRAFT] Needs QA + Engineer review before use in CI.
+// [DRAFT] Needs SDET review before use in CI.
 // Feature: 跳題邏輯
 // Automation candidates: TC-QLOGIC-001 ~ TC-QLOGIC-006
-// SKIP REASON: 年齡層跳題邏輯無對應 DOM 元素可驗證；cases.json id 待填入；需 ENG TASK 完成後才可解除 skip
+// SKIP REASON: 年齡層跳題邏輯無對應 DOM 元素可驗證；cases.json id 待填入；需 [SDET TODO] 完成後才可解除 skip
 //
 // 已確認（2026-06-10 Playwright 探索）：
 //   - 觀察題組 URL: /question?step=choice（同一 URL 內依序換題，不換 step）
@@ -14,13 +14,13 @@
 //   - 題目類型標籤: 含文字 "觀察題組"
 //   - 題目標題: heading level=2（題目內容）
 
-// [ENG TASK] Add data-testid="question-age-level" — shows current age level label (needed for TC-QLOGIC-001~004)
-// [ENG TASK] Add data-testid="answer-option-correct" / "answer-option-wrong" — or expose via fixture
-// [ENG TASK] Add data-testid="result-age-display" on result page
-// [ENG TASK] Add data-testid="complete-module-button" — next/finish button in module
-// [ENG TASK] Add data-testid="current-module-label" — shows module name + age level
-// [ENG TASK] Add data-testid="exam-container" — outermost exam wrapper
-// [ENG TASK] Provide fixture cases.json with case_2m, case_4m, case_6m, case_42m fields (real SIT case IDs)
+// [SDET TODO] Add data-testid="question-age-level" — shows current age level label (needed for TC-QLOGIC-001~004)
+// [SDET TODO] Add data-testid="answer-option-correct" / "answer-option-wrong" — or expose via fixture
+// [SDET TODO] Add data-testid="result-age-display" on result page
+// [SDET TODO] Add data-testid="complete-module-button" — next/finish button in module
+// [SDET TODO] Add data-testid="current-module-label" — shows module name + age level
+// [SDET TODO] Add data-testid="exam-container" — outermost exam wrapper
+// [SDET TODO] Provide fixture cases.json with case_2m, case_4m, case_6m, case_42m fields (real SIT case IDs)
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -31,17 +31,17 @@ describe('跳題邏輯', () => {
 
   it.skip('TC-QLOGIC-001 從實質年齡層開始出題，答錯後系統降低一個年齡層難度', () => {
     // Preconditions: 4M 個案存在且年齡層已判斷
-    // [ENG TASK] Provide cases.json case_4m id; navigate directly to that child's exam
+    // [SDET TODO] Provide cases.json case_4m id; navigate directly to that child's exam
     cy.fixture('cases').then((cases) => {
-      cy.visit('/question?step=overview'); // [ENG TASK] Need to be in the 4M child's session context
+      cy.visit('/question?step=overview'); // [SDET TODO] Need to be in the 4M child's session context
       cy.contains('button', '開始檢測').click();
 
       // Verify first question is at 4M level
-      // [ENG TASK] Add data-testid="question-age-level" to show current age level label
+      // [SDET TODO] Add data-testid="question-age-level" to show current age level label
       cy.get('[data-testid="question-age-level"]').should('contain', '4');
 
       // Answer wrong
-      // [ENG TASK] Add data-testid="answer-option-wrong" or confirm which button = wrong answer
+      // [SDET TODO] Add data-testid="answer-option-wrong" or confirm which button = wrong answer
       cy.contains('button', '否').click();
       cy.contains('button', '下一題').click();
 
@@ -51,13 +51,13 @@ describe('跳題邏輯', () => {
   });
 
   it.skip('TC-QLOGIC-002 答對後系統只上升一個年齡層，不可跨越兩階', () => {
-    // [ENG TASK] Provide cases.json case_4m id
+    // [SDET TODO] Provide cases.json case_4m id
     cy.fixture('cases').then((cases) => {
       cy.visit('/question?step=overview');
       cy.contains('button', '開始檢測').click();
 
       // Answer correct at 2M level
-      // [ENG TASK] Add data-testid="answer-option-correct" or confirm which button = correct answer
+      // [SDET TODO] Add data-testid="answer-option-correct" or confirm which button = correct answer
       cy.contains('button', '是').click();
       cy.contains('button', '下一題').click();
 
@@ -68,13 +68,13 @@ describe('跳題邏輯', () => {
   });
 
   it.skip('TC-QLOGIC-003 42M 個案答對後最高升至 48M，不跳至 60M 或更高', () => {
-    // [ENG TASK] Provide cases.json case_42m id
+    // [SDET TODO] Provide cases.json case_42m id
     cy.fixture('cases').then((cases) => {
       cy.visit('/question?step=overview');
       cy.contains('button', '開始檢測').click();
 
       // Keep answering correct to push level up
-      // [ENG TASK] Provide a test helper or API to fast-forward to 48M level
+      // [SDET TODO] Provide a test helper or API to fast-forward to 48M level
       cy.contains('button', '是').click();
       cy.contains('button', '下一題').click();
       cy.get('[data-testid="question-age-level"]').should('contain', '48');
@@ -89,9 +89,9 @@ describe('跳題邏輯', () => {
 
   it.skip('TC-QLOGIC-004 跨模組後系統跳回實質年齡層（4M）對應的下一模組', () => {
     // Preconditions: 4M 個案剛完成「6M 語言理解」模組
-    // [ENG TASK] Provide cases.json case_4m id
-    // [ENG TASK] Add data-testid="current-module-label" to show module name + age level
-    // [ENG TASK] Add data-testid="complete-module-button" — next/finish button at end of module
+    // [SDET TODO] Provide cases.json case_4m id
+    // [SDET TODO] Add data-testid="current-module-label" to show module name + age level
+    // [SDET TODO] Add data-testid="complete-module-button" — next/finish button at end of module
     cy.fixture('cases').then((cases) => {
       cy.visit('/question?step=overview');
       cy.contains('button', '開始檢測').click();
@@ -106,8 +106,8 @@ describe('跳題邏輯', () => {
   });
 
   it.skip('TC-QLOGIC-005 觀察題組全錯時結果顯示最低月齡「2 個月」', () => {
-    // [ENG TASK] Provide cases.json with 6M case id (need AI module completed)
-    // [ENG TASK] Add data-testid="result-age-display" on result page to verify final age
+    // [SDET TODO] Provide cases.json with 6M case id (need AI module completed)
+    // [SDET TODO] Add data-testid="result-age-display" on result page to verify final age
     cy.fixture('cases').then((cases) => {
       cy.visit('/question?step=overview');
       cy.contains('button', '開始檢測').click();
@@ -118,7 +118,7 @@ describe('跳題邏輯', () => {
       // 6M 個案為 radio button 樣式（不是 button role）
       cy.contains('否').click();
       cy.contains('button', '下一題').click();
-      // [ENG TASK] Need to iterate all observation questions — count unknown without real data
+      // [SDET TODO] Need to iterate all observation questions — count unknown without real data
 
       cy.get('[data-testid="result-age-display"]').should('contain', '2');
       cy.get('[data-testid="result-age-display"]').should('not.contain', '0');
@@ -126,8 +126,8 @@ describe('跳題邏輯', () => {
   });
 
   it.skip('TC-QLOGIC-006 個案在最低年齡層（2M）持續答錯時系統不崩潰', () => {
-    // [ENG TASK] Provide cases.json case_4m id
-    // [ENG TASK] Add data-testid="exam-container" outermost exam wrapper
+    // [SDET TODO] Provide cases.json case_4m id
+    // [SDET TODO] Add data-testid="exam-container" outermost exam wrapper
     cy.fixture('cases').then((cases) => {
       cy.visit('/question?step=overview');
       cy.contains('button', '開始檢測').click();
@@ -137,7 +137,7 @@ describe('跳題邏輯', () => {
       for (let i = 0; i < 5; i++) {
         cy.contains('否').click(); // radio button 樣式（低月齡）
         cy.contains('button', '下一題').click();
-        // [ENG TASK] Add data-testid="question-age-level" to verify stays at 2M
+        // [SDET TODO] Add data-testid="question-age-level" to verify stays at 2M
       }
 
       // No error message, no blank page

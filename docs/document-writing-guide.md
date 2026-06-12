@@ -115,7 +115,7 @@ PM 寫 inbox 需求時，請優先回答這些問題：
 ```md
 1. 問題
    - Impact: 這會影響什麼測試、驗收或風險？
-   - PM Answer:
+   - QA Assumption: QA 暫時假設的答案（讓流程能繼續推進）
 ```
 
 好問題：
@@ -123,7 +123,7 @@ PM 寫 inbox 需求時，請優先回答這些問題：
 ```md
 1. 使用者輸入未註冊 Email 時，畫面要顯示成功提示還是錯誤訊息？
    - Impact: 會影響錯誤訊息測試，也會影響是否需要避免帳號枚舉風險。
-   - PM Answer:
+   - QA Assumption: 假設顯示成功提示（避免帳號枚舉），待 Playwright snapshot 確認。
 ```
 
 壞問題：

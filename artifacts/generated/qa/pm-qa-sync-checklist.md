@@ -1,73 +1,36 @@
 # PM / QA 同步問題 Checklist
 
 > 產出時間：2026-06-10
+> 更新時間：2026-06-12
 > 來源：專案整體同步分析
-> 用途：供 PM 與 QA 逐項確認，每項完成後打勾
+> 用途：QA 追蹤未解項目，每項完成後打勾
 
 ---
 
-## 區塊 A｜PM Questions 待回覆（71 題）
+## 區塊 A｜QA Assumption 待評估（71 題）✅ 格式已更新
 
-> 所有 feature 的 `questions.md` 中，PM Answer 欄位全部空白。
-> 請 PM 依序開啟對應文件填寫答案後通知 QA。
+> ~~PM Answer 欄位空白~~ — 格式已於 2026-06-12 更新。
+> PM 不進此系統，questions.md 改為 QA 內部備忘，`PM Answer:` 全數改為 `QA Assumption:`。
+> QA 自行填入假設值後即可推進 `/QA-design`，不需等待 PM。
 
-### A1. 高影響功能（優先處理）
+### 待 QA 填入 Assumption 的功能（優先）
 
-- [ ] **login**（8 題）
-  - 文件：`qa-workspace/specs/login/questions.md`
-  - 影響：登入流程驗收標準、錯誤提示文案、帳號格式規則
-
-- [ ] **gait-analysis 走路步態**（5 題）
-  - 文件：`qa-workspace/specs/gait-analysis/questions.md`
-  - 影響：步態分析流程、AI 模組觸發時機、判定標準
-
-- [ ] **verbal-expression 口語表達**（5 題）
-  - 文件：`qa-workspace/specs/verbal-expression/questions.md`
-  - 影響：計時邏輯、無 AI 模組時的備案行為
-
-- [ ] **handwriting-recognition 手繪圖形辨識**（5 題）
-  - 文件：`qa-workspace/specs/handwriting-recognition/questions.md`
-  - 影響：拍攝模組有無、手繪辨識觸發條件
-
-- [ ] **account-register 帳號/註冊**（5 題）
-  - 文件：`qa-workspace/specs/account-register/questions.md`
-  - 影響：驗證碼邏輯、必填欄位定義
-
-- [ ] **admin-backend 後台管理**（5 題）
-  - 文件：`qa-workspace/specs/admin-backend/questions.md`
-  - 影響：後台權限、資料查閱範圍
-
-### A2. 一般功能
-
-- [ ] **question-logic 跳題邏輯**（5 題）
-  - 文件：`qa-workspace/specs/question-logic/questions.md`
-
-- [ ] **observation-group 觀察題組**（4 題）
-  - 文件：`qa-workspace/specs/observation-group/questions.md`
-
-- [ ] **re-recording 重新錄製**（4 題）
-  - 文件：`qa-workspace/specs/re-recording/questions.md`
-
-- [ ] **progress-bar 進度條**（4 題）
-  - 文件：`qa-workspace/specs/progress-bar/questions.md`
-
-- [ ] **data-validation 資料驗證**（4 題）
-  - 文件：`qa-workspace/specs/data-validation/questions.md`
-
-- [ ] **question-content 題目內容**（4 題）
-  - 文件：`qa-workspace/specs/question-content/questions.md`
-
-- [ ] **card-matching 圖卡配對**（4 題）
-  - 文件：`qa-workspace/specs/card-matching/questions.md`
-
-- [ ] **video-recording 影片錄製**（4 題）
-  - 文件：`qa-workspace/specs/video-recording/questions.md`
-
-- [ ] **register 創建帳號入口**（4 題）
-  - 文件：`qa-workspace/specs/register/questions.md`
-
-- [ ] **forgot-password 忘記密碼**（4 題）
-  - 文件：`qa-workspace/specs/forgot-password/questions.md`
+- [ ] **login**（8 題）— `qa-workspace/specs/login/questions.md`
+- [ ] **gait-analysis**（5 題）— `qa-workspace/specs/gait-analysis/questions.md`
+- [ ] **verbal-expression**（5 題）— `qa-workspace/specs/verbal-expression/questions.md`
+- [ ] **handwriting-recognition**（5 題）— `qa-workspace/specs/handwriting-recognition/questions.md`
+- [ ] **account-register**（5 題）— `qa-workspace/specs/account-register/questions.md`
+- [ ] **admin-backend**（5 題）— `qa-workspace/specs/admin-backend/questions.md`
+- [ ] **question-logic**（5 題）— `qa-workspace/specs/question-logic/questions.md`
+- [ ] **observation-group**（4 題）— `qa-workspace/specs/observation-group/questions.md`
+- [ ] **re-recording**（4 題）— `qa-workspace/specs/re-recording/questions.md`
+- [ ] **progress-bar**（4 題）— `qa-workspace/specs/progress-bar/questions.md`
+- [ ] **data-validation**（4 題）— `qa-workspace/specs/data-validation/questions.md`
+- [ ] **question-content**（4 題）— `qa-workspace/specs/question-content/questions.md`
+- [ ] **card-matching**（4 題）— `qa-workspace/specs/card-matching/questions.md`
+- [ ] **video-recording**（4 題）— `qa-workspace/specs/video-recording/questions.md`
+- [ ] **register**（4 題）— `qa-workspace/specs/register/questions.md`
+- [ ] **forgot-password**（4 題）— `qa-workspace/specs/forgot-password/questions.md`
 
 ---
 
@@ -121,27 +84,10 @@
 
 ## 區塊 C｜描述文件更新（QA 執行）
 
-> 以下文件內容已落後，需 QA 重新產出。
-
-- [ ] **test-report.md 重新產出**
-  - 現況：只含 3 個 feature（login、forgot-password、register），2026-05-28
-  - 正確：應涵蓋 15 個 feature、74 個 TC
-  - 行動：執行 `/QA-6-generate-report`
-
-- [ ] **release-summary.md 重新產出**
-  - 現況：只含 3 個 feature，2026-05-28
-  - 正確：應涵蓋所有 feature 的最新狀態
-  - 行動：同上，連同 .docx 一起更新
-
-- [ ] **scenario-matrix.md 重新產出**
-  - 現況：只含 3 個 feature、14 個情境，2026-05-28
-  - 正確：應涵蓋 15 個 feature 的完整情境矩陣
-  - 行動：執行 `/QA-6-generate-report` 或單獨重建 scenario-matrix
-
-- [ ] **CLAUDE.md 功能狀態表修正**
-  - 現況：observation-group 與 data-validation 的 .cy.ts 欄位標記 ❌
-  - 正確：兩個 .cy.ts 檔案已存在，應標記 ✅
-  - 行動：手動更新 CLAUDE.md 第 115–116 行
+- [x] **test-report.md** — 舊版（2026-05-28）已刪除，待執行測試後由 `/QA-6-generate-report` 重新產出
+- [x] **release-summary.md** — 舊版已刪除，同上
+- [x] **scenario-matrix.md** — 舊版已刪除，同上
+- [x] **CLAUDE.md 功能狀態表** — observation-group、data-validation .cy.ts 已更新為 ✅（2026-06-12）
 
 ---
 
@@ -150,20 +96,15 @@
 - [ ] **progress-bar test-cases.json 尚未產出**
   - 現況：CLAUDE.md 標記為「❌ BLOCKED」
   - 問題：BLOCKED 的原因是等待 PM 確認規格，還是技術限制？
-  - 行動：PM 確認後，若規格已穩定 → QA 執行 `/QA-4-generate-testcases progress-bar`
+  - 行動：PM 確認後，若規格已穩定 → QA 執行 `/QA-design progress-bar`
 
 ---
 
 ## 統計摘要
 
-| 區塊 | 項目數 | 負責方 |
-|------|--------|--------|
-| A — PM Questions 待回覆 | 71 題 / 16 個 feature | PM |
-| B — Issue Tracking 未解 | 8 個 Issue | PM → 通知 QA |
-| C — 文件更新 | 4 份文件 | QA |
-| D — progress-bar BLOCKED | 1 項確認 | PM + QA |
-| **合計** | **84 項** | |
-
----
-
-> 完成後請通知 QA 更新對應的 spec 與報告文件。
+| 區塊 | 項目數 | 負責方 | 狀態 |
+|------|--------|--------|------|
+| A — QA Assumption 待填入 | 71 題 / 16 個 feature | QA | ⏳ 待填 |
+| B — Issue Tracking 未解 | 8 個 Issue | 等系統修復 | ⏳ 待確認 |
+| C — 文件更新 | 4 份文件 | QA | ✅ 已處理 |
+| D — progress-bar BLOCKED | 1 項確認 | 等外部規則 | ⏳ 待確認 |

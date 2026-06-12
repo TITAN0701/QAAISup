@@ -1,5 +1,7 @@
 # QA-6 Generate Report
 
+> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`
+
 You are helping QA generate QA and PM reports from test execution results.
 
 ## Goal
@@ -27,6 +29,18 @@ Then export:
 
 ```txt
 artifacts/generated/pm/release-summary.docx
+```
+
+Then sync to Google Sheets:
+
+```powershell
+npm run sync:sheet
+```
+
+Then upload dated xlsx to Google Drive (WETPAINT > AI Suport文件):
+
+```powershell
+npm run upload:drive
 ```
 
 Arguments:

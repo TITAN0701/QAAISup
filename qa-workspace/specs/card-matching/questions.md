@@ -1,24 +1,20 @@
-# QA/AI Questions for PM: 圖卡配對
+# QA 釐清備忘 - 圖卡配對
 
-## Need Clarification
+## 待釐清項目
 
 1. Issue #10（調整中）：圖卡配對跳題範圍限制尚在調整中，預計何時完成？完成後需通知 QA 重新測試嗎？
    - Impact: 高嚴重度且尚未完成，QA 無法對此項目進行自動化驗證，需等修正完成後才能設計測試案例。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 2. Issue #11：圖卡配對互動方式最終確認為「維持點選」（非拖拉），這個決定是否已更新到需求文件？後續是否可能再次更改？
    - Impact: 影響自動化測試的互動設計，若再次變更需重寫測試。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 3. Issue #9：8M 以下（如 4M、6M）若進入圖卡配對，系統行為是什麼？直接跳過、顯示錯誤，還是不顯示入口？
    - Impact: 影響負向測試案例設計。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 4. 圖卡配對除了「點選正確」之外，是否有時間限制或嘗試次數限制？
    - Impact: 影響測試案例的完整性。
-   - PM Answer:
-
-## Confirmed Decisions
+   - QA Assumption: （待 QA 評估後填入）
+## 已確認項目
 
 - Source: pm-inbox/issue-tracking-0507.md
 - Issue #9、#11 狀態為「已完成」，待 QA 驗證。

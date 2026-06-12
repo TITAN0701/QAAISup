@@ -5,8 +5,8 @@
 //       SC-DATA-VALIDATION-004 is BLOCKED (CASEID 流水號規則待群健所確認)
 
 // SKIP REASON: 身分證字號欄位真實 selector 與表單 URL 待確認
-// [ENG TASK] Confirm form URL where 身分證字號 is entered (child registration form)
-// [ENG TASK] Confirm real selector for 身分證字號 input and validation error message
+// [SDET TODO] Confirm form URL where 身分證字號 is entered (child registration form)
+// [SDET TODO] Confirm real selector for 身分證字號 input and validation error message
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -16,23 +16,21 @@ describe('資料驗證 (UI)', () => {
   });
 
   it.skip('SC-DATA-VALIDATION-003 身分證字號第二碼非 1 或 2 時顯示驗證錯誤', () => {
-    // [ENG TASK] Replace with actual child registration form URL
+    // [SDET TODO] Replace with actual child registration form URL
     cy.visit('/admin/child-list');
 
-    // [ENG TASK] Replace with actual trigger to open child add/edit form
+    // [SDET TODO] Replace with actual trigger to open child add/edit form
     cy.contains('button', /新增|建立|Add/i).click();
 
-    // Enter ID number with invalid 2nd digit (e.g. "3")
-    // [ENG TASK] Add data-testid="id-number-input"
-    cy.get('[data-testid="id-number-input"]').type('A312345678');
+    // [SDET TODO] Confirm placeholder or label text for 身分證字號 input
+    cy.contains('div,label', /身分證|身份證/).parent().find('input').first()
+      .type('A312345678');
 
     // Trigger validation
-    cy.get('[data-testid="id-number-input"]').blur();
+    cy.contains('div,label', /身分證|身份證/).parent().find('input').first()
+      .blur();
 
-    // Error message should appear
-    // [ENG TASK] Add data-testid="id-number-error"
-    cy.get('[data-testid="id-number-error"]')
-      .should('be.visible')
-      .and('contain.text', /格式|錯誤|無效/i);
+    // [SDET TODO] Confirm error message container selector
+    cy.contains('div,span,p', /格式|錯誤|無效/i).should('be.visible');
   });
 });

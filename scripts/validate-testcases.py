@@ -35,6 +35,29 @@ def format_json_path(path_parts: list[object]) -> str:
     return formatted
 
 
+# ID 前綴對照表：資料夾名稱 → (TC 縮寫前綴, SC 全名前綴)
+# TC 用縮寫（如 TC-CARDMATCH-001），SC 用全名（如 SC-CARD-MATCHING-001）
+# 新增功能時在此加一行即可；未列出的 feature 兩者皆預設使用資料夾名稱大寫
+FEATURE_CODE_ALIASES: dict[str, tuple[str, str]] = {
+    "account-register":       ("ACCREG",        "ACCOUNT-REGISTER"),
+    "admin-backend":          ("ADMIN",          "ADMIN-BACKEND"),
+    "card-matching":          ("CARDMATCH",      "CARD-MATCHING"),
+    "data-validation":        ("DATAVAL",        "DATA-VALIDATION"),
+    "gait-analysis":          ("GAIT",           "GAIT-ANALYSIS"),
+    "handwriting-recognition":("HWRITE",         "HANDWRITING"),
+    "observation-group":      ("OBSERVE",        "OBSERVATION-GROUP"),
+    "question-content":       ("QCONTENT",       "QUESTION-CONTENT"),
+    "question-logic":         ("QLOGIC",         "QUESTION-LOGIC"),
+    "re-recording":           ("REREC",          "RE-RECORDING"),
+    "verbal-expression":      ("VERBAL",         "VERBAL-EXPRESSION"),
+    "video-recording":        ("VIDEO",          "VIDEO-RECORDING"),
+    "forgot-password":        ("FORGOT-PASSWORD","FORGOT-PASSWORD"),
+    "login":                  ("LOGIN",          "LOGIN"),
+    "register":               ("REGISTER",       "REGISTER"),
+    "progress-bar":           ("PROGRESS-BAR",   "PROGRESS-BAR"),
+}
+
+
 def validate_testcases(specs_root: Path, schema_path: Path) -> int:
     schema = load_json(schema_path)
     validator = Draft202012Validator(schema)
@@ -79,9 +102,11 @@ def validate_testcases(specs_root: Path, schema_path: Path) -> int:
                 warnings.append(f"{feature_dir.name}: no scenarios found for requirement_id cross-check")
 
             seen_ids: set[str] = set()
-            feature_code = feature_dir.name.upper()
-            expected_case_pattern = re.compile(rf"^TC-{re.escape(feature_code)}-\d{{3}}$")
-            expected_requirement_pattern = re.compile(rf"^SC-{re.escape(feature_code)}-\d{{3}}$")
+            alias = FEATURE_CODE_ALIASES.get(feature_dir.name)
+            tc_code = alias[0] if alias else feature_dir.name.upper()
+            sc_code = alias[1] if alias else feature_dir.name.upper()
+            expected_case_pattern = re.compile(rf"^TC-{re.escape(tc_code)}-\d{{3}}$")
+            expected_requirement_pattern = re.compile(rf"^SC-{re.escape(sc_code)}-\d{{3}}$")
             for index, test_case in enumerate(data.get("test_cases", [])):
                 if not isinstance(test_case, dict):
                     continue
@@ -94,14 +119,14 @@ def validate_testcases(specs_root: Path, schema_path: Path) -> int:
                     if not expected_case_pattern.match(case_id):
                         errors.append(
                             f"{feature_dir.name}: test_cases[{index}].id must match "
-                            f"TC-{feature_code}-001 format, got {case_id!r}"
+                            f"TC-{tc_code}-001 format, got {case_id!r}"
                         )
 
                 requirement_id = test_case.get("requirement_id")
                 if isinstance(requirement_id, str) and not expected_requirement_pattern.match(requirement_id):
                     errors.append(
                         f"{feature_dir.name}: test_cases[{index}].requirement_id must match "
-                        f"SC-{feature_code}-001 format, got {requirement_id!r}"
+                        f"SC-{sc_code}-001 format, got {requirement_id!r}"
                     )
                 if requirement_id and scenario_ids and requirement_id not in scenario_ids:
                     errors.append(

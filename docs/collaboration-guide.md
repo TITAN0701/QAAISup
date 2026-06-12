@@ -65,7 +65,7 @@ AI 不應該做：
 
 - 自行決定未確認的商業規則
 - 自行判定 pass / fail
-- 未經 QA/Engineer review 直接合併測試碼
+- 未經 SDET review 直接合併測試碼
 - 使用正式帳密或敏感資料
 
 ## Workflow
@@ -77,27 +77,16 @@ AI 不應該做：
 4. QA 預覽 PM 需求，確認後輸入 YES
 5. 系統建立 qa-workspace/specs/{feature}/
 6. QA/AI 根據 PM inbox 整理 spec.md
-7. QA/AI 產生 questions.md
-8. PM 回答 PM Answer
-9. QA/AI 產生 scenarios.md 與測試設計
-10. QA 審核測試案例
-11. QA/Engineer 決定是否進入自動化
+7. QA/AI 產生 questions.md（QA Assumption，不等 PM）
+8. QA/AI 產生 scenarios.md 與測試設計
+9. QA 審核測試案例
+10. SDET 決定是否進入自動化
 12. CI 執行測試
 13. AI 根據 raw report 產生報告
 ```
 
-## PM Answer Rule
+## QA Assumption Rule
 
-當 PM 看到 `questions.md` 時，只需要填：
+`questions.md` 是 QA 內部備忘，PM 不需填寫。
 
-```txt
-PM Answer:
-```
-
-如果答案還不知道，請填：
-
-```txt
-PM Answer: 待客戶確認。
-```
-
-如果答案會改變需求，QA 或 AI 需要同步更新 `spec.md`。
+QA 對不確定的需求自行填入假設值（QA Assumption），讓流程繼續推進。若假設後來驗證有誤，再更新 `spec.md` 與 `scenarios.md`。

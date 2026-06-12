@@ -12,7 +12,7 @@
       "steps": ["點擊創建帳號入口"],
       "expected": ["系統進入註冊流程"],
       "automation_candidate": true,
-      "notes": "導向 URL 或頁面狀態需依 PM Answer 確認。"
+      "notes": "導向 URL 或頁面狀態需依 QA Assumption 或實際 Playwright snapshot 確認。"
     },
     {
       "id": "TC-REGISTER-002",
@@ -24,7 +24,7 @@
       "steps": ["保留必填欄位空白", "送出註冊"],
       "expected": ["系統提示必填欄位", "不應建立帳號"],
       "automation_candidate": true,
-      "notes": "必填欄位清單需依 PM Answer 或實作確認。"
+      "notes": "必填欄位清單需依 QA Assumption 或實作確認。"
     },
     {
       "id": "TC-REGISTER-003",
@@ -36,7 +36,7 @@
       "steps": ["輸入有效基本資料", "輸入不同的密碼與確認密碼", "送出註冊"],
       "expected": ["系統提示密碼不一致", "不應建立帳號"],
       "automation_candidate": true,
-      "notes": "提示文案需依 PM Answer 確認。"
+      "notes": "提示文案需依 QA Assumption 或實際 Playwright snapshot 確認。"
     },
     {
       "id": "TC-REGISTER-004",
@@ -48,7 +48,7 @@
       "steps": ["輸入有效註冊資料", "送出註冊"],
       "expected": ["系統建立帳號或進入後續驗證流程"],
       "automation_candidate": true,
-      "notes": "後續驗證流程與測試資料產生方式需依 PM Answer 確認。"
+      "notes": "後續驗證流程與測試資料產生方式需依 QA Assumption 或實際 Playwright snapshot 確認。"
     }
   ]
 }

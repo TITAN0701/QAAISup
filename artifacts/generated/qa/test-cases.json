@@ -13,7 +13,7 @@
         "steps": ["輸入有效帳號", "輸入正確密碼", "送出登入"],
         "expected": ["系統登入成功", "導向登入後首頁或顯示已登入狀態"],
         "automation_candidate": true,
-        "notes": "成功導向 URL 或畫面狀態需依 PM Answer 確認。"
+        "notes": "成功導向 URL 或畫面狀態需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-LOGIN-002",
@@ -25,7 +25,7 @@
         "steps": ["保留帳號欄位空白", "輸入任意密碼", "送出登入"],
         "expected": ["系統提示帳號為必填", "不應登入成功"],
         "automation_candidate": true,
-        "notes": "提示文案需依 PM Answer 確認。"
+        "notes": "提示文案需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-LOGIN-003",
@@ -37,7 +37,7 @@
         "steps": ["輸入有效帳號", "保留密碼欄位空白", "送出登入"],
         "expected": ["系統提示密碼為必填", "不應登入成功"],
         "automation_candidate": true,
-        "notes": "提示文案需依 PM Answer 確認。"
+        "notes": "提示文案需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-LOGIN-004",
@@ -61,7 +61,7 @@
         "steps": ["點擊忘記密碼入口"],
         "expected": ["系統進入忘記密碼流程"],
         "automation_candidate": true,
-        "notes": "導向 URL 或頁面標題需依 PM Answer 確認。"
+        "notes": "導向 URL 或頁面標題需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-LOGIN-006",
@@ -73,7 +73,7 @@
         "steps": ["點擊創建帳號入口"],
         "expected": ["系統進入註冊流程"],
         "automation_candidate": true,
-        "notes": "導向 URL 或頁面標題需依 PM Answer 確認。"
+        "notes": "導向 URL 或頁面標題需依 QA Assumption 或 Playwright snapshot 確認。"
       }
     ]
   },
@@ -91,7 +91,7 @@
         "steps": ["點擊忘記密碼入口"],
         "expected": ["系統進入忘記密碼流程"],
         "automation_candidate": true,
-        "notes": "導向 URL 或頁面狀態需依 PM Answer 確認。"
+        "notes": "導向 URL 或頁面狀態需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-FORGOT-PASSWORD-002",
@@ -103,7 +103,7 @@
         "steps": ["保留 Email 欄位空白", "送出申請"],
         "expected": ["系統提示 Email 為必填"],
         "automation_candidate": true,
-        "notes": "提示文案需依 PM Answer 確認。"
+        "notes": "提示文案需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-FORGOT-PASSWORD-003",
@@ -115,7 +115,7 @@
         "steps": ["輸入格式錯誤的 Email", "送出申請"],
         "expected": ["系統提示 Email 格式錯誤"],
         "automation_candidate": true,
-        "notes": "錯誤格式樣本與文案需依 PM Answer 確認。"
+        "notes": "錯誤格式樣本與文案需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-FORGOT-PASSWORD-004",
@@ -145,7 +145,7 @@
         "steps": ["點擊創建帳號入口"],
         "expected": ["系統進入註冊流程"],
         "automation_candidate": true,
-        "notes": "導向 URL 或頁面狀態需依 PM Answer 確認。"
+        "notes": "導向 URL 或頁面狀態需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-REGISTER-002",
@@ -157,7 +157,7 @@
         "steps": ["保留必填欄位空白", "送出註冊"],
         "expected": ["系統提示必填欄位", "不應建立帳號"],
         "automation_candidate": true,
-        "notes": "必填欄位清單需依 PM Answer 或實作確認。"
+        "notes": "必填欄位清單需依 QA Assumption 或實際測試確認。"
       },
       {
         "id": "TC-REGISTER-003",
@@ -169,7 +169,7 @@
         "steps": ["輸入有效基本資料", "輸入不同的密碼與確認密碼", "送出註冊"],
         "expected": ["系統提示密碼不一致", "不應建立帳號"],
         "automation_candidate": true,
-        "notes": "提示文案需依 PM Answer 確認。"
+        "notes": "提示文案需依 QA Assumption 或 Playwright snapshot 確認。"
       },
       {
         "id": "TC-REGISTER-004",
@@ -181,7 +181,7 @@
         "steps": ["輸入有效註冊資料", "送出註冊"],
         "expected": ["系統建立帳號或進入後續驗證流程"],
         "automation_candidate": true,
-        "notes": "後續驗證流程與測試資料產生方式需依 PM Answer 確認。"
+        "notes": "後續驗證流程與測試資料產生方式需依 QA Assumption 或 Playwright snapshot 確認。"
       }
     ]
   },

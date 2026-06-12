@@ -140,6 +140,30 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 
 ---
 
+### #9 全專案術語不一致（流程重構後遺留）
+
+**根本原因：** 流程重構後（QA-2/3/4 合併、PM-2 移除、工程師角色改為 SDET）只更新了 command 檔本身，未同步清理其他引用這些術語的所有文件。
+
+**問題：** 16 個 feature 的 `.cy.ts`、`qa-knowledge/`、`docs/`、`README.md`、`CLAUDE.md` 仍使用舊術語：
+- `[ENG TASK]` — 舊標記，指向不存在的「工程師」角色
+- `PM Answer:` — 舊格式，暗示 PM 需要進系統填寫
+- `/QA-2`、`/QA-3`、`/QA-4` — 已刪除的指令名稱
+- `QA/Engineer review` — 錯誤的角色描述
+
+**如果不修：**
+- AI 讀到 `[ENG TASK]` 會誤以為有工程師要處理，產出錯誤的任務分配
+- AI 讀到 `PM Answer:` 會等 PM 填答或把問題導向 PM，但 PM 不進系統
+- 新對話開始時 AI 讀到舊指令名稱，會嘗試執行已不存在的 command
+- 整體文件前後矛盾，降低 AI 產出的準確性
+
+**修法：** 已於 2026-06-12 全面清理，統一改為：
+- `[ENG TASK]` → `[SDET TODO]`
+- `PM Answer:` → `QA Assumption:`
+- 舊指令名稱 → 現行指令名稱
+- `工程師` → `SDET`
+
+---
+
 ### #8 沒有 Preset 設定
 
 **根本原因：** S4（專案綁定，無可攜框架）
@@ -159,9 +183,10 @@ BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3000")
 |---|------|---------|------|------|
 | 1 | `data-validation.test.py` BASE_URL 寫死 | 獨立程式碼問題 | 🔴 P1 | ✅ 已修 |
 | 2 | 框架無運作模式切換，MCP 不可用時全面失效 | 運作模式缺失 | 🔴 P1 | ✅ 已修 |
-| 3 | 切換專案後 command 路徑假設不更新 | S1、S3、S4 | 🟡 P2 | ❌ 待修 |
-| 4 | Command 檔未模組化，重複邏輯分散 | S1、S2 | 🟡 P2 | ❌ 待修 |
-| 5 | ENGINEERING-TASKS.md 無優先排序 | 獨立執行管理問題 | 🟡 P2 | ❌ 待修 |
+| 3 | 切換專案後 command 路徑假設不更新 | S1、S3、S4 | 🟡 P2 | ✅ 已修 |
+| 4 | Command 檔未模組化，重複邏輯分散 | S1、S2 | 🟡 P2 | ✅ 已修 |
+| 5 | ENGINEERING-TASKS.md 無優先排序 | 獨立執行管理問題 | 🟡 P2 | ✅ 已修 |
 | 6 | Bug 回報無 Google Sheet 整合 | S4 | 🟢 P3 | ❌ 待修 |
-| 7 | progress-bar BLOCKED 無追蹤機制 | 獨立追蹤缺失 | 🟢 P3 | ❌ 待修 |
-| 8 | 沒有政府/醫療場景 Preset | S4 | 🟢 P3 | ❌ 待修 |
+| 7 | progress-bar BLOCKED 無追蹤機制 | 獨立追蹤缺失 | 🟢 P3 | ✅ 已修 |
+| 8 | 沒有多場景 Preset | S4 | 🟢 P3 | ⏸ 待第二個系統確認後再建 |
+| 9 | 全專案術語不一致（ENG TASK / PM Answer / 工程師 / 舊指令名稱殘留） | 流程重構後未同步清理 | 🟡 P2 | ✅ 已修 |

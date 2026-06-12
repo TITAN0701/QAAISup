@@ -1,28 +1,23 @@
-# QA/AI Questions for PM: 走路步態
+# QA 釐清備忘 - 走路步態
 
-## Need Clarification
+## 待釐清項目
 
 1. Issue #29~#36 均修改了提示文字，QA 驗證時需要比對的各模組正確文案清單是否可提供？（各模組提示詞一、二、三的完整正確內容）
    - Impact: 若無正確文案清單，QA 無法自動化驗證文字內容是否符合規格。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 2. 正面、背面、側面模組的測驗流程是否完全相同？各模組的提示詞數量或順序有差異嗎？
    - Impact: 影響測試案例設計，需確認各模組流程差異。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 3. Issue #34：側面模組輔助框設計參考「仰躺模組」，仰躺模組的輔助框位置/設計規格為何？
    - Impact: 影響輔助框顯示正確性的驗證標準。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 4. Issue #37：口語表達題錄製時圖片被框框遮擋，此問題歸屬走路步態模組還是口語表達模組？
    - Impact: 影響測試案例歸類與回歸測試範圍確認。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 5. 走路步態的錄製是否需要偵測到孩童在畫面內才能開始計時？還是按下錄製即開始？
    - Impact: 影響錄製流程測試步驟設計。
-   - PM Answer:
-
-## Confirmed Decisions
+   - QA Assumption: （待 QA 評估後填入）
+## 已確認項目
 
 - Source: pm-inbox/issue-tracking-0507.md
 - Issue #29~#37 狀態均為「已完成」，待 QA 驗證。

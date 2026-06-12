@@ -99,8 +99,8 @@ account-register | ✅ | ✅ | ❌ | ❌ | ✅
 
 ```
 💡 建議：
-1. /QA-3-generate-scenarios account-register — scenarios.md 尚未產出
-2. /QA-4-generate-testcases card-matching — test-cases 尚未產出
+1. /QA-design account-register — scenarios.md 尚未產出
+2. /QA-design card-matching — test-cases 尚未產出
 3. ...
 ```
 

@@ -1,24 +1,20 @@
-# QA/AI Questions for PM: 進度條
+# QA 釐清備忘 - 進度條
 
-## Need Clarification
+## 待釐清項目
 
 1. Issue #39、#40（均為待確認）：進度條規則需由群健所提供，目前群健所是否已回覆？規則內容為何？
    - Impact: 規則確認前無法設計進度條測試案例，也無法自動化驗證進度條行為。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 2. Issue #39：AI 模組進度條應如何更新？是依照模組完成數量計算，還是以上傳成功為準？
    - Impact: 影響進度條測試的斷言邏輯設計。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 3. Issue #40：觀察題組進度條修正後的計算邏輯是什麼？每答一題增加幾%？
    - Impact: 影響進度條增量測試的驗證方式。
-   - PM Answer:
-
+   - QA Assumption: （待 QA 評估後填入）
 4. 進度條是否在手機、平板、桌機上一致顯示？還是某些裝置有不同 UI？
    - Impact: 影響跨裝置測試的設計範圍。
-   - PM Answer:
-
-## Confirmed Decisions
+   - QA Assumption: （待 QA 評估後填入）
+## 已確認項目
 
 - Source: pm-inbox/issue-tracking-0507.md
 - Issue #39、#40 狀態均為「待確認」，需群健所提供規則後才能測試。

@@ -32,7 +32,7 @@
 - 需人眼判斷視覺品質（影片畫質、輔助框比例）
 - 涉及「開始測驗 / 開始檢測」操作（SIT 環境限制）
 - 非同步上傳等待外部 API 回應
-- 需求尚未穩定或 PM Answer 仍待確認的功能
+- 需求尚未穩定或 QA Assumption 仍待驗證的功能
 
 ## Selector Rule
 
@@ -40,7 +40,7 @@
 
 現階段使用順序：`input[placeholder]` > `cy.contains('button/a', '文字')` > `a[href]` > 穩定唯一中文文字
 
-無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[ENG TASK]`。
+無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[SDET TODO]`。
 禁止使用 CSS nth-child、不穩定 class name、完整 XPath。
 
 ## Review Rule

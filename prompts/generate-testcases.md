@@ -1,1 +1,1 @@
-> 此檔案已合併至 `.claude/commands/QA-4-generate-testcases.md`，請以該檔案為主。
+> 此功能已合併至 `/QA-design`，請以 `.claude/commands/QA-design.md` 為主。

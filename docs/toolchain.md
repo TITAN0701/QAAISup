@@ -49,7 +49,7 @@ QA approves test cases
         ↓
 AI/QA creates Cypress and pytest draft
         ↓
-QA/Engineer reviews code
+SDET reviews code
         ↓
 GitHub Actions runs Cypress and pytest
         ↓

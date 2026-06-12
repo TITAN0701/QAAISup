@@ -118,20 +118,20 @@ tasks.md
 範例：
 
 ```md
-# QA/AI Questions for PM
+# QA 釐清備忘 - {feature}
 
-## Need Clarification
+## 待釐清項目
 
 1. 重設密碼連結有效時間是多久？
    - Impact: 會影響有效連結與過期連結測試。
-   - PM Answer:
+   - QA Assumption: 假設有效期為 24 小時，常見業界做法。
 
 2. 使用者輸入未註冊 Email 時要顯示成功提示還是錯誤訊息？
    - Impact: 會影響錯誤訊息測試與帳號枚舉風險。
-   - PM Answer:
+   - QA Assumption: 假設顯示成功提示（避免帳號枚舉），待 Playwright snapshot 確認。
 ```
 
-PM 只需要填 `PM Answer`。如果不知道答案，可以填「待客戶確認」。
+QA 自行填入假設值，讓流程繼續推進，不需等 PM 回覆。
 
 ## scenarios.md
 

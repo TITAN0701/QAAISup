@@ -12,7 +12,7 @@
       "steps": ["點擊忘記密碼入口"],
       "expected": ["系統進入忘記密碼流程"],
       "automation_candidate": true,
-      "notes": "導向 URL 或頁面狀態需依 PM Answer 確認。"
+      "notes": "導向 URL 或頁面狀態需依 QA Assumption 或實際 Playwright snapshot 確認。"
     },
     {
       "id": "TC-FORGOT-PASSWORD-002",
@@ -24,7 +24,7 @@
       "steps": ["保留 Email 欄位空白", "送出申請"],
       "expected": ["系統提示 Email 為必填"],
       "automation_candidate": true,
-      "notes": "提示文案需依 PM Answer 確認。"
+      "notes": "提示文案需依 QA Assumption 或實際 Playwright snapshot 確認。"
     },
     {
       "id": "TC-FORGOT-PASSWORD-003",
@@ -36,7 +36,7 @@
       "steps": ["輸入格式錯誤的 Email", "送出申請"],
       "expected": ["系統提示 Email 格式錯誤"],
       "automation_candidate": true,
-      "notes": "錯誤格式樣本與文案需依 PM Answer 確認。"
+      "notes": "錯誤格式樣本與文案需依 QA Assumption 或實際 Playwright snapshot 確認。"
     },
     {
       "id": "TC-FORGOT-PASSWORD-004",

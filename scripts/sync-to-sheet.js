@@ -10,7 +10,7 @@ const ARTIFACTS_QA = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\artifacts\\generate
 
 function getAuth() {
   const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH));
-  const { client_id, client_secret } = credentials.installed;
+  const { client_id, client_secret } = credentials.web || credentials.installed;
   const oauth2Client = new google.auth.OAuth2(client_id, client_secret, 'http://localhost:3000');
   oauth2Client.setCredentials(JSON.parse(fs.readFileSync(TOKEN_PATH)));
   return oauth2Client;

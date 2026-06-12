@@ -1,5 +1,7 @@
 # QA Clarify
 
+> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`
+
 QA 整理對某個 feature 尚待釐清的假設與不確定點，存入 questions.md 作為內部備忘。
 
 ## Goal
@@ -29,7 +31,7 @@ $ARGUMENTS
 
 - 這是 QA 內部備忘，不是給 PM 填寫的表單
 - 每個問題說明影響範圍（Impact）：會影響哪些測試或驗收標準
-- 不確定的地方寫假設值（QA Assumption），讓後續 QA-3 可以繼續推進
+- 不確定的地方寫假設值（QA Assumption），讓後續 /QA-design 可以繼續推進
 - 不要發明業務規則，只記錄「不確定」的地方
 - 若已有填寫內容，保留既有紀錄
 

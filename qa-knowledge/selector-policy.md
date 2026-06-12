@@ -23,11 +23,11 @@
 
 **class 使用條件**：只用語意明確、不因 UI 改版而變動的 class（例如 `.btn-primary`、`.error-message`）。避免使用 Tailwind utility class（如 `.bg-white`、`.text-sm`）或框架自動產生的 hash class。
 
-若以上替代方案也無法確認 selector，該 TC 改為 `it.skip()`，並在頂部加 `[ENG TASK]` 說明需補哪個屬性。
+若以上替代方案也無法確認 selector，該 TC 改為 `it.skip()`，並在頂部加 `[SDET TODO]` 說明需確認哪個屬性或 URL。
 
 ## Preferred Selector（data-testid 可用後的長期目標）
 
-1. `data-testid`（待工程師補上後再啟用）
+1. `data-testid`（待 SIT DOM 補上後再啟用）
 2. semantic role，例如 `button`、`input`
 3. `placeholder` 或 `label` 文字
 4. 穩定且唯一的中文文字（`cy.contains`）
@@ -44,7 +44,7 @@ Tailwind / hash class（如 .bg-white、.text-sm、.jsx-abc123）
 依賴畫面位置的 selector
 ```
 
-## Naming Convention（供未來工程師補 data-testid 參考）
+## Naming Convention（data-testid 可用後的命名規範）
 
 ```txt
 data-testid="login-email-input"
@@ -59,5 +59,5 @@ AI 產生測試碼時：
 
 - **不可寫** `cy.get('[data-testid="..."]')`
 - 必須使用從 Playwright snapshot 或 WETPAINT 參考資料中確認的真實 selector
-- 無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[ENG TASK]`
-- `[ENG TASK]` 說明工程師需補哪個 `data-testid` 及對應元素
+- 無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[SDET TODO]`
+- `[SDET TODO]` 說明需確認哪個 URL、selector 或 DOM 屬性

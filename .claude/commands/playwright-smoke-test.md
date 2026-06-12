@@ -1,5 +1,7 @@
 # Playwright Smoke Test
 
+> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/mcp-fallback.md`
+
 使用 Playwright MCP 自動登入系統，巡覽所有主要頁面並截圖。
 
 頁面清單從 `automation/e2e/pages.md` 讀取。換系統時只需更新該檔案，不需修改此指令。
@@ -97,8 +99,11 @@ mkdir -p artifacts/raw/screenshots/snapshots
 ## Rules
 
 - 執行前必須先讀取 `automation/e2e/pages.md`，不使用指令內硬寫的頁面清單
-- 不要點「開始測驗」或任何會新增/修改資料的按鈕
-- 不要填寫任何表單並送出（只截圖，不操作）
+- 允許所有操作：登入、點「開始測驗」/「開始檢測」、填寫並送出表單
+- **測驗流程中每一題都必須點入作答並截圖 + snapshot，不可跳過任何一題**（強制）
+- **影片錄製模組（supine/gait/video）**：切換 390×844 → 點「開始錄製」→ 等 30 秒 → 點「停止錄製」→ 點「上傳影片」，強制完成不可略過
+- 截圖命名規則：`smoke-step-{step}-{題號}.png` / `snapshot-step-{step}-{題號}.yml`
 - 截圖統一使用 `fullPage: true`
 - 如果某頁面載入失敗（404 或跳轉），記錄為失敗但繼續執行其他頁面
 - 截圖完成後**不要**關閉瀏覽器（保留給後續使用）
+- **已知測試個案**（優先使用）：userId=528（4歲，48M，所有模組）、userId=524（2M，supine 題）

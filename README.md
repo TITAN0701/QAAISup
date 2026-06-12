@@ -7,25 +7,23 @@
 ## 流程總覽
 
 ```
-[PM 填需求]  /PM-1-create-intake
+[PM 填需求]  /PM-import
      ↓
-[建立 QA 工作區]  new-feature-from-inbox.ps1
+[建立 QA 工作區]  /QA-1-import-pm-request → new-feature-from-inbox.ps1
      ↓
-[QA/AI 產規格 & 問題]  /QA-1  /QA-2  → spec.md  questions.md
+[QA 整理假設]  /QA-clarify → questions.md（QA Assumption，不等 PM）
      ↓
-[PM 回答問題]  /PM-2-answer-questions  → questions.md PM Answer:
+[QA 產情境 & 案例]  /QA-design → scenarios.md  test-cases.json
      ↓
-[QA/AI 產情境 & 案例]  /QA-3  /QA-4  → scenarios.md  test-cases.json
+[截圖取 selector]  /playwright-smoke-test → snapshots/*.yml
      ↓
-[QA/AI 產自動化草稿]  /QA-5  → *.cy.ts  test_*.py  ⚠ Engineer 補 data-testid
+[QA 產自動化草稿]  /QA-5 → *.cy.ts  test_*.py（selector 從 snapshot 抽取）
      ↓
-[執行測試 & 回填結果]  execution-results.csv  ( Pass / Fail / Blocked )
+[執行測試]  npm run test:e2e / pytest → allure-results/
      ↓
-[產報告 & Excel]  /QA-6  或  refresh-qa-artifacts.ps1
+[產報告]  /QA-6 → test-cases.md  test-report.md  release-summary.md
      ↓
-[test-cases.md  test-report.md  scenario-matrix.xlsx]
-     ↓
-[同步 Google Sheet]  npm run sync:sheet
+[匯出 PM 報告]  /PM-report → release-summary.docx
 ```
 
 ---
@@ -66,17 +64,17 @@ npm run sync:sheet
 
 | 指令 | 用途 |
 |---|---|
-| `/PM-1-create-intake` | PM 建立需求 |
-| `/PM-2-answer-questions` | PM 回答問題 |
-| `/QA-1-import-pm-request` | 匯入 PM 需求 |
-| `/QA-2-generate-questions` | 產生釐清問題 |
-| `/QA-3-generate-scenarios` | 產生測試情境 |
-| `/QA-4-generate-testcases` | 產生測試案例 |
-| `/QA-5-generate-automation` | 產自動化腳本草稿 |
-| `/QA-6-generate-report` | 產 QA / PM 報告（含 test-cases.md） |
+| `/PM-import` | 匯入 PM 需求（直接寫 or .xlsx） |
+| `/PM-report` | 審查並匯出 PM 報告（.docx） |
+| `/QA-1-import-pm-request` | 建立 QA 工作區 |
+| `/QA-clarify` | QA 整理假設備忘（不等 PM） |
+| `/QA-design` | 產情境 + 測試案例（一次完成） |
+| `/playwright-smoke-test` | 登入 SIT，截圖 + 取 DOM snapshot |
+| `/QA-5-generate-automation` | 讀 snapshot 產 Cypress/pytest 草稿 |
+| `/QA-6-generate-report` | 產 QA + PM 報告 |
 | `/QA-bug-report` | Bug 整理成 RIDER 格式並推送 GitHub Issues |
+| `/QA-knowledge-update` | 系統改版後同步知識庫 |
 | `/check-project` | 掃描專案整體檔案結構 |
-| `/playwright-smoke-test` | 截圖所有主要頁面 |
 | `/project-init` | 清空舊內容、更新設定，快速切換至新系統 |
 
 ---

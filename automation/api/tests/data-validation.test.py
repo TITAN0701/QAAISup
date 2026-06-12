@@ -2,8 +2,8 @@
 # Feature: 資料驗證
 # Test cases: TC-DATAVAL-001 ~ TC-DATAVAL-003 (API validation for ID number)
 
-# [ENG TASK] Confirm API endpoint for ID number validation (e.g. POST /api/validate/id-number)
-# [ENG TASK] Confirm request/response schema
+# [SDET TODO] Confirm API endpoint for ID number validation (e.g. POST /api/validate/id-number)
+# [SDET TODO] Confirm request/response schema
 # Do NOT use real personal ID numbers in production
 
 import os
@@ -24,7 +24,7 @@ class TestIdNumberValidation:
 
     def test_TC_DATAVAL_001_second_digit_1_male_passes(self, valid_headers):
         """TC-DATAVAL-001 第二碼為 1（男性）時驗證通過"""
-        # [ENG TASK] Confirm request body key name (id_number? id? national_id?)
+        # [SDET TODO] Confirm request body key name (id_number? id? national_id?)
         response = requests.post(
             VALIDATE_ENDPOINT,
             json={"id_number": "A123456789"},
@@ -32,7 +32,7 @@ class TestIdNumberValidation:
         )
         assert response.status_code == 200
         data = response.json()
-        # [ENG TASK] Confirm response key for validation result (valid? success? result?)
+        # [SDET TODO] Confirm response key for validation result (valid? success? result?)
         assert data.get("valid") is True
 
     def test_TC_DATAVAL_002_second_digit_2_female_passes(self, valid_headers):

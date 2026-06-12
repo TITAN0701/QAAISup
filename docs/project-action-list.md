@@ -125,7 +125,7 @@
 
   - [ ] PM 確認 BLOCKED 原因（等待規格確認 or 技術限制）
   - [ ] QA 在 `qa-workspace/specs/progress-bar/` 建立 `blocker.md`，記錄原因、對應問題編號、預計解除日期
-  - [ ] PM 回覆後，QA 執行 `/QA-4-generate-testcases progress-bar`
+  - [ ] 規格確認後，QA 執行 `/QA-design progress-bar`
 
 ---
 

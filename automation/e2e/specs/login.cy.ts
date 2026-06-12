@@ -2,8 +2,8 @@
 // 來源：qa-workspace/specs/login/test-cases.json
 // Selector 驗證：Playwright snapshot 2026-06-09（登入頁無 data-testid，使用 placeholder）
 
-// [ENG TASK] Add data-testid="login-account-input", "login-password-input", "login-submit-button"
-// [ENG TASK] Add data-testid="login-error-message" for error toast/alert
+// [SDET TODO] Add data-testid="login-account-input", "login-password-input", "login-submit-button"
+// [SDET TODO] Add data-testid="login-error-message" for error toast/alert
 
 describe("一般登入", () => {
   const loginUrl = "/login";

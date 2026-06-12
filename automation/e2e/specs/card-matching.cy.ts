@@ -7,8 +7,8 @@
 //   - 測驗進入點: /question?step=overview → 點「開始檢測」
 //   - 圖卡配對題目 step code 未知（不是 choice/supine）→ 需工程確認
 
-// [ENG TASK] Confirm step code for card-matching questions (e.g. /question?step=card or similar)
-// [ENG TASK] Confirm real selectors for question type indicator, card options, feedback elements
+// [SDET TODO] Confirm step code for card-matching questions (e.g. /question?step=card or similar)
+// [SDET TODO] Confirm real selectors for question type indicator, card options, feedback elements
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -18,17 +18,17 @@ describe('圖卡配對', () => {
   });
 
   it.skip('TC-CARDMATCH-001 4M 個案測驗中不顯示圖卡配對題目', () => {
-    cy.visit('/question?step=overview'); // [ENG TASK] Need to be in the correct child's session context
+    cy.visit('/question?step=overview'); // [SDET TODO] Need to be in the correct child's session context
 
     // Walk through all questions and verify none are card-matching type
-    // [ENG TASK] Add data-testid="question-type" with value like "card-matching" or "standard"
+    // [SDET TODO] Add data-testid="question-type" with value like "card-matching" or "standard"
     cy.get('[data-testid="question-type"]').each(($el) => {
       expect($el.text()).not.to.contain('card-matching');
     });
   });
 
   it.skip('TC-CARDMATCH-002 6M 個案測驗中不顯示圖卡配對題目', () => {
-    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam page URL for 6M case after clicking 「發展檢測」
+    cy.visit('/frontdesk'); // [SDET TODO] Replace with actual exam page URL for 6M case after clicking 「發展檢測」
 
     cy.get('[data-testid="question-type"]').each(($el) => {
       expect($el.text()).not.to.contain('card-matching');
@@ -36,7 +36,7 @@ describe('圖卡配對', () => {
   });
 
   it.skip('TC-CARDMATCH-003 8M 個案測驗中可正常顯示圖卡配對題目', () => {
-    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam page URL for 8M case after clicking 「發展檢測」
+    cy.visit('/frontdesk'); // [SDET TODO] Replace with actual exam page URL for 8M case after clicking 「發展檢測」
 
     // At least one card-matching question should appear
     cy.get('[data-testid="question-type"][value="card-matching"]').should('exist');
@@ -45,10 +45,10 @@ describe('圖卡配對', () => {
   });
 
   it.skip('TC-CARDMATCH-004 圖卡配對題中點擊彩色圖案即算配對成功（無需拖拉）', () => {
-    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam page URL for 8M case after clicking 「發展檢測」
+    cy.visit('/frontdesk'); // [SDET TODO] Replace with actual exam page URL for 8M case after clicking 「發展檢測」
 
     // Navigate to a card-matching question
-    // [ENG TASK] Provide direct URL or test data to land on a card-matching question
+    // [SDET TODO] Provide direct URL or test data to land on a card-matching question
     cy.get('[data-testid="question-type"][value="card-matching"]').should('exist');
 
     // Click (not drag) the correct colored card
@@ -59,7 +59,7 @@ describe('圖卡配對', () => {
   });
 
   it.skip('TC-CARDMATCH-005 圖卡配對點擊正確圖案後顯示正向回饋並進入下一題', () => {
-    cy.visit('/frontdesk'); // [ENG TASK] Replace with actual exam page URL for 8M case after clicking 「發展檢測」
+    cy.visit('/frontdesk'); // [SDET TODO] Replace with actual exam page URL for 8M case after clicking 「發展檢測」
 
     cy.get('[data-testid="question-type"][value="card-matching"]').should('exist');
 

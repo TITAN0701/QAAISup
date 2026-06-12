@@ -1,5 +1,7 @@
 # QA Design
 
+> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`
+
 根據 spec 一次產出測試情境（scenarios）與測試案例（test cases）。
 
 ## Goal

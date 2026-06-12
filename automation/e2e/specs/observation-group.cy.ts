@@ -10,8 +10,8 @@
 //   - 下一題按鈕: button "下一題"（答題後才啟用）
 //   - 題目類型標籤: cy.contains('觀察題組')
 
-// [ENG TASK] Seed test data: 15M+/24M/39M 個案且 AI 模組已完成，提供 cases.json 真實 id
-// [ENG TASK] Confirm how to verify AI module completion state (URL change or DOM element)
+// [SDET TODO] Seed test data: 15M+/24M/39M 個案且 AI 模組已完成，提供 cases.json 真實 id
+// [SDET TODO] Confirm how to verify AI module completion state (URL change or DOM element)
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -26,7 +26,7 @@ describe('觀察題組', () => {
       cy.visit('/question?step=overview');
       cy.contains('button', '開始檢測').click();
 
-      // [ENG TASK] Confirm how AI module completion is indicated before observation group
+      // [SDET TODO] Confirm how AI module completion is indicated before observation group
       cy.url().should('include', 'step=choice');
       cy.contains('觀察題組').should('be.visible');
     });
@@ -39,7 +39,7 @@ describe('觀察題組', () => {
 
       cy.url().should('include', 'step=choice');
       cy.contains('觀察題組').should('be.visible');
-      // [ENG TASK] Confirm how to verify 24M-specific observation group vs 15M
+      // [SDET TODO] Confirm how to verify 24M-specific observation group vs 15M
     });
   });
 

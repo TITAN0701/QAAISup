@@ -69,7 +69,7 @@ qa-workspace/specs/*/scenarios.md
 使用者回覆「更新」或指定要更新哪些項目後：
 
 1. 依確認內容修改對應的 qa-knowledge 檔案
-2. 若有新術語加入 glossary，同步確認 QA-2 ～ QA-6 的 Read 清單是否需要調整
+2. 若有新術語加入 glossary，同步確認 QA-clarify、QA-design、QA-5、QA-6 的 Read 清單是否需要調整
 3. commit 所有變更，message 格式：
 
 ```
