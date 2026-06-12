@@ -20,7 +20,7 @@ PM 填需求 (pm-inbox/)
 QA/AI 產規格與問題 (qa-workspace/specs/{feature}/)
   ↓ /QA-1 /QA-clarify → spec.md, questions.md
 QA/AI 產情境與案例
-  ↓ /QA-3 /QA-4 → scenarios.md, test-cases.json
+  ↓ /QA-design → scenarios.md, test-cases.json
 QA/AI 產自動化草稿
   ↓ /QA-5 → automation/e2e/specs/*.cy.ts, automation/api/tests/*.py
 執行測試 & 回填結果 (artifacts/raw/)
@@ -75,8 +75,7 @@ npm run sync:sheet
 | `/PM-report` | 審查並匯出 PM 發布摘要報告（.md + .docx） |
 | `/QA-1-import-pm-request` | 檢查 pm-inbox，準備建立工作區 |
 | `/QA-clarify` | QA 整理尚待釐清的假設與不確定點（內部備忘） |
-| `/QA-3-generate-scenarios` | 產生測試情境（scenarios、plan、tasks） |
-| `/QA-4-generate-testcases` | 產生 test-cases.json、test-plan、risk-notes |
+| `/QA-design` | 產生測試情境與測試案例（scenarios、test-cases.json、plan、tasks） |
 | `/QA-5-generate-automation` | 產自動化草稿（Cypress + pytest）；AI 依 test-cases.json 與 scenarios.md 推斷產出，非真實執行，需 QA/Engineer review 後才可跑 |
 | `/QA-6-generate-report` | 根據執行結果產 QA/PM 報告 |
 | `/QA-bug-report` | 將 bug 描述整理成 RIDER 格式報告（輸出至 artifacts/generated/qa/bugs/） |
