@@ -39,14 +39,15 @@ describe("一般登入", () => {
   });
 
   it("[TC-LOGIN-003] 未輸入密碼時提示必填", () => {
-    cy.get('input[placeholder="請輸入手機號碼或電子郵件"]').should('be.visible').clear().type('0999999993');
+    const account = Cypress.env("TEST_USER_EMAIL");
+    cy.get('input[placeholder="請輸入手機號碼或電子郵件"]').should('be.visible').clear().type(account);
     cy.contains('button', '登入').should('be.visible').click();
     cy.contains('div,span,p', /密碼|必填|請輸入/i).should('be.visible');
     cy.screenshot("TC-LOGIN-003-result");
   });
 
   it("[TC-LOGIN-004] 錯誤帳密登入失敗", () => {
-    cy.get('input[placeholder="請輸入手機號碼或電子郵件"]').should('be.visible').clear().type('0999999994');
+    cy.get('input[placeholder="請輸入手機號碼或電子郵件"]').should('be.visible').clear().type('invalid-user@example.com');
     cy.get('input[placeholder="請輸入密碼"]').should('be.visible').clear().type('wrongpassword', { log: false });
     cy.contains('button', '登入').should('be.visible').click();
     cy.contains('div,span,p', /帳號或密碼錯誤|登入失敗/i).should('be.visible');
