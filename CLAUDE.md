@@ -71,9 +71,8 @@ npm run sync:sheet
 
 | 指令 | 用途 |
 |------|------|
-| `/PM-1-create-intake` | PM 建立需求（整理 pm-inbox） |
-| `/PM-3-review-release-summary` | PM 審查 release summary |
-| `/PM-4-import-xlsx` | 匯入 XLSX 需求表 |
+| `/PM-import` | 匯入 PM 需求（直接撰寫 or 從 .xlsx 匯入） |
+| `/PM-report` | 審查並匯出 PM 發布摘要報告（.md + .docx） |
 | `/QA-1-import-pm-request` | 檢查 pm-inbox，準備建立工作區 |
 | `/QA-2-generate-questions` | 根據 spec 產生 PM 釐清問題 |
 | `/QA-3-generate-scenarios` | 產生測試情境（scenarios、plan、tasks） |
