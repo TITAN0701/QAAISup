@@ -47,6 +47,10 @@
     "statusValues": ["Not Evaluated", "Passed", "Failed", "Blocked"],
     "exportDocx": true
   },
+  "evals": {
+    "rubrics": ".claude/evals/",
+    "autoEval": true
+  },
   "integrations": {
     "github": {
       "repo": "TITAN0701/QAAISup",
