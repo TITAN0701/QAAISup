@@ -19,9 +19,6 @@ PM 填需求 (pm-inbox/)
   ↓ /PM-1-create-intake → .\scripts\new-feature-from-inbox.ps1
 QA/AI 產規格與問題 (qa-workspace/specs/{feature}/)
   ↓ /QA-1 /QA-2 → spec.md, questions.md
-PM 釐清問題（選用）
-  ↓ 口頭 / 文件 / 任何方式皆可，QA 自行判斷是否夠用再繼續
-  ↓ /PM-2-answer-questions → 若 PM 願意填 questions.md 才使用，非必要步驟
 QA/AI 產情境與案例
   ↓ /QA-3 /QA-4 → scenarios.md, test-cases.json
 QA/AI 產自動化草稿
@@ -75,7 +72,6 @@ npm run sync:sheet
 | 指令 | 用途 |
 |------|------|
 | `/PM-1-create-intake` | PM 建立需求（整理 pm-inbox） |
-| `/PM-2-answer-questions` | PM 回答 questions.md（選用，非必要步驟） |
 | `/PM-3-review-release-summary` | PM 審查 release summary |
 | `/PM-4-import-xlsx` | 匯入 XLSX 需求表 |
 | `/QA-1-import-pm-request` | 檢查 pm-inbox，準備建立工作區 |
@@ -89,6 +85,12 @@ npm run sync:sheet
 | `/check-project` | 掃描專案整體檔案結構（只用 Glob，最小 token）|
 | `/playwright-smoke-test` | 用 Playwright MCP 截圖所有主要頁面 |
 | `/project-init` | 清空舊專案內容、更新設定，快速切換至新系統 |
+
+**備用工具（非常規流程）：**
+
+| 指令 | 用途 |
+|------|------|
+| `/PM-2-answer-questions` | PM 若需書面紀錄時才使用，將釐清結果填入 questions.md |
 
 ---
 
