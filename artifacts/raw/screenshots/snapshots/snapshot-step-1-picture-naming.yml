@@ -1,0 +1,33 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2079]:
+    - generic [ref=e2080]:
+      - generic [ref=e2082]:
+        - generic [ref=e2084]: 口語表達
+        - generic [ref=e2086]: 0%
+      - generic [ref=e2276]:
+        - generic [ref=e2277]:
+          - paragraph [ref=e2278]: 圖片拍攝教學
+          - heading "口語表達" [level=2] [ref=e2279]
+          - paragraph [ref=e2280]: 請將相機擺放在能夠完整拍攝孩子正面臉部的位置。避免家長出現在鏡頭中。 協助孩子按下錄影按鈕，並確保孩子能在60秒內完成作答。
+        - generic [ref=e2282]:
+          - img "step1" [ref=e2283]
+          - img "questionScreenPreview" [ref=e2284]
+          - img "hint" [ref=e2285]
+          - generic [ref=e2286]:
+            - paragraph [ref=e2287]: 1. 家長播放語音
+            - paragraph [ref=e2288]: 2. 孩童口頭回答
+          - img "faceDetectionPreview" [ref=e2289]
+          - img "playAudioButton" [ref=e2290]
+      - generic [ref=e2291]:
+        - generic [ref=e2292]:
+          - img "avatar" [ref=e2293]
+          - generic [ref=e2294]:
+            - paragraph [ref=e2295]: 四歲0個月
+            - paragraph [ref=e2296]: 0112_MMHT000027 | 4歲0個月 | 男
+        - generic [ref=e2297]:
+          - button "取消" [ref=e2298] [cursor=pointer]
+          - button "開始錄製" [ref=e2299] [cursor=pointer]:
+            - img [ref=e2300]
+            - text: 開始錄製
+  - region "Notifications (F8)":
+    - list

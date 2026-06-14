@@ -1,0 +1,28 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - img "logo" [ref=e4]
+    - generic [ref=e6]:
+      - generic [ref=e7]: 兒童發展智慧偵測平台
+      - generic [ref=e9]:
+        - heading "歡迎回來" [level=2] [ref=e10]
+        - generic [ref=e11]:
+          - generic [ref=e12]: 帳號
+          - textbox "帳號" [ref=e13]:
+            - /placeholder: 請輸入手機號碼或電子郵件
+        - generic [ref=e14]:
+          - generic [ref=e15]: 密碼
+          - generic [ref=e16]:
+            - textbox "密碼" [ref=e17]:
+              - /placeholder: 請輸入密碼
+            - button [ref=e18] [cursor=pointer]:
+              - img [ref=e19]
+          - button "忘記密碼？" [ref=e22] [cursor=pointer]
+        - button "登入" [ref=e23] [cursor=pointer]:
+          - generic [ref=e24]: 登入
+      - img "chick" [ref=e25]
+      - img "two star" [ref=e26]
+      - img "cloud" [ref=e27]
+      - img "red heart" [ref=e28]
+    - generic [ref=e29]: Copyright © 2025 WETPAINT | All Rights Reserved
+  - region "Notifications (F8)":
+    - list

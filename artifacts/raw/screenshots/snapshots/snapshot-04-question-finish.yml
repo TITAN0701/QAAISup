@@ -1,0 +1,13 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2079]:
+    - generic [ref=e2415]:
+      - heading "評量完成！" [level=2] [ref=e2416]
+      - paragraph [ref=e2417]:
+        - text: 想了解孩子在這次測驗中的表現？
+        - text: 請點選「查看評量結果」以瀏覽評估內容。
+      - link "查看評量結果" [ref=e2418] [cursor=pointer]:
+        - /url: /question?step=result
+        - text: 查看評量結果
+        - img [ref=e2419]
+  - region "Notifications (F8)":
+    - list

@@ -1,0 +1,27 @@
+# Snapshot: /question?step=walk-fb (走路步態 - 正/背面)
+# Captured: 2026-06-15 via JS bundle fetch (walk-fb-DtMb6cvB.js)
+# Method: bundle text extraction (direct navigation blocked by sequential exam flow)
+
+page_title: 走路步態（正面/背面）
+url_pattern: /question?step=walk-fb
+step_code: walk-fb
+
+confirmed_text:
+  instruction_title:
+    - 接下來，請您幫孩子拍攝一段直線行走影片
+  instruction_detail:
+    - 畫面需為孩子正對或背對鏡頭向前走的模樣，協助我們觀察孩子自然的步態發展。
+  setup_requirements:
+    - 請將手機或平板直立擺放（直式拍攝）
+    - 孩子的全身（從頭到腳）都在綠色輔助框內，並且清楚入鏡
+  duration_hint:
+    - 超過 15 秒，最多 60 秒
+  shooting_notes_header: 拍攝小提醒
+  shooting_notes:
+    - 錄影前避免孩童超出輔助框
+    - 避免鏡頭失焦、模糊與晃動
+    - 拍攝過程中避免干涉孩童動作與多人入鏡
+  tutorial_label: 拍攝教學
+
+unconfirmed_text:
+  - 請勿讓孩子穿著遮擋四肢（衣著限制說明 — 未出現在 bundle，需人工確認）

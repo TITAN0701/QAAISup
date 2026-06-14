@@ -1,0 +1,25 @@
+- generic [active] [ref=e1]:
+  - main [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e19]:
+        - generic [ref=e21]: 精細動作
+        - generic [ref=e23]: 0%
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - paragraph [ref=e35]: 拍攝教學
+          - heading "手繪圖形辨識圖片拍照" [level=2] [ref=e36]
+          - paragraph [ref=e37]: 請拍下孩子所繪製的仿畫，並且完成上傳。
+        - img "手繪圖形辨識" [ref=e39]
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - img "avatar" [ref=e43]
+          - generic [ref=e44]:
+            - paragraph [ref=e45]: QASmoke48M
+            - paragraph [ref=e46]: 0112_MMHT000071 | 4歲0個月 | 男
+        - generic [ref=e47]:
+          - button "取消" [ref=e48] [cursor=pointer]
+          - button "開始拍照" [ref=e49] [cursor=pointer]:
+            - img [ref=e50]
+            - text: 開始拍照
+  - region "Notifications (F8)":
+    - list

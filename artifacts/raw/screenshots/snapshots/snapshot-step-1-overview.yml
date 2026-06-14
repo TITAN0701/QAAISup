@@ -1,0 +1,128 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2075]:
+    - generic [ref=e2076]:
+      - generic [ref=e2078]:
+        - generic [ref=e2080]: 測驗總覽
+        - generic [ref=e2082]: 0%
+      - generic [ref=e2086]:
+        - generic [ref=e2088]:
+          - generic [ref=e2092]:
+            - generic [ref=e2093]:
+              - heading "測驗總覽" [level=2] [ref=e2094]
+              - paragraph [ref=e2095]: 歡迎使用WETPAINT替您的寶貝做線上的發展評估
+              - paragraph [ref=e2096]: 孩子本次的檢測面向涵蓋：「粗大動作、精細動作、社會情緒、語言理解、語言表達、認知」
+            - generic [ref=e2097]:
+              - paragraph [ref=e2103]: 請務必於作答前， 詳細閱讀完測驗須知喔！
+              - generic [ref=e2104]:
+                - generic [ref=e2107]: 粗大動作
+                - generic [ref=e2110]: 精細動作
+                - generic [ref=e2113]: 社會情緒
+                - generic [ref=e2116]: 語言理解
+                - generic [ref=e2119]: 語言表達
+                - generic [ref=e2123]:
+                  - generic [ref=e2124]: 認
+                  - generic [ref=e2125]: 知
+          - generic [ref=e2129]:
+            - generic [ref=e2130]:
+              - heading "測驗方式" [level=2] [ref=e2131]
+              - paragraph [ref=e2132]: 測驗的方式包括填答 「觀察題組」與「任務影片拍攝」
+              - paragraph [ref=e2133]: 為了讓您更熟悉測驗方式，我們將為您說明操作的小技巧，協助您與孩子順利完成作答
+            - generic [ref=e2135]:
+              - generic [ref=e2136]:
+                - generic [ref=e2137]: 觀察題組說明
+                - list [ref=e2140]:
+                  - listitem [ref=e2141]:
+                    - generic [ref=e2142]: "1"
+                    - generic [ref=e2143]: 請回想或觀察孩子平時的表現與反應後作答
+                  - listitem [ref=e2144]:
+                    - generic [ref=e2145]: "2"
+                    - generic [ref=e2146]: 問題皆為選擇題，請依實際表現填寫
+                  - listitem [ref=e2147]:
+                    - generic [ref=e2148]: "3"
+                    - generic [ref=e2149]: 觀察題組不能重複測驗，請確保在網路穩定的地方填寫
+              - generic [ref=e2150]:
+                - generic [ref=e2151]: 影片拍攝說明
+                - list [ref=e2154]:
+                  - listitem [ref=e2155]:
+                    - generic [ref=e2156]: "1"
+                    - generic [ref=e2157]: 請依任務指示，錄製指定秒數的影片後上傳供系統分析
+                  - listitem [ref=e2158]:
+                    - generic [ref=e2159]: "2"
+                    - generic [ref=e2160]: 拍攝時依照指示調整錄製方向，失敗可重新拍攝
+                  - listitem [ref=e2161]:
+                    - generic [ref=e2162]: "3"
+                    - generic [ref=e2163]: 保持畫面穩定清晰，避免干擾物入鏡
+          - generic [ref=e2167]:
+            - generic [ref=e2168]:
+              - heading "影片拍攝小技巧" [level=2] [ref=e2169]
+              - paragraph [ref=e2170]: 這裡提供您在為孩子拍攝影片時的注意事項，以及可事先準備的輔助設備建議，幫助您更順利完成任務。
+              - paragraph [ref=e2171]: 別擔心記不住！在每一題開始前，我們都會提供清楚的操作說明，逐步引導您完成拍攝。
+            - generic [ref=e2173]:
+              - generic [ref=e2174]:
+                - generic [ref=e2176]: 心理與環境準備
+                - generic [ref=e2177]:
+                  - generic [ref=e2178]:
+                    - heading "選擇合適的時間" [level=3] [ref=e2179]
+                    - generic [ref=e2180]:
+                      - img "time" [ref=e2181]
+                      - paragraph [ref=e2182]: 建議在孩子精神充足、心情穩定時進行，避免孩子疲累或肚子餓的時段。
+                  - generic [ref=e2183]:
+                    - heading "營造安靜環境" [level=3] [ref=e2184]
+                    - generic [ref=e2185]:
+                      - img "environment" [ref=e2186]
+                      - paragraph [ref=e2187]: 測驗需在無干擾的空間中進行，避免背景音樂、開放式空間或其他人的打擾。
+              - generic [ref=e2188]:
+                - generic [ref=e2190]: 道具與設備準備
+                - generic [ref=e2191]:
+                  - generic [ref=e2192]:
+                    - heading "確認所需材料" [level=3] [ref=e2193]
+                    - generic [ref=e2194]:
+                      - img "materials" [ref=e2195]
+                      - generic [ref=e2196]:
+                        - paragraph [ref=e2197]: 依照每項任務說明準備對應道具，如孩子喜歡的小玩具與紙筆
+                        - paragraph [ref=e2198]: 注意道具不可入鏡！
+                  - generic [ref=e2199]:
+                    - heading "確認設備正常" [level=3] [ref=e2200]
+                    - generic [ref=e2201]:
+                      - img "equipment" [ref=e2202]
+                      - generic [ref=e2203]:
+                        - paragraph [ref=e2204]: 攝影裝置電量充足、鏡頭乾淨、支架穩固。
+                        - paragraph [ref=e2205]: 建議可以使用支架拍攝畫面比較穩定喔！
+          - generic [ref=e2209]:
+            - generic [ref=e2210]:
+              - heading "答題互動小技巧" [level=2] [ref=e2211]
+              - paragraph [ref=e2212]: 可以用鼓勵與引導的語氣進行對話，讓孩子自然表現，不需糾正或催促。
+            - generic [ref=e2214]:
+              - generic [ref=e2217]:
+                - generic [ref=e2218]:
+                  - img [ref=e2220]
+                  - paragraph [ref=e2222]: 若孩子遲疑，可重複問題或提示
+                - generic [ref=e2223]:
+                  - img [ref=e2225]
+                  - paragraph [ref=e2227]: 在測驗前簡單說明活動內容：「等一下我們要玩一些小任務，像是在玩遊戲喔～」
+              - generic [ref=e2229]:
+                - generic [ref=e2230]: 如果拍攝失敗，可以重新拍攝！
+                - generic [ref=e2231]:
+                  - img [ref=e2233]
+                  - paragraph [ref=e2235]: 避免直接告訴孩子答案，過度干涉孩子的反應
+                - generic [ref=e2236]:
+                  - img [ref=e2238]
+                  - paragraph [ref=e2240]: 不要用急促、責備的語氣催促孩子
+                - generic [ref=e2241]:
+                  - img [ref=e2243]
+                  - paragraph [ref=e2245]: 不要重複練習或糾正動作
+        - button "上一張" [disabled]:
+          - img
+        - button "下一張" [ref=e2246] [cursor=pointer]:
+          - img [ref=e2247]
+      - generic [ref=e2255]:
+        - generic [ref=e2256]:
+          - img "avatar" [ref=e2257]
+          - generic [ref=e2258]:
+            - paragraph [ref=e2259]: 48myiyioele
+            - paragraph [ref=e2260]: 0120_MMHT000031 | 4歲7個月 | 男
+        - generic [ref=e2261]:
+          - button "取消" [ref=e2262] [cursor=pointer]
+          - button "開始檢測" [ref=e2263] [cursor=pointer]
+  - region "Notifications (F8)":
+    - list

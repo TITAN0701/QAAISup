@@ -1,0 +1,31 @@
+# Snapshot: /question?step=walk-side (走路步態 - 側面)
+# Captured: 2026-06-15 via JS bundle fetch (walk-side-6HEwPPc7.js)
+# Method: bundle text extraction (direct navigation blocked by sequential exam flow)
+
+page_title: 走路步態（側面）
+url_pattern: /question?step=walk-side
+step_code: walk-side
+
+confirmed_text:
+  instruction_title:
+    - 接下來，請您幫孩子拍攝一段直線行走影片
+  instruction_detail:
+    - 畫面需為孩子側面行走的模樣，協助我們觀察孩子自然的步態發展。
+  setup_requirements:
+    - 請將手機或平板橫式擺放（橫式拍攝）
+    - 請確認孩子的全身（從頭到腳）都在綠色輔助框內，並且清楚入鏡
+  duration_hint:
+    - 超過 15 秒，最多 60 秒
+  shooting_notes_header: 拍攝小提醒
+  shooting_notes:
+    - 錄影過程避免孩童超出輔助框
+    - 避免鏡頭失焦、模糊與晃動
+    - 拍攝過程中避免干涉孩童動作與多人入鏡
+  tutorial_label: 拍攝教學
+
+key_distinction_from_walk_fb:
+  - walk-side: 橫式擺放（橫式拍攝）；側面行走
+  - walk-fb:   直立擺放（直式拍攝）；正對或背對鏡頭
+
+unconfirmed_text:
+  - 由左向右 / 由右向左（方向說明 — 未出現在 bundle）
