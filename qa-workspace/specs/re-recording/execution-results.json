@@ -1,0 +1,25 @@
+{
+  "feature": "re-recording",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/re-recording/test-cases.json",
+  "scenario_reviews": [],
+  "test_results": [
+    {
+      "test_case_id": "TC-REREC-002",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 檢測紀錄頁 URL 待確認，需補錄模組 seed data",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-REREC-004",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 同上，3 個待補錄模組個案 seed data 待確認",
+      "screenshot": ""
+    }
+  ]
+}

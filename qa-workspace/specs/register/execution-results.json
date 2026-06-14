@@ -1,67 +1,45 @@
 {
   "feature": "register",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
   "source_test_cases": "qa-workspace/specs/register/test-cases.json",
   "scenario_reviews": [
-    {
-      "scenario_id": "SC-REGISTER-001",
-      "status": "Approved",
-      "notes": "需確認創建帳號入口導向規則。"
-    },
-    {
-      "scenario_id": "SC-REGISTER-002",
-      "status": "Approved",
-      "notes": "需確認必填欄位與文案。"
-    },
-    {
-      "scenario_id": "SC-REGISTER-003",
-      "status": "Approved",
-      "notes": "需確認密碼不一致錯誤文案。"
-    },
-    {
-      "scenario_id": "SC-REGISTER-004",
-      "status": "Approved",
-      "notes": "需確認註冊成功後流程。"
-    }
+    { "scenario_id": "SC-REGISTER-001", "status": "Approved", "notes": "確認創建帳號入口導向規則。" },
+    { "scenario_id": "SC-REGISTER-002", "status": "Approved", "notes": "確認必填欄位與文案。" },
+    { "scenario_id": "SC-REGISTER-003", "status": "Approved", "notes": "確認密碼不一致錯誤文案。" },
+    { "scenario_id": "SC-REGISTER-004", "status": "Approved", "notes": "確認註冊成功後流程。" }
   ],
   "test_results": [
     {
       "test_case_id": "TC-REGISTER-001",
-      "platform": "Desktop / Win Chrome",
-      "status": "Pass",
-      "executed_at": "2026-05-30T15:00:59+08:00",
-      "test_url": "",
-      "evidence": "",
-      "notes": "",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — BLOCKED: 功能未在 SIT 開放，RD 尚未啟用",
       "screenshot": ""
     },
     {
       "test_case_id": "TC-REGISTER-002",
-      "platform": "Desktop / Win Chrome",
-      "status": "Pass",
-      "executed_at": "2026-05-30T15:00:59+08:00",
-      "test_url": "",
-      "evidence": "",
-      "notes": "",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — BLOCKED: 功能未在 SIT 開放",
       "screenshot": ""
     },
     {
       "test_case_id": "TC-REGISTER-003",
-      "platform": "Desktop / Win Chrome",
-      "status": "Pass",
-      "executed_at": "2026-05-30T15:00:59+08:00",
-      "test_url": "",
-      "evidence": "",
-      "notes": "",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — BLOCKED: 功能未在 SIT 開放",
       "screenshot": ""
     },
     {
       "test_case_id": "TC-REGISTER-004",
-      "platform": "Desktop / Win Chrome",
-      "status": "Pass",
-      "executed_at": "2026-05-30T15:00:59+08:00",
-      "test_url": "",
-      "evidence": "",
-      "notes": "",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — BLOCKED: 功能未在 SIT 開放",
       "screenshot": ""
     }
   ]

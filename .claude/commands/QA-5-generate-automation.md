@@ -1,6 +1,6 @@
 # QA-5 Generate Automation
 
-> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`、`.claude/modules/mcp-fallback.md`
+> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`、`.claude/modules/mcp-fallback.md`、`.claude/modules/eval-loader.md`
 
 You are helping QA generate automation draft code.
 
@@ -43,7 +43,18 @@ $ARGUMENTS
 
 依 Selector 抽取規則產出所有 feature 的 `.cy.ts`（見下方規則）。
 
-### Step 2 — 驗證所有產出檔案
+### Step 2 — 自我評估
+
+產出 .cy.ts 後，依序執行評估：
+
+1. 對照 `.claude/evals/rubrics/automation.md` 逐項檢查每個產出檔案
+2. 依 `.claude/evals/criteria/flow-gates.md` 判斷結果代碼
+3. 依 `.claude/evals/benchmarks/qa-baseline.md` 確認 skip 比例是否超標
+4. 輸出評估結果
+
+若結果為 `AUTOMATION_BLOCKED`，**停止**，必須修正高權重違規後才繼續。
+
+### Step 3 — 驗證所有產出檔案
 
 產出完成後，**逐一 Read 每個 .cy.ts 檔案**，確認：
 - 無 `data-testid` selector
@@ -53,7 +64,7 @@ $ARGUMENTS
 
 確認無誤後才進入 Step 3。
 
-### Step 3 — 確認執行環境
+### Step 4 — 確認執行環境
 
 讀取 `.env` 檔案，確認：
 - `CYPRESS_BASE_URL` 存在且非空白
@@ -61,7 +72,7 @@ $ARGUMENTS
 
 若 `CYPRESS_BASE_URL` 未設定或為空 → **停止，告知使用者「請先設定 .env 的 CYPRESS_BASE_URL 再繼續」，不執行測試**。
 
-### Step 4 — 執行測試
+### Step 5 — 執行測試
 
 環境確認正確後，執行：
 
@@ -76,7 +87,7 @@ npm run test:e2e
 
 若出現**環境錯誤**（非功能失敗）→ 停止，告知使用者排除環境問題後重跑。
 
-### Step 5 — 整理產物
+### Step 6 — 整理產物
 
 執行完成後執行：
 
@@ -84,7 +95,7 @@ npm run test:e2e
 .\scripts\refresh-qa-artifacts.ps1
 ```
 
-### Step 6 — 回報執行結果
+### Step 7 — 回報執行結果
 
 列出：
 - 執行時間

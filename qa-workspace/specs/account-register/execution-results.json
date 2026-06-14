@@ -1,0 +1,21 @@
+{
+  "feature": "account-register",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/account-register/test-cases.json",
+  "scenario_reviews": [
+    { "scenario_id": "SC-ACCREG-003", "status": "Approved", "notes": "OTP mock API 路徑待確認後解除 skip。" }
+  ],
+  "test_results": [
+    {
+      "test_case_id": "TC-ACCREG-003",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "test_url": "",
+      "evidence": "",
+      "notes": "it.skip — OTP verify API endpoint 待確認，data-testid='register-error-message' 待工程師加入",
+      "screenshot": ""
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "feature": "question-logic",
+  "run_at": "2026-06-14T15:40:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/question-logic/test-cases.json",
+  "scenario_reviews": [],
+  "test_results": [
+    { "test_case_id": "TC-QLOGIC-001", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 年齡層降級需 API intercept 或題庫比對驗證", "screenshot": "" },
+    { "test_case_id": "TC-QLOGIC-002", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 年齡層升降需 API intercept 驗證", "screenshot": "" },
+    { "test_case_id": "TC-QLOGIC-003", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 最高年齡層需 API intercept 或題庫比對驗證", "screenshot": "" },
+    { "test_case_id": "TC-QLOGIC-004", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 跨模組跳轉需確認 URL pattern 或 heading 文字變化", "screenshot": "" },
+    { "test_case_id": "TC-QLOGIC-005", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 需有 AI 模組完成的 6M 個案；結果頁月齡顯示方式待確認", "screenshot": "" },
+    { "test_case_id": "TC-QLOGIC-006", "platform": "Desktop / Electron 130 headless", "status": "Pass", "executed_at": "2026-06-14T15:40:00+08:00", "notes": "每次執行 createChild(4) 建立全新 4M 孩童（POST /cskapi/api/child），startExamFor 進入測驗，URL 含 step=，body 不含「發生錯誤」/「系統錯誤」", "screenshot": "" }
+  ]
+}

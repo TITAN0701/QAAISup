@@ -1,12 +1,10 @@
 // [DRAFT] Needs QA + Engineer review before use in CI.
 // Feature: 帳號註冊
-// Automation candidates: TC-ACCREG-003 (mock wrong verification code)
+// Automation candidates: TC-ACCREG-003
 // TC-ACCREG-001~002 = require real OTP email, manual or mock needed
-// Selector 驗證：Playwright snapshot 2026-06-09
+// Selector 來源：Playwright snapshot-12-register.yml (2026-06-13)
 
-// SKIP REASON: 錯誤訊息真實 selector 待確認（目前無 id/class/text 可用）
-// [SDET TODO] Confirm verification code API endpoint to intercept/mock
-// [SDET TODO] Confirm real selector for register error message element
+// [SDET TODO] TC-ACCREG-003: 確認 OTP verify API endpoint（目前寫 **/verify-otp，需工程師確認真實路徑）
 
 describe('帳號註冊', () => {
   beforeEach(() => {
@@ -15,13 +13,12 @@ describe('帳號註冊', () => {
   });
 
   it.skip('TC-ACCREG-003 輸入錯誤驗證碼後系統顯示錯誤提示並拒絕完成註冊', () => {
-    // Fill in registration form (selectors verified from snapshot)
     cy.get('input[placeholder="請輸入全名"]').type('測試使用者');
     cy.get('input[placeholder="example@email.com"]').type('test-otp@test.example');
-    // Password field has no placeholder — use role
     cy.get('input[placeholder="請輸入 8 碼以上含大小寫英文"]').type('TestPass@123');
 
     // Mock OTP verification API to return invalid code error
+    // [SDET TODO] 確認真實 API endpoint 路徑（目前用 **/verify-otp 估計）
     cy.intercept('POST', '**/verify-otp', {
       statusCode: 400,
       body: { error: 'invalid_otp', message: '驗證碼錯誤' },
@@ -30,11 +27,7 @@ describe('帳號註冊', () => {
     cy.contains('button', '確認送出').click();
     cy.wait('@verifyOtp');
 
-    // [SDET TODO] Add data-testid="register-error-message" to error alert
-    cy.get('[data-testid="register-error-message"]')
-      .should('be.visible')
-      .and('contain', '驗證碼');
-
+    cy.contains('div,p,span', /驗證碼|錯誤/i).should('be.visible');
     cy.url().should('contain', '/register');
   });
 });

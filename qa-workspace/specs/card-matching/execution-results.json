@@ -1,0 +1,49 @@
+{
+  "feature": "card-matching",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/card-matching/test-cases.json",
+  "scenario_reviews": [],
+  "test_results": [
+    {
+      "test_case_id": "TC-CARDMATCH-001",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 圖卡配對 step code 未知，data-testid 元素尚未加入 DOM",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-CARDMATCH-002",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 同上",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-CARDMATCH-003",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 同上",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-CARDMATCH-004",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 同上",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-CARDMATCH-005",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 同上",
+      "screenshot": ""
+    }
+  ]
+}

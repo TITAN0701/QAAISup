@@ -1,5 +1,7 @@
 # PM Report
 
+> 執行前先讀：`.claude/modules/eval-loader.md`
+
 審查並匯出 PM 發布摘要報告。
 
 ## Goal
@@ -25,9 +27,13 @@ $ARGUMENTS
 
 若檔案不存在或內容為空，告知使用者：「尚未產出 release-summary.md，請先執行 /QA-6-generate-report。」直接結束。
 
-### Step 2 — 審查內容
+### Step 2 — 評估報告品質
 
-檢查以下項目：
+對照 `.claude/evals/rubrics/report.md` 執行評估，依 `.claude/evals/criteria/flow-gates.md` 判斷結果代碼：
+- `REPORT_INVALID`：Pass/Fail 非來自執行結果 → 停止，告知使用者先執行 `/QA-6-generate-report`
+- `REPORT_OK`：繼續審查
+
+審查以下項目：
 - 功能清單是否完整（對照 `qa-workspace/specs/` 下的 feature 數量）
 - 各功能狀態是否正確（Not Evaluated / Passed / Failed / Blocked）
 - 發布風險說明是否清楚

@@ -1,0 +1,98 @@
+{
+  "feature": "admin-backend",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/admin-backend/test-cases.json",
+  "scenario_reviews": [
+    { "scenario_id": "SC-ADMIN-001", "status": "Approved", "notes": "導覽列選單項目確認。" },
+    { "scenario_id": "SC-ADMIN-002", "status": "Approved", "notes": "儀表板統計資料顯示確認。" },
+    { "scenario_id": "SC-ADMIN-003", "status": "Approved", "notes": "孩童列表搜尋功能確認。" },
+    { "scenario_id": "SC-ADMIN-004", "status": "Approved", "notes": "孩童列表欄位確認。" },
+    { "scenario_id": "SC-ADMIN-005", "status": "Approved", "notes": "帳號管理列表欄位確認。" },
+    { "scenario_id": "SC-ADMIN-006", "status": "Approved", "notes": "產生邀請連結按鈕確認。" },
+    { "scenario_id": "SC-ADMIN-007", "status": "Approved", "notes": "連結紀錄頁面確認。" },
+    { "scenario_id": "SC-ADMIN-008", "status": "Approved", "notes": "停用帳號登入拒絕 — 需 disabled_user fixture，待 SDET 補充。" }
+  ],
+  "test_results": [
+    {
+      "test_case_id": "TC-ADMIN-001",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pass",
+      "executed_at": "2026-06-13T00:00:00+08:00",
+      "test_url": "https://sit-wetpaint.nhri.org.tw/admin/dashboard",
+      "evidence": "nav 含儀錶板/孩童列表/題目管理/邀請管理/關於我們",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-ADMIN-002",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pass",
+      "executed_at": "2026-06-13T00:00:00+08:00",
+      "test_url": "https://sit-wetpaint.nhri.org.tw/admin/dashboard",
+      "evidence": "孩童總人數/新增孩童數/檢測完成數/檢測完成率 文字確認",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-ADMIN-003",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pass",
+      "executed_at": "2026-06-13T00:00:00+08:00",
+      "test_url": "https://sit-wetpaint.nhri.org.tw/admin/child-list",
+      "evidence": "搜尋輸入框可見，搜尋按鈕可點擊",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-ADMIN-004",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pass",
+      "executed_at": "2026-06-13T00:00:00+08:00",
+      "test_url": "https://sit-wetpaint.nhri.org.tw/admin/child-list",
+      "evidence": "table thead 含孩童姓名/性別/年齡/地區/最後檢測/狀態/動作",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-ADMIN-005",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pass",
+      "executed_at": "2026-06-13T00:00:00+08:00",
+      "test_url": "https://sit-wetpaint.nhri.org.tw/admin/invite",
+      "evidence": "table thead 含帳號編號/帳號名稱/角色/來源",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-ADMIN-006",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pass",
+      "executed_at": "2026-06-13T00:00:00+08:00",
+      "test_url": "https://sit-wetpaint.nhri.org.tw/admin/invite",
+      "evidence": "產生邀請連結按鈕可見",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-ADMIN-007",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pass",
+      "executed_at": "2026-06-13T00:00:00+08:00",
+      "test_url": "https://sit-wetpaint.nhri.org.tw/admin/invite",
+      "evidence": "連結紀錄按鈕可見且可點擊",
+      "notes": "",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-ADMIN-008",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "test_url": "",
+      "evidence": "",
+      "notes": "it.skip — 需 disabled_user fixture (users.json)，錯誤訊息 selector 待確認",
+      "screenshot": ""
+    }
+  ]
+}

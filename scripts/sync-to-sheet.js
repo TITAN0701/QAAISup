@@ -2,11 +2,12 @@ const { google } = require('googleapis');
 const fs = require('fs');
 const path = require('path');
 
-const TOKEN_PATH = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\.claude\\sheets-token.json';
-const CREDENTIALS_PATH = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\.claude\\google-credentials.json';
+const PROJECT_ROOT = path.resolve(__dirname, '..');
+const TOKEN_PATH = path.join(PROJECT_ROOT, '.claude', 'sheets-token.json');
+const CREDENTIALS_PATH = path.join(PROJECT_ROOT, '.claude', 'google-credentials.json');
 const SPREADSHEET_ID = '1-EO-84MVnU7zyBoCJUcJvNJpPYYYCzmRldCwDvEcO1Q';
-const TC_DIR = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\qa-workspace\\specs';
-const ARTIFACTS_QA = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\artifacts\\generated\\qa';
+const TC_DIR = path.join(PROJECT_ROOT, 'qa-workspace', 'specs');
+const ARTIFACTS_QA = path.join(PROJECT_ROOT, 'artifacts', 'generated', 'qa');
 
 function getAuth() {
   const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH));
@@ -195,6 +196,11 @@ function loadBugReports() {
 
 // ── 主流程 ──
 async function main() {
+  if (!fs.existsSync(CREDENTIALS_PATH) || !fs.existsSync(TOKEN_PATH)) {
+    console.log('⏭️  Google Sheets 同步跳過（憑證未設定，僅公司環境可用）');
+    console.log('   缺少檔案：', !fs.existsSync(CREDENTIALS_PATH) ? CREDENTIALS_PATH : TOKEN_PATH);
+    return;
+  }
   const auth = getAuth();
   const sheets = google.sheets({ version: 'v4', auth });
 

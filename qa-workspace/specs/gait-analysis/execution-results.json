@@ -1,0 +1,16 @@
+{
+  "feature": "gait-analysis",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/gait-analysis/test-cases.json",
+  "scenario_reviews": [],
+  "test_results": [
+    { "test_case_id": "TC-GAIT-001", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 步態拍攝提醒頁 URL (/exam/module/gait/reminder) 待確認", "screenshot": "" },
+    { "test_case_id": "TC-GAIT-002", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 同上", "screenshot": "" },
+    { "test_case_id": "TC-GAIT-003", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 同上", "screenshot": "" },
+    { "test_case_id": "TC-GAIT-004", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 同上", "screenshot": "" },
+    { "test_case_id": "TC-GAIT-005", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 側面模組 URL 待確認", "screenshot": "" },
+    { "test_case_id": "TC-GAIT-007", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 錄製時長提示 selector 待確認", "screenshot": "" },
+    { "test_case_id": "TC-GAIT-009", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 拍攝注意事項 selector 待確認", "screenshot": "" }
+  ]
+}

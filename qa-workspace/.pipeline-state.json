@@ -1,0 +1,119 @@
+﻿{
+    "pipeline_id":  "2026-06-14-001",
+    "started_at":  "2026-06-14T14:37:25+08:00",
+    "last_updated":  "2026-06-14T15:40:00+08:00",
+    "scope":  "all",
+    "features":  {
+                     "login":  {
+                                   "qa5":  "done",
+                                   "tests_run":  "done",
+                                   "pass":  5,
+                                   "pending":  1,
+                                   "fail":  0
+                               },
+                     "forgot-password":  {
+                                             "qa5":  "done",
+                                             "tests_run":  "done",
+                                             "pass":  4,
+                                             "pending":  0,
+                                             "fail":  0
+                                         },
+                     "admin-backend":  {
+                                           "qa5":  "done",
+                                           "tests_run":  "done",
+                                           "pass":  7,
+                                           "pending":  1,
+                                           "fail":  0
+                                       },
+                     "account-register":  {
+                                              "qa5":  "done",
+                                              "tests_run":  "done",
+                                              "pass":  0,
+                                              "pending":  1,
+                                              "fail":  0
+                                          },
+                     "card-matching":  {
+                                           "qa5":  "done",
+                                           "tests_run":  "done",
+                                           "pass":  0,
+                                           "pending":  5,
+                                           "fail":  0
+                                       },
+                     "register":  {
+                                      "qa5":  "done",
+                                      "tests_run":  "done",
+                                      "pass":  0,
+                                      "pending":  4,
+                                      "fail":  0
+                                  },
+                     "data-validation":  {
+                                             "qa5":  "done",
+                                             "tests_run":  "done",
+                                             "pass":  0,
+                                             "pending":  1,
+                                             "fail":  0
+                                         },
+                     "gait-analysis":  {
+                                           "qa5":  "done",
+                                           "tests_run":  "done",
+                                           "pass":  0,
+                                           "pending":  7,
+                                           "fail":  0
+                                       },
+                     "handwriting-recognition":  {
+                                                     "qa5":  "done",
+                                                     "tests_run":  "done",
+                                                     "pass":  0,
+                                                     "pending":  1,
+                                                     "fail":  0
+                                                 },
+                     "observation-group":  {
+                                               "qa5":  "done",
+                                               "tests_run":  "done",
+                                               "pass":  0,
+                                               "pending":  4,
+                                               "fail":  0
+                                           },
+                     "re-recording":  {
+                                          "qa5":  "done",
+                                          "tests_run":  "done",
+                                          "pass":  0,
+                                          "pending":  2,
+                                          "fail":  0
+                                      },
+                     "verbal-expression":  {
+                                               "qa5":  "done",
+                                               "tests_run":  "done",
+                                               "pass":  0,
+                                               "pending":  2,
+                                               "fail":  0
+                                           },
+                     "video-recording":  {
+                                             "qa5":  "done",
+                                             "tests_run":  "done",
+                                             "pass":  0,
+                                             "pending":  2,
+                                             "fail":  0
+                                         },
+                     "question-content":  {
+                                              "qa5":  "done",
+                                              "tests_run":  "done",
+                                              "pass":  3,
+                                              "pending":  2,
+                                              "fail":  0
+                                          },
+                     "question-logic":  {
+                                            "qa5":  "done",
+                                            "tests_run":  "done",
+                                            "pass":  1,
+                                            "pending":  5,
+                                            "fail":  0
+                                        }
+                 },
+    "totals":  {
+                   "pass":  20,
+                   "pending":  38,
+                   "fail":  0,
+                   "specs":  58
+               }
+}

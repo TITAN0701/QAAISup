@@ -1,0 +1,19 @@
+{
+  "feature": "data-validation",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/data-validation/test-cases.json",
+  "scenario_reviews": [
+    { "scenario_id": "SC-DATA-VALIDATION-003", "status": "Approved", "notes": "UI 案例，身分證字號欄位 URL 與 selector 待確認後解除 skip。" }
+  ],
+  "test_results": [
+    {
+      "test_case_id": "SC-DATA-VALIDATION-003",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 身分證字號表單 URL 與 selector 待工程師確認",
+      "screenshot": ""
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "feature": "observation-group",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/observation-group/test-cases.json",
+  "scenario_reviews": [],
+  "test_results": [
+    { "test_case_id": "SC-OBSERVATION-GROUP-001", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 需 cases.json 真實 SIT 個案 ID（15M+ 且 AI 模組已完成）", "screenshot": "" },
+    { "test_case_id": "SC-OBSERVATION-GROUP-002", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 同上（24M 個案）", "screenshot": "" },
+    { "test_case_id": "SC-OBSERVATION-GROUP-003", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 同上（39M 個案）", "screenshot": "" },
+    { "test_case_id": "SC-OBSERVATION-GROUP-004", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 同上，需確認 AI 模組結果保留驗證方式", "screenshot": "" }
+  ]
+}

@@ -10,12 +10,13 @@ const ExcelJS = require('exceljs');
 const fs = require('fs');
 const path = require('path');
 
-const CREDENTIALS_PATH = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\.claude\\google-credentials.json';
-const TOKEN_PATH       = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\.claude\\sheets-token.json';
-const TC_DIR           = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\qa-workspace\\specs';
-const ARTIFACTS_QA     = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\artifacts\\generated\\qa';
-const ARTIFACTS_PM     = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\artifacts\\generated\\pm';
-const OUTPUT_DIR       = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\artifacts\\generated\\qa';
+const PROJECT_ROOT     = path.resolve(__dirname, '..');
+const CREDENTIALS_PATH = path.join(PROJECT_ROOT, '.claude', 'google-credentials.json');
+const TOKEN_PATH       = path.join(PROJECT_ROOT, '.claude', 'sheets-token.json');
+const TC_DIR           = path.join(PROJECT_ROOT, 'qa-workspace', 'specs');
+const ARTIFACTS_QA     = path.join(PROJECT_ROOT, 'artifacts', 'generated', 'qa');
+const ARTIFACTS_PM     = path.join(PROJECT_ROOT, 'artifacts', 'generated', 'pm');
+const OUTPUT_DIR       = path.join(PROJECT_ROOT, 'artifacts', 'generated', 'qa');
 
 // Google Drive 資料夾名稱路徑（從 My Drive 開始）
 const DRIVE_FOLDER_PATH = ['WETPAINT', 'AI Suport文件'];
@@ -213,6 +214,11 @@ async function uploadToDrive(drive, folderId, filePath, fileName) {
 
 // ── 主流程 ──
 async function main() {
+  if (!fs.existsSync(CREDENTIALS_PATH) || !fs.existsSync(TOKEN_PATH)) {
+    console.log('⏭️  Google Drive 上傳跳過（憑證未設定，僅公司環境可用）');
+    console.log('   缺少檔案：', !fs.existsSync(CREDENTIALS_PATH) ? CREDENTIALS_PATH : TOKEN_PATH);
+    return;
+  }
   const today = new Date();
   const dateStr = today.toISOString().slice(0, 10).replace(/-/g, '');
   const fileName = `${dateStr}-qa-report.xlsx`;

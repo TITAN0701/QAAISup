@@ -1,0 +1,25 @@
+{
+  "feature": "video-recording",
+  "run_at": "2026-06-13T00:00:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/video-recording/test-cases.json",
+  "scenario_reviews": [],
+  "test_results": [
+    {
+      "test_case_id": "TC-VIDEO-005",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 大肢體模組錄製頁 URL 待確認 (/exam/module/gross-motor/record)",
+      "screenshot": ""
+    },
+    {
+      "test_case_id": "TC-VIDEO-006",
+      "platform": "Desktop / Electron 130 headless",
+      "status": "Pending",
+      "executed_at": "",
+      "notes": "it.skip — 走路側面模組錄製頁 URL 待確認 (/exam/module/gait-side/record)",
+      "screenshot": ""
+    }
+  ]
+}

@@ -149,7 +149,9 @@ docs/                        # 架構、協作、環境設定文件
 - **對話過程中只執行使用者明確說的事**：不把討論中的想法、建議或分析自動實作進去，除非使用者明確說「請做」或「幫我加」
 - **使用者只是提問或討論時，不可動任何檔案**：問題就回答問題，分析就給分析，沒有收到明確指令前不得寫入、新增或修改任何檔案
 - **分析技術可行性前必須先驗證假設，不可把未經確認的推斷當結論寫入文件**：若無法驗證，應明確說明「尚未確認」，不得以猜測作為分析依據
+- **回答任何問題或執行任何任務前，必須確認 CLAUDE.md 相關章節的內容**，不得依賴記憶或推斷；涉及流程、指令順序、目錄結構、規則的問題，一律以 CLAUDE.md 為唯一來源。
 - **每次對話開始時必須讀取本專案的 memory**：從 Claude Code 的專案 memory 目錄讀取 `MEMORY.md`（路徑由系統自動提供，不需寫死）。根據內容了解專案現況與過去決策，讀取失敗時不需提示使用者，直接繼續。
+- **建立或修改任何 `.claude/` 檔案前，必須先載入 `.claude/modules/structure-policy.md`**，確認內容放置在正確層級（commands / evals / modules），不得憑印象判斷。
 
 ---
 
@@ -254,14 +256,6 @@ TEST_ENV=staging
 
 完整規則見 `qa-knowledge/selector-policy.md`。
 
-**目前限制（SIT 環境，2026-06-10 起）：**
-- **禁止使用 `data-testid`** — SIT 環境 DOM 尚未加入，寫了會全部失敗
-- 替代優先順序：唯一穩定 `id` > 語意 `class` > `placeholder` > 按鈕文字 > `href` > 標題文字
-- 無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[SDET TODO]`
-- 禁止：CSS nth-child、Tailwind utility class、hash class、完整 XPath
-
-**長期目標（data-testid 補上後）：** `data-testid` > semantic role > label > 穩定唯一文字
-
 ---
 
 ## 重要限制（SIT 環境）
@@ -273,23 +267,6 @@ TEST_ENV=staging
 
 ---
 
-## 功能狀態快照（2026-06-12）
+## 功能狀態快照
 
-| 功能 | spec | questions | scenarios | test-cases | .cy.ts |
-|------|:----:|:---------:|:---------:|:----------:|:------:|
-| login | ✅ | ✅ | ✅ | ✅ | ✅ |
-| forgot-password | ✅ | ✅ | ✅ | ✅ | ✅ |
-| register | ✅ | ✅ | ✅ | ✅ | 🚫 BLOCKED（SIT 未開放）|
-| question-logic | ✅ | ✅ | ✅ | ✅ | ✅ |
-| question-content | ✅ | ✅ | ✅ | ✅ | ✅ |
-| card-matching | ✅ | ✅ | ✅ | ✅ | ✅ |
-| video-recording | ✅ | ✅ | ✅ | ✅ | ✅ |
-| verbal-expression | ✅ | ✅ | ✅ | ✅ | ✅ |
-| observation-group | ✅ | ✅ | ✅ | ✅ | ✅ |
-| handwriting-recognition | ✅ | ✅ | ✅ | ✅ | ✅ |
-| gait-analysis | ✅ | ✅ | ✅ | ✅ | ✅ |
-| re-recording | ✅ | ✅ | ✅ | ✅ | ✅ |
-| account-register | ✅ | ✅ | ✅ | ✅ | ✅ |
-| data-validation | ✅ | ✅ | ✅ | ✅ | ✅ |
-| admin-backend | ✅ | ✅ | ✅ | ✅ | ✅ |
-| progress-bar | ✅ | ✅ | ✅ | ❌ BLOCKED | ❌ |
+執行 `/check-project` 取得即時狀態（靜態表格會過期，以動態掃描為準）。

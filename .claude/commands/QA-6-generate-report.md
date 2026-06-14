@@ -1,6 +1,6 @@
 # QA-6 Generate Report
 
-> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`
+> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`、`.claude/modules/eval-loader.md`
 
 You are helping QA generate QA and PM reports from test execution results.
 
@@ -48,6 +48,27 @@ Arguments:
 ```txt
 $ARGUMENTS
 ```
+
+## Steps
+
+### Step 1 — 產出報告
+
+依 Goal 中定義的輸入來源產出 test-cases.md、test-report.md、failure-analysis.md、release-summary.md。
+
+### Step 2 — 自我評估
+
+產出完成後，依序執行評估：
+
+1. 對照 `.claude/evals/rubrics/report.md` 逐項檢查 test-report.md 與 release-summary.md
+2. 依 `.claude/evals/criteria/flow-gates.md` 判斷結果代碼
+3. 依 `.claude/evals/benchmarks/qa-baseline.md` 確認覆蓋率是否達標
+4. 輸出評估結果
+
+若結果為 `REPORT_INVALID`，**停止**，不匯出 Word，告知使用者先取得 execution-results.json 後再重跑。
+
+### Step 3 — 匯出與同步
+
+評估結果為 `REPORT_OK` 後才執行匯出與同步。
 
 ## Rules
 

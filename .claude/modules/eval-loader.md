@@ -1,20 +1,35 @@
 # Module: Eval Loader
 
 此模組定義 AI 在每個產出步驟後，應對照哪個 rubric 進行自我評估。
+評估使用三層結構：rubrics（評什麼）→ criteria（怎麼判斷）→ benchmarks（對比什麼）。
 
 ## 使用方式
 
-在 command 的產出步驟後加入：「對照 `.claude/evals/{rubric}` 進行自我評估」
+在 command 的產出步驟後加入：
+「對照 `.claude/evals/rubrics/{rubric}.md`，依 `.claude/evals/criteria/flow-gates.md` 判斷，基準值參照 `.claude/evals/benchmarks/qa-baseline.md`」
 
 ## Rubric 對照表
 
-| 產出物 | 對應 Rubric | 評估時機 |
+| 產出物 | Rubric 檔案 | 評估時機 |
 |--------|------------|---------|
-| `spec.md` | `.claude/evals/spec.rubric.md` | `/QA-1` 讀取 spec 後 |
-| `scenarios.md` | `.claude/evals/scenarios.rubric.md` | `/QA-design` 產出後 |
-| `test-cases.json` | `.claude/evals/test-cases.rubric.md` | `/QA-design` 產出後 |
-| `.cy.ts` / `.py` | `.claude/evals/automation.rubric.md` | `/QA-5` 產出後 |
-| `test-report.md` / `release-summary.md` | `.claude/evals/report.rubric.md` | `/QA-6` 產出後 |
+| `spec.md` | `.claude/evals/rubrics/spec.md` | `/QA-1` 讀取 spec 後 |
+| `scenarios.md` | `.claude/evals/rubrics/scenarios.md` | `/QA-design` 產出後 |
+| `test-cases.json` | `.claude/evals/rubrics/test-cases.md` | `/QA-design` 產出後 |
+| `.cy.ts` / `.py` | `.claude/evals/rubrics/automation.md` | `/QA-5` 產出後 |
+| `test-report.md` / `release-summary.md` | `.claude/evals/rubrics/report.md` | `/QA-6` 產出後 |
+
+## 三層評估流程
+
+參考來源：microsoft/LLM-Rubric（多維度評分）、vladfeigin/llm-agents-evaluation（可量測指標）
+
+```
+Step 1 — rubrics/    對照評分維度清單，逐項列出評估項目
+Step 2 — criteria/   用 metrics.md 的四個維度（Completeness/Consistency/Executability/Traceability）
+           對每個高權重項目評 1–5 分
+           依 flow-gates.md 判斷是否阻擋
+Step 3 — benchmarks/ 對照 qa-baseline.md 的目標分數，輸出「目前 vs 基準」差距
+輸出：結果代碼 + 維度分數 + 與基準的差距說明
+```
 
 ## 評估結果代碼
 

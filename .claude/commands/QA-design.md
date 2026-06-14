@@ -1,6 +1,6 @@
 # QA Design
 
-> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`
+> 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`、`.claude/modules/eval-loader.md`
 
 根據 spec 一次產出測試情境（scenarios）與測試案例（test cases）。
 
@@ -54,9 +54,21 @@ $ARGUMENTS
 - 預設自動化目標為 Cypress；API / 後端驗證才用 pytest
 - 不發明 spec 以外的規則；需求不完整時加備註，不要猜測
 
+### Step 3 — 自我評估
+
+產出完成後，依序執行評估：
+
+1. 對照 `.claude/evals/rubrics/scenarios.md` 逐項檢查 scenarios.md
+2. 對照 `.claude/evals/rubrics/test-cases.md` 逐項檢查 test-cases.json
+3. 依 `.claude/evals/criteria/flow-gates.md` 判斷結果代碼
+4. 依 `.claude/evals/benchmarks/qa-baseline.md` 確認數值是否達標
+5. 輸出評估結果（格式見 eval-loader.md）
+
+若結果為 `SCENARIOS_INCOMPLETE` 或 `TC_INVALID`，**不繼續**，告知使用者需修正的項目。
+
 ## Rules
 
 - 若 spec.md 不存在，停止並告知使用者先執行 `/QA-1-import-pm-request`
 - questions.md 的未釐清項目用 QA Assumption 標記，不阻擋流程
 - 不重複讀取已產出的 scenarios.md，Step 2 直接沿用 Step 1 的結果
-- 兩個 Step 連續執行，不需使用者確認中間步驟
+- 兩個 Step 連續執行，Step 3 評估後才算完成

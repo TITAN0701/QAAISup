@@ -5,11 +5,13 @@
 
 const { google } = require('googleapis');
 const fs = require('fs');
+const path = require('path');
 const http = require('http');
 const url = require('url');
 
-const CREDENTIALS_PATH = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\.claude\\google-credentials.json';
-const TOKEN_PATH = 'C:\\Users\\suppo\\Desktop\\QAAI專案\\.claude\\sheets-token.json';
+const PROJECT_ROOT = path.resolve(__dirname, '..');
+const CREDENTIALS_PATH = path.join(PROJECT_ROOT, '.claude', 'google-credentials.json');
+const TOKEN_PATH = path.join(PROJECT_ROOT, '.claude', 'sheets-token.json');
 
 const SCOPES = [
   'https://www.googleapis.com/auth/spreadsheets',

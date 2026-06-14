@@ -1,0 +1,14 @@
+{
+  "feature": "question-content",
+  "run_at": "2026-06-14T15:40:00+08:00",
+  "tool": "Cypress 14.5.4 / Electron 130 headless",
+  "source_test_cases": "qa-workspace/specs/question-content/test-cases.json",
+  "scenario_reviews": [],
+  "test_results": [
+    { "test_case_id": "TC-QCONTENT-001", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 需確認如何在單一 test 遍歷所有題目（題數不定，頁面動態切換）", "screenshot": "" },
+    { "test_case_id": "TC-QCONTENT-002", "platform": "Desktop / Electron 130 headless", "status": "Pending", "executed_at": "", "notes": "it.skip — 48M 新孩童第一題為精細動作拍照題（step=graphic-copying-photo），不含是/否按鈕。createChild(48) 本身運作正常（POST 201），待 SDET 確認哪個月齡第一題為選擇題", "screenshot": "" },
+    { "test_case_id": "TC-QCONTENT-003", "platform": "Desktop / Electron 130 headless", "status": "Pass", "executed_at": "2026-06-14T15:40:00+08:00", "notes": "windowslinux20（4歲3個月）等待下次檢測日期（2027/02/02），發展頁不含「題目不足」錯誤", "screenshot": "" },
+    { "test_case_id": "TC-QCONTENT-004", "platform": "Desktop / Electron 130 headless", "status": "Pass", "executed_at": "2026-06-14T15:40:00+08:00", "notes": "60MT（5歲5個月）等待下次檢測日期（2026/12/29），發展頁不含「題目不足」錯誤", "screenshot": "" },
+    { "test_case_id": "TC-QCONTENT-005", "platform": "Desktop / Electron 130 headless", "status": "Pass", "executed_at": "2026-06-14T15:40:00+08:00", "notes": "72MT（6歲1個月）等待下次檢測時間，發展頁不含「題目不足」錯誤", "screenshot": "" }
+  ]
+}
