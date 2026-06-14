@@ -5,6 +5,8 @@
  * 執行：node scripts/upload-to-drive.js
  */
 
+try { require('dotenv').config(); } catch {}
+
 const { google } = require('googleapis');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
@@ -21,11 +23,23 @@ const OUTPUT_DIR       = path.join(PROJECT_ROOT, 'artifacts', 'generated', 'qa')
 // Google Drive 資料夾名稱路徑（從 My Drive 開始）
 const DRIVE_FOLDER_PATH = ['WETPAINT', 'AI Suport文件'];
 
+function loadCredentials() {
+  if (process.env.GOOGLE_CREDENTIALS_JSON) return JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
+  if (fs.existsSync(CREDENTIALS_PATH)) return JSON.parse(fs.readFileSync(CREDENTIALS_PATH, 'utf8'));
+  throw new Error('缺少 credentials。請設定 GOOGLE_CREDENTIALS_JSON 或將憑證存至 .claude/google-credentials.json');
+}
+
+function loadToken() {
+  if (process.env.GOOGLE_SHEETS_TOKEN) return JSON.parse(process.env.GOOGLE_SHEETS_TOKEN);
+  if (fs.existsSync(TOKEN_PATH)) return JSON.parse(fs.readFileSync(TOKEN_PATH, 'utf8'));
+  throw new Error('缺少 token。請執行 node scripts/auth-sheets.js 完成授權，或設定 GOOGLE_SHEETS_TOKEN 環境變數');
+}
+
 function getAuth() {
-  const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH));
+  const credentials = loadCredentials();
   const { client_id, client_secret } = credentials.web || credentials.installed;
   const oauth2Client = new google.auth.OAuth2(client_id, client_secret);
-  oauth2Client.setCredentials(JSON.parse(fs.readFileSync(TOKEN_PATH)));
+  oauth2Client.setCredentials(loadToken());
   return oauth2Client;
 }
 
@@ -214,9 +228,15 @@ async function uploadToDrive(drive, folderId, filePath, fileName) {
 
 // ── 主流程 ──
 async function main() {
-  if (!fs.existsSync(CREDENTIALS_PATH) || !fs.existsSync(TOKEN_PATH)) {
-    console.log('⏭️  Google Drive 上傳跳過（憑證未設定，僅公司環境可用）');
-    console.log('   缺少檔案：', !fs.existsSync(CREDENTIALS_PATH) ? CREDENTIALS_PATH : TOKEN_PATH);
+  const hasCredentials = process.env.GOOGLE_CREDENTIALS_JSON || fs.existsSync(CREDENTIALS_PATH);
+  const hasToken = process.env.GOOGLE_SHEETS_TOKEN || fs.existsSync(TOKEN_PATH);
+  if (!hasCredentials) {
+    console.log('⏭️  Google Drive 上傳跳過：未設定 GOOGLE_CREDENTIALS_JSON 且找不到 .claude/google-credentials.json');
+    return;
+  }
+  if (!hasToken) {
+    console.log('⏭️  Google Drive 上傳跳過：未設定 GOOGLE_SHEETS_TOKEN 且找不到 .claude/sheets-token.json');
+    console.log('   請執行：node scripts/auth-sheets.js');
     return;
   }
   const today = new Date();
