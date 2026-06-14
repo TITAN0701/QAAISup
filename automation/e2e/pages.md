@@ -40,15 +40,23 @@
 | `overview` | 測驗總覽說明 | ✅ |
 | `choice` | 觀察題組選擇題（是/否/未觀察）| ✅（部分） |
 | `supine` | 仰躺動作拍攝（影片錄製） | ❌ |
+| `walk-fb` | 走路步態 — 正/背面錄影 | ✅（bundle 確認，2026-06-15） |
+| `walk-side` | 走路步態 — 側面錄影 | ✅（bundle 確認，2026-06-15） |
+| `graphic-copying-video` | 大肢體動作（影片）| ✅（JS bundle 列舉確認） |
+| `graphic-copying-photo` | 手握筆拍照（精細動作）| ✅（48M 個案 QASmoke48M 實際截圖確認） |
+| `picture-naming` | 看圖命名（語言表達）| ✅（JS bundle 列舉確認） |
+| `picture-pairing` | 圖卡配對 | ✅（JS bundle 列舉確認） |
+| `picture-ident` | 圖片辨識（語言理解）| ✅（JS bundle 列舉確認） |
 | `finish` | 測驗完成頁 | ✅ |
 | `result` | 評量結果頁（`/question?step=result`）| ✅ |
-| 其他 | 圖卡配對、步態分析、手寫、語言等 step code 尚待 48M 個案確認 | ❓ |
+
+**step code 來源**：2026-06-15 從 `assets/index-D_BLtiFK.js` main bundle 分析取得全部代碼
 
 **已確認的 step 流程**：
 
 - **2M 個案（qatest01, userId=524）**：`overview` → `supine`（影片）→ `choice`（觀察題）→ `finish` → `result`
 - **39M 個案（39test1042, userId=502）**：`overview` → `choice`（觀察題，共 ~56 題）→ `finish` → `result`
-- **48M 個案（userId=528/529/530，尚未測驗）**：預期有完整模組（走路/大肢體/手握筆/語言/情緒/專注力）→ 待截圖確認
+- **48M 個案（QASmoke48M, childId=539）**：`overview` → `graphic-copying-photo`（精細動作）→ `walk-fb`（步態正/背面）→ `walk-side`（步態側面）→ ... → `finish`（實際截圖進行中，依序確認）
 
 **已知測試個案 userId**（2026-06-12 從後台 API 確認）：
 
