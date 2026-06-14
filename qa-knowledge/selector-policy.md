@@ -44,6 +44,20 @@ Tailwind / hash class（如 .bg-white、.text-sm、.jsx-abc123）
 依賴畫面位置的 selector
 ```
 
+## Grep 掃描清單（QA-5 驗證用）
+
+執行 QA-5 產出驗證時，依此表對 `automation/e2e/specs/` 執行 Grep，只 Read 有命中的檔案：
+
+| 禁用類型 | Grep Pattern |
+|---------|-------------|
+| data-testid | `data-testid` |
+| Tailwind utility class | `bg-white\|text-sm\|text-gray\|text-red\|rounded-\|px-\|py-\|flex \|grid ` |
+| hash class | `box_shadow\|jsx-[a-z0-9]` |
+| nth-child | `nth-child` |
+| XPath | `xpath` |
+
+> 此清單是禁用 selector 的唯一來源。更新 `## Avoid` 時須同步更新此表。
+
 ## Naming Convention（data-testid 可用後的命名規範）
 
 ```txt

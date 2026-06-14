@@ -56,12 +56,7 @@ $ARGUMENTS
 
 ### Step 3 — 驗證所有產出檔案
 
-**先用 Grep 批次掃描**所有 .cy.ts，找出違規 selector（Context Rot 防護，不逐一 Read 整份檔案）：
-
-```
-Grep 'data-testid' automation/e2e/specs/
-Grep 'bg-white|box_shadow|text-gray|rounded-' automation/e2e/specs/
-```
+讀取 `qa-knowledge/selector-policy.md` 的「Grep 掃描清單」，依表中每一個 Pattern 對 `automation/e2e/specs/` 執行 Grep（Context Rot 防護，不逐一 Read 整份檔案）。
 
 僅對 **Grep 有命中的檔案** 才用 Read 讀取確認，逐一檢查：
 - 無 `data-testid` selector
@@ -118,7 +113,7 @@ npm run test:e2e
 - **禁止使用 `cy.get('[data-testid="..."]')`** — SIT DOM 尚未加入 data-testid，詳見 qa-knowledge/selector-policy.md
 - Do not use real credentials or production data.
 - Generated code is draft and needs SDET review before execution.
-- **宣告完成前必須用 Grep 批次掃描所有 .cy.ts 禁用 selector**，只 Read Grep 有命中的檔案，不可逐一載入全部（Context Rot 防護）。
+- **宣告完成前必須依 `qa-knowledge/selector-policy.md` 的「Grep 掃描清單」批次掃描所有 .cy.ts**，只 Read 有命中的檔案（Context Rot 防護）。Pattern 維護在 selector-policy.md，不在此處重複。
 
 ### Selector 抽取規則
 
