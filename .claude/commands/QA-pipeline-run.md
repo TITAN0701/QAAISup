@@ -17,7 +17,7 @@ $ARGUMENTS
 
 - **未帶 feature 參數** → 對全部功能執行（all）
 - **snapshot 不存在** → 自動執行 playwright-smoke-test，不詢問使用者
-- **`.env` 不存在** → 自動從 CLAUDE.md / config.json 建立 `.env`，不詢問使用者
+- **`.env` 不存在** → 自動從 `config.json`（sitUrl / testEmail）+ Grep CLAUDE.md（password）建立 `.env`，不詢問使用者
 - **帶 `--restart` 參數** → 忽略上次狀態，QA-5 也重新產出（會覆蓋現有 .cy.ts）
 
 ---
@@ -28,7 +28,10 @@ $ARGUMENTS
 
 檢查 `.env` 是否存在且 `CYPRESS_BASE_URL` 有值：
 
-- **不存在或空白** → 自動從 CLAUDE.md 讀取 `CYPRESS_BASE_URL`、`TEST_USER_EMAIL`、`TEST_USER_PASSWORD`，寫入 `.env`，繼續執行
+- **不存在或空白** → 依下列方式取值後寫入 `.env`，繼續執行（Context Rot 防護，不整份讀 CLAUDE.md）：
+  - `CYPRESS_BASE_URL`：讀 `config.json` 的 `env.sitUrl`
+  - `TEST_USER_EMAIL`：讀 `config.json` 的 `env.testEmail`
+  - `TEST_USER_PASSWORD`：用 Grep 在 CLAUDE.md 找 `TEST_USER_PASSWORD=` 取值
 
 ---
 
