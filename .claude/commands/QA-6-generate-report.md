@@ -110,6 +110,11 @@ $ARGUMENTS
 
 不在 md 展開 steps / preconditions / expected，保留在 JSON。
 
+### Context Rot 防護
+
+- 讀取 `qa-workspace/specs/*/test-cases.json` 與 `execution-results.json` 時，**每次只處理一個 feature**，完成後繼續下一個，不同時載入所有 feature 的檔案。
+- 讀取前先用 Grep 確認關鍵欄位存在（例如 `"status"`, `"result"`），再用 Read + limit/offset 只讀需要的段落。
+
 ### 報告規則
 
 - Do not invent pass/fail results.

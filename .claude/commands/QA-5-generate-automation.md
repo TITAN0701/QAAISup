@@ -56,13 +56,19 @@ $ARGUMENTS
 
 ### Step 3 — 驗證所有產出檔案
 
-產出完成後，**逐一 Read 每個 .cy.ts 檔案**，確認：
+**先用 Grep 批次掃描**所有 .cy.ts，找出違規 selector（Context Rot 防護，不逐一 Read 整份檔案）：
+
+```
+Grep 'data-testid' automation/e2e/specs/
+Grep 'bg-white|box_shadow|text-gray|rounded-' automation/e2e/specs/
+```
+
+僅對 **Grep 有命中的檔案** 才用 Read 讀取確認，逐一檢查：
 - 無 `data-testid` selector
 - 無 Tailwind/hash class（`box_shadow`、`bg-white` 等）
-- 無不存在的 `#id` selector
 - 無法確認的 selector 已寫成 `it.skip()` + `[SDET TODO]`
 
-確認無誤後才進入 Step 3。
+確認無誤後才進入 Step 4。
 
 ### Step 4 — 確認執行環境
 
@@ -112,7 +118,7 @@ npm run test:e2e
 - **禁止使用 `cy.get('[data-testid="..."]')`** — SIT DOM 尚未加入 data-testid，詳見 qa-knowledge/selector-policy.md
 - Do not use real credentials or production data.
 - Generated code is draft and needs SDET review before execution.
-- **宣告完成前必須逐一 Read 每個產出的 .cy.ts 驗證**，不可依賴印象或推斷。
+- **宣告完成前必須用 Grep 批次掃描所有 .cy.ts 禁用 selector**，只 Read Grep 有命中的檔案，不可逐一載入全部（Context Rot 防護）。
 
 ### Selector 抽取規則
 
