@@ -51,12 +51,8 @@ Tailwind / hash class（如 .bg-white、.text-sm、.jsx-abc123）
 | 禁用類型 | Grep Pattern |
 |---------|-------------|
 | data-testid | `data-testid` |
-| Tailwind utility class | `bg-white\|text-sm\|text-gray\|text-red\|rounded-\|px-\|py-\|flex \|grid ` |
-| hash class | `box_shadow\|jsx-[a-z0-9]` |
-| nth-child | `nth-child` |
-| XPath | `xpath` |
 
-> 此清單是禁用 selector 的唯一來源。更新 `## Avoid` 時須同步更新此表。
+> 此清單是禁用 selector 的唯一來源。需新增禁用規則時，在此表加入對應 Pattern。
 
 ## Naming Convention（data-testid 可用後的命名規範）
 
