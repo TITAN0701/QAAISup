@@ -70,8 +70,11 @@ pytest automation/api/tests/
 # 匯出 PM 報告（Word）
 .\scripts\export-pm-report-docx.ps1
 
-# 同步 TC 至 Google Sheet（供 PM 查閱）
+# 同步 TC 至 Google Sheet（供 PM 查閱，需 .claude/sheets-token.json）
 npm run sync:sheet
+
+# 上傳 xlsx 至 Google Drive（需 .claude/sheets-token.json）
+npm run upload:drive
 
 # 初始化新專案（清空舊內容、更新設定）
 .\scripts\project-init.ps1 -ProjectName "..." -ProjectCode "..." -SitUrl "..." -TestEmail "..." -TestPassword "..."
@@ -92,6 +95,9 @@ npm run sync:sheet
 | `/QA-6-generate-report` | 根據執行結果產 QA/PM 報告 |
 | `/QA-bug-report` | 將 bug 描述整理成 RIDER 格式報告（輸出至 artifacts/generated/qa/bugs/） |
 | `/QA-knowledge-update` | 審視 qa-knowledge 四個檔案是否與現有 spec 一致，列出差異後確認再更新（系統改版後執行）|
+| `/QA-pipeline-spec` | 串聯 QA-1 → QA-clarify → QA-design，完整完成需求分析到測試案例設計 |
+| `/QA-pipeline-run` | 串聯 playwright-smoke-test → QA-5 → 執行測試，含 resume 邏輯跳過已完成 feature |
+| `/QA-pipeline-report` | 串聯 QA-6 → PM-report，產出所有報告並匯出 Word |
 | `/check-project` | 掃描專案整體檔案結構（只用 Glob，最小 token）|
 | `/playwright-smoke-test` | 用 Playwright MCP 截圖所有主要頁面 |
 | `/project-init` | 清空舊專案內容、更新設定，快速切換至新系統 |
@@ -152,6 +158,8 @@ docs/                        # 架構、協作、環境設定文件
 - **回答任何問題或執行任何任務前，必須確認 CLAUDE.md 相關章節的內容**，不得依賴記憶或推斷；涉及流程、指令順序、目錄結構、規則的問題，一律以 CLAUDE.md 為唯一來源。
 - **每次對話開始時必須讀取本專案的 memory**：從 Claude Code 的專案 memory 目錄讀取 `MEMORY.md`（路徑由系統自動提供，不需寫死）。根據內容了解專案現況與過去決策，讀取失敗時不需提示使用者，直接繼續。
 - **建立或修改任何 `.claude/` 檔案前，必須先載入 `.claude/modules/structure-policy.md`**，確認內容放置在正確層級（commands / evals / modules），不得憑印象判斷。
+- **讀取大型檔案時優先用 Grep 找關鍵字，再用 Read + limit/offset 只讀需要的段落**，避免一次載入整份檔案消耗大量 token（Context Rot 防護）。
+- **每個 feature 完成後立即 commit**，確保狀態落地為檔案，不依賴 session 記憶。
 
 ---
 
@@ -168,7 +176,7 @@ docs/                        # 架構、協作、環境設定文件
 
 **備份流程（每次執行上述指令前強制執行）：**
 ```powershell
-Compress-Archive -Path "c:\Users\suppo\Desktop\QAAI專案" -DestinationPath "c:\Users\suppo\Desktop\QAAI專案-backup-$(Get-Date -Format 'yyyyMMdd-HHmm').zip" -Exclude "*/node_modules/*"
+$root = (Get-Item -Path (git -C $PSScriptRoot rev-parse --show-toplevel 2>$null ?? ".")); Compress-Archive -Path $root.FullName -DestinationPath "$($root.Parent.FullName)\$($root.Name)-backup-$(Get-Date -Format 'yyyyMMdd-HHmm').zip" -Exclude "*/node_modules/*"
 ```
 
 **特別禁止**：`git filter-repo --path <單一路徑> --replace-text` 組合使用 — 這會刪除所有其他檔案。正確用法只用 `--replace-text`，不加 `--path`。
