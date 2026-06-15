@@ -9,12 +9,13 @@
 ## 概況
 
 本次執行共 **58 件自動化規格**，結果：Pass 20、**Pending 38、Fail 0**。
+> 更新（2026-06-15）：TC-VIDEO-006 已解鎖，Pending 實際為 **37 件**。
 
 **無任何 Fail（系統錯誤/功能異常）**，所有未通過案例均為 `it.skip()`（Pending），原因可分為三類：
 
 | 類型 | 數量 | 說明 |
 |------|------|------|
-| SDET 技術待解決 | 27 | 需 API intercept、cy.clock()、媒體裝置模擬 |
+| SDET 技術待解決 | 26 | 需補 snapshot / API intercept / cy.clock() |
 | SIT 環境限制 | 8 | 功能未開放、需外部非同步 API |
 | 人工視覺驗證 | 3 | 無法純自動化，需截圖目視確認 |
 
@@ -92,14 +93,14 @@
 
 ---
 
-### video-recording（2 件）
+### video-recording（1 件，1 件已解鎖）
 
 | TC ID | 阻塞原因 |
 |-------|---------|
-| TC-VIDEO-005 | 需進入大肢體模組錄製頁面（Playwright snapshot 缺失，selector 未確認） |
-| TC-VIDEO-006 | 需進入側面模組錄製頁面（同上） |
+| TC-VIDEO-005 | 需進入大肢體模組錄製頁面（`step=graphic-copying-video` snapshot 缺失，說明文字內容待確認） |
+| ~~TC-VIDEO-006~~ | ✅ **已解鎖**（2026-06-15）：URL `/question?step=walk-side`、文字「超過 15 秒，最多 60 秒」已從 snapshot-step-walk-side.yml 確認，`it.skip` 已移除 |
 
-**待辦：** 補齊錄製頁面 snapshot，確認 DOM 中說明文字的 selector
+**待辦：** 補 `step=graphic-copying-video` snapshot，確認說明文字內容後解鎖 TC-VIDEO-005
 
 ---
 
@@ -149,7 +150,10 @@
 
 | TC ID | 阻塞原因 |
 |-------|---------|
-| TC-REREC-001, 003 | 需等待影片上傳完成（外部非同步行為），無法在 headless 環境模擬錄製流程 |
+| TC-REREC-002 | 缺 re-recording 頁面 Playwright snapshot，URL 與 selector 待補齊後可解鎖 |
+| TC-REREC-004 | 同上，另需確認「中斷後再次進入」的模組清單 selector |
+
+**待辦：** 執行 `/playwright-smoke-test` 補 re-recording 頁面截圖 → 解鎖後移除 `it.skip`
 
 ---
 

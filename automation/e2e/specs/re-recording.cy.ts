@@ -3,10 +3,11 @@
 // Automation candidates: TC-REREC-002, TC-REREC-004
 // TC-REREC-001, TC-REREC-003 = async upload dependency, manual review recommended
 
-// SKIP REASON: 前台檢測紀錄頁 URL 待確認；需取得真實 selector（id/class/text）後才能執行
-// [SDET TODO] Confirm URL for 檢測紀錄 page
-// [SDET TODO] Confirm real selectors for re-recording entry button, complete button, module list
-// [SDET TODO] Seed test data: cases with pending re-record modules
+// SKIP REASON: 缺少 /question?step=re-recording（或等效頁面）的 Playwright snapshot
+// 補齊 snapshot 後可解鎖，非永久跳過
+// [SDET TODO] 執行 /playwright-smoke-test 補 re-recording 頁面截圖與 snapshot
+// [SDET TODO] Confirm URL: 推測為 /question?step=re-recording 或從「檢測紀錄」tab 進入
+// [SDET TODO] Confirm selectors: 重新錄製入口按鈕、完成按鈕、模組清單
 
 import { loginAs } from '../flows/loginFlow';
 
