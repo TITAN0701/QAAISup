@@ -27,9 +27,13 @@
 
 ## 圖卡配對 (card-matching.cy.ts)
 
+> 更新：2026-06-15 — step code 已確認，data-testid 已清除，改用 cy.intercept() 架構
+
 | # | 優先度 | Task |
 |---|--------|------|
-| 4 | 🟠 P2 | 確認可直接導到圖卡配對題的 URL 或測試設定方式 |
+| 4 | 🟠 P2 | **TC-001~003**：在 cases.json 填入真實 4M / 6M / 8M childId，並確認 quiz API `POST /cskapi/api/child/*/quizattempts/` response 中 steps 陣列的欄位名稱（目前用 `JSON.stringify` 搜尋 `"picture-pairing"` 字串，若欄位名稱不同需調整 assertion） |
+| 4a | 🟠 P2 | **TC-004~005**：對 `/question?step=picture-pairing` 執行 Playwright snapshot，取得圖卡選項 selector（按鈕文字 / img alt / 穩定 class）及正向回饋文字後補齊兩個 skip test |
+| 4b | 🔵 參考 | **已確認**（2026-06-15 bundle 分析）：圖卡配對 step code = `picture-pairing`，quiz API pattern = `**/cskapi/api/child/*/quizattempts/**` |
 
 ## 影片錄製 (video-recording.cy.ts)
 
