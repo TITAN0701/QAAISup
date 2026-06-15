@@ -1,0 +1,93 @@
+# Snapshot: /question?step=picture-pairing (圖卡配對)
+# Captured: 2026-06-15 via Playwright MCP live navigation
+# Child: qa36m1781504606141 (36M, quiz store loaded via 正常流程)
+# Method: router.push() after resume API loaded quiz store
+
+page_title: WETPAINT
+url_pattern: /question?step=picture-pairing
+step_code: picture-pairing
+
+# ── 教學頁面（intro/tutorial）確認 ──────────────────────────────
+# 進入 picture-pairing 時先顯示此教學頁
+# 需點「開始作答」才能進入實際圖卡題目
+
+intro_page:
+  heading_text: 圖卡配對
+  heading_level: h2
+  section_label: 測驗教學
+  instruction: 請幫孩子點選語音按鈕播放題目，讓孩子自己操作即可。
+  image_alt: 圖卡配對示意圖
+  buttons:
+    - text: 取消
+      selector: cy.contains('button', '取消')
+    - text: 開始作答
+      selector: cy.contains('button', '開始作答')
+  progress_bar: visible (顯示 %)
+
+confirmed_selectors:
+  - cy.contains('h2', '圖卡配對')
+  - cy.contains('p', '請幫孩子點選語音按鈕播放題目，讓孩子自己操作即可。')
+  - cy.contains('button', '開始作答')
+  - cy.contains('button', '取消')
+  - cy.contains('測驗教學')
+
+# ── 實際圖卡題目 UI（未確認）────────────────────────────────────
+card_question_ui:
+  status: NOT_CAPTURED
+  reason: >
+    「開始作答」需要 Pinia store 有 picture-pairing 類型的 currentQuestionData。
+    quiz store 的 currentQuestionData.type 必須是 picture-pairing 對應的 question type
+    才能進入實際圖卡題目（否則按鈕無反應）。
+    router.push() 會載入 intro 頁但 store 仍是上一題的類型。
+  how_to_capture: >
+    需要透過正常測驗流程到達 picture-pairing（下一題按鈕觸發 ai/complete API），
+    讓系統自動將 currentQuestionData 更新為 picture-pairing 類型的題目。
+  required_child_age: 42-48M（確認 36M 個案不含此模組）
+
+# ── Quiz API 結構（2026-06-15 確認）────────────────────────────
+api_structure:
+  resume_endpoint: POST /cskapi/api/child/{childId}/quizattempts/resume/{quizId}
+  resume_response:
+    quizId: string (UUID)
+    category: "ai" | "observation"
+    currentQuestion:
+      type: string  # FM02_02=手繪圖, FM02_01=手握筆動作, choice=觀察題
+      question: string
+      ttsText: string
+      attemptId: string
+      id: string (UUID)
+      answerContents: array
+      images: array
+    statistics: ["ai", "observation"]
+
+  submit_ai: POST /cskapi/api/child/{childId}/quizattempts/ai/submit
+  submit_body:
+    childId: number
+    quizId: string
+    questionId: string
+    fileSize: number
+    contentType: "image/jpeg" | "video/mp4"
+  submit_response:
+    fileId: string (UUID)
+
+  upload: POST /cskapi/api/multipartupload/part?fileId={fileId}&partNumber=1
+  upload_response:
+    partNumber: number
+    eTag: string
+
+  complete_ai: POST /cskapi/api/child/{childId}/quizattempts/ai/complete
+  complete_body:
+    childId: number
+    quizId: string
+    questionId: string
+    fileId: string
+    next: boolean
+    parts: [{partNumber, eTag}]
+  complete_response: same as resume_response (next question data)
+
+# ── 年齡分流確認（2026-06-15 實測）────────────────────────────
+age_module_finding:
+  36M_child: picture-pairing NOT included (跳過，直接到 choice → finish)
+  48M_child: picture-pairing CONFIRMED (QASmoke48M 2026-06-15 實測)
+  conclusion: picture-pairing 在 42-48M 個案出現，36M 以下不包含此模組
+  note: CLAUDE.md 的「24m+：語言理解 D1/D2」可能指的是 picture-naming 而非 picture-pairing
