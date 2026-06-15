@@ -126,30 +126,62 @@ function loadScenarios() {
   return rows;
 }
 
-// ── 載入 Test Report（從 md 解析表格列） ──
+// ── 載入 Test Report（來源：pipeline-state.json） ──
 function loadTestReport() {
   const rows = [];
-  const reportFile = path.join(ARTIFACTS_QA, 'test-report.md');
-  if (!fs.existsSync(reportFile)) return rows;
-  const content = fs.readFileSync(reportFile, 'utf8');
-  const tableRows = content.match(/\| .+ \| .+ \|/g) || [];
-  for (const row of tableRows) {
-    const cols = row.split('|').map(c => c.trim()).filter(Boolean);
-    if (cols.length >= 2 && !cols[0].startsWith('-')) rows.push(cols);
+  const stateFile = path.join(PROJECT_ROOT, 'qa-workspace', '.pipeline-state.json');
+  if (!fs.existsSync(stateFile)) return rows;
+  let state;
+  try { state = JSON.parse(fs.readFileSync(stateFile, 'utf8')); } catch { return rows; }
+  for (const [feature, data] of Object.entries(state.features || {})) {
+    rows.push([
+      feature,
+      data.pass ?? 0,
+      data.pending ?? 0,
+      data.fail ?? 0,
+      data.playwright_verified ?? 0,
+      state.pipeline_id || '',
+      data.note || '',
+    ]);
   }
+  const t = state.totals || {};
+  rows.push([
+    '【合計】',
+    t.pass ?? 0,
+    t.pending ?? 0,
+    t.fail ?? 0,
+    t.playwright_verified ?? 0,
+    '',
+    `last_updated: ${state.last_updated || ''}`,
+  ]);
   return rows;
 }
 
-// ── 載入 Release Summary（從 md 解析表格列） ──
+// ── 載入 Release Summary（來源：pipeline-state.json 摘要） ──
 function loadReleaseSummary() {
   const rows = [];
-  const file = path.join(ARTIFACTS_PM, 'release-summary.md');
-  if (!fs.existsSync(file)) return rows;
-  const content = fs.readFileSync(file, 'utf8');
-  const tableRows = content.match(/\| .+ \| .+ \|/g) || [];
-  for (const row of tableRows) {
-    const cols = row.split('|').map(c => c.trim()).filter(Boolean);
-    if (cols.length >= 2 && !cols[0].startsWith('-')) rows.push(cols);
+  const stateFile = path.join(PROJECT_ROOT, 'qa-workspace', '.pipeline-state.json');
+  if (!fs.existsSync(stateFile)) return rows;
+  let state;
+  try { state = JSON.parse(fs.readFileSync(stateFile, 'utf8')); } catch { return rows; }
+  const t = state.totals || {};
+  rows.push(['Pipeline ID', state.pipeline_id || '']);
+  rows.push(['最後更新', state.last_updated || '']);
+  rows.push(['Pass', t.pass ?? 0]);
+  rows.push(['Pending', t.pending ?? 0]);
+  rows.push(['Fail', t.fail ?? 0]);
+  rows.push(['Playwright MCP 補驗', t.playwright_verified ?? 0]);
+  rows.push(['Specs 總數', t.specs ?? 0]);
+  rows.push(['', '']);
+  rows.push(['Pending 分類', '']);
+  const pb = state.pending_breakdown || {};
+  if (pb.legitimate_skip) {
+    rows.push(['合法 it.skip', pb.legitimate_skip.count ?? 0]);
+    rows.push(['合法 skip 功能', (pb.legitimate_skip.features || []).join(', ')]);
+  }
+  if (pb.needs_engineer_input) {
+    rows.push(['待工程師確認', pb.needs_engineer_input.count ?? 0]);
+    rows.push(['待確認功能', (pb.needs_engineer_input.features || []).join(', ')]);
   }
   return rows;
 }
@@ -194,17 +226,13 @@ async function buildXlsx(outputPath) {
 
   // Sheet 3：Test Report
   const reportRows = loadTestReport();
-  if (reportRows.length > 0) {
-    const reportHeaders = reportRows[0];
-    addSheet('Test Report', reportHeaders, reportRows.slice(1));
-  }
+  addSheet('Test Report',
+    ['Feature', 'Pass', 'Pending', 'Fail', 'Playwright 補驗', 'Pipeline ID', '備註'],
+    reportRows);
 
-  // Sheet 3：Release Summary
+  // Sheet 4：Release Summary
   const summaryRows = loadReleaseSummary();
-  if (summaryRows.length > 0) {
-    const summaryHeaders = summaryRows[0];
-    addSheet('Release Summary', summaryHeaders, summaryRows.slice(1));
-  }
+  addSheet('Release Summary', ['項目', '值'], summaryRows);
 
   await wb.xlsx.writeFile(outputPath);
 }

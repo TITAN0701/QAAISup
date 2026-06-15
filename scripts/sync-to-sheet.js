@@ -136,20 +136,39 @@ function loadScenarios() {
   return rows;
 }
 
-// ── 3. Test Report（摘要表格） ──
+// ── 3. Test Report（來源：pipeline-state.json） ──
 function loadTestReport() {
-  const rows = [['項目', '數值']];
-  const reportFile = path.join(ARTIFACTS_QA, 'test-report.md');
-  if (!fs.existsSync(reportFile)) return rows;
-  const content = fs.readFileSync(reportFile, 'utf8');
-  // 抓所有 markdown 表格列
-  const tableRows = content.match(/\| .+ \| .+ \|/g) || [];
-  for (const row of tableRows) {
-    const cols = row.split('|').map(c => c.trim()).filter(Boolean);
-    if (cols.length >= 2 && !cols[0].startsWith('-')) {
-      rows.push(cols);
-    }
+  const header = ['Feature', 'Pass', 'Pending', 'Fail', 'Playwright 補驗', 'Pipeline ID', '備註'];
+  const rows = [header];
+  const stateFile = path.join(PROJECT_ROOT, 'qa-workspace', '.pipeline-state.json');
+  if (!fs.existsSync(stateFile)) return rows;
+  let state;
+  try { state = JSON.parse(fs.readFileSync(stateFile, 'utf8')); } catch { return rows; }
+
+  for (const [feature, data] of Object.entries(state.features || {})) {
+    rows.push([
+      feature,
+      data.pass ?? 0,
+      data.pending ?? 0,
+      data.fail ?? 0,
+      data.playwright_verified ?? 0,
+      state.pipeline_id || '',
+      data.note || '',
+    ]);
   }
+
+  // 合計列
+  const t = state.totals || {};
+  rows.push([
+    '【合計】',
+    t.pass ?? 0,
+    t.pending ?? 0,
+    t.fail ?? 0,
+    t.playwright_verified ?? 0,
+    '',
+    `last_updated: ${state.last_updated || ''}`,
+  ]);
+
   return rows;
 }
 
