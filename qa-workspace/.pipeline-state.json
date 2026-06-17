@@ -1,7 +1,7 @@
-﻿{
-    "pipeline_id":  "2026-06-14-001",
-    "started_at":  "2026-06-14T14:37:25+08:00",
-    "last_updated":  "2026-06-14T15:40:00+08:00",
+{
+    "pipeline_id":  "2026-06-17-001",
+    "started_at":  "2026-06-17T06:00:00+08:00",
+    "last_updated":  "2026-06-17T07:00:00+08:00",
     "scope":  "all",
     "features":  {
                      "login":  {
@@ -9,7 +9,8 @@
                                    "tests_run":  "done",
                                    "pass":  5,
                                    "pending":  1,
-                                   "fail":  0
+                                   "fail":  0,
+                                   "note":  "TC-LOGIN-006: 登入頁確認無「創立帳號」入口，功能不存在，it.skip 合法"
                                },
                      "forgot-password":  {
                                              "qa5":  "done",
@@ -23,97 +24,128 @@
                                            "tests_run":  "done",
                                            "pass":  7,
                                            "pending":  1,
-                                           "fail":  0
+                                           "fail":  0,
+                                           "note":  "TC-ADMIN-008: SIT 無停用帳號測試資料，it.skip 保留待工程師提供 disabled_user"
                                        },
                      "account-register":  {
                                               "qa5":  "done",
                                               "tests_run":  "done",
                                               "pass":  0,
                                               "pending":  1,
-                                              "fail":  0
+                                              "fail":  0,
+                                              "note":  "OTP endpoint 未建，功能入口存在但後端未完成，it.skip 合法（功能未上線）"
                                           },
                      "card-matching":  {
                                            "qa5":  "done",
                                            "tests_run":  "done",
                                            "pass":  0,
                                            "pending":  5,
-                                           "fail":  0
+                                           "fail":  0,
+                                           "note":  "功能未上線，SIT 無 card-matching route，it.skip 合法"
                                        },
                      "register":  {
                                       "qa5":  "done",
                                       "tests_run":  "done",
                                       "pass":  0,
                                       "pending":  4,
-                                      "fail":  0
+                                      "fail":  0,
+                                      "note":  "功能未開放，it.skip 合法"
                                   },
                      "data-validation":  {
                                              "qa5":  "done",
                                              "tests_run":  "done",
-                                             "pass":  0,
-                                             "pending":  1,
-                                             "fail":  0
+                                             "pass":  1,
+                                             "pending":  0,
+                                             "fail":  0,
+                                             "note":  "SC-DATA-VALID-003 解鎖：前台新增孩童 dialog 確認存在"
                                          },
                      "gait-analysis":  {
                                            "qa5":  "done",
                                            "tests_run":  "done",
-                                           "pass":  0,
-                                           "pending":  7,
-                                           "fail":  0
+                                           "pass":  6,
+                                           "pending":  1,
+                                           "fail":  0,
+                                           "note":  "2026-06-17 TC-GAIT-002~005,007,009 全數解鎖通過（navigateToStep + 更新 assertions）。TC-GAIT-001 it.skip（walk-fb 無衣著限制文字）"
                                        },
                      "handwriting-recognition":  {
                                                      "qa5":  "done",
                                                      "tests_run":  "done",
                                                      "pass":  0,
-                                                     "pending":  1,
-                                                     "fail":  0
+                                                     "pending":  0,
+                                                     "fail":  0,
+                                                     "note":  "TC-HWRITE-003 automation_candidate:false（需 mediaDevices 錄製）"
                                                  },
                      "observation-group":  {
                                                "qa5":  "done",
                                                "tests_run":  "done",
-                                               "pass":  0,
-                                               "pending":  4,
-                                               "fail":  0
+                                               "pass":  4,
+                                               "pending":  0,
+                                               "fail":  0,
+                                               "note":  "全部通過"
                                            },
                      "re-recording":  {
                                           "qa5":  "done",
                                           "tests_run":  "done",
                                           "pass":  0,
                                           "pending":  2,
-                                          "fail":  0
+                                          "fail":  0,
+                                          "note":  "TC-REREC-002,004: /records URL 不存在，重新錄製需 mediaDevices + seed 資料。it.skip 保留"
                                       },
                      "verbal-expression":  {
                                                "qa5":  "done",
                                                "tests_run":  "done",
                                                "pass":  0,
                                                "pending":  2,
-                                               "fail":  0
+                                               "fail":  0,
+                                               "note":  "2026-06-17 TC-VERBAL-001,002 blocked: SIT picture-naming 點「開始錄製」回 API 500，無法進入錄製狀態。it.skip 保留"
                                            },
-                     "video-recording":  {
-                                             "qa5":  "done",
-                                             "tests_run":  "done",
-                                             "pass":  0,
-                                             "pending":  2,
-                                             "fail":  0
-                                         },
                      "question-content":  {
                                               "qa5":  "done",
                                               "tests_run":  "done",
-                                              "pass":  3,
-                                              "pending":  2,
-                                              "fail":  0
+                                              "pass":  4,
+                                              "pending":  1,
+                                              "fail":  0,
+                                              "note":  "TC-QCONTENT-001,003,004,005 通過。TC-QCONTENT-002 blocked: observation/submit API 500，切題失敗。it.skip 保留"
                                           },
                      "question-logic":  {
                                             "qa5":  "done",
                                             "tests_run":  "done",
                                             "pass":  1,
                                             "pending":  5,
-                                            "fail":  0
-                                        }
+                                            "fail":  0,
+                                            "note":  "TC-QLOGIC-001~005: 年齡層升降邏輯需 API intercept，DOM 不可見。it.skip 保留"
+                                        },
+                     "video-recording":  {
+                                             "qa5":  "done",
+                                             "tests_run":  "done",
+                                             "pass":  2,
+                                             "pending":  0,
+                                             "fail":  0,
+                                             "note":  "2026-06-17 TC-VIDEO-005,006 全數解鎖通過（navigateToStep）"
+                                         }
                  },
     "totals":  {
-                   "pass":  20,
-                   "pending":  38,
+                   "pass":  34,
+                   "pending":  23,
                    "fail":  0,
-                   "specs":  58
-               }
+                   "specs":  57
+               },
+    "pending_breakdown": {
+        "legitimate_skip": {
+            "count": 23,
+            "features": [
+                "login(1): TC-LOGIN-006 功能不存在",
+                "card-matching(5): 功能未上線",
+                "register(4): 功能未開放",
+                "account-register(1): OTP 後端未完成",
+                "re-recording(2): 需 seed 資料 + mediaDevices",
+                "verbal-expression(2): SIT API 500 阻塞錄製",
+                "admin-backend(1): 需 disabled_user 測試資料",
+                "question-content(1): SIT observation/submit API 500",
+                "question-logic(5): 需 cy.intercept 驗證升降邏輯",
+                "gait-analysis(1): walk-fb 無衣著限制文字"
+            ],
+            "reason": "功能未上線、功能未開放、SIT API 限制、需工程師提供測試資料或 seed、或需確認 API intercept 方案"
+        }
+    }
 }

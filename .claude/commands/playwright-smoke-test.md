@@ -11,6 +11,10 @@
 - Accessibility tree → `artifacts/raw/screenshots/snapshots/`
 - Cypress 執行截圖 → `artifacts/raw/screenshots/cypress/`（由 Cypress 自動存入，此指令不處理）
 
+## TodoWrite 任務追蹤（必須執行）
+
+> 先讀 `.claude/modules/task-registry.md`，取得 `playwright-smoke-test` 的任務模板，**啟動時立即呼叫 TodoWrite 建立任務清單**（`{N}` 替換為 pages.md 解析出的實際頁面數）。進度更新規則見 task-registry.md 的通用規則與 `playwright-smoke-test` 專屬規則。
+
 ## Arguments
 
 ```txt
@@ -101,9 +105,11 @@ mkdir -p artifacts/raw/screenshots/snapshots
 - 執行前必須先讀取 `automation/e2e/pages.md`，不使用指令內硬寫的頁面清單
 - 允許所有操作：登入、點「開始測驗」/「開始檢測」、填寫並送出表單
 - **測驗流程中每一題都必須點入作答並截圖 + snapshot，不可跳過任何一題**（強制）
+- **選擇題 / 觀察題組答題速度：快速模式**（選「是」後立即點「下一題」，不等待、不停頓；可用 `evaluate` setInterval loop 批次作答，每題間隔 ≤ 600ms）
 - **影片錄製模組（supine/gait/video）**：切換 390×844 → 點「開始錄製」→ 等 30 秒 → 點「停止錄製」→ 點「上傳影片」，強制完成不可略過
 - 截圖命名規則：`smoke-step-{step}-{題號}.png` / `snapshot-step-{step}-{題號}.yml`
 - 截圖統一使用 `fullPage: true`
 - 如果某頁面載入失敗（404 或跳轉），記錄為失敗但繼續執行其他頁面
 - 截圖完成後**不要**關閉瀏覽器（保留給後續使用）
-- **已知測試個案**（優先使用）：userId=528（4歲，48M，所有模組）、userId=524（2M，supine 題）
+- **測驗個案**：每次執行前必須用 `createChild(月齡)` + `startExamFor()` 建立全新孩童，不可使用已測驗個案（顯示「等待下次檢測時間」無法進入）
+- **影片題無法跳過**：supine / walk-fb / walk-side / graphic-copying-video / picture-naming 等影片題必須完整錄製才能進下一題，無法繞過

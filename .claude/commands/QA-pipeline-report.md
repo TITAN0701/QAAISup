@@ -5,6 +5,10 @@
 依序執行 Google Sheets 同步 → Google Drive xlsx 上傳，完整完成報告產出。
 資料來源：`qa-workspace/.pipeline-state.json`（最新 pipeline 結果）。
 
+## TodoWrite 任務追蹤（必須執行）
+
+> 先讀 `.claude/modules/task-registry.md`，取得 `qa-pipeline-report` 的任務模板，**啟動時立即呼叫 TodoWrite 建立任務清單**。進度更新規則見 task-registry.md 的通用規則與 `qa-pipeline-report` 專屬規則。
+
 Arguments:
 
 ```txt

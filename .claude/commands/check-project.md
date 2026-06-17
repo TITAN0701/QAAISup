@@ -66,7 +66,7 @@ account-register | ✅ | ✅ | ❌ | ❌ | ✅
 - `spec.md` 存在 → ✅
 - `questions.md` 存在 → ✅
 - `scenarios.md` 存在 → ✅
-- `artifacts/generated/qa/` 下有對應 json 或 md → ✅
+- `qa-workspace/specs/{feature}/test-cases.json` 存在 → ✅
 - `automation/e2e/specs/` 下有對應 `.cy.ts` → ✅
 
 #### 3b — 缺少的階段（只列 ❌ 的部分）

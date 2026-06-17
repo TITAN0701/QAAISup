@@ -82,8 +82,11 @@ describe('後台管理', () => {
     cy.contains('button', '連結紀錄').should('be.visible').click();
   });
 
+  // [VERIFIED BY PLAYWRIGHT MCP] 2026-06-15 — 登入失敗時顯示「帳號或密碼錯誤」(selector: cy.contains('帳號或密碼錯誤'))
+  // it.skip 保留原因：SIT 無停用帳號測試資料，無法確認停用帳號的錯誤訊息文字是否與「帳號或密碼錯誤」相同
+  // 解鎖條件：工程師提供 disabled_user.email + disabled_user.password 並寫入 CI Secret
   it.skip('TC-ADMIN-008 停用帳號後登入被拒並顯示錯誤訊息', () => {
-    // SKIP REASON: 需要 disabled_user fixture 帳號（users.json 待補）；錯誤訊息真實 selector 待確認
+    // SKIP REASON: SIT 無停用帳號測試資料
     cy.fixture('users').then((users) => {
       cy.visit('/login');
       cy.get('input[placeholder="請輸入手機號碼或電子郵件"]').type(users.disabled_user.email);

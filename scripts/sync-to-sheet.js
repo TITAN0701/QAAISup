@@ -7,7 +7,7 @@ const path = require('path');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const TOKEN_PATH = path.join(PROJECT_ROOT, '.claude', 'sheets-token.json');
 const CREDENTIALS_PATH = path.join(PROJECT_ROOT, '.claude', 'google-credentials.json');
-const SPREADSHEET_ID = '1-EO-84MVnU7zyBoCJUcJvNJpPYYYCzmRldCwDvEcO1Q';
+const SPREADSHEET_ID = '1uK9k4O1gL_YiNbXolOITpVnYwzJHB0j-UunLjG0fV0g';
 const TC_DIR = path.join(PROJECT_ROOT, 'qa-workspace', 'specs');
 const ARTIFACTS_QA = path.join(PROJECT_ROOT, 'artifacts', 'generated', 'qa');
 

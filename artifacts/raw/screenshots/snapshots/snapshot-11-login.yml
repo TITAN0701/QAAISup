@@ -9,11 +9,13 @@
           - generic [ref=e12]: 帳號
           - textbox "帳號" [ref=e13]:
             - /placeholder: 請輸入手機號碼或電子郵件
+            - text: "0999999993"
         - generic [ref=e14]:
           - generic [ref=e15]: 密碼
           - generic [ref=e16]:
             - textbox "密碼" [ref=e17]:
               - /placeholder: 請輸入密碼
+              - text: password123
             - button [ref=e18] [cursor=pointer]:
               - img [ref=e19]
           - button "忘記密碼？" [ref=e22] [cursor=pointer]

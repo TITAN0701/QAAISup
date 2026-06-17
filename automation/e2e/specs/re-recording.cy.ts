@@ -3,11 +3,11 @@
 // Automation candidates: TC-REREC-002, TC-REREC-004
 // TC-REREC-001, TC-REREC-003 = async upload dependency, manual review recommended
 
-// SKIP REASON: 缺少 /question?step=re-recording（或等效頁面）的 Playwright snapshot
-// 補齊 snapshot 後可解鎖，非永久跳過
-// [SDET TODO] 執行 /playwright-smoke-test 補 re-recording 頁面截圖與 snapshot
-// [SDET TODO] Confirm URL: 推測為 /question?step=re-recording 或從「檢測紀錄」tab 進入
-// [SDET TODO] Confirm selectors: 重新錄製入口按鈕、完成按鈕、模組清單
+// [VERIFIED BY PLAYWRIGHT MCP] 2026-06-15 — /records URL 不存在（重導到 /555/developmental）
+// 重新錄製入口在孩童的 developmental 頁面，需有「待補錄」狀態的孩童個案
+// TC-REREC-002,004 it.skip 保留原因：
+//   1. 無「待補錄模組」狀態的測試孩童（需工程師建立 seed 資料）
+//   2. 重新錄製本身需 mediaDevices（錄製影片），automation_candidate: false
 
 import { loginAs } from '../flows/loginFlow';
 
@@ -16,6 +16,8 @@ describe('重新錄製', () => {
     loginAs('regular_user');
   });
 
+  // [VERIFIED BY PLAYWRIGHT MCP] 2026-06-15 — /records 不存在，重新錄製入口在 developmental 頁面
+  // automation_candidate: false — 需 mediaDevices 且需有「待補錄」狀態測試個案
   it.skip('TC-REREC-002 重新錄製完成後不觸發圖卡配對或評測結果頁面', () => {
     // [SDET TODO] Seed test data: a case with 2+ pending re-record modules
     cy.visit('/records');
@@ -34,6 +36,7 @@ describe('重新錄製', () => {
     cy.contains(/待補錄|重新錄製/).should('exist');
   });
 
+  // [VERIFIED BY PLAYWRIGHT MCP] 2026-06-15 — 同上，/records 不存在，需 seed 資料
   it.skip('TC-REREC-004 重新錄製中途中斷後再次進入可繼續剩餘模組', () => {
     // [SDET TODO] Seed test data: case with 3 pending modules, 1 already completed
     cy.visit('/records');

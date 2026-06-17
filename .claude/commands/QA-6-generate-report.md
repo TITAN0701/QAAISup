@@ -2,45 +2,32 @@
 
 > 執行前先讀：`.claude/modules/config-loader.md`、`.claude/modules/qa-knowledge-loader.md`、`.claude/modules/eval-loader.md`
 
-You are helping QA generate QA and PM reports from test execution results.
+You are helping QA generate reports from test execution results.
+
+> **報告流程說明**：不產出 markdown 中間檔（test-report.md / failure-analysis.md / release-summary.md 均已廢除）。
+> 唯一資料來源為 `qa-workspace/.pipeline-state.json`，輸出目標為 Google Sheets + Google Drive xlsx。
 
 ## Goal
 
 Read:
 
 ```txt
-artifacts/raw/allure-results/
-artifacts/generated/allure-report/
-qa-workspace/specs/*/test-cases.json
-qa-knowledge/glossary.md
-CI logs if available
+qa-workspace/.pipeline-state.json          ← 唯一執行結果來源
+qa-workspace/specs/*/test-cases.json       ← TC 清單（供 Test Cases sheet）
+qa-workspace/specs/*/scenarios.md          ← 情境（供 Scenarios sheet）
+artifacts/generated/qa/risk-notes.md       ← 風險備註（若存在）
+artifacts/generated/qa/bugs/*.md           ← Bug reports（若存在）
 ```
 
-Generate:
+Generate / Sync:
 
 ```txt
-artifacts/generated/qa/test-cases.md       ← 所有 feature TC 彙整（人讀版）
-artifacts/generated/qa/test-report.md
-artifacts/generated/qa/failure-analysis.md
-artifacts/generated/pm/release-summary.md
-```
+Google Sheets（npm run sync:sheet）
+  → Test Cases、Scenarios、Test Report、Risk Notes、Bug Reports
 
-Then export:
-
-```txt
-artifacts/generated/pm/release-summary.docx
-```
-
-Then sync to Google Sheets:
-
-```powershell
-npm run sync:sheet
-```
-
-Then upload dated xlsx to Google Drive (WETPAINT > AI Suport文件):
-
-```powershell
-npm run upload:drive
+Google Drive xlsx（node scripts/upload-to-drive.js）
+  → artifacts/generated/qa/{日期}-qa-report.xlsx
+  → 上傳至 Drive：WETPAINT > AI Suport文件
 ```
 
 Arguments:
@@ -51,77 +38,52 @@ $ARGUMENTS
 
 ## Steps
 
-### Step 1 — 產出報告
+### Step 1 — 確認執行結果存在
 
-依 Goal 中定義的輸入來源產出 test-cases.md、test-report.md、failure-analysis.md、release-summary.md。
+檢查 `qa-workspace/.pipeline-state.json` 是否存在且 `totals.pass` 或 `totals.pending` 大於 0：
+
+- **不存在或全為 0** → **停止**，告知使用者先執行 `/QA-pipeline-run` 取得測試結果
+- **已存在** → 繼續 Step 2
 
 ### Step 2 — 自我評估
 
-產出完成後，依序執行評估：
+依序執行：
 
-1. 對照 `.claude/evals/rubrics/report.md` 逐項檢查 test-report.md 與 release-summary.md
-2. 依 `.claude/evals/criteria/flow-gates.md` 判斷結果代碼
-3. 依 `.claude/evals/benchmarks/qa-baseline.md` 確認覆蓋率是否達標
-4. 輸出評估結果
+1. 對照 `.claude/evals/rubrics/report.md` 逐項確認 pipeline-state 欄位完整性
+2. 依 `.claude/evals/criteria/flow-gates.md` 判斷結果代碼：
+   - `REPORT_INVALID`：pipeline-state 缺少 pass/pending/fail 來源 → **停止**
+   - `REPORT_OK`：繼續 Step 3
+3. 依 `.claude/evals/benchmarks/qa-baseline.md` 確認覆蓋率是否達標，輸出評估結果
 
-若結果為 `REPORT_INVALID`，**停止**，不匯出 Word，告知使用者先取得 execution-results.json 後再重跑。
+### Step 3 — 同步 Google Sheets
 
-### Step 3 — 匯出與同步
+```powershell
+npm run sync:sheet
+```
 
-評估結果為 `REPORT_OK` 後才執行匯出與同步。
+失敗（token 過期）→ 告知使用者執行 `node scripts/auth-sheets.js` 重新授權。
+
+### Step 4 — 產出 xlsx 並上傳 Google Drive
+
+```powershell
+node scripts/upload-to-drive.js
+```
+
+產出 `artifacts/generated/qa/{日期}-qa-report.xlsx`，上傳至 Drive `WETPAINT > AI Suport文件`。
+
+失敗（權限不足）→ 告知使用者執行 `node scripts/auth-sheets.js` 重新授權（需 `drive.file` scope）。
 
 ## Rules
 
-### test-cases.md 產出規則
-
-從 `qa-workspace/specs/*/test-cases.json` 讀取所有 feature 的測試案例，產出 `artifacts/generated/qa/test-cases.md`，格式如下：
-
-```md
-# Test Cases 彙整
-
-> 自動產出，請勿手動編輯。來源：`qa-workspace/specs/*/test-cases.json`
-> 最後更新：{產出時間}
-
-## 統計
-
-| Feature | 總數 | High | Medium | Low | 可自動化 | 自動化率 |
-|---------|------|------|--------|-----|---------|---------|
-| login   | n    | n    | n      | n   | n       | xx%     |
-| ...     |      |      |        |     |         |         |
-| **合計** | n   | n    | n      | n   | n       | xx%     |
-
----
-
-## {feature}
-
-> 來源：`qa-workspace/specs/{feature}/test-cases.json`
-
-| ID | 標題 | 優先度 | 類型 | 自動化 |
-|----|------|--------|------|--------|
-| TC-LOGIN-001 | 正常登入流程 | high | e2e | ✅ |
-| TC-LOGIN-002 | 密碼錯誤 | medium | e2e | ✅ |
-| TC-LOGIN-003 | 帳號不存在 | medium | e2e | ⚠️ |
-```
-
-自動化欄位規則：
-- `automation_candidate: true` → ✅
-- `automation_candidate: false` → ❌
-- 欄位不存在 → ⚠️（待評估）
-
-不在 md 展開 steps / preconditions / expected，保留在 JSON。
-
 ### Context Rot 防護
 
-- 讀取 `qa-workspace/specs/*/test-cases.json` 與 `execution-results.json` 時，**每次只處理一個 feature**，完成後繼續下一個，不同時載入所有 feature 的檔案。
-- 讀取前先用 Grep 確認關鍵欄位存在（例如 `"status"`, `"result"`），再用 Read + limit/offset 只讀需要的段落。
+- 讀取 `qa-workspace/specs/*/test-cases.json` 時，**每次只處理一個 feature**，完成後繼續下一個，不同時載入所有 feature 的檔案
+- 讀取前先用 Grep 確認關鍵欄位存在，再用 Read + limit/offset 只讀需要的段落
 
 ### 報告規則
 
-- Do not invent pass/fail results.
-- Pass/fail must come from Cypress, pytest, CI, or Allure.
-- PM report fields should be Chinese.
-- PM report status values should remain English.
-- QA report may include technical details.
-- PM report should summarize release risk, impacted features, PM decisions needed, and customer-facing notes.
-- Use `.\scripts\export-pm-report-docx.ps1` to export Word after Markdown is ready.
+- Pass/Fail 數字必須來自 `pipeline-state.json`，不得捏造或推算
+- 不產出任何 .md 中間檔（test-report.md / failure-analysis.md / release-summary.md 均已廢除）
+- 不執行 `export-pm-report-docx.ps1`（Word 匯出已廢除）
+- 若使用者需要 PM 可讀版本，指引至 Google Sheets 連結或 Drive xlsx
 

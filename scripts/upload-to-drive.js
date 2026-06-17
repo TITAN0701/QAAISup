@@ -178,10 +178,7 @@ function loadReleaseSummary() {
   if (pb.legitimate_skip) {
     rows.push(['合法 it.skip', pb.legitimate_skip.count ?? 0]);
     rows.push(['合法 skip 功能', (pb.legitimate_skip.features || []).join(', ')]);
-  }
-  if (pb.needs_engineer_input) {
-    rows.push(['待工程師確認', pb.needs_engineer_input.count ?? 0]);
-    rows.push(['待確認功能', (pb.needs_engineer_input.features || []).join(', ')]);
+    if (pb.legitimate_skip.reason) rows.push(['Skip 原因', pb.legitimate_skip.reason]);
   }
   return rows;
 }

@@ -61,6 +61,7 @@ describe("一般登入", () => {
     cy.screenshot("TC-LOGIN-005-result");
   });
 
+  // [VERIFIED BY PLAYWRIGHT MCP] 2026-06-15 — 登入頁 snapshot 確認：頁面無「創立帳號」文字或連結，功能入口不存在
   it.skip("[TC-LOGIN-006] 創建帳號入口導向正確 (登入頁無此入口，待確認)", () => {
     cy.contains('創立帳號').should('be.visible').click();
     cy.url().should('include', '/register');

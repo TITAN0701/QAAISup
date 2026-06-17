@@ -2,17 +2,26 @@
 // 每次測試前建立全新孩童資料，確保測驗狀態乾淨可用。
 //
 // 使用方式：
-//   const childName = createChild(36);
-//   startExamFor(childName);
+//   const child = createChild(36);
+//   navigateToStep(child, 'walk-fb', 'ai', 'GM01_01');
 //
 // 實作：使用 cy.request() 直接呼叫 API（/cskapi/api/child），
 //   不透過 UI，繞過 Reka UI 下拉選單互動問題。
 //   cy.request() 自動帶入瀏覽器 session cookie（需先呼叫 loginAs）。
 //
+// 回傳：Cypress.Chainable<{ name: string; id: number }>
+//   呼叫端用 .then(child => navigateToStep(child, ...)) 才能拿到 id。
+//   直接傳 child 物件給 navigateToStep 即可（TypeScript 允許 Chainable 型別）。
+//
 // API 限制：
 //   - fullName 只允許中文、英文字母與數字（不可有連字號）
 //   - birthDate 需為 2 個月以上、6 歲以下
 //   - 城市/區域：臺北市南港區 (homeCity.code="63", homeDist.code="6309")
+
+export interface Child {
+  name: string;
+  id: number;
+}
 
 function birthdayForAge(ageMonths: number): string {
   const d = new Date();
@@ -43,19 +52,18 @@ function fakeNationalId(): string {
 }
 
 /**
- * 建立全新孩童資料（直接呼叫 POST /cskapi/api/child），回傳孩童姓名。
+ * 建立全新孩童資料（直接呼叫 POST /cskapi/api/child）。
+ * 回傳 Cypress.Chainable<Child>，需用 .then(child => ...) 或直接傳給支援 Chainable 的函式。
  * 呼叫前需已登入（loginAs 在 beforeEach 中執行）。
- * 完成後接著呼叫 startExamFor(childName) 進入測驗。
  */
-export function createChild(ageMonths: number): string {
-  const childName = `qa${ageMonths}m${Date.now()}`; // 不含連字號（API 限制）
+export function createChild(ageMonths: number): Cypress.Chainable<Child> {
+  const childName = `qa${ageMonths}m${Date.now()}`;
   const nationalId = fakeNationalId();
   const birthday = birthdayForAge(ageMonths);
 
-  // JWT is in sessionStorage; cy.request() needs it in Authorization header
-  cy.window().then((win) => {
+  return cy.window().then((win) => {
     const token = win.sessionStorage.getItem('token');
-    cy.request({
+    return cy.request({
       method: 'POST',
       url: '/cskapi/api/child',
       headers: { Authorization: `Bearer ${token}` },
@@ -73,8 +81,9 @@ export function createChild(ageMonths: number): string {
         isIndigenous: false,
       },
       failOnStatusCode: true,
+    }).then((resp) => {
+      const id = resp.body?.data?.id as number;
+      return { name: childName, id };
     });
   });
-
-  return childName;
 }

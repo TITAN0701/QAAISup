@@ -49,8 +49,26 @@
 
 現階段使用順序：`input[placeholder]` > `cy.contains('button/a', '文字')` > `a[href]` > 穩定唯一中文文字
 
-無法確認 selector 的 TC 一律寫 `it.skip()`，並在檔案頂部加 `[SDET TODO]`。
+無法確認 selector 的 TC → 先用 Playwright MCP 補驗取得 snapshot，再從 snapshot 抽 selector。若系統入口確實不存在才寫 `it.skip()`。
 禁止使用 CSS nth-child、不穩定 class name、完整 XPath。
+
+## it.skip 使用規則
+
+**`it.skip` 與 `pending` 只有一種使用時機：SIT 系統上確實沒有此功能或入口。**
+
+- 功能未上線、入口不存在 → `it.skip` / `pending`
+- selector 不知道、fixture 未建、技術待確認 → **不用 skip/pending，去補齊再跑**
+- 影片錄製、視覺品質等無法自動化 → 在 `test-cases.json` 標記 `automation_candidate: false`，不產出 `.cy.ts`，不寫 `it.skip`
+
+## Playwright MCP 補驗規則
+
+**當 Cypress 無法執行測試時（前置需 mediaDevices、需完整流程狀態、SIT 不支援直連 URL），改用 Playwright MCP 驗證。**
+
+- Cypress 失敗或無法到達的步驟 → 用 Playwright MCP 手動走完流程並截圖 + snapshot 為憑
+- 驗證結果存入 `artifacts/raw/screenshots/snapshots/snapshot-step-{step}.yml`
+- 截圖存入 `artifacts/raw/screenshots/smoke/smoke-{名稱}.png`
+- Playwright MCP 補驗通過 → pipeline-state 記為 `pass`，不計 pending，**不保留 it.skip**（移除 skip，改為純 comment 標注 `// [VERIFIED BY PLAYWRIGHT MCP] {日期} — {確認的事實}`）
+- 補驗後若仍需保留 `.cy.ts` 測試，改寫成能跑的真實 `it()`；若 Cypress 結構上無法到達（需走完影片前置），則整個 `it()` body 以截圖 + comment 說明為憑，不放無法執行的 cy 指令
 
 ## Review Rule
 

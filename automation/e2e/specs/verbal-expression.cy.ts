@@ -15,45 +15,74 @@
 //   - 評分選項: cy.contains('button', '正確') / '不正確' / '沒反應'
 //   - 上傳影片: cy.contains('button', '上傳影片')
 //
-// [SDET TODO] 進入 /question?step=picture-naming 需先選擇 48M+ 個案並開始檢測
-// [SDET TODO] 計時器以 cy.clock() + cy.tick() 控制，需確認 app 使用 Date/setTimeout
+// [VERIFIED BY PLAYWRIGHT MCP] 2026-06-15 — picture-naming URL 及 UI 元素已於前次 session 確認
+//   存在：口語表達標題、開始錄製按鈕、圖片編號（01/01）、倒數計時器
+// TC-VERBAL-001,002 it.skip 保留原因：
+//   1. cy.visit('/question?step=picture-naming') 直連被 SIT 重導，Cypress 無法到達
+//   2. 60 秒計時器驗證需 cy.clock() + cy.tick()，Playwright MCP 無法替代
+//   3. 開始錄製需 mediaDevices（automation_candidate: false 部分）
+//
+// 2026-06-17 解鎖路徑（JS bundle 確認）：
+//   直連問題可用 navigateToStep(childName, 'picture-naming', 'ai', 'SE03_LE04') 解決。
+//   resolveNextStep 邏輯：category='ai' + currentQuestion.type='SE03_LE04' → hv('SE03_LE04') → 'picture-naming'。
+//   呼叫：navigateToStep(freshChild, 'picture-naming', 'ai', 'SE03_LE04')
+//   計時器格式（00:60 vs 01:00）仍需確認。
 
 import { loginAs } from '../flows/loginFlow';
+import { navigateToStep } from '../flows/examFlow';
+import { createChild } from '../flows/childFlow';
 
 describe('口語表達', () => {
   beforeEach(() => {
     loginAs('regular_user');
   });
 
-  it.skip('TC-VERBAL-001 口語表達每張圖片各自獨立倒數 60 秒，切換圖片後重置', () => {
-    // 前置：需選擇 48M+ 個案並進入測驗後到達 picture-naming step
-    cy.visit('/question?step=picture-naming');
-    cy.contains('口語表達').should('be.visible');
-    cy.contains('button', '開始錄製').click();
-
-    // 確認第一張圖（格式 01/01 或 01/N）
-    cy.contains(/^01\//).should('be.visible');
-
-    // 計時器以倒數格式顯示（00:60 或 01:00）
-    // [SDET TODO] 確認計時器初始值與格式（00:60 / 01:00）
-    cy.clock();
-    cy.tick(60000);
-
-    // 切換後應顯示第二張圖
-    cy.contains(/^02\//).should('be.visible');
-    cy.screenshot('TC-VERBAL-001-result');
+  // [VERIFIED BY PLAYWRIGHT MCP] 2026-06-15 — picture-naming 功能入口存在，UI 元素已確認
+  // 計時器正數計時（showCountdown:false，bundle 確認），初始 00:00，60秒後 01:00
+  // 2026-06-17 解鎖：navigateToStep category='ai' + type='SE03_LE04' → picture-naming
+  // [BLOCKED 2026-06-17] SIT 環境「開始錄製」觸發 API 回 500，頁面無法進入錄製狀態
+  // 新建孩童在 picture-naming 步驟點「開始錄製」→ quizattempts API 500 → 頁面不跳轉
+  // 同樣問題見 TC-QCONTENT-002（observation/submit 500）
+  // 需 SIT API 正常或使用已有固定個案才能驗證 60 秒計時行為
+  it.skip('TC-VERBAL-001 口語表達每張圖片各自獨立計時 60 秒，切換圖片後重置', () => {
+    createChild(48).then((child) => {
+      navigateToStep(child, 'picture-naming', 'ai', 'SE03_LE04');
+      cy.contains('口語表達').should('be.visible');
+      cy.get('body').then(($body) => {
+        if ($body.find('button:contains("了解！繼續")').length) {
+          cy.contains('button', '了解！繼續').click();
+        }
+      });
+      cy.contains('button', '開始錄製').should('be.visible');
+      cy.clock();
+      cy.contains('button', '開始錄製').click();
+      cy.get('body').should('contain', '01/');
+      cy.contains('00:00').should('be.visible');
+      cy.tick(60000);
+      cy.contains('01:00').should('be.visible');
+      cy.get('body').should('contain', '02/');
+      cy.screenshot('TC-VERBAL-001-result');
+    });
   });
 
-  it.skip('TC-VERBAL-002 第一張圖 60 秒倒數結束後自動進入第二張圖並重新計時', () => {
-    cy.visit('/question?step=picture-naming');
-    cy.contains('口語表達').should('be.visible');
-    cy.contains('button', '開始錄製').click();
-
-    cy.contains(/^01\//).should('be.visible');
-    cy.clock();
-    cy.tick(60000);
-
-    cy.contains(/^02\//).should('be.visible');
-    cy.screenshot('TC-VERBAL-002-result');
+  // [BLOCKED 2026-06-17] 同 TC-VERBAL-001，SIT API 500 阻塞錄製啟動
+  it.skip('TC-VERBAL-002 第一張圖 60 秒計時結束後自動進入第二張圖並重新計時', () => {
+    createChild(48).then((child) => {
+      navigateToStep(child, 'picture-naming', 'ai', 'SE03_LE04');
+      cy.contains('口語表達').should('be.visible');
+      cy.get('body').then(($body) => {
+        if ($body.find('button:contains("了解！繼續")').length) {
+          cy.contains('button', '了解！繼續').click();
+        }
+      });
+      cy.contains('button', '開始錄製').should('be.visible');
+      cy.clock();
+      cy.contains('button', '開始錄製').click();
+      cy.get('body').should('contain', '01/');
+      cy.tick(60000);
+      cy.get('body').should('contain', '02/');
+      cy.contains('00:00').should('be.visible');
+      cy.screenshot('TC-VERBAL-002-result');
+    });
   });
 });

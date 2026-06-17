@@ -4,14 +4,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
-## 專案簡介
-
-AI 輔助、規格驅動的 QA 自動化框架。從 PM 需求到 QA 報告的全流程 AI 協作，針對「國衛院學齡前兒童發展數位評估系統」（代號 wetpaint）進行測試。
-
-目標 SIT 環境：`https://sit-wetpaint.nhri.org.tw/`
-
----
-
 ## 核心流程（三步驟）
 
 ```
@@ -43,64 +35,7 @@ QA 產情境與案例
 
 ---
 
-## 常用指令
-
-```powershell
-# 建立新功能工作區（從 pm-inbox 匯入）
-.\scripts\new-feature-from-inbox.ps1
-
-# 執行 Cypress E2E（讀 .env 的 CYPRESS_BASE_URL）
-npm run test:e2e
-
-# 執行單一 Cypress 測試檔
-npx cypress run --spec "automation/e2e/specs/login.cy.ts"
-
-# 執行 pytest API 測試
-pytest automation/api/tests/
-
-# 產出所有 QA 產物（回填執行結果後）
-.\scripts\refresh-qa-artifacts.ps1
-
-# 含 PM release summary
-.\scripts\refresh-qa-artifacts.ps1 -IncludePm
-
-# 驗證 SDD 文件結構完整性
-.\scripts\validate-sdd.ps1
-
-# 匯出 PM 報告（Word）
-.\scripts\export-pm-report-docx.ps1
-
-# 同步 TC 至 Google Sheet（供 PM 查閱，需 .claude/sheets-token.json）
-npm run sync:sheet
-
-# 上傳 xlsx 至 Google Drive（需 .claude/sheets-token.json）
-npm run upload:drive
-
-# 初始化新專案（清空舊內容、更新設定）
-.\scripts\project-init.ps1 -ProjectName "..." -ProjectCode "..." -SitUrl "..." -TestEmail "..." -TestPassword "..."
-```
-
----
-
-## Slash Commands
-
-| 指令 | 用途 |
-|------|------|
-| `/PM-import` | 匯入 PM 需求（直接撰寫 or 從 .xlsx 匯入） |
-| `/PM-report` | 審查並匯出 PM 發布摘要報告（.md + .docx） |
-| `/QA-1-import-pm-request` | 檢查 pm-inbox，準備建立工作區 |
-| `/QA-clarify` | QA 整理尚待釐清的假設與不確定點（內部備忘） |
-| `/QA-design` | 產生測試情境與測試案例（scenarios、test-cases.json、plan、tasks） |
-| `/QA-5-generate-automation` | 產自動化草稿（Cypress + pytest）；讀 Playwright snapshot 抽取 selector，找不到才寫 it.skip() + [SDET TODO]，需 SDET review 後才可跑 |
-| `/QA-6-generate-report` | 根據執行結果產 QA/PM 報告 |
-| `/QA-bug-report` | 將 bug 描述整理成 RIDER 格式報告（輸出至 artifacts/generated/qa/bugs/） |
-| `/QA-knowledge-update` | 審視 qa-knowledge 四個檔案是否與現有 spec 一致，列出差異後確認再更新（系統改版後執行）|
-| `/QA-pipeline-spec` | 串聯 QA-1 → QA-clarify → QA-design，完整完成需求分析到測試案例設計 |
-| `/QA-pipeline-run` | 串聯 playwright-smoke-test → QA-5 → 執行測試，含 resume 邏輯跳過已完成 feature |
-| `/QA-pipeline-report` | 串聯 QA-6 → PM-report，產出所有報告並匯出 Word |
-| `/check-project` | 掃描專案整體檔案結構（只用 Glob，最小 token）|
-| `/playwright-smoke-test` | 用 Playwright MCP 截圖所有主要頁面 |
-| `/project-init` | 清空舊專案內容、更新設定，快速切換至新系統 |
+> 常用指令與 Slash Commands 完整清單見 [README.md](README.md)
 
 ---
 
@@ -131,18 +66,6 @@ automation/
 scripts/                     # PowerShell/Python 工具腳本
 docs/                        # 架構、協作、環境設定文件
 ```
-
----
-
-## 架構重點
-
-**五層架構**：PM Input → QA/AI Specification → Test Design → Automation → Execution & Report
-
-每層的關鍵限制：
-- **AI 不可自行創造測試結果**：Pass/Fail 必須來自測試框架或 CI
-- **AI 產出需 QA 審核後才能進入自動化**
-- **QA-5 產出為草稿**：AI 讀 Playwright snapshot 抽取 selector 寫出 Cypress 程式碼，未實際跑瀏覽器；需 SDET review 後才可執行 `npm run test:e2e`
-- **無法確認 selector 時**，寫 `it.skip()` + `[SDET TODO]`，並記錄在 `automation/ENGINEERING-TASKS.md`
 
 ---
 
@@ -210,7 +133,7 @@ TEST_ENV=staging
 - 執行：`npm run sync:sheet`（腳本：`scripts/sync-to-sheet.js`）
 - Token：`.claude/sheets-token.json`（範圍：`spreadsheets` + `drive.readonly`）
 - 初次授權：`node scripts/auth-sheets.js`（會開啟瀏覽器，完成後自動存 token）
-- Spreadsheet ID：`1-EO-84MVnU7zyBoCJUcJvNJpPYYYCzmRldCwDvEcO1Q`
+- Spreadsheet ID：`1uK9k4O1gL_YiNbXolOITpVnYwzJHB0j-UunLjG0fV0g`（WETPAINT QA AI 測試報告，2026-06-17 建立）
 
 ### Playwright MCP
 - 用途：截圖所有頁面與測驗流程（`/playwright-smoke-test`），包含進入測驗、逐題作答、影片錄製上傳
@@ -218,19 +141,9 @@ TEST_ENV=staging
 - **允許所有操作**：登入、點「開始測驗」/「開始檢測」、填寫並送出表單（2026-06-12 授權）
 - **每一題都必須點入截圖 + snapshot，不可跳過**
 - **影片模組必須完整執行**：切換 390×844 → 開始錄製 → 等 30 秒 → 停止 → 上傳
-- **已知測試個案 userId**（SIT 環境，需後台管理員帳號才能訪問）：
-  - userId=502：39test1042（3歲3個月，39M）
-  - userId=524：qatest01（2個月，2M，有 supine 影片題）
-  - userId=530：「5」（4歲，48M，尚未測驗，模組最完整）
-  - userId=529：「4」（4歲，48M，尚未測驗）
-  - userId=528：「3」（4歲，48M，尚未測驗）
-- **年齡層 × 模組對照**（依用戶提供的對照表）：
-  - 2-9m：走路步態（A1/A2/A3）
-  - 12-15m：＋大肢體動作
-  - 18m：＋社會情緒（F）
-  - 24m+：＋手握筆（B）、語言理解（D1/D2）
-  - 36m+：＋精細動作/語言表達
-  - 42-48m：幾乎全部模組（A+B+C+D1+D2+E+F）
+- **等待操作上限**：單次 wait 不超過 20 秒；影片上傳等長時間操作改用輪詢（wait 10s → 檢查 → wait 10s → 檢查）
+- **Smoke Test 必須新增全新孩童**：不可使用已測驗個案（顯示「等待下次檢測時間」無法進入）
+- **已知測試個案及年齡層模組對照**：見 `automation/e2e/pages.md` 與 project memory
 
 ### GitHub CLI（gh）
 - 用途：`/QA-bug-report` 自動推送 Bug 至 GitHub Issues
@@ -241,40 +154,7 @@ TEST_ENV=staging
 
 ---
 
-## 切換新專案
-
-將此框架套用至不同系統時，執行 `/project-init`，AI 會依序詢問：
-
-| 欄位 | 說明 |
-|------|------|
-| 專案名稱 | 中文全名，例如：成人健康評估系統 |
-| 專案代號 | 英文小寫，例如：adult-health |
-| SIT URL | 新系統的測試環境網址 |
-| 測試帳號 / 密碼 | 新系統的登入憑證 |
-| API URL | 若無可略過 |
-
-確認後自動執行 `scripts/project-init.ps1`，清空所有舊內容並更新 `.env` 與 `CLAUDE.md`。完成後直接從 `/QA-1-import-pm-request` 開始新專案。
-
-> 清空範圍：`pm-inbox/`、`qa-workspace/specs/`、`automation/e2e/specs/*.cy.ts`、`automation/api/tests/*.py`、`artifacts/`
-> 保留範圍：`scripts/`、`.claude/commands/`、`qa-knowledge/`、Page Object 結構、`package.json`
-
----
-
 ## Selector 規則
 
 完整規則見 `qa-knowledge/selector-policy.md`。
 
----
-
-## 重要限制（SIT 環境）
-
-- Playwright MCP 截圖任務：允許所有操作，包含登入、點「開始測驗」/「開始檢測」、填寫並送出表單
-- `/playwright-smoke-test` 執行測驗流程時，**每一題都必須點進去作答並截圖**，不可跳過任何一題
-- 影片錄製模組（supine、gait、video）：切換手機尺寸（390×844）後點「開始錄製」→ 等 30 秒 → 點「停止錄製」→ 點「上傳影片」，強制完成不可略過
-- 每一題截圖 + snapshot 必須存檔，命名規則：`smoke-step-{step}-{題號}.png` / `snapshot-step-{step}-{題號}.yml`
-
----
-
-## 功能狀態快照
-
-執行 `/check-project` 取得即時狀態（靜態表格會過期，以動態掃描為準）。
