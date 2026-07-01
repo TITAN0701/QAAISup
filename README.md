@@ -69,25 +69,102 @@ Spreadsheet ID：`1uK9k4O1gL_YiNbXolOITpVnYwzJHB0j-UunLjG0fV0g`
 
 ---
 
-## AI 架構
+## AI Agent 架構
+
+> **AI 負責推理，Cypress 負責執行，人負責審核——三者分工明確。**
+> 定位：**AI-augmented QA**，AI 產草稿、人審核、Pass/Fail 不由 AI 判斷。
+
+### 快覽
 
 ```
-┌──────────────────────────────────────────────────────┐
-│  Claude Code                                          │
-│  CLAUDE.md        行為規則、安全限制                  │
-│  .claude/commands/ 16 個 Slash Command 執行步驟       │
-│  .claude/modules/  共用載入器（config / eval / mcp）  │
-│  .claude/evals/    產出品質評分標準                   │
-│  qa-knowledge/     測試策略、selector 規則、風險定義  │
-│  memory/           跨對話持久記憶                     │
-└──────────────────────────────────────────────────────┘
-      │                   │                  │
-Playwright MCP      Google Drive MCP    GitHub CLI (gh)
-截圖 + snapshot      唯讀搜尋 Drive     推送 Bug Issues
+┌─────────────────────────────────────────────────────────┐
+│  大腦    Claude sonnet-4-6 + CLAUDE.md（行為規則）       │
+├─────────────────────────────────────────────────────────┤
+│  規劃    current-task.md → Slash Commands（16 個）       │
+│  感知    Playwright MCP  → snapshots/*.yml（DOM tree）   │
+│  行動    MCP / PowerShell / gh CLI / Sheets API         │
+│  評估    .claude/evals/  → SPEC_OK … AUTOMATION_BLOCKED │
+│  記憶    memory/ + qa-knowledge/ + TodoWrite            │
+├─────────────────────────────────────────────────────────┤
+│  執行（非 AI）  Cypress → pipeline-state.json           │
+└─────────────────────────────────────────────────────────┘
+ReAct：Thought ✅  Action ✅  Observe ✅  自動閉環 ⚠️  Multi-agent ❌
 ```
 
-AI 產出物每步自動評分：`SPEC_OK` / `SCENARIOS_OK` / `TC_OK` / `AUTOMATION_OK` / `REPORT_OK`
-`AUTOMATION_BLOCKED` 時強制停止，修正後才能繼續。
+---
+
+### 細節：7 個 Agent 組件
+
+| 組件 | 位置 | 職責 |
+|------|------|------|
+| **大腦** | `CLAUDE.md` + `claude-sonnet-4-6` | System Prompt、行為規則、安全限制 |
+| **規劃層** | `current-task.md` + `task-registry.md` + Slash Commands | 任務範圍控制、16 個工作流指令 |
+| **感知層** | Playwright MCP → `snapshots/*.yml` | DOM accessibility tree、截圖、JS evaluate |
+| **行動層** | Playwright MCP / PowerShell / gh CLI / Sheets API | 瀏覽器操控、檔案操作、外部服務 |
+| **評估層** | `.claude/evals/` | 每步產出自動評分，不達標強制阻擋 |
+| **記憶層** | `memory/` + `qa-knowledge/` + TodoWrite | 跨 session 記憶、領域知識、進度追蹤 |
+| **執行層** | Cypress + `pipeline-state.json` | 非 AI 執行測試，唯一 Pass/Fail 來源 |
+
+### 細節：評估結果代碼
+
+| 代碼 | 意義 | 行動 |
+|------|------|------|
+| `SPEC_OK` / `TC_OK` / `AUTOMATION_OK` / `REPORT_OK` | 通過 | 繼續下一步 |
+| `SPEC_INCOMPLETE` / `TC_INVALID` | 產出不完整 | 補充後重跑 |
+| `AUTOMATION_BLOCKED` | 安全違規（如 data-testid）| 強制停止，修正才繼續 |
+| `REPORT_INVALID` | Pass/Fail 非來自執行結果 | 不產出報告 |
+
+### 細節：與 ReAct 標準對照
+
+| ReAct 要素 | 本框架 | 說明 |
+|-----------|:------:|------|
+| Thought（推理） | ✅ | Claude 每個 Action 前有推理 |
+| Action（工具呼叫） | ✅ | MCP / PowerShell / gh |
+| Observation（觀察回饋） | ✅ | snapshot / Cypress 結果 |
+| 自動閉環 | ⚠️ | 人工觸發各步驟 |
+| Multi-agent 協作 | ❌ | 目前單一 agent |
+
+---
+
+## Harness Engineering 定位
+
+> 參考 Karpathy、Martin Fowler、Addy Osmani、OpenAI 官方文件的綜合分析。
+
+### 三層 AI 工程演進
+
+```
+Prompt Engineering  (2022–2023)  怎麼問得好？        → 單次對話輸入
+Context Engineering (2023–2024)  怎麼給足背景？       → 系統提示與背景文件
+Harness Engineering (2025+)      怎麼讓 AI 自主運作？ → Agent 框架、工具邊界、協作架構
+```
+
+本框架屬於第三層：**Harness Engineering**。
+
+### 核心設計原則（Karpathy）
+
+> LLM 是 kernel（核心），Harness 是 nginx 規則——agent 在你的基礎設施規則內運作，不是自由行動。
+
+實作對應：`CLAUDE.md` 行為規則 + `evals/` 阻擋機制 = Harness 的 nginx 規則層。
+
+### 五個維度缺口分析
+
+| Harness 維度 | 業界標準 | 本框架 | 符合度 |
+|-------------|---------|--------|:------:|
+| **任務邊界** | 明確定義 agent 可做 / 不可做 | `CLAUDE.md` AI 限制、git 高危指令禁止 | ✅ |
+| **工具權限** | 每工具有授權範圍，harness 驗證 schema | `settings.local.json`、MCP 工具清單 | ✅ |
+| **Human-in-the-loop** | 關鍵節點強制人工審核 | `evals/` BLOCKED 停止、QA 審核草稿 | ✅ |
+| **Observability** | traces、audit logs、dashboard、成本追蹤 | 無（pipeline-state 有資料但無介面） | ❌ |
+| **Multi-agent 協作** | 多 agent 分工平行，任務編排層協調 | 單一 agent，Slash Commands 串聯 | ❌ |
+
+> **關鍵數字**（arXiv CAAF 論文）：生產 agent 中 ~98.4% 是 Harness 基礎設施，只有 ~1.6% 是 AI 決策邏輯。
+
+### 補強路線（三個優先級）
+
+| 優先 | 方向 | 做法 | 難度 |
+|:----:|------|------|:----:|
+| P1 | **Observability** | 讀 `pipeline-state.json` 產簡易 dashboard；或接 Langfuse / Helicone | 低 |
+| P2 | **工具呼叫 schema 驗證** | 在 harness 層加 schema check，防 prompt injection 升級為任意指令 | 中 |
+| P3 | **Multi-agent 分工** | spec-agent / automation-agent / review-agent 各自平行，用 LangGraph 或 CrewAI 協調 | 高 |
 
 ---
 
